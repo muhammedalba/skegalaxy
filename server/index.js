@@ -69,10 +69,10 @@ dbconnection();
 //mount Routes
 MountRoutes(app);
 // Static file declaration
-app.use(express.static(path.join(__dirname, 'client/dist')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 // Serve the React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 // create error and send it to error handling middleware
 app.use("*", (req, res, next) => {
