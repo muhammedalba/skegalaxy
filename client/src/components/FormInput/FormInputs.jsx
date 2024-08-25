@@ -17,7 +17,7 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
     useAutapiMutation();
   const navigate = useNavigate();
   const focus = useRef(null);
-console.log(eror);
+
   // state
   let [Error, setError] = useState("");
   const [image, setImage] = useState(null);
@@ -166,7 +166,7 @@ console.log(eror);
   ));
 
   return (
-    <div className="container pt-5">
+    <div className="container pt-5 Auth">
       <ToastContainer
         position="top-right"
         autoClose={2000}

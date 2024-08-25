@@ -20,6 +20,7 @@ import { FaRegUser } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { Fade } from "react-awesome-reveal";
+import { BiTransfer } from "react-icons/bi";
 
 
 
@@ -140,6 +141,11 @@ const Header = () => {
       icon: <IoMdHome fontSize={"1.7rem"} color="var( --text-color)" />,
     },
     {
+      title: " طلباتي",
+      path: "/orders",
+      icon: <BiTransfer fontSize={"1.7rem"} color="var( --text-color)" />,
+    },
+    {
       title: "لوحه التحكم",
       path: "/dashboard",
       icon: (
@@ -204,13 +210,14 @@ const Header = () => {
           <div className=" d-flex w-100 px-2 py-2  justify-content-between container-fluid">
             {/* logo start */}
             <div className="logo  d-flex align-items-center">
-              <Fade delay={0} direction="down" triggerOnce={true} cascade>
-                <img
+              <Fade delay={0} direction="down" triggerOnce={true} >
+                  <Link to={'/'}>    
+                   <img
                   style={{ width: "50px ", height: "50px" }}
                   className="logo  rounded-circle  d-sm-block  "
                   src={logo}
                   alt="logo"
-                />
+                /> </Link>
                 <div
                   style={{ color: "var(--text-color)", whiteSpace: "nowrap" }}
                   className="  mb-0 d-none d-sm-block px-1 "
@@ -219,6 +226,7 @@ const Header = () => {
                       مجرة السماء
                   </Fade>
                 </div>
+                  
               </Fade>
             </div>
             {/* logo end */}

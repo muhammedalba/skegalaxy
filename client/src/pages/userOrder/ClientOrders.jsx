@@ -136,10 +136,17 @@ const ClientOrders = () => {
           
           <div
             onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])}
-            className="w-100 text-center fs-3 text-success user-select-none"
+            className={!confirmed?"  fs-3 pointer text-success user-select-none":'fs-3 pointer text-dark  user-select-none' }
             style={{ cursor: "pointer" }}
           >
-            {!confirmed ? "الطلبات الحاليه  " : " الطلبات  السابقة"}
+        الطلبات الحاليه  
+          </div>
+          <div
+            onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])}
+            className={confirmed?"  fs-3 pointer text-success user-select-none":'fs-3 pointer text-dark  user-select-none' }
+            style={{ cursor: "pointer" }}
+          >
+             الطلبات  السابقة
           </div>
           {/* data table */}
           <table className="table pt-5 mt-3">

@@ -82,14 +82,14 @@
 }
 
 .card-product::after {
-    content: "مجرةالسماء";
+    content: "SkyGalaxy";
     position: absolute;
     bottom: 0;
     left: 50%;
     width: 100%;
     text-align: center;
     font-weight: 500;
-    font-size: 3em;
+    font-size: 2.3em;
     color: rgba(0, 0, 0, 0.1);
     -webkit-transform: translate(-50%,0 );
     -moz-transform: translate(-50%,0 );

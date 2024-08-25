@@ -74,8 +74,8 @@ const Card = ({ product, imgePath }) => {
 const [display ,setDisplay]=useState(false);
 const cokkies = new Cookies();
 const token = cokkies.get("token");
-const shareUrl = window.location.href.replace('#showData','products'); // URL الصفحة الحالية
-const title =  "شركه مجرة السماء!"; // العنوان للمشاركة
+const shareUrl = window.location.href; // URL الصفحة الحالية
+const title =  "   شركه مجرة السماء! للتجارة"; // العنوان للمشاركة
 
   const addToCart = useCallback((productId) => {
     // تحقق من أن المستخدم مسجل الدخول وأن معرف المنتج صالح
@@ -97,7 +97,7 @@ const title =  "شركه مجرة السماء!"; // العنوان للمشار
   setDisplay(!display)
  }
   return (
-    <div className="card-product m-auto">
+    <div className="card-product m-auto ">
    
       <IoShareSocial style={{ top: "4rem" }} className="cart-icon " onClick={showIcons} />
       <Link to={`/products/${product.id}`}>
@@ -106,17 +106,17 @@ const title =  "شركه مجرة السماء!"; // العنوان للمشار
       <div style={{    transform:display?'translateX(0)':' translateX(158%)'}}
        className=" cart-share  d-flex align-items-center justify-content-center gap-2 flex-column">
         {/* زر المشاركة على Twitter */}
-        <TwitterShareButton url={`${shareUrl}/${product.id}`} title={title}>
+        <TwitterShareButton url={`${shareUrl}products/${product.id}`} title={title}>
           <TwitterIcon size={35} round={true} />
         </TwitterShareButton>
 
         {/* زر المشاركة على WhatsApp */}
-        <WhatsappShareButton url={`${shareUrl}/${product.id}`} title={title}>
+        <WhatsappShareButton url={`${shareUrl}products/${product.id}`} title={title}>
           <WhatsappIcon size={35} round={true} />
         </WhatsappShareButton>
 
         {/* زر المشاركة على Telegram */}
-        <TelegramShareButton url={`${shareUrl}/${product.id}`} title={title}>
+        <TelegramShareButton url={`${shareUrl}products/${product.id}`} title={title}>
           <TelegramIcon size={35} round={true} />
         </TelegramShareButton>
 

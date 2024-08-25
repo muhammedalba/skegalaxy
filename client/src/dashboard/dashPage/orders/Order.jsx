@@ -259,7 +259,7 @@ console.log(order);
                 <div className="fs-5 py-2 border col-12  text-primary " >
                   وصل التحويل 
 
-                  <img onClick={()=>openImge(`${order?.imageUrl}/${order?.data?.image}`)} height={150} width={300} className=" text-dark m-auto d-block" src={`${order?.imageUrl}/${order?.data?.image}`}/>
+                  <img onClick={()=>openImge(`${order?.imageUrl}/${order?.data?.image}`)} height={150} width={150} className=" text-dark m-auto d-block" src={`${order?.imageUrl}/${order?.data?.image}`}/>
                 </div>
                 <div className={shippingAddress?.detalis?" fs-5 py-2 border  text-primary d-block ":'d-none'} >
                   تفاصيل اضافيه
@@ -268,7 +268,7 @@ console.log(order);
                 </div>
                 
                 {/* buttons  str*/}
-                <div className="my-2 border-bottom py-2 d-flex align-items-center justify-content-evenly">
+                <div className="my-2 border-bottom py-2 d-flex align-items-center justify-content-evenly flex-wrap gap-2">
                 <Fade delay={0} direction='up' triggerOnce={true}    >
                     <span style={{fontWeight:'500'}}
                       className={

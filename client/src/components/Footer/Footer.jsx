@@ -13,6 +13,7 @@ import { FcUnlock } from "react-icons/fc";
 import logo from '../../imges/logo1.webp'
 import { BsTelephone } from "react-icons/bs";
 import { MdOutlineMail } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 
 
@@ -82,11 +83,13 @@ const Footer = () => {
                 {/*  communication */}
                 <div className="col-12 col-sm-6 text-center ">
                     <Fade direction='up' triggerOnce={true} cascade>
-                                 <img className="m-auto " width={50} height={50} src={logo} alt="logo" />
-                                  <div className="pt-1 ">
-                                      
-                                      شركة مجرة السماء للتجارة 
-                                  </div>
+                                 <Link to={'/'}>
+                                    <img className="m-auto " width={50} height={50} src={logo} alt="logo" />
+                                    <div className="pt-1 ">
+                                        
+                                        شركة مجرة السماء للتجارة 
+                                    </div>
+                                  </Link>
                                   <div className="d-flex align-items-center justify-content-center gap-1 py-1 pointer">
                                   <BsTelephone fontSize={'1rem'} />
                                   <a href="tel:+966598909991" >

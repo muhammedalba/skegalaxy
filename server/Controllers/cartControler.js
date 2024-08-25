@@ -164,7 +164,7 @@ exports.updateCartItemQuantity = asyncHandler(async (req, res, next) => {
   const {productId, quantity } = req.body;
   // get productbyID
   const product = await productModel.findById(productId);
-  console.log(product.quantity);
+  
   
   const cart = await cartModel.findOne({ user: req.user._id });
 
@@ -190,8 +190,8 @@ exports.updateCartItemQuantity = asyncHandler(async (req, res, next) => {
       new ApiError(` there is no item for id  ${req.params.itemid} `, 404)
     );
   }
-  await cart.save();
   calcTotalCartPrice(cart);
+  await cart.save();
   res.status(201).json({
     resnumOfCartItems: cart.cartItems.length,
     data: cart,
@@ -217,9 +217,12 @@ exports.applayCoupon = asyncHandler(async (req, res, next) => {
   const cart = await cartModel.findOne({ user: req.user._id });
   const totalPrice = cart.totalCartPrice;
 
-  // 3- Calculate price after priceAfterDiscount
-  const priceAfterDiscount =( totalPrice - (totalPrice * coupon.discount) / 100).toFixed(2);
-  cart.totalPriceAfterDiscount=priceAfterDiscount;
+// 3- Calculate price after priceAfterDiscount
+const priceAfterDiscount =( totalPrice - totalPrice * coupon.discount/ 100 ).toFixed(2);
+
+
+cart.totalPriceAfterDiscount=priceAfterDiscount;
+
 
 
   await cart.save();

@@ -201,9 +201,10 @@ const showBrandsSlide= useMemo(() => {
 
   if (brands?.data?.length > 0) {
     return brands?.data.map((brand, index) => (
-     <button onClick={() => scrollToSection(section1Ref,`brand=${brand._id}`)}   className="m-1 btn border" key={index}>
+     <button onClick={() => scrollToSection(section1Ref,`brand=${brand._id}`)}   
+     className=" btn d-block m-auto " key={index}>
         <div  inert="true" 
-                className="  p-2 d-flex flex-column
+                className=" border p-2 d-flex flex-column
             align-items-center  m-auto pointer">
           <img
             
@@ -216,8 +217,9 @@ const showBrandsSlide= useMemo(() => {
             className=" d-sm-block"
             alt="brand"
           />
-        </div>
+
         <span className="fs-3 text-center w-100 d-block">{brand?.name}</span>
+        </div>
       
      </button> 
 
@@ -236,20 +238,20 @@ const showBrandsSlide= useMemo(() => {
       superLargeDesktop: {
         breakpoint: { max: 3000, min: 1024 },
         items: 4,
-        slidesToSlide: 4 // optional, default to 1.
+        slidesToSlide: 1 // optional, default to 1.
       },
       desktop: {
-        breakpoint: { max: 1024, min: 780 },
+        breakpoint: { max: 1024, min: 700 },
         items: 3,
-        slidesToSlide: 3 // optional, default to 1.
+        slidesToSlide: 1 // optional, default to 1.
       },
       tablet: {
-        breakpoint: { max: 780, min: 510 },
+        breakpoint: { max: 700, min: 420 },
         items: 2,
-        slidesToSlide: 2 // optional, default to 1.
+        slidesToSlide: 1 // optional, default to 1.
       },
       mobile: {
-        breakpoint: { max: 510, min: 0 },
+        breakpoint: { max: 420, min: 0 },
         items: 1,
         slidesToSlide: 1 // optional, default to 1.
       }
@@ -279,13 +281,13 @@ const showBrandsSlide= useMemo(() => {
   rewindWithAnimation={true}
   transitionDuration={1000}
   customTransition={"transform 3000ms ease-in-out"}
-  showDots={false}
+  // showDots={false}
   arrows={false}
   focusOnSelect={false}
   ssr={true}
   rtl={true}
 
-  centerMode={true}
+  // centerMode={true}
   lazyLoad={true} // تحسين الأداء باستخدام التحميل المؤجل
 >
   {showBrandsSlide}

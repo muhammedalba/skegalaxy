@@ -458,7 +458,7 @@ const Cart = () => {
   // handel coupon
   const handelcoupon = (e) => {
     e.preventDefault();
-    if (coupon !== undefined && coupon !== "" && coupon.length > 3) {
+    if (coupon !== undefined && coupon !== "" && coupon.length >= 3) {
       // console.log(coupon,'NEWSsm1');
       updateOne({
         url: `/cart/applayCoupon`,
@@ -471,6 +471,7 @@ const Cart = () => {
       infoNotify("الرمز المدخل غير صحيح");
     }
   };
+console.log(errorUpdate);
 
   return (
     <div className="container-fluid pt-5  ">
@@ -650,7 +651,7 @@ const Cart = () => {
 
       {/* order form start */}
       <div
-        className="  p-4 w-100  "
+        className="p-1 w-100  "
         style={{
           position: "absolute",
           minHeight: "100%",
@@ -661,13 +662,13 @@ const Cart = () => {
           zIndex: 1000,
         }}
       >
-        <form
+        <form className="m-auto col-11 col-md-10 col-lg-9 p-3 rounded-4 mt-5 "
           style={{
             backgroundColor: "var(--bgColor)",
             color: "var(--text-color)",
           }}
-          // onSubmit={handelCreateOrder}
-          className="m-auto col-10 col-md-12 p-3 rounded-4 mt-5 "
+         
+         
         >
           <p className="w-100 fs-4  text-center border-bottom ">
             معلومات الدفع ولاستلام
@@ -988,7 +989,7 @@ const Cart = () => {
                   onChange={handleshippingAddress}
                 />
 
-                <img className="w-100 my-2" src={vizaImge} alt="viza" />
+                <img className="w-50 my-2 m-auto d-block" src={vizaImge} alt="viza" />
               </div>
             </div>
           </div>
@@ -1007,7 +1008,7 @@ const Cart = () => {
               disabled
               onClick={handelcheckoutSession}
               type="button"
-              className="btn btn-success d-none"
+              className="btn btn-success"
             >
               دفع باستخدام بطاقة الكترونيه
             </button>

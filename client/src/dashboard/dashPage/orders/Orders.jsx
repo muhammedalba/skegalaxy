@@ -8,12 +8,12 @@
     import { TiArrowSortedDown } from "react-icons/ti";
     import { TiArrowSortedUp } from "react-icons/ti";
     
-    import { errorNotify, infoNotify, successNotify } from "../../../utils/Toast";
+    import { errorNotify, successNotify } from "../../../utils/Toast";
     import { useGetDataQuery, useUpdateOneMutation } from "../../../redux/features/api/apiSlice";
     import QuantityResults from "../../../components/QuantityResults/QuantityResults";
     import Navigation from "../../../components/navigation/Navigation";
     import { useSelector } from "react-redux";
-    import { convertDateTime } from "../../../utils/convertDateTime";
+
 import { SkeletonTeble } from "../../../utils/skeleton";
 import { FilterData } from "../../../utils/filterSearh";
     
@@ -239,9 +239,14 @@ import { FilterData } from "../../../utils/filterSearh";
 
           {/* data table */}
 
-          <div className="w-100 text-center fs-3 pointer text-primary " 
+          <div className={confirmed?"  fs-3 pointer text-primary ":'fs-3 pointer text-dark ' }
            onClick={handlidisplayOrders} > 
-           {confirmed?'عرض الطلبات الحاليه ':"عرض الطلبات السابقة"}
+          عرض الطلبات السابقة
+           
+           </div>
+           <div className={!confirmed?"  fs-3 pointer text-primary ":'fs-3 pointer text-dark ' }
+           onClick={handlidisplayOrders} > 
+         عرض الطلبات الحاليه 
            
            </div>
           <table className="table table-striped  pt-5 mt-3 ">

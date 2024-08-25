@@ -312,7 +312,9 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
                               <span className="text-success"> SAR</span>
                             </span>
                           </span>
+                          
                         </div>
+                               <span className="text-danger">(شامل الضريبه المضافه)</span>
                   </Fade>
                 </div>
                 
@@ -372,12 +374,12 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
       desktop: {
         breakpoint: { max: 3000, min: 1024 },
         items: 3,
-        slidesToSlide: 3 // optional, default to 1.
+        slidesToSlide: 1// optional, default to 1.
       },
       tablet: {
         breakpoint: { max: 1024, min: 500 },
         items: 2,
-        slidesToSlide: 2 // optional, default to 1.
+        slidesToSlide: 1// optional, default to 1.
       },
       mobile: {
         breakpoint: { max: 500, min: 0 },
@@ -428,31 +430,13 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
             
             showDots={true}
             ssr={true}
-            infinite={true}
-            autoPlay={true}
-    
             
+            arrows={false}
+            focusOnSelect={false}
             
-       
-           
-          
-          
-
-
-            rewind={true}
-            rewindWithAnimation={true}
-
-            customTransition={"transform 3000ms ease-in-out"}
-
-            // arrows={false}
-            focusOnSelect={true}
-
-          
-            centerMode={true}
+            // centerMode={true}
             lazyLoad={true} // تحسين الأداء باستخدام التحميل المؤجل
-
-
-          >
+            >
 
       {showProducts} 
    </Carousel>
