@@ -1,0 +1,13 @@
+.sidebar{
+    background-color: var(--bgColor);
+    min-height:100vh;
+  
+   
+   
+
+    .active{
+        background-color: var(--text-color);
+        color: var(--bgColor) !important;
+      width: 100%;
+    }
+}

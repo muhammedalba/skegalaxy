@@ -1,0 +1,176 @@
+
+
+
+
+
+.card-product {
+  padding: 0 !important;
+  position: relative;
+  width: 225px;
+  height: 410PX;
+  background: var(--bgColor);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid var(--bgColor);
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+
+  .cart-icon{
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 2.2em;
+    color: rgb(179, 23, 23) !important;
+    background: var(--bgColor);
+    transition: 0.3s;
+    padding: 5px;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    -ms-border-radius:50%;
+    -o-border-radius:50%;
+    border-radius:50%;
+   z-index: 3;
+    &:hover{
+   color: rgb(255, 255, 255)!important;
+    background: rgb(179, 23, 23)!important;
+  
+    }
+    &:active{
+      
+      -webkit-transform: translateY(5px);
+      -moz-transform: translateY(5px);
+      -ms-transform: translateY(5px);
+      -o-transform: translateY(5px);
+      transform: translateY(5px);
+}
+  }
+  .cart-share{
+    position: absolute;
+    top: 7rem;
+    right: 5px;
+    z-index: 4;
+    cursor: pointer;
+    right: 5px;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+}
+}
+
+
+.card-product::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:var(--minColor);
+  transform: skewY(345deg);
+  transition: 0.5s;
+}
+
+.card-product:hover::before {
+  top: -70%;
+  transform: skewY(390deg);
+}
+
+.card-product::after {
+    content: "مجرةالسماء";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 3em;
+    color: rgba(0, 0, 0, 0.1);
+    -webkit-transform: translate(-50%,0 );
+    -moz-transform: translate(-50%,0 );
+    -ms-transform: translate(-50%,0 );
+    -o-transform: translate(-50%,0 );
+    transform: translate(-50%,0 );
+    
+}
+
+.card-product .imgBox {
+  position: relative;
+  width: 100%;
+  height: 13rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1;
+}
+
+
+.card-product .contentBox {
+  position: relative;
+  padding:0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .stars{
+    width: 100% !important;
+  }
+ 
+}
+
+.card-product .contentBox h3 {
+  font-size: 18px;
+  color: var(--text-color);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.card-product .contentBox .price {
+  font-size: 23px;
+  color: var(--text-color);
+  font-weight: 700;
+  letter-spacing: 1px;
+  
+}
+
+.card-product .contentBox .buy {
+  position: relative;
+  top: 100px;
+  opacity: 0;
+  padding: 10px 30px;
+  width: 150px;
+  color: var(--text-color);
+  text-decoration: none;
+  background: var(--spancolor);
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.5s;
+  cursor: pointer !important;
+  
+}
+
+.card-product:hover .contentBox .buy {
+  top: 0;
+  opacity: 1;
+
+ 
+
+}
+
+@media screen and (max-width:340px ){
+    .card-product {
+        
+        height: 415px;
+        margin-bottom: 20px;
+    }
+   
+    
+}

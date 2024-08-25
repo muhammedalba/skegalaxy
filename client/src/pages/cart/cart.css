@@ -1,0 +1,15 @@
+.totale{
+   position: fixed;
+   right:  0;
+}
+@media screen and (max-width:992px){
+   .totale{
+      position: relative;
+ 
+   }  
+}
+    
+
+
+ 
+    

@@ -1,0 +1,39 @@
+
+
+.footer{
+    background-color:var(--bgColor);
+    color: var(--text-color) !important;
+    .services{
+        span{
+            
+                font-weight: 100 !important;
+                font-size: 1rem !important;
+            }
+        
+    background-color: var(--text-color);
+    color: var(--bgColor);
+    svg , span{
+        color: var(--star-colour);
+    }
+    }
+    svg{
+        color: var(--text-color);
+        -o-transition: 0.5s;
+        -webkit-transition: 0.5s;
+        -moz-transition: 0.5s;
+        -ms-transition: 0.5s;
+        transition: 0.5s;
+}
+    a{
+        color: var(--text-color)!important;
+        
+    }
+    
+}
+.Social a svg:hover {
+    
+    
+        color: var( --spancolor) !important;
+    
+    
+}

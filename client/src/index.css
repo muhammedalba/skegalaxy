@@ -1,0 +1,113 @@
+
+*{
+  margin: 0;
+  padding: 0; 
+  box-sizing: border-box;   
+  font-family: 'Amiri', serif;
+  
+}
+/* src/index.css أو src/App.css */
+
+
+
+:root {
+
+ --spancolor : hsl(38 90% 55%); 
+
+   --minColor: #fff;
+  --bgColor: #eeedeb;
+  --text-color: #2f3645;
+  /* stars */
+  --primary-colour: #EEEDEB;
+  --secondary-colour: hsl(233 80% 70%);
+  --star-colour: hsl(38 90% 55%);
+}
+
+body {
+
+    scroll-behavior: smooth;
+  
+ 
+   
+  
+.nowrap{
+white-space: nowrap;
+
+}
+.pointer{
+  cursor: pointer;
+}
+  .modal-backdrop.show{
+    z-index: 1;
+  }
+
+  background-color: var(--minColor) !important;
+  color: var(--text-color) !important;
+ a{ text-decoration: none !important;
+  color: var(--text-color) !important;
+ }
+ /*input{
+  background-color: var(--text-color) !important; 
+}*/
+
+ /* .table   th {
+  background-color: var(--bgColor);
+  color: var(--text-color) !important;
+ }
+ .table  td {
+
+  color: var(--text-color) !important;
+ 
+  border-color: var(--spancolor)
+ } */
+
+}
+
+
+.skeleton-loading{
+  opacity: .7;
+  -o-border-radius:5px ;
+  width:100%!important;
+  height: 35px !important;
+  display: block;
+  -webkit-animation: skeleton 1s infinite  linear alternate;
+  animation: skeleton 1s infinite  linear alternate;
+  -webkit-border-radius:5px ;
+  -moz-border-radius:5px ;
+  -ms-border-radius:5px ;
+  border-radius:5px ;
+  background: 
+  linear-gradient(0.25turn, transparent, #dfdada, transparent),
+  /* linear-gradient(#eee, #eee), */
+  /* radial-gradient(38px circle at 19px 19px, #eee 50%, transparent 51%), */
+  linear-gradient(#eee, #eee);  
+background-repeat: no-repeat;
+/* background-size: 315px 250px, 315px 180px, 100px 100px, 225px 30px;  */
+background-position: -315px 0, 0 0, 0px 190px, 50px 195px; 
+}
+
+@keyframes skeleton {
+  to {
+    background-position: 315px 0, 0 0, 0 190px, 50px 195px;
+  }
+
+}
+
+
+.MinPage{
+  white-space: normal !important;
+  color: var(--text-color);
+  
+}
+.card-body{
+  /* background-color: #5f6f6596 !important; */
+  color: var(--text-color);
+}
+
+/* carousel */
+.react-multi-carousel-track{
+  margin: auto !important;
+}
+table th{
+  background-color: #9d9b966c !important;
+}
