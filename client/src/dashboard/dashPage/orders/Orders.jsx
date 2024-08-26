@@ -239,14 +239,14 @@ import { FilterData } from "../../../utils/filterSearh";
 
           {/* data table */}
 
-          <div className={confirmed?"  fs-3 pointer text-primary ":'fs-3 pointer text-dark ' }
+          <div className={confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1 ":'m-1  btn btn-success fs-5 pointer text-white' }
            onClick={handlidisplayOrders} > 
-          عرض الطلبات السابقة
+           الطلبات السابقة
            
            </div>
-           <div className={!confirmed?"  fs-3 pointer text-primary ":'fs-3 pointer text-dark ' }
+           <div className={!confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1  ":' m-1 btn btn-success fs-5 pointer text-white'  }
            onClick={handlidisplayOrders} > 
-         عرض الطلبات الحاليه 
+          الطلبات الحاليه 
            
            </div>
           <table className="table table-striped  pt-5 mt-3 ">

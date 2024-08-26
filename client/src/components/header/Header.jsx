@@ -165,6 +165,7 @@ const Header = () => {
         key={index}
         className={
           (link.path === "/dashboard" && role === "user") ||
+          (link.path === "/orders" && !role ) ||
           (role === undefined && link.path === "/dashboard")
             ? "d-none"
             : "nav-item d-flex align-items-center  "

@@ -134,20 +134,17 @@ const ClientOrders = () => {
             isLoading={isLoading}
           />
           
-          <div
-            onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])}
-            className={!confirmed?"  fs-3 pointer text-success user-select-none":'fs-3 pointer text-dark  user-select-none' }
-            style={{ cursor: "pointer" }}
-          >
-        الطلبات الحاليه  
-          </div>
-          <div
-            onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])}
-            className={confirmed?"  fs-3 pointer text-success user-select-none":'fs-3 pointer text-dark  user-select-none' }
-            style={{ cursor: "pointer" }}
-          >
-             الطلبات  السابقة
-          </div>
+       
+          <div className={!confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1 ":'m-1  btn btn-success fs-5 pointer text-white' }
+          onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
+           الطلبات السابقة
+           
+           </div>
+           <div className={confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1":' m-1v btn btn-success fs-5 pointer text-white'  }
+          onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
+          الطلبات الحاليه 
+           
+           </div>
           {/* data table */}
           <table className="table pt-5 mt-3">
             <thead>

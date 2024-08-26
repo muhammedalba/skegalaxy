@@ -8,7 +8,6 @@ import {
 import Carousel from 'react-multi-carousel';
 import { Fade } from "react-awesome-reveal";
 
-import { Fragment,  } from 'react';
 
 import { SkeletonProduct } from "../../utils/skeleton";
 import Navigation from "../../components/navigation/Navigation";
@@ -62,7 +61,7 @@ const Products = () => {
     data: categories,
     // error: errorcategories,
     isLoading: loadingcategories,
-    // isSuccess: successcategories,
+    isSuccess: successcategories,
   } = useGetDataQuery(`categories`);
 
 
@@ -262,16 +261,16 @@ const showBrandsSlide= useMemo(() => {
 
       {/* categgories */}
 
-      <div className=" d-none text-center d-sm-block mt-4 p-1">
+{  successcategories&&    <div className=" d-none text-center d-sm-block mt-4 p-1">
         <span style={{ backgroundColor: 'var(--bgColor)'}} className=" fs-4 w-100 m-auto  mb-2 d-block py-3 border border-end-0 border-start-0 ">الاقسام</span>
         <div className="d-flex  flex-wrap justify-content-around ">
           { showCategoriesData}
         </div>
-      </div>
+      </div>}
       {/* brands */}
-    <div className="">
+ { successbrands &&     <div className="">
       <p style={{ backgroundColor: 'var(--bgColor)'}} className="py-2 my-3  fs-3 border border-end-0 border-start-0 text-center">    شركاء النجاح  </p>
-      <Carousel
+   <Carousel
   responsive={responsive}
 
   autoPlay={true}
@@ -291,8 +290,8 @@ const showBrandsSlide= useMemo(() => {
   lazyLoad={true} // تحسين الأداء باستخدام التحميل المؤجل
 >
   {showBrandsSlide}
-</Carousel>
-    </div>
+      </Carousel>
+    </div>}
       
 
       {/* products */}
