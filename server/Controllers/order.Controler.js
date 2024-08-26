@@ -3,7 +3,7 @@ const stripe = require("stripe")("sk_test_51PRvCc04PQXKD0Rqli1MC6Xi9yikoS0JqHzCG
 
 const asyncHandler = require("express-async-handler");
 const factory = require("./handelersFactory");
-const { uploadImage } = require("../middleWare/uploadImgeMiddlewRE.JS");
+const { uploadImage ,updatemageFromFolder} = require("../middleWare/uploadImgeMiddlewRE.JS");
 
 const ApiError = require("../utils/apiError");
 const {sendEmail} = require("../sendEmail");
@@ -12,15 +12,17 @@ const orderModul = require("../models/orderModel");
 const productModel = require("../models/productModule");
 const UserModel = require("../models/users.module");
 
-// upload single image
-exports.uploadorderImge=uploadImage([{name:'image',maxCount:1}])
+
+// upload single image and orderPdf
+exports.uploadorderImge=uploadImage([{name:'image',maxCount:1},{name:'orderPdf',maxCount:1}])
 
 //post  create cash order
 // /api/orders/:cartId
 exports.createcashOrder = asyncHandler(async (req, res, next) => {
 
-
+const DeliveryVerificationCode = Math.floor(100000 + Math.random() * 900000).toString();
  
+
   
   // app settings
   const shippingPrice = 0;
@@ -46,6 +48,7 @@ exports.createcashOrder = asyncHandler(async (req, res, next) => {
     cartItems: cart.cartItems,
     shippingAddress:shipping,
     image:req.body.image,
+    VerificationCode:DeliveryVerificationCode,
     totalOrderPrice,
   });
   // 3- send email
@@ -244,6 +247,30 @@ exports.updateOrderTodelivered = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ data: updateOrder });
 });
+
+// put update order paid status to paid
+// /api/orders/:id/invoice
+exports.updateOrderSendInvoice = asyncHandler(async (req, res, next) => {
+  const order = await orderModul.findById(req.params.id);
+  if (!order) {
+    return next(
+      new ApiError(`there is such a order with id : ${req.params.id}`, 404)
+    );
+  }
+  // chek If this order has an invoice
+ 
+  // if(order.orderPdf){
+      // update imge from uploads folder
+      await updatemageFromFolder(req.params.id, orderModul, req);
+  // }
+  order.orderPdf = req.body.orderPdf;
+ 
+
+  const updateOrder = await order.save();
+
+  res.status(200).json({ data: updateOrder });
+});
+
 
 // get checkout session from stripe and send it as response
 // /api/orders/checkout-session/cartId

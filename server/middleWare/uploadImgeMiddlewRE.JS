@@ -14,10 +14,12 @@ const multerOptions = () => {
   const fileFilter = (req, file, cb) => {
     const imagType = file.mimetype.split("/")[0];
     const pdfType = file.mimetype.split("/")[1];
+  console.log(req.baseUrl,'req.baseUrl');
   
     if (
       imagType === "image" ||
-      (pdfType === "pdf" && req.baseUrl === "/api/products")
+      (pdfType === "pdf" && req.baseUrl === "/api/products")||
+      (pdfType === "pdf" && req.baseUrl === "/api/orders")
     ) {
       cb(null, true);
     } else {
@@ -120,6 +122,15 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
     fs.writeFileSync(filePath, req.files.infoProductPdf[0].buffer);
 
     req.body.infoProductPdf = filename; // Save PDF into our db
+  }
+  if (req.files.orderPdf) {
+    const filename = `${path}-orderPdf-${uuidv4()}.pdf`;
+    const filePath = `uploads/${path}/${filename}`;
+
+    // Save the PDF file directly
+    fs.writeFileSync(filePath, req.files.orderPdf[0].buffer);
+
+    req.body.orderPdf = filename; // Save PDF into our db
   }
     // Resize and save single image
     if (req.files.image) {
@@ -233,6 +244,17 @@ exports.updatemageFromFolder = asyncHandler(async (id, model, req) => {
 
       //
     }
+    if (
+      req.body.orderPdf) {
+      // const imgePath = findImgeInDB.image.split("/").slice(3).join("/");
+      const baseUrl = req.baseUrl.split("/").slice(2).join("/");
+      const imagePath = `uploads/${baseUrl}/${findImgeInDB.orderPdf}`;
+
+      // Verify the file exists before deleting it
+      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+
+      //
+    }
   }
 });
 
@@ -271,6 +293,16 @@ exports.deletImageFromFolder = asyncHandler(async (id, model, req) => {
       // const imgePath = findImgeInDB.image.split("/").slice(3).join("/");
       const baseUrl = req.baseUrl.split("/").slice(2).join("/");
       const imagePath = `uploads/${baseUrl}/${findImgeInDB.infoProductPdf}`;
+
+      // Verify the file exists before deleting it
+      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+
+      //
+    }
+    if (findImgeInDB.orderPdf) {
+      // const imgePath = findImgeInDB.image.split("/").slice(3).join("/");
+      const baseUrl = req.baseUrl.split("/").slice(2).join("/");
+      const imagePath = `uploads/${baseUrl}/${findImgeInDB.orderPdf}`;
 
       // Verify the file exists before deleting it
       if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);

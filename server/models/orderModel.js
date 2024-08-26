@@ -40,6 +40,7 @@ const orderSchema = new mongoose.Schema(
       street:String,
     },
     totalOrderPrice: { type: Number },
+    VerificationCode: { type: Number },
     paymentMethodType: {
       type: String,
       enum: ["card", "cash"],
@@ -50,7 +51,11 @@ const orderSchema = new mongoose.Schema(
     paidAt: { type: Date },
     isDelivered: { type: Boolean, default: false },
     deliveredAt: { type: Date },
+    orderPdf: {
+    type: String,
   },
+  },
+
   { timestamps: true }
 );
 

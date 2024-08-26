@@ -60,6 +60,8 @@ exports.createProductValidator = [
       if (req.body.price <= val) {
         throw new Error("priceAfterDiscount must be lower than price");
       }
+      console.log(val);
+      
       return true;
     }),
   check("colors")

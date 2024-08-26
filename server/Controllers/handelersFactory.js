@@ -99,17 +99,37 @@ exports.getOne = (model, populationOpt) =>
     }
 
 // If there is a request to download a PDF file
-    if (req.query.download && req.query.download === 'pdf' && req.baseUrl.includes('products')) {
-      //Specify the path to the file   
-      const pdfFilePath = path.join(__dirname, '..', 'uploads', 'products', document.infoProductPdf);
-  
+    if (req.query.download && req.query.download === 'pdf'  ) {
       
+      
+      if(req.baseUrl.includes('products')){
+          //Specify the path to the file   
+      const pdfFilePath = path.join(__dirname, '..', 'uploads', 'products', document.infoProductPdf);  
       // إرسال ملف PDF للمستخدم
       res.download(pdfFilePath, `${document.infoProductPdf}`, (err) => {
         if (err) {
           return next(new ApiError(`Error sending file: ${err.message}`, 500));
         }
       });
+      }
+      if(req.baseUrl.includes('orders')){
+        //Specify the path to the file   
+    const pdfFilePath = path.join(__dirname, '..', 'uploads', 'orders', document.orderPdf);  
+    // إرسال ملف PDF للمستخدم
+    res.download(pdfFilePath, `${document.orderPdf}`, (err) => {
+      if (err) {
+        return next(new ApiError(`Error sending file: ${err.message}`, 500));
+      }
+    });
+    }
+    
+  
+      
+    
+    
+    
+    
+    
     } else {
       // Send PDF file to user
       res.status(200).json({ status: 'success', data: document, imageUrl });

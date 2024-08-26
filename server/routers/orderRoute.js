@@ -4,6 +4,8 @@ const allowedTo = require("../utils/allowedTo");
 const role = require("../utils/userRoles");
 const { resizeImge } = require("../middleWare/uploadImgeMiddlewRE.JS");
 const {
+  uploadorderImge,
+  updateOrderSendInvoice,
   getAllOrders,
   checkoutSession,
   findSpecificOrder,
@@ -11,8 +13,8 @@ const {
   filterOrderForLoggedUser,
   updateOrderToPaid,
   updateOrderTodelivered,
-  uploadorderImge,
 } = require("../Controllers/order.Controler");
+
 const router = express.Router();
 router.use(protect);
 router.route("/:cartId").post(uploadorderImge,resizeImge,createcashOrder);
@@ -26,5 +28,6 @@ router.get("/:id", findSpecificOrder);
 router.post("/checkout-session/:cartId",protect,allowedTo(role.ADMIN, role.MANGER, role.USER), checkoutSession);
 router.put("/:id/pay", allowedTo(role.ADMIN, role.MANGER), updateOrderToPaid);
 router.put( "/:id/deliver",allowedTo(role.ADMIN, role.MANGER),updateOrderTodelivered);
+router.put( "/:id/invoice",allowedTo(role.ADMIN, role.MANGER),uploadorderImge,resizeImge,updateOrderSendInvoice);
 
 module.exports = router;
