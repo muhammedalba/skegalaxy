@@ -40,11 +40,12 @@ const Carousel = () => {
     return isSuccess && carouseles?.data?.map((preview, index) => (
       <div
         key={index}
-        className={`carousel-item ${index === 0 ? "active" : ""} h-100 w-100 rounded`}
+        className={`carousel-item ${index === 0 ? "active" : ""} h-100 w-100 `}
         data-bs-interval={`${index * 500}`}
       >
         <img
-          className="d-block h-100 rounded w-100"
+          width={500} height={400}
+          className=" h-100 rounded w-100"
           src={`${carouseles?.imageUrl}/${preview?.carouselImage}`}
           alt={`Preview${index}`}
           loading="lazy" // Lazy load carouselImages

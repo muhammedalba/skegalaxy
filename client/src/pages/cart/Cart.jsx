@@ -952,7 +952,7 @@ console.log(errorUpdate);
                   htmlFor={"detalis"}
                 >
                   <BiMessageAltDetail />
-                  معلومات اضافيه
+                  معلومات مكان التسليم
                 </label>
 
                 <textarea
@@ -960,7 +960,7 @@ console.log(errorUpdate);
                   id={"detalis"}
                   name={"detalis"}
                   type={"text"}
-                  placeholder={"معلومات اضافيه "}
+                  placeholder={"   معلومات مكان التسليم"}
                   value={shippingAddress.detalis}
                   onChange={handleshippingAddress}
                   rows="8"

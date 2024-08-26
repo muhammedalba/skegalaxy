@@ -144,7 +144,7 @@ const Products = () => {
           <Fade delay={0} direction='up' triggerOnce={true}    >
 
             <img
-              style={{ width: "100px", height: "80px" }}
+             style={{ width: "5rem", height: "5rem", }}
               src={`${products.imageUrl}/${product.imageCover}`}
               alt="avatar"
             />

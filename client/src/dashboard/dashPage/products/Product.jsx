@@ -61,30 +61,31 @@ const Product = () => {
     
     },
   ] = useUpdateOneMutation();
+console.log(updateError);
 
 
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     price: "",
-    priceAfterDiscount: "",
+    // priceAfterDiscount: "",
     quantity: "",
     category: "",
     brand:'',
-    // supCategories:''
+
   });
   const [ProductData, setProductData] = useState({
     title: "",
     description: "",
     price: "",
-    priceAfterDiscount: "",
+ 
     quantity: "",
     sold: "",
     ratingsAverage: '',
     ratingsQuantity: "",
     category: {},
     colors: [],
-   
+    priceAfterDiscount: "",
     supCategories: [],
     createdAt: "",
     images: [],
@@ -111,23 +112,53 @@ const Product = () => {
         price: product.data?.price,
         quantity: product.data?.quantity,
         sold: product.data?.sold,
-        priceAfterDiscount: product.data?.priceAfterDiscount,
+        priceAfterDiscount: product.data?.priceAfterDiscount ,
         ratingsAverage: product.data?.ratingsAverage,
         createdAt: convertDateTime(product.data?.createdAt),
         category: product.data?.category?.name,
         brand: product.data.brand?.name,
         images: product.data?.images,
       });
-      setFormData({
-        title: product.data?.title,
+      // setFormData({
+      //   title: product.data?.title,
+      //   description: product.data?.description,
+      //   price: product.data?.price,
+    
+      //   quantity: product.data?.quantity,
+      //   category: product.data.category?._id,
+      //   brand: product.data.brand?._id,
+      // });
+      // product.data?.priceAfterDiscount &&  setFormData({
+     
+      //       title: product.data?.title,
+      //   description: product.data?.description,
+      //   price: product.data?.price,
+      //   priceAfterDiscount: product.data?.priceAfterDiscount,
+      //   quantity: product.data?.quantity,
+      //   category: product.data.category?._id,
+      //   brand: product.data.brand?._id,
+      // });
+
+
+      const baseFormData = {
+        title: product?.data?.title,
         description: product.data?.description,
         price: product.data?.price,
-        priceAfterDiscount: product.data?.priceAfterDiscount,
-        quantity: product.data?.quantity,
+        quantity: product?.data?.quantity,
         category: product.data.category?._id,
         brand: product.data.brand?._id,
-      });
+      };
+      
+      // إضافة priceAfterDiscount فقط إذا كانت موجودة
+      const formData = product?.data?.priceAfterDiscount
+        ? { ...baseFormData, priceAfterDiscount: product.data.priceAfterDiscount }
+        : baseFormData;
+      
+      setFormData(formData);
+
     }
+
+   
     if (updatesuccess) {
      successNotify(`تمت  التعديل بنجاح`);
 
@@ -147,7 +178,7 @@ const Product = () => {
 
   // handleSubmit
   const handleSubmit = (e) => {
-    console.log(formData);
+    
    
     e.preventDefault();
     if (formData.price !== '' && +formData.price <= +formData.priceAfterDiscount ) {
@@ -155,11 +186,7 @@ const Product = () => {
       setErrorMsge(" يجب ان لايكون السعر بعد التخفيض اكبر من السعر ");
       return;
     }
-    if (formData.priceAfterDiscount == undefined) {
-      infoNotify("  يجب ان لايكون السعر بعد التخفيض فارغ    ");
-      setErrorMsge(" يجب ان لايكون السعر بعد التخفيض  فارغ");
-      return;
-    }
+   
     if (formData.category === undefined || formData.category == ''||
          formData.brand === undefined || formData.brand == '') {
       infoNotify(" يجب ان لايكون القسم او الشركه فارغ  ");
@@ -171,7 +198,7 @@ const Product = () => {
       formData.description.length >= 20  &&
       formData.quantity !== 0 &&
       formData.price > 0 &&
-      formData.priceAfterDiscount > 0 &&
+      
       formData.category !== undefined &&
       formData.category !== "" &&
       formData.brand !== undefined &&
@@ -211,7 +238,7 @@ const Product = () => {
     const imgeFile =file.type.split('/')[0]
     const pdfFile =file.type.split('/')[1]
 
-    console.log(pdfFile===type);
+ 
     
     if (imgeFile === type) {
       setimageCover(file);
@@ -278,6 +305,8 @@ const Product = () => {
   // handleChange
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
+    console.log(formData);
+    
   
   };
 

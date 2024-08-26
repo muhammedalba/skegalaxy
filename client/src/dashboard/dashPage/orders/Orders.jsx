@@ -168,11 +168,18 @@ import { FilterData } from "../../../utils/filterSearh";
 
                 <td className="d-none d-sm-table-cell" scope="row">
                 <Fade delay={0} direction='up' triggerOnce={true}   >
-                  <span className={order?.isPaid ? "text-success  fs-5"
-                        : "text-danger"}>
-                    {order.isPaid ?'تم الدفع':
+                  <span className= "text-dark  fs-5">
+                    {order?.isPaid &&order?.VerificationCode ?
+                    <span className="">
+                      <span>
+                    <i className="text-success"> الكود</i>
+                    ( {order?.VerificationCode?order?.VerificationCode:'سيتم ارساله عند توصيل'} )
+                  </span>
+                    </span>
+
+                    :
                       <button disabled={order?.isPaid||updateLoading} onClick={()=>handliPay(order._id)} className=" btn btn-primary   ">
-                        تاكيد الدفع   
+                         ارسال كود الاستلام   
                        </button>}
                   </span>
                 </Fade>
@@ -189,7 +196,7 @@ import { FilterData } from "../../../utils/filterSearh";
                 <td>
                 <Fade delay={0} direction='up' triggerOnce={true}    >
 
-                  <Link to={`${order._id}`} className="btn btn-success">
+                  <Link to={`${order._id}`} className="btn btn-success text-white">
                     عرض
                   </Link>
                   </Fade>

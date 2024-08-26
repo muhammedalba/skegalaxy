@@ -5,7 +5,7 @@ const LoadingPage = () => {
         <div className='loading'>
             <div className="spinner">
                 <div className="spinner_items">
-                    <img  src={logo} alt="logo" />
+                    <img  width={200}  height={200} src={logo} alt="logo" />
                 </div>
                 <p className='fs-4 pt-3'>جار التحميل . . .</p>
             </div>

@@ -13,6 +13,12 @@ import { useSelector } from "react-redux";
 import { convertDateTime } from "../../utils/convertDateTime";
 import { Fade } from "react-awesome-reveal";
 import { SkeletonTeble } from "../../utils/skeleton";
+
+
+
+
+
+
 const ClientOrders = () => {
  
     
@@ -53,7 +59,7 @@ const ClientOrders = () => {
                 </Fade>
               </td>
     
-              <td className="text-center">
+              <td className="text-center d-none d-md-table-cell">
                 <Fade delay={0} direction="up" triggerOnce={true} cascade>
                   <span>{order?.cartItems.length}</span>
                 </Fade>
@@ -64,7 +70,7 @@ const ClientOrders = () => {
                 </Fade>
               </td>
     
-              <td className={"d-none d-md-table-cell"}>
+              <td className="d-none d-md-table-cell">
                 <Fade delay={0} direction="up" triggerOnce={true} cascade>
                   <span
                     className={
@@ -79,6 +85,14 @@ const ClientOrders = () => {
                 <Fade delay={0} direction="up" triggerOnce={true} cascade>
                   <span>
                     ( {order.totalOrderPrice} )<i className="text-success"> SAR</i>
+                  </span>
+                </Fade>
+              </td>
+              <td className={"text-center"}>
+                <Fade delay={0} direction="up" triggerOnce={true} cascade>
+                  <span>
+                    ( {order?.VerificationCode?order?.VerificationCode:'سيتم ارساله عند توصيل'} )
+                    <i className="text-success"> الكود</i>
                   </span>
                 </Fade>
               </td>
@@ -140,11 +154,12 @@ const ClientOrders = () => {
            الطلبات السابقة
            
            </div>
-           <div className={confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1":' m-1v btn btn-success fs-5 pointer text-white'  }
+           <div className={confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1":' m-1 btn btn-success fs-5 pointer text-white'  }
           onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
           الطلبات الحاليه 
            
            </div>
+
           {/* data table */}
           <table className="table pt-5 mt-3">
             <thead>
@@ -153,7 +168,7 @@ const ClientOrders = () => {
                   ترتيب
                 </th>
     
-                <th scope="col"> عدد المنتجات </th>
+                <th className="d-none d-md-table-cell" scope="col"> عدد المنتجات </th>
                 <th className="d-none d-sm-table-cell" scope="col">
                   تاريخ الطلب
                 </th>
@@ -163,6 +178,7 @@ const ClientOrders = () => {
                 </th>
     
                 <th scope="col">السعر الاجمالي </th>
+                <th scope="col"> كود الاستلام </th>
                 <th scope="col">عرض</th>
               </tr>
             </thead>

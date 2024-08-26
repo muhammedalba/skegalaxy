@@ -98,7 +98,7 @@ console.log(error);
           <Fade delay={0} direction='up' triggerOnce={true}   >
 
             { carousel.carouselImage?<img
-              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+              style={{ width: "5rem", height: "5rem", }}
               src={`${Carouseles.imageUrl}/${carousel.carouselImage}`}
               alt="avatar"
             />:'لا يوجد صورة'}

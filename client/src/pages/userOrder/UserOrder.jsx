@@ -5,10 +5,11 @@
     import { Fade } from "react-awesome-reveal";
     import { ToastContainer } from "react-toastify";
     import { useGetDataQuery } from "../../redux/features/api/apiSlice";
-    import { errorNotify } from "../../utils/Toast";
+    import { errorNotify, successNotify, warnNotify } from "../../utils/Toast";
     import { convertDateTime } from "../../utils/convertDateTime";
     import { SkeletonCustomerAndAdress, SkeletonTeble } from "../../utils/skeleton";
 import Rating from "../../components/Rating/Rating";
+import Cookies from "universal-cookie";
 
     
 
@@ -19,6 +20,8 @@ import Rating from "../../components/Rating/Rating";
     const UserOrder = () => {
         //   get user id from params
         const {orderId}=useParams();
+        const cookies = new Cookies();
+        const Token=cookies.get('token');
     
       // get order from the database
       const {
@@ -34,6 +37,7 @@ import Rating from "../../components/Rating/Rating";
       const shippingAddress = order?.data?.shippingAddress
 
 
+
     
     
       // handle error
@@ -45,10 +49,56 @@ import Rating from "../../components/Rating/Rating";
         
       }, [error]);
 
-    
+    const  openImge =()=>{
+
+    }
 
  
-
+    const DownloadPdf = async( ) => {
+      const baseUrl=import.meta.env.VITE_API
+       if(Token){
+        try {
+          const response = await fetch(`${baseUrl}/orders/${orderId}/?download=pdf`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${Token}`,
+              'Content-Type': 'application/pdf',
+            },
+          });
+  
+          // تحقق من حالة الاستجابة
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+  
+          // تحقق من نوع المحتوى
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('pdf')) {
+            // أنشئ رابط لتحميل الـ PDF
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'document.pdf'); // اسم الملف الذي سيتم تنزيله
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            successNotify('تم تنزيل الملف بنجاح')
+          } else {
+            console.error('Error: Response is not a PDF file');
+          }
+          console.log(response);
+          
+        } catch (error) {
+          console.error('Error fetching PDF:', error);
+          errorNotify('حثة مشكلة اثناء تنزيل الملف')
+        }
+       }else{
+        warnNotify('الرجاء تسجيل الدخول')
+       }
+  
+         
+        };
 
 
    // if sucsses and data is not empty  show the products
@@ -236,14 +286,30 @@ import Rating from "../../components/Rating/Rating";
                   <span className=" text-dark "> : {shippingAddress?.title} </span>
                 </div>
                 <div className={shippingAddress?.detalis?" fs-5 py-2 border  text-primary d-block ":'d-none'} >
-                  تفاصيل اضافيه
+                  تفاصيل مكان الاستلام
                   
                   <span className=" text-dark "> : {shippingAddress?.detalis} </span>
                 </div>
+                <div className="fs-5 py-2 border col-12  text-primary " >
+                  وصل التحويل 
+
+                  <img onClick={()=>openImge(`${order?.imageUrl}/${order?.data?.image}`)} height={150} width={150} className=" text-dark m-auto d-block" src={`${order?.imageUrl}/${order?.data?.image}`}/>
+                </div>
+                <div className={" fs-5 py-2 border  text-primary d-block "} >
+                   كود الاستلام
+                  <span className=" text-dark "> : {order?.data?.VerificationCode} </span>
+                  
+                </div>
 
               </div>}
-            </Fade>
-               
+            </Fade>{console.log(order?.data)}
+            
+            <button  className= {order?.data?.orderPdf?'m-2 btn btn-success fs-5 text-white':'d-none' }
+            type="button" onClick={DownloadPdf}   >
+                  
+                  تحميل الفاتورة 
+                  
+            </button>
              {/* data table */}
             <table className="table table-striped pt-5 mt-5 text-center">
               

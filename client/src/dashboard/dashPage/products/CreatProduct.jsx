@@ -65,28 +65,12 @@ const CreatProduct = () => {
     title: "",
     description: "",
     price: "",
-    priceAfterDiscount: "",
     quantity: "",
     category: '',
     brand: '',
     
   });
-  // const [ProductData, setProductData] = useState({
-  //   title: "",
-  //   description: "",
-  //   price: "",
-  //   priceAfterDiscount: "",
-  //   quantity: "",
-  //   sold: "",
-  //   ratingsAverage: "",
-  //   ratingsQuantity: "",
-  //   category: [],
-  //   colors: [],
-  //   reviews: [],
-  //   supCategories: [],
-  //   createdAt: "",
-  //   images: [],
-  // });
+
   const [imageCover, setimageCover] = useState(null);
   const [infoProductPdf, setinfoProductPdf] = useState(null);
   const [images, setIimages] = useState([]);
@@ -121,7 +105,7 @@ const CreatProduct = () => {
 
   // handleSubmit
   const handleSubmit = (e) => {
-    console.log(formData);
+    
     e.preventDefault();
     if (formData.price <= formData.priceAfterDiscount && formData.price !== '') {
       errorNotify(" يجب ان لايكون السعر بعد التخفيض اكبر من السعر ");
@@ -189,7 +173,7 @@ const CreatProduct = () => {
     const imgeFile =file.type.split('/')[0]
     const pdfFile =file.type.split('/')[1]
 
-    console.log(pdfFile===type);
+   
     
     if (imgeFile === type) {
       setimageCover(file);
@@ -257,6 +241,7 @@ const CreatProduct = () => {
 
   // handleChange
   const handleChange = (e) => {
+    
     setFormData({ ...formData, [e.target.id]: e.target.value });
     console.log(formData);
   };

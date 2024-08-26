@@ -268,7 +268,7 @@ const showBrandsSlide= useMemo(() => {
         </div>
       </div>}
       {/* brands */}
- { successbrands &&     <div className="">
+ {/* { successbrands &&     <div className="">
       <p style={{ backgroundColor: 'var(--bgColor)'}} className="py-2 my-3  fs-3 border border-end-0 border-start-0 text-center">    شركاء النجاح  </p>
    <Carousel
   responsive={responsive}
@@ -291,7 +291,7 @@ const showBrandsSlide= useMemo(() => {
 >
   {showBrandsSlide}
       </Carousel>
-    </div>}
+    </div>} */}
       
 
       {/* products */}

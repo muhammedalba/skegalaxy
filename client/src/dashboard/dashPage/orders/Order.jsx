@@ -1,9 +1,9 @@
 import {  useParams } from "react-router-dom";
-import { useGetDataQuery, useUpdateOneMutation } from "../../../redux/features/api/apiSlice";
-import {  useCallback, useEffect, useMemo } from "react";
+import { useCreateOneMutation, useGetDataQuery, useUpdateOneMutation } from "../../../redux/features/api/apiSlice";
+import {  useCallback, useEffect, useMemo, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { ToastContainer } from "react-toastify";
-import { errorNotify, successNotify } from "../../../utils/Toast";
+import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
 import { SkeletonCustomerAndAdress, SkeletonTeble } from "../../../utils/skeleton";
 import { convertDateTime } from "../../../utils/convertDateTime";
 
@@ -28,7 +28,14 @@ import { convertDateTime } from "../../../utils/convertDateTime";
        
       
       }] = useUpdateOneMutation();
-    
+      const [
+        createOne,
+        {
+          error: createError,
+          isLoading: createLoading,
+          isSuccess: createSuccess,
+        },
+      ] = useCreateOneMutation();
 
       const user = order?.data?.user
       const shippingAddress = order?.data?.shippingAddress
@@ -45,8 +52,11 @@ console.log(order);
         if (updateError) {
           errorNotify("خطا في تحديث التغييرات");
         }
+        if (createError) {
+          errorNotify("خطا في  ارسال الفاتورة");
+        }
         
-      }, [error, updateError]);
+      }, [createError, error, updateError]);
 
       // handle success
       useEffect(() => {
@@ -54,8 +64,11 @@ console.log(order);
         if (updateSuccess) {
           successNotify(" تمت تحديث الحاله بنجاح");
         }
+        if (createSuccess) {
+          successNotify("  تم ارسال الفاتورة بنجاح ");
+        }
         
-      }, [ updateSuccess]);
+      }, [createSuccess, updateSuccess]);
 
       // handel delivered
       const handleAction = useCallback(
@@ -134,7 +147,7 @@ console.log(order);
             </Fade>
           </td>
       
-             <td className="">
+             <td className="d-none d-sm-table-cell" >
           <Fade delay={0} direction='up' triggerOnce={true} >
 
             {product?.quantity}
@@ -173,6 +186,68 @@ console.log(order);
     const openImge=()=>{
   
     }
+
+    const [invoicePdf, setinvoicePdf] = useState(null);
+    // handle  pdf
+    const handleImageChange = (event) => {
+      const file = event.target.files[0];
+
+      const pdfFile =file.type.split('/')[1]
+  
+     
+     if (pdfFile === 'pdf') {
+      setinvoicePdf(file);
+     
+      }else{
+        warnNotify(`الملف ${file.name} ليس بصيغة صحيحة`);
+        return;
+      }
+    };
+    const sendInvoice =useCallback( (e) => {
+    
+      e.preventDefault();
+      if (invoicePdf == null) {
+        warnNotify(" يجب اختيار ملف اولا");
+        return;
+      }
+     
+      
+      if (
+        invoicePdf != null 
+  
+      ) {  
+        // handel form data
+        const form = new FormData();
+        
+        
+        if (invoicePdf) {
+          form.append("orderPdf", invoicePdf);
+        }
+        
+    
+        //  send form data to server
+        createOne({
+          url: `/orders/${orderId}/invoice`,
+          body: form,
+          method: "put",
+        });
+        
+  
+  
+      } 
+
+      
+       
+         
+        },
+        [createOne, invoicePdf, orderId]
+      );
+
+
+
+
+
+    
       return (<>
         <div className="container-fluid pt-5 ">
             {/* tosat compunenet */}
@@ -266,7 +341,24 @@ console.log(order);
                   
                   <span className=" text-dark "> : {shippingAddress?.detalis} </span>
                 </div>
-                
+                {/* send pdf */}
+                <div className="col-md-12 py-3 fs-5 py-2 border col-12  text-primary">
+            <label
+              className="p-1 fs-5 d-flex align-items-center gap-1"
+              htmlFor="orderPdf"
+            >
+                   ارسال فاتوره(pdf) 
+            </label>
+            <input
+              
+              disabled={isLoading ? true : false}
+              className="form-control"
+              id="orderPdf"
+              name="orderPdf"
+              type="file"
+              onChange={(e)=>handleImageChange(e)}           
+               />
+               </div>
                 {/* buttons  str*/}
                 <div className="my-2 border-bottom py-2 d-flex align-items-center justify-content-evenly flex-wrap gap-2">
                 <Fade delay={0} direction='up' triggerOnce={true}    >
@@ -279,7 +371,7 @@ console.log(order);
                         order?.data?.isDelivered ? (
                         "تم التوصيل"
                       ) : (
-                        <button disabled={order?.data?.isDelivered||updateLoading} 
+                        <button disabled={order?.data?.isDelivered||updateLoading || isLoading} 
                         onClick={()=>handleAction(order?.data?._id,'deliver')} 
                         className=" btn btn-primary   ">
                             تاكيد التوصيل
@@ -288,15 +380,27 @@ console.log(order);
                     </span>
                 </Fade>
                 <Fade delay={0} direction='up' triggerOnce={true}    >
-                  <span className={order?.data?.isPaid ?"text-success  fs-5"
-                        : "text-danger"}>
-                        {order?.data?.isPaid ?'تم الدفع':
+                <button disabled={updateLoading||isLoading } 
+                 onClick={sendInvoice }
+                 className=" btn btn-primary   ">
+                      ارسال فاتورة
+                 </button>
+                </Fade>
+                <Fade delay={0} direction='up' triggerOnce={true}    >
+                  <h5 className="text-success">
+                        {order?.data?.isPaid ?                
+                        <span className="">
+                     
+                    <i className="text-dark"> الكود</i>
+                    ( {order?.data.VerificationCode} )
+                 
+                    </span>:
                           <button disabled={order?.data?.isPaid||updateLoading}
                           onClick={()=>handleAction(order?.data?._id,'pay')} 
                           className=" btn btn-primary   ">
-                            تاكيد الدفع   
+                             ارسال كود التحقق   
                           </button>}
-                  </span>
+                  </h5>
                 </Fade>
                 </div>
                 {/* buttons  end*/}
@@ -312,16 +416,15 @@ console.log(order);
                     <th className="d-none d-md-table-cell" scope="col">
                       صورة المنتج
                     </th>
-                    <th className="d-none  d-sm-table-cell" scope="col">الاسم المنتج</th>
+                    <th className="" scope="col">الاسم المنتج</th>
                     <th className="d-none d-sm-table-cell" scope="col">
                     اسم القسم  و الشركه
                     </th>
                     <th className="d-none d-sm-table-cell" scope="col">
                       تاريخ الطلب 
                     </th>
-                    {/* <th scope="col"> وسيلة الدفع</th> */}
-                    <th scope="col">  الكميه</th>
-                    <th className="d-none d-md-table-cell" scope="col">
+                    <th className="d-none d-sm-table-cell"  scope="col">  الكميه</th>
+                    <th className="" scope="col">
                       الاستلام
                     </th>
 
