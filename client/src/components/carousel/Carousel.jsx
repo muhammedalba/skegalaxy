@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { ToastContainer } from "react-toastify";
-import { Fade } from "react-awesome-reveal";
+
 import { useGetDataQuery } from "../../redux/features/api/apiSlice";
 import { errorNotify } from "../../utils/Toast";
 import './categories.css';
@@ -44,7 +44,7 @@ const Carousel = () => {
         data-bs-interval={`${index * 500}`}
       >
         <img
-          width={500} height={400}
+          width={'100%'} height={200}
           className=" h-100 rounded w-100"
           src={`${carouseles?.imageUrl}/${preview?.carouselImage}`}
           alt={`Preview${index}`}
@@ -69,13 +69,15 @@ const Carousel = () => {
         theme="colored"
       />
 
-      <div className="my-2">
+      <div className="my-2 w-100"
+      style={{  height: "45vh" }}
+      >
         {/* Carousel */}
-        <Fade delay={0} direction='up' triggerOnce={true} cascade>
+      
           <div
-            style={{ width: "100%", height: "45vh" }}
+            
             id="carouselExampleInterval"
-            className="carousel slide m-auto mt-4"
+            className="carousel slide m-auto mt-4 w-100  h-100"
             data-bs-ride="carousel"
           >
             <div className="carousel-inner h-100 w-100">
@@ -100,7 +102,7 @@ const Carousel = () => {
               <span className="visually-hidden">Next</span>
             </button>
           </div>
-        </Fade>
+       
       </div>
     </div>
   );

@@ -583,7 +583,7 @@ console.log(errorUpdate);
                 <span className="d-flex border-bottom flex-wrap py-3  justify-content-center  fs-5 ">
                   المجموع قبل الخصم :
                   <span className="ps-1 text-success text-decoration-line-through">
-                    ({productsDetails?.totalCartPrice.toFixed(2)})SAR{" "}
+                    ({productsDetails?.totalCartPrice.toFixed(2)})SAR
                   </span>
                 </span>
               </Fade>
@@ -597,6 +597,12 @@ console.log(errorUpdate);
                   ? productsDetails?.totalCartPrice?.toFixed(2)
                   : updateData?.data?.totalPriceAfterDiscount?.toFixed(2)}
                 ) <span className="ps-1 text-success">SAR</span>
+              </span>
+              <span className="text-primary text-center d-block">اجور توصيل تختلف حسب المكان ولكميه يرجى تواصل معنا لمعرفة تكلفة التوصيل 
+              <a className="d-block " href="tel:+966598909991" >
+               ( 966598909991+)
+                </a>
+                او يمكنك استلام طلبيتك من احد افرعنا في مدينه الرياض      
               </span>
             </Fade>
            

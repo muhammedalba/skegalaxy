@@ -154,7 +154,7 @@ console.log(error);
       <table className="table table-striped  pt-5 mt-3">
         <thead>
           <tr>
-            <th              className="d-none  d-sm-table-cell"
+            <th   className="d-none  d-sm-table-cell"
               scope="col"
             >
             ترتيب
