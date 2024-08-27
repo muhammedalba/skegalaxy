@@ -9,6 +9,9 @@ import { ToastContainer } from "react-toastify";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";
 import { MdOutlineCategory } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
+
 
 
 
@@ -110,7 +113,7 @@ const Products = () => {
           <td>
           <Fade delay={0} direction='up' triggerOnce={true}     >
 
-            {product.title?.slice(0, 20) }
+            {product.title?.slice(0, 40) }
             </Fade>
             </td>
           <td
@@ -153,24 +156,19 @@ const Products = () => {
           <td>
           <Fade delay={0} direction='up' triggerOnce={true}    >
 
-            <Link to={!LoadingDelet && product._id} className="btn btn-success">
-              {LoadingDelet ? (
-                <span className="spinner-border"></span>
-              ) : (
-                "تعديل"
-              )}
+            <Link to={!LoadingDelet && product._id} className="">
+              <CiEdit  color="blue" fontSize={'1.5rem'}/>     
             </Link>
             </Fade>
           </td>
           <td>
           <Fade delay={0} direction='up' triggerOnce={true}    >
-
             <button
               disabled={LoadingDelet}
               onClick={() => handelDelet(product._id)}
-              className="btn btn-danger"
+              className=" border-0"
             >
-              {LoadingDelet ? <span className="spinner-border"></span> : "حذف"}
+                <RiDeleteBin6Line  fontSize={'1.5rem'} color="red"/>
             </button>
             </Fade>
           </td>

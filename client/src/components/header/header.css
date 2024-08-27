@@ -8,12 +8,13 @@ header {
   -moz-transition: 1.5s;
   -ms-transition: 1.5s;
   transition: 1.5s;
-  background-color: var(--bgColor);
+  background-color: var(--bgColor) !important;
   box-shadow: var(--text-color) 0px 10px 10px -10px;
+.nav{
+  background-color: var(--minColor) !important;
 
-  ul {
-    background-color: var(--bgColor);
-  }
+}
+  
   .active {
     svg {
       background-color: var(--text-color);
@@ -142,7 +143,7 @@ header span {
   transition: 3s;
   z-index: 1001 !important;
   cursor: pointer;
-  border: 1px solid var(--text-color);
+  border: 3px solid var(--btn-bg-color);
 }
 #span svg:first-child {
   -webkit-animation: top 1s infinite;

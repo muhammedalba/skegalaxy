@@ -93,7 +93,7 @@ const Brands = () => {
           </td>
           <td ><span className="">
           <Fade delay={0} direction='up' triggerOnce={true} >
-            {brand.name.slice(0,10)}
+            {brand.name.slice(0,40)}
 
           </Fade>
             </span>

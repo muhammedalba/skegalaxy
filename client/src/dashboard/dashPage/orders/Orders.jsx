@@ -246,16 +246,16 @@ import { FilterData } from "../../../utils/filterSearh";
 
           {/* data table */}
 
-          <div className={confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1 ":'m-1  btn btn-success fs-5 pointer text-white' }
-           onClick={handlidisplayOrders} > 
+          <button disabled={confirmed}  className={!confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1 ":'m-1  btn btn-success fs-5 pointer text-white' }
+          onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
            الطلبات السابقة
            
-           </div>
-           <div className={!confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1  ":' m-1 btn btn-success fs-5 pointer text-white'  }
-           onClick={handlidisplayOrders} > 
+           </button>
+           <button disabled={!confirmed}  className={confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1":' m-1 btn btn-success fs-5 pointer text-white'  }
+          onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
           الطلبات الحاليه 
            
-           </div>
+           </button>
           <table className="table table-striped  pt-5 mt-3 ">
             <thead>
               <tr className="text-center">

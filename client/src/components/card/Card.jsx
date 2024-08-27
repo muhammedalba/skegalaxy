@@ -152,7 +152,8 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
           cascade
         >
           <Rating ratingsAverage={product?.ratingsAverage || 3} />
-          <h3 className="my-1"> {product?.title?.slice(0, 15)}</h3>
+          <h3 className="my-1"> {product?.title?.slice(0, 25)} </h3>
+         
           {/* price */}
           <div className="d-flex mb-1 w-100 justify-content-evenly align-items-center flex-wrap">
             <h2
@@ -171,16 +172,16 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
               </h2>
             )}
 
-            <span className="text-danger">(شامل الضريبه المضافه)</span>
+            <span className="text-danger">(شامل ضريبة القيمة المضافة 15%)</span>
           </div>
 
           <button
             disabled={createLoding?true:false}
-          
+          style={{ whiteSpace: 'nowrap'}}
             onClick={() => addToCart(product.id)}
             className="buy border-0"
           >
-       {    createLoding? <span className=" spinner-border"></span>:' اضافه للسله'}
+       {    createLoding? <span className=" spinner-border"></span>:' اضافه الى السلة'}
              
           </button>
         </Fade>

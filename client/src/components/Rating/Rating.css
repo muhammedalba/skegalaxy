@@ -15,7 +15,7 @@
   .stars  label:hover ~ label .star-stroke,
   .stars  label:hover  .star-stroke
 {
-    background: var(--star-colour) !important;
+    background: var( var(--btn-bg-color)) !important;
   } 
   
   

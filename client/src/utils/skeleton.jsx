@@ -1,24 +1,24 @@
 
 const arry = [1, 2, 3, 4, 5, 6, 7];
 
-// export const SkeletonCard = arry.map((index) => {
-//   return (
-//     <div
-//       key={index}
-//       className="card m-auto "
-//       style={{ height: "200px", width: "18rem" }}
-//     >
-//       <div className="w-100 " style={{ height: "150px" }}>
-//         <span className="skeleton-loading  h-100 w-100" />
-//       </div>
-//       <div style={{ height: "50px" }} className="card-body">
-//         <h5 className="card-title h-100 ">
-//           <span className="skeleton-loading w-50 h-100  col-6" />
-//         </h5>
-//       </div>
-//     </div>
-//   );
-// });
+export const SkeletonCard = arry.map((index) => {
+  return (
+    <div
+      key={index}
+      className="card m-auto "
+      style={{ height: "200px", width: "18rem" }}
+    >
+      <div className="w-100 " style={{ height: "150px" }}>
+        <span className="skeleton-loading  h-100 w-100" />
+      </div>
+      <div style={{ height: "50px" }} className="card-body">
+        <h5 className="card-title h-100 ">
+          <span className="skeleton-loading w-50 h-100  col-6" />
+        </h5>
+      </div>
+    </div>
+  );
+});
 
 export const SkeletonTeble = arry.map((index) => {
   return (

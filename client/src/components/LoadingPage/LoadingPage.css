@@ -46,7 +46,7 @@
 }
 .spinner_items::after{
     content: "";
-    border: 2px solid var(--spancolor);
+    border: 2px solid var(--bgColor);
     border-radius: 50%;
     width: 100%;
     height: 100%;

@@ -77,21 +77,21 @@ const ClientOrders = () => {
                       order.isDelivered ? "text-success  fs-5" : "text-danger fs-5"
                     }
                   >
-                    {order.isDelivered ? "تم الارسال" : "   لم يتم الارسال"}
+                    {order.isDelivered ? "تم التوصيل " : "   لم يتم التوصيل"}
                   </span>
                 </Fade>
               </td>
               <td className="text-center">
                 <Fade delay={0} direction="up" triggerOnce={true} cascade>
                   <span>
-                    ( {order.totalOrderPrice} )<i className="text-success"> SAR</i>
+                    ( {order?.totalOrderPrice?.toFixed(2)} )<i className="text-success"> SAR</i>
                   </span>
                 </Fade>
               </td>
               <td className={"text-center"}>
                 <Fade delay={0} direction="up" triggerOnce={true} cascade>
                   <span>
-                    ( {order?.VerificationCode?order?.VerificationCode:'سيتم ارساله عند توصيل'} )
+                    ( {order?.isPaid?order?.VerificationCode:'سيتم ارساله عند توصيل'} )
                     <i className="text-success"> الكود</i>
                   </span>
                 </Fade>
@@ -149,16 +149,16 @@ const ClientOrders = () => {
           />
           
        
-          <div className={!confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1 ":'m-1  btn btn-success fs-5 pointer text-white' }
+          <button disabled={confirmed}  className={!confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1 ":'m-1  btn btn-success fs-5 pointer text-white' }
           onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
            الطلبات السابقة
            
-           </div>
-           <div className={confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1":' m-1 btn btn-success fs-5 pointer text-white'  }
+           </button>
+           <button disabled={!confirmed}  className={confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1":' m-1 btn btn-success fs-5 pointer text-white'  }
           onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
           الطلبات الحاليه 
            
-           </div>
+           </button>
 
           {/* data table */}
           <table className="table pt-5 mt-3">

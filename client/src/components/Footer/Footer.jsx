@@ -78,13 +78,13 @@ const Footer = () => {
       </div>
 
 {/* Social Media Icons && */} 
-      <div className="container">
-          <div className="row p-3 ">  
+      <div className="w-100">
+          <div className="row p-3 w-100 bp-0 ">  
                 {/*  communication */}
-                <div className="col-12 col-sm-6 text-center ">
+                <div className="col-12 col-sm-4 text-center pt-3">
                     <Fade direction='up' triggerOnce={true} cascade>
                                  <Link to={'/'}>
-                                    <img className="m-auto " width={50} height={50} src={logo} alt="logo" />
+                                    <img className="m-auto " width={100} height={100} src={logo} alt="logo" />
                                     <div className="pt-1 ">
                                         
                                         شركة مجرة السماء للتجارة 
@@ -101,7 +101,91 @@ const Footer = () => {
                                       <MdOutlineMail fontSize={'1rem'}/>
                                       <a href="*"> info@skygalaxyco.com</a>
                                   </div>
+
+                    <div className="d-flex justify-content-center align-items-center  mt-2">
+                      <a href="#" className="text-white me-1">
+                        <SiFacebook fontSize={"2rem"} color="#0866ff" />
+                      </a>
+                      <a href="#" className="text-white mx-1">
+                        <FaTelegramPlane fontSize={"2rem"} color="#28a8e9"/>
+                      </a>
+                      <a href="https://wa.me/+966598909991" className="text-white mx-1">
+                        <BsWhatsapp fontSize={"2rem"}  color="#33bd45 " />
+                      </a>
+                      <a  href="#" className="text-white mx-1 ">
+                        <FaInstagram fontSize={"2rem"}  color="#df0073"/>
+                      </a>
+                    </div>
+
+
                     </Fade>
+                   
+         
+                </div>  
+                <div className=" col-12 col-sm-8 mb-0  my-3">
+                            <Fade direction='up' triggerOnce={true} cascade>
+                                <h3 style={{borderColor:' var(--btn-bg-color)!important '}} className="text-center border-2 border-top-0 border-start-0 border-end-0  border mb-3 pb-2">فروعنا </h3>
+                                <div className=" row ">
+                                    <div className="col-12 col-md-6">
+                                    <ul className="list-unstyled px-2  text-center">
+                                        <li className="fs-5">
+                                          <span className="w-100 d-block text-center fs-5 pt-2 ">الإدارة العامة</span>
+
+                                          <h5 className="footer-link text-center"> الرياض - حي الملز - طريق صلاح الدين الايوبي</h5>
+                                        </li>
+                                        <span className="w-100 d-block text-center  fs-5"> المنطقة الوسطى </span>
+                                        <li className="">
+
+                                    <h5 className="footer-link">    
+                                        
+                                      الرياض - مخرج ١٧ - طريق المدينة المنورة   </h5>
+                                  </li>
+                                  <li>
+
+                                    <h5 className="footer-link">                                        
+                                    الرياض - حي العارض - طريق الملك عبد العزيز  </h5>
+                                  </li>
+                                  <li>
+                                    <h5 className="footer-link"> 
+
+                                    الرياض - حي السلي - شارع ابن ماجة   </h5>
+                                  </li>
+    
+
+                                      
+                                    
+                                    </ul>
+                                    </div>
+                                    <div className="col-12 col-md-6">
+                                    <ul className="list-unstyled  text-center">
+                                    <li className=" pt-1">
+                                          <span className="w-100 d-block text-center py-2 fs-5">  المنطقة الغربية </span>
+                                          <h5 className="footer-link text-center"> 
+                                            
+                                          مكة المكرمة - حي الرصيفة - شارع الشجاعة </h5>
+                                        </li>
+                                        <li className=" ">
+                                          <h5 className="footer-link text-center ">
+    
+                                          مكة المكرمة -  حي الزايدي - طريق الملك فهد </h5>
+                                        </li> 
+                                      
+                                        <li className=" ">
+                                        <span className="w-100 d-block text-center fs-5  py-2"> المنطقة الشرقية</span>
+
+                              
+                                        </li> 
+                                        <li className=" ">
+                                          <h5 className="footer-link text-center">
+    
+                                          الدمام - حي البادية -  شارع المستشفى   </h5>
+                                        </li> 
+                                      
+                                    
+                                    </ul>
+                                    </div>
+                                </div>
+                            </Fade>
                 </div>  
 
                 {/* pages*/}
@@ -127,8 +211,8 @@ const Footer = () => {
                             </Fade> 
                 </div>  */}
                 {/* Social Media Icons */}
-                <div className="Social col-12 col-sm-6 align-items-center  p-2 text-center fs-3 ">
-                  <Fade
+                 <div className="Social col-12 col-sm-4 align-items-center  p-2 text-center fs-3 ">
+                {/*  <Fade
                     direction="up"
                     duration={500}
                     delay={0}
@@ -151,20 +235,20 @@ const Footer = () => {
                         <FaInstagram fontSize={"2rem"}  color="#df0073"/>
                       </a>
                     </div>
-                  </Fade>
-                </div>
+                  </Fade>*/}
+                </div> 
             
            </div>  
 
       </div>
       
-          {/* <div className="col-12 ">
+           {/* <div className="col-12 ">
             <div className="">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3572.7122636397758!2d50.088684!3d26.432760499999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49fd00723c33a3%3A0x81186921c4f94e68!2z2LnZiNin2LLZhCDZhdin2YrYqSDYrdix2KfYsdmK2Kkg2LHYutmI2YrYqSDZhdis2LHYqSDYp9mE2LPZhdin2KEg2YTZhNiq2KzYp9ix2Kk!5e0!3m2!1sar!2str!4v1724486500106!5m2!1sar!2str" height={150} style={{border: 0,width:'100%'}} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3572.7122636397758!2d50.088684!3d26.432760499999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49fd00723c33a3%3A0x81186921c4f94e68!2z2LnZiNin2LLZhCDZhdin2YrYqSDYrdix2KfYsdmK2Kkg2LHYutmI2YrYqSDZhdis2LHYqSDYp9mE2LPZhdin2KEg2YTZhNiq2KzYp9ix2Kk!5e0!3m2!1sar!2str!4v1724486500106!5m2!1sar!2str" height={100} style={{border: 0,width:'100%'}} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
 
             </div>
 
-          </div> */}
+          </div>  */}
 
    
 
@@ -172,7 +256,7 @@ const Footer = () => {
 
 
       {/* Footer End Section */}
-      <div className="text-center border border-2  border-end-0 border-start-0 p-2">
+      <div style={{borderColor:' var(--btn-bg-color)!important '}} className="text-center border border-2  border-end-0 border-start-0 p-2">
         <Fade direction="up" duration={500} delay={0} triggerOnce={true}>
           <p>
             صمم بواسطه محمد. جميع الحقوق محفوظة <i>.2024 &copy; </i>

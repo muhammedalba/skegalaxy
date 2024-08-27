@@ -43,7 +43,12 @@ console.log(order);
 
 
       // states
-    
+      
+        const openImge = (imageUrl) => {
+          console.log(imageUrl);
+          
+          window.open(imageUrl, '_blank'); // تفتح الصورة في نافذة جديدة
+        }; 
       // handle error
       useEffect(() => {
         if (error) {
@@ -183,9 +188,7 @@ console.log(order);
       </tr>
     );}
   }, [isLoading, isSuccess, order?.data?.cartItems, order?.data?.createdAt, order?.data?.isDelivered, order?.data?.length, order?.data?.updatedAt, order?.imageUrl]);
-    const openImge=()=>{
-  
-    }
+ 
 
     const [invoicePdf, setinvoicePdf] = useState(null);
     // handle  pdf
@@ -331,10 +334,10 @@ console.log(order);
 
                   <span className=" text-dark "> : {shippingAddress?.title} </span>
                 </div>
-                <div className="fs-5 py-2 border col-12  text-primary " >
+                <div  onClick={()=>openImge(`${order?.imageUrl}/${order?.data?.image}`)} className="fs-5 py-2 border pointer col-12  text-primary " >
                   وصل التحويل 
 
-                  <img onClick={()=>openImge(`${order?.imageUrl}/${order?.data?.image}`)} height={150} width={150} className=" text-dark m-auto d-block" src={`${order?.imageUrl}/${order?.data?.image}`}/>
+                  <img height={150} width={150} className=" text-dark m-auto d-block" src={`${order?.imageUrl}/${order?.data?.image}`}/>
                 </div>
                 <div className={shippingAddress?.detalis?" fs-5 py-2 border  text-primary d-block ":'d-none'} >
                   تفاصيل اضافيه
@@ -350,7 +353,8 @@ console.log(order);
                    ارسال فاتوره(pdf) 
             </label>
             <input
-              
+              accept=".pdf"
+              required
               disabled={isLoading ? true : false}
               className="form-control"
               id="orderPdf"
@@ -380,9 +384,9 @@ console.log(order);
                     </span>
                 </Fade>
                 <Fade delay={0} direction='up' triggerOnce={true}    >
-                <button disabled={updateLoading||isLoading } 
+                <button disabled={updateLoading||isLoading || order?.data?.isPaid } 
                  onClick={sendInvoice }
-                 className=" btn btn-primary   ">
+                 className={order?.data?.isPaid?" btn btn-success   ":'btn btn-primary '}>
                       ارسال فاتورة
                  </button>
                 </Fade>

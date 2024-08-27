@@ -4,7 +4,7 @@
   padding: 0; 
   box-sizing: border-box;   
   font-family: 'Amiri', serif;
-  
+  text-transform: capitalize;
 }
 /* src/index.css أو src/App.css */
 
@@ -13,10 +13,11 @@
 :root {
 
  --spancolor : hsl(38 90% 55%); 
-
+--btn-bg-color:#0f7d9f;
    --minColor: #fff;
-  --bgColor: #eeedeb;
+  --bgColor: #b8dce7;
   --text-color: #2f3645;
+  --text-white: white;
   /* stars */
   --primary-colour: #EEEDEB;
   --secondary-colour: hsl(233 80% 70%);
@@ -109,5 +110,5 @@ background-position: -315px 0, 0 0, 0px 190px, 50px 195px;
   margin: auto !important;
 }
 table th{
-  background-color: #9d9b966c !important;
+  background-color: var( --bgColor) !important;
 }

@@ -27,7 +27,7 @@ const handleRatings = (rating) => {
           <div
           className='star-stroke w-100 h-100 '
            style={{backgroundColor:parseInt(ratingsAverage) >= rating?
-          'var(--star-colour)':' var(--secondary-colour)',
+          ' var(--btn-bg-color)':' var(--secondary-colour)',
           display:'grid' , placeItems:'center'
           ,clipPath:' polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)'}} >
 
@@ -38,7 +38,7 @@ const handleRatings = (rating) => {
               className='star-fill' 
               style={{width:'70%',
                 backgroundColor:parseInt(ratingsAverage) >= rating?
-               'var(--star-colour)':'var(--primary-colour)',
+               ' var(--btn-bg-color)':'var(--primary-colour)',
                 clipPath:'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
                 aspectRatio:'1',
             }}

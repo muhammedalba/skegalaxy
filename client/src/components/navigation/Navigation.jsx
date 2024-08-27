@@ -37,7 +37,7 @@ const dispatch = useDispatch()
         <li key={index} className="page-item">
           <span
             style={{
-              background: status?.currentPage === index + 1 ? "#cacae2" : "transparent",
+              background: status?.currentPage === index + 1 ? "var(--minColor)" : "transparent",
               cursor: "pointer",
             }}
             onClick={() => handelcurrentPage(index + 1)}
@@ -55,7 +55,7 @@ const dispatch = useDispatch()
       <ul className="pagination justify-content-center">
         {isSuccess && status?.prevPage && (
           <li
-            style={{ cursor: "pointer" }}
+           
             onClick={minusActions}
             className="page-item"
           >
@@ -65,8 +65,14 @@ const dispatch = useDispatch()
 
         {status?.numperOfPages > 5 ? (
           <>
-            <li className="page-item mx-1">
-              <span style={{ background: "#cacae2" }} className="page-link">
+            <li className="page-item mx-1" 
+>
+              
+              <span 
+              // style={{ background: "var(--bgColor) !important",color:'var(--btn-bg-color)!important' }} 
+              
+              className="page-link"
+              >
                 {isLoading ? (
                   <span className="spinner-border"></span>
                 ) : (
@@ -74,10 +80,12 @@ const dispatch = useDispatch()
                 )}
               </span>
             </li>
-            <li className="page-item mx-2">
+            <li className="page-item mx-2" >
               <span className="page-link">
                 {isLoading ? (
-                  <span className="spinner-border"></span>
+                  <span                       
+                  style={{color:'red !important', borderWidth:'4px !important',cursor: "pointer"}}
+                  className="spinner-border"></span>
                 ) : (
                   `عدد الصفحات (${status?.numperOfPages})`
                 )}

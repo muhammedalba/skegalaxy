@@ -49,9 +49,13 @@ import Cookies from "universal-cookie";
         
       }, [error]);
 
-    const  openImge =()=>{
-
-    }
+   
+      const openImge = (imageUrl) => {
+        console.log(imageUrl);
+        
+        window.open(imageUrl, '_blank'); // تفتح الصورة في نافذة جديدة
+      }; 
+    
 
  
     const DownloadPdf = async( ) => {
@@ -290,14 +294,16 @@ import Cookies from "universal-cookie";
                   
                   <span className=" text-dark "> : {shippingAddress?.detalis} </span>
                 </div>
-                <div className="fs-5 py-2 border col-12  text-primary " >
+                <div onClick={()=>openImge(`${order?.imageUrl}/${order?.data?.image}`)} className="fs-5 py-2 border col-12  text-primary " >
                   وصل التحويل 
 
-                  <img onClick={()=>openImge(`${order?.imageUrl}/${order?.data?.image}`)} height={150} width={150} className=" text-dark m-auto d-block" src={`${order?.imageUrl}/${order?.data?.image}`}/>
+                  <img  height={150} width={150} className=" text-dark m-auto d-block pointer" src={`${order?.imageUrl}/${order?.data?.image}`}/>
                 </div>
                 <div className={" fs-5 py-2 border  text-primary d-block "} >
-                   كود الاستلام
-                  <span className=" text-dark "> : {order?.data?.VerificationCode} </span>
+                   كود الاستلام : 
+                   <span className="p-1 text-dark">
+                    ( {order?.data.isPaid ? order?.data?.VerificationCode:'سيتم ارساله عند توصيل'} )
+                  </span>
                   
                 </div>
 

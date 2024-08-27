@@ -145,7 +145,7 @@ const TopBar = () => {
           {/* <Fade delay={0} direction="up" triggerOnce={true}> */}
             <div className="logo d-flex   align-items-center">
               <img
-                className="logo  rounded-circle  me-2 d-sm-block  "
+                className="logo    me-2 d-sm-block  "
                 src={logo}
                 alt="logo"
               />

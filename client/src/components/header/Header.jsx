@@ -129,22 +129,22 @@ const Header = () => {
   });
 
   // Nav links
-  const nav_Links = [
+  const nav_Links = [ {
+      title: " طلباتي",
+      path: "/orders",
+      icon: <BiTransfer fontSize={"1.7rem"} color="var( --text-color)" />,
+    },
     {
       title: "سلة مشترياتي",
       path: "/Cart",
       icon: <BsCart2 fontSize={"1.7rem"} color="var( --text-color)" />,
     },
     {
-      title: "صفحة الرئيسيه",
+      title: "الصفحة الرئيسية",
       path: "/",
       icon: <IoMdHome fontSize={"1.7rem"} color="var( --text-color)" />,
     },
-    {
-      title: " طلباتي",
-      path: "/orders",
-      icon: <BiTransfer fontSize={"1.7rem"} color="var( --text-color)" />,
-    },
+   
     {
       title: "لوحه التحكم",
       path: "/dashboard",
@@ -220,11 +220,11 @@ const Header = () => {
                   alt="logo"
                 /> </Link>
                 <div
-                  style={{ color: "var(--text-color)", whiteSpace: "nowrap" }}
+                  style={{ color: "var(--text-color)", whiteSpace: "nowrap", }}
                   className="  mb-0 d-none d-sm-block px-1 "
                 >
                   <Fade triggerOnce={true} cascade>
-                      مجرة السماء
+                       sky Galaxy
                   </Fade>
                 </div>
                   
@@ -292,7 +292,7 @@ const Header = () => {
             aria-expanded="false"
           >
             {/* <Fade className="border-0" delay={0} direction="right" triggerOnce={true} cascade> */}
-              تسجيل دخول \انشاء حساب
+              تسجيل الدخول 
             {/* </Fade> */}
           </span>
           <FaUser

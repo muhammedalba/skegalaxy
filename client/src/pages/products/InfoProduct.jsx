@@ -269,17 +269,17 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
               <div className="w-100">
                 <div className="card-body text-end p-2">
                   <Fade delay={0} direction="up" triggerOnce={true}>
-                        <h1 style={{ backgroundColor: 'var(--bgColor)'}}  className="card-title py-2 text-center text-danger border border-end-0 border-start-0">
+                        <h1 style={{ backgroundColor: 'var(--bgColor)'}}  className="card-title py-2 mb-3  text-center text-danger border border-end-0 border-start-0">
                           {product?.data.title}
                         </h1>
-                        <div className={product?.data.brand?.name?"fw-bold pt-4 fs-4 ":"d-none"}>
-                          <span className="card-title ps-3">الشركة:</span>
+                        <div className={product?.data.brand?.name?"fw-bold  fs-4 ":"d-none"}>
+                          <span className="card-title ps-3">الشركة :</span>
                           <span className="text-secondary ps-2">
                             {product?.data.brand?.name}
                           </span>
                         </div>
-                        <div className={product?.data.category?.name?"fw-bold  fs-4 ": "d-none"}>
-                          <span className="card-title"> القسم: </span>
+                        <div className={product?.data.category?.name?"fw-bold  fs-4 pt-2": "d-none"}>
+                          <span className="card-title "> القسم :  </span>
                           <span className="text-secondary ps-2">
                             {product?.data.category?.name}
                           </span>
@@ -291,8 +291,8 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
                           </span>
                           <span className="text-danger "> كميه محدودة</span>
                         </div>
-                        <div className="fw-bold fs-4 pt-3">
-                          <span className="card-title ps-3">سعر المنتج:</span>
+                        <div className="fw-bold fs-4 pt-2">
+                          <span className="card-title ps-3">سعر المنتج : </span>
                           <span className="text-secondary ps-2">
                             <span className="text-success"> SAR</span>
                             <i className={
@@ -314,8 +314,8 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
                           </span>
                           
                         </div>
-                               <span className="text-danger">(شامل الضريبه المضافه)</span>
-                  </Fade>
+                        <span className="text-danger">(شامل ضريبة القيمة المضافة 15%)</span>
+                        </Fade>
                 </div>
                 
                 <div className="fs-6 ">
@@ -424,7 +424,7 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
 
 
    {  categoryData?.data?.length > 1 &&  <div className="container">
-      <p style={{ backgroundColor: 'var(--bgColor)'}} className="py-2 my-3  fs-3 border border-end-0 border-start-0 text-center">   منتجات مشابها : </p>
+      <p style={{ backgroundColor: 'var(--bgColor)'}} className="py-2 my-3  fs-3 border border-end-0 border-start-0 text-center">   منتجات متشابهة : </p>
       <Carousel
             responsive={responsive}
             

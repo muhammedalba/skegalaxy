@@ -7,6 +7,7 @@ import {
 } from "../../redux/features/api/apiSlice";
 import Carousel from 'react-multi-carousel';
 import { Fade } from "react-awesome-reveal";
+import { SkeletonCard } from "../../utils/skeleton";
 
 
 import { SkeletonProduct } from "../../utils/skeleton";
@@ -151,40 +152,61 @@ const Products = () => {
 
     if (isSuccess && categories?.data?.length > 0){
     return categories?.data?.map((category, index) => (
-            <button  onClick={() => scrollToSection(section1Ref,`category=${category._id}`)}
-              key={index}
-              type="button"
-              className=" btn col-12 col-sm-6 col-md-4 p-2 col-lg-3 col-xl-2 h"
-              style={{ cursor: "pointer" }}
-            >
-              <Fade
-                style={{ margin: "auto" }}
-                duration={500}
-                delay={0}
-                direction="up"
-                triggerOnce={true}
-                cascade
-              >
-                <div
+            // <button  onClick={() => scrollToSection(section1Ref,`category=${category._id}`)}
+            //   key={index}
+            //   type="button"
+            //   className=" btn col-12 col-sm-6 col-md-4 p-2 col-lg-3 col-xl-2 "
+            //   style={{ cursor: "pointer" }}
+            // >
+            //   <Fade
+            //     style={{ margin: "auto" }}
+            //     duration={500}
+            //     delay={0}
+            //     direction="up"
+            //     triggerOnce={true}
+            //     cascade
+            //   >
+            //     <div
                   
-                  className="d-flex rounded-3 border align-items-center"
-                >
-                  <img
-                    style={{ height: "100px", width: "100px" }}
-                    src={
-                      category.image
-                        ? `${categories?.imageUrl}/${category.image}`
-                        : logo
-                    }
-                    className="d-sm-block"
-                    alt="category"
-                  />
-                  <div style={{ height: "3rem" }} className="card-body w-100 h-100">
-                    <h5 className="text-dark m-0">{category.name}</h5>
-                  </div>
-                </div>
-              </Fade>
-            </button>
+            //       className="d-flex rounded-3 border align-items-center accordion-body overflow-hidden"
+            //     >
+            //       <img
+            //         style={{ height: "100px", width: "100px" }}
+            //         src={
+            //           category.image
+            //             ? `${categories?.imageUrl}/${category.image}`
+            //             : logo
+            //         }
+            //         className="d-sm-block"
+            //         alt="category"
+            //       />
+            //       <div style={{ height: "3rem" }} className="card-body w-100 h-100">
+            //         <h5 className="text-dark m-0">{category.name} </h5>
+            //       </div>
+            //     </div>
+            //   </Fade>
+            // </button>
+            <button onClick={() => scrollToSection(section1Ref,`category=${category._id}`)} 
+     className=" btn d-block m-auto " key={index}>
+        <div style={{height:'250px'}} inert="true" 
+                className=" border p-2 d-flex flex-column
+            align-items-center justify-content-between  m-auto pointer overflow-hidden">
+          <img
+            
+            width={150} height={150}
+            src={
+              category.image
+               ? `${categories?.imageUrl}/${category?.image}`
+                : logo
+            }
+            className=" d-sm-block w"
+            alt="brand"
+          />
+
+        <span style={{width:'10rem',backgroundColor:'var(--bgColor)!important'}} className="fs-3 border m-1 p-2 rounded  text-center  d-block">{category?.name} </span>
+        </div>
+      
+     </button> 
           
     ));}
   }, [categories?.data, categories?.imageUrl, isSuccess]);
@@ -202,9 +224,9 @@ const showBrandsSlide= useMemo(() => {
     return brands?.data.map((brand, index) => (
      <button onClick={() => scrollToSection(section1Ref,`brand=${brand._id}`)}   
      className=" btn d-block m-auto " key={index}>
-        <div  inert="true" 
+        <div style={{height:'250px'}} inert="true" 
                 className=" border p-2 d-flex flex-column
-            align-items-center  m-auto pointer">
+            align-items-center justify-content-between  m-auto pointer overflow-hidden">
           <img
             
             width={150} height={150}
@@ -213,11 +235,11 @@ const showBrandsSlide= useMemo(() => {
                ? `${brands?.imageUrl}/${brand?.image}`
                 : logo
             }
-            className=" d-sm-block"
+            className=" d-sm-block w"
             alt="brand"
           />
+        <span style={{width:'10rem',backgroundColor:'var(--bgColor)!important'}} className="fs-3 border m-1 p-2 rounded  text-center  d-block">{brand?.name} </span>
 
-        <span className="fs-3 text-center w-100 d-block">{brand?.name}</span>
         </div>
       
      </button> 
@@ -261,15 +283,40 @@ const showBrandsSlide= useMemo(() => {
 
       {/* categgories */}
 
-{  successcategories&&    <div className=" d-none text-center d-sm-block mt-4 p-1">
+{/* {  successcategories&&    <div className=" d-none text-center d-sm-block mt-4 p-1">
         <span style={{ backgroundColor: 'var(--bgColor)'}} className=" fs-4 w-100 m-auto  mb-2 d-block py-3 border border-end-0 border-start-0 ">الاقسام</span>
         <div className="d-flex  flex-wrap justify-content-around ">
           { showCategoriesData}
         </div>
-      </div>}
+      </div>} */}
+            {/* brands */}
+  { successcategories &&     <div className="">
+      <p style={{ backgroundColor: 'var(--bgColor)'}} className="pb-2 mb-3  fs-3 border border-end-0 border-start-0 text-center">     الاقسام  </p>
+   <Carousel
+  responsive={responsive}
+
+  autoPlay={true}
+  infinite={false}
+ 
+  rewind={true}
+  rewindWithAnimation={true}
+  transitionDuration={1000}
+  customTransition={"transform 3000ms ease-in-out"}
+  // showDots={false}
+  arrows={true}
+  focusOnSelect={false}
+  ssr={true}
+  
+
+
+  lazyLoad={true} // تحسين الأداء باستخدام التحميل المؤجل
+>
+{ showCategoriesData ||SkeletonCard}
+      </Carousel>
+    </div>} 
       {/* brands */}
- {/* { successbrands &&     <div className="">
-      <p style={{ backgroundColor: 'var(--bgColor)'}} className="py-2 my-3  fs-3 border border-end-0 border-start-0 text-center">    شركاء النجاح  </p>
+  { successbrands &&     <div className="">
+      <p style={{ backgroundColor: 'var(--bgColor)'}} className="pb-2 mb-3  fs-3 border border-end-0 border-start-0 text-center">    شركاء النجاح  </p>
    <Carousel
   responsive={responsive}
 
@@ -291,7 +338,7 @@ const showBrandsSlide= useMemo(() => {
 >
   {showBrandsSlide}
       </Carousel>
-    </div>} */}
+    </div>} 
       
 
       {/* products */}
@@ -303,7 +350,7 @@ const showBrandsSlide= useMemo(() => {
           <div className="w-100 flex-wrap align-items-center overflow-hidden p-1 d-flex">
             {/*gategory  */}
             <div className=" p-2">
-              <select
+              <select 
                 disabled={isLoading}
                 className="form-select  py-2"
                 onChange={useCallback((e) => {

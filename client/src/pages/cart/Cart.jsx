@@ -491,7 +491,7 @@ console.log(errorUpdate);
         {/* products results && table */}
         <div className="col-12 col-lg-9 border-end flex">
           <Fade delay={0} direction="up" triggerOnce={true}>
-            <h1 className="text-center m-3 py-3 border-bottom">سلة منتجات</h1>
+            <h1 className="text-center m-3 py-3 border-bottom">سلة مشترياتي </h1>
           </Fade>
 
           {/* products results */}
@@ -528,12 +528,12 @@ console.log(errorUpdate);
         </div>
 
         {/* coupon and checkout start*/}
-        <div className={productsDetails?.resnumOfCartItems>0?"col-12 col-sm-6 mx-auto col-lg-3 totale":"col-12 col-sm-6 mx-auto col-lg-3 totale"}>
+        <div className={productsDetails?.resnumOfCartItems>0?"col-12 col-sm-7 mx-auto col-lg-3  totale z-2":"col-12 col-sm-6 mx-auto col-lg-3 totale"}>
           {/* coupon start*/}
           {/* {isSuccess && productsDetails?.resnumOfCartItems > 0 &&  */}
           <form
           style={{backgroundColor:'var(--minColor)'}}
-            className=" w-100 shadow-none pt-5 border-bottom pb-2"
+            className=" w-100 shadow-none pt-5 border-bottom p-2"
             onSubmit={handelcoupon}
           >
             <div className="form-group my-2">
@@ -577,7 +577,7 @@ console.log(errorUpdate);
           </form>
           {/* coupon end */}
           {/* checkout start  && totale*/}
-          <div   style={{backgroundColor:'var(--minColor)'}} className= {isSuccess && productsDetails?.resnumOfCartItems > 0 ?" w-100   d-flex pb-2 rounded align-items-center  flex-column gap-1":'d-none'}>
+          <div   style={{backgroundColor:'var(--minColor)'}} className= {isSuccess && productsDetails?.resnumOfCartItems > 0 ?" w-100   d-flex p-2  align-items-center  flex-column gap-1":'d-none'}>
             {updateData?.data?.totalPriceAfterDiscount && !display && (
               <Fade delay={0} direction="up" triggerOnce={true}>
                 <span className="d-flex border-bottom flex-wrap py-3  justify-content-center  fs-5 ">
@@ -598,11 +598,12 @@ console.log(errorUpdate);
                   : updateData?.data?.totalPriceAfterDiscount?.toFixed(2)}
                 ) <span className="ps-1 text-success">SAR</span>
               </span>
-              <span className="text-primary text-center d-block">اجور توصيل تختلف حسب المكان ولكميه يرجى تواصل معنا لمعرفة تكلفة التوصيل 
+              <span className="text-danger text-center d-block">  التوصيل مجانا داخل مدينة الرياض لاي طلب يتجاوز  (6000) الاف ريال</span>
+              <span className="text-primary text-center d-block">اجور التوصيل تختلف حسب المكان والكمية تواصل  معنا لمعرفة تكلفة التوصيل 
               <a className="d-block " href="tel:+966598909991" >
                ( 966598909991+)
                 </a>
-                او يمكنك استلام طلبيتك من احد افرعنا في مدينه الرياض      
+                او يمكنك استلام طلبيتك من احد فروعنا         
               </span>
             </Fade>
            
