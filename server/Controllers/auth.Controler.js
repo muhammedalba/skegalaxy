@@ -8,7 +8,7 @@ const UserModel = require("../models/users.module");
 const { uploadImage } = require("../middleWare/uploadImgeMiddlewRE.JS");
 const { sendEmail } = require("../sendEmail");
 const ApiErorr = require("../utils/apiError");
-const { createToken } = require("../utils/createToken");
+const { createToken, createRefreshToken } = require("../utils/createToken");
 const { sanitizeUser } = require("../utils/sanitizeData");
 
 // upload  images
@@ -41,6 +41,9 @@ exports.signup = asyncHandler(async (req, res) => {
 
   // generate token
   const token = createToken(user);
+  const refreshToken  = createRefreshToken(user);
+  res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' }); // `secure: true` للتأكد من أن الكوكي تُرسل فقط عبر HTTPS
+
   res.status(201).json({status:'success', data: sanitizeUser(user), token ,imageUrl});
 });
 
@@ -69,62 +72,115 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
 
   // generate token
   const token = createToken(user);
+  const refreshToken  = createRefreshToken(user);
+ 
+  
+  res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: false, sameSite: 'Strict' });
+
 
   res.status(200).json({status:'success', data: sanitizeUser(user), token,imageUrl });
 });
 
+// authMiddleware.js
 
 
-// check token
-exports.protect = asyncHandler(async (req, res, next) => {
-  // 1 - check if token exist
-  let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    token = req.headers.authorization.split(" ")[1];
-  } else if (!token) {
-    return next(
-      new ApiErorr(
-        "you are not login please login to get access this route",
-        401
-      )
-    );
-  }
-  // 2 - verify token (no change happens  ,expired token)
-  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+// const authenticateToken = (req, res, next) => {
+//   const authHeader = req.headers['authorization'];
+//   const token = authHeader && authHeader.split(' ')[1];
 
-  // 3 - check if user exists
-  const currentUser = await UserModel.findById(decoded.userId);
+//   if (!token) return res.sendStatus(401);
+
+//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+//     if (err) {
+//       if (err.name === 'TokenExpiredError') {
+//         // جلب رمز التحديث من الـ cookie
+//         const refreshToken = req.cookies.refreshToken;
+
+//         if (!refreshToken) return res.sendStatus(403);
+
+//         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+//           if (err) return res.sendStatus(403);
+
+//           const newAccessToken = jwt.sign({ username: user.username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+//           res.setHeader('Authorization', `Bearer ${newAccessToken}`);
+//           req.user = user;
+//           next();
+//         });
+//       } else {
+//         return res.sendStatus(403);
+//       }
+//     } else {
+//       req.user = user;
+//       next();
+//     }
+//   });
+// };
+
+
+
+const handleAuthenticatedUser = async (user, req, next) => {
+  const currentUser = await UserModel.findById(user.userId);
   if (!currentUser) {
-    return next(
-      new ApiErorr(
-        "the user that belong to this token does no longer exist ",
-        401
-      )
-    );
+    return next(new ApiErorr('The user belonging to this token no longer exists', 401));
   }
 
   if (currentUser.passwordChangeAt) {
-    const passwordChangeTimesTamp = parseInt(
-      currentUser.passwordChangeAt.getTime() / 1000,
-      10
-    );
+    const passwordChangeTimestamp = parseInt(currentUser.passwordChangeAt.getTime() / 1000, 10);
 
-    //  password change after token created (error)
-    if (passwordChangeTimesTamp > decoded.iat) {
-      return next(
-        new ApiErorr(
-          "user recently chenged his password .please login again...",
-          401
-        )
-      );
+    // Password changed after token creation (error)
+    if (passwordChangeTimestamp > user.iat) {
+      return next(new ApiErorr('User recently changed his password. Please log in again...', 401));
     }
   }
+
   req.user = currentUser;
   next();
+};
+// check token
+exports.protect = asyncHandler(async (req, res, next) => {
+  // 1 - Check if token exists
+  let token;
+  
+
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
+  if (!token) {
+    return next(new ApiErorr('You are not logged in. Please log in to access this route', 401));
+  }
+
+  // 2 - Verify token (handle expired or invalid tokens)
+  jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, user) => {
+    if (err) {
+      if (err.name === 'TokenExpiredError') {
+        const { refreshToken } = req.cookies;
+        if (!refreshToken) {
+          return next(new ApiErorr('Refresh token is missing', 403));
+        }
+
+        jwt.verify(refreshToken, process.env.JWT_SECRET_KEY, async (refError, refUser) => {
+          if (refError) return next(new ApiErorr('Invalid refresh token', 403));
+
+          const newAccessToken = createToken(refUser);
+          res.setHeader('Authorization', `Bearer ${newAccessToken}`);
+
+          // Continue with the request
+          await handleAuthenticatedUser(refUser, req, next);
+        });
+      } else {
+        return next(new ApiErorr('Invalid access token', 403));
+      }
+    } else {
+      await handleAuthenticatedUser(user, req, next);
+    }
+  });
 });
+
+
+
+
+
 
 
 

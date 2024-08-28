@@ -5,13 +5,14 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const cors = require("cors");
 
+const cookieParser = require("cookie-parser");
 // eslint-disable-next-line import/no-extraneous-dependencies
-const rateLimit = require('express-rate-limit');
+const rateLimit = require("express-rate-limit");
 // eslint-disable-next-line import/no-extraneous-dependencies
-const hpp = require('hpp'); 
+const hpp = require("hpp");
 const compression = require("compression");
 // eslint-disable-next-line import/no-extraneous-dependencies
-const mongoSanitize = require('express-mongo-sanitize');
+const mongoSanitize = require("express-mongo-sanitize");
 
 const ApiError = require("./utils/apiError");
 const globalError = require("./middleWare/ErroeMidleWare");
@@ -22,6 +23,9 @@ const { webhookCheckout } = require("./Controllers/order.Controler");
 
 const app = express();
 dotenv.config({ path: ".env" });
+
+//  sve refresh token in cookie
+app.use(cookieParser());
 
 // enable other domains to access routes
 app.use(cors());
@@ -46,17 +50,28 @@ app.use(express.json({ limit: "25kb" }));
 //    }));
 // To apply data sanitizotion:
 app.use(mongoSanitize());
- // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+// Limit each IP to 100 requests per `window` (here, per 15 minutes).
 const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	limit: 100,
-  message:"to mony accounts created from this IP  ,please tray agin after an hours"
-})
-app.use('/api/users/auth',limiter)
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100,
+  message:
+    "to mony accounts created from this IP  ,please tray agin after an hours",
+});
+app.use("/api/users/auth", limiter);
 
 // middleware to protect against HTTP Parameter Pollution attacks
-app.use(hpp({whitelist: ['price','sold','quantity','ratingsQuantity','ratingsAverage']}));
- 
+app.use(
+  hpp({
+    whitelist: [
+      "price",
+      "sold",
+      "quantity",
+      "ratingsQuantity",
+      "ratingsAverage",
+    ],
+  })
+);
+
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
   console.log("mode:", process.env.NODE_ENV);
@@ -69,10 +84,10 @@ dbconnection();
 //mount Routes
 MountRoutes(app);
 // Static file declaration
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 // Serve the React app
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
 });
 // create error and send it to error handling middleware
 app.use("*", (req, res, next) => {
