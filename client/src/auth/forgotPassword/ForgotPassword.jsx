@@ -119,7 +119,7 @@ const ForgotPassword = () => {
 
         <button
           disabled={isLoading ? true : false}
-          className="btn btn-primary my-4"
+          className="btn btncolor my-4"
           type="submit"
         >
           {isLoading && <span className="spinner-border"></span>}

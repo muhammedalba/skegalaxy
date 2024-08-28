@@ -393,7 +393,7 @@ const showBrandsSlide= useMemo(() => {
                       <button
                         onClick={() => setFilter("")}
                         type="button"
-                        className="btn btn-primary h-50"
+                        className="btn btncolor h-50"
                       >
                         كل المنتجات
                       </button>

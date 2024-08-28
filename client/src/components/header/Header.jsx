@@ -21,6 +21,8 @@ import { FaUser } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { Fade } from "react-awesome-reveal";
 import { BiTransfer } from "react-icons/bi";
+import { Results } from "../../redux/features/Slice/QuantityResultSlice";
+import { currentPage } from "../../redux/features/Slice/NavigationSlice";
 
 
 
@@ -88,7 +90,12 @@ const Header = () => {
     window.location.pathname='/'
  
   };
+ // reset navigation to 10 items per page and update navigation property
 
+ const resetNavegation = () => {
+  dispatch(Results(10));
+  dispatch(currentPage(1));
+};
   // Auth links
   const AuthLinks = [
     {
@@ -162,6 +169,7 @@ const Header = () => {
   const nav_link_show = nav_Links.map((link, index) => {
     return (
       <li
+      onClick={resetNavegation}
         key={index}
         className={
           (link.path === "/dashboard" && role === "user") ||

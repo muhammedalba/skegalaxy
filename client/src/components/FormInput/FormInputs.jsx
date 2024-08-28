@@ -240,9 +240,9 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
           </span>
         )}
 
-        <button style={{ background:'var(--spancolor) '}}
+        <button
           disabled={isLoading ? true : false}
-          className="btn btn-primary my-4 d-flex align-items-center"
+          className="btn btncolor my-4 d-flex align-items-center"
           type="submit"
         >
           {isLoading && <span className="spinner-border"></span>}

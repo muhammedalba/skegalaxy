@@ -29,7 +29,7 @@ body {
     scroll-behavior: smooth;
   
  
-   
+   overflow-x: hidden;
   
 .nowrap{
 white-space: nowrap;
@@ -63,7 +63,10 @@ white-space: nowrap;
  } */
 
 }
-
+.btncolor{
+ background-color: var(--btn-bg-color) !important; 
+ color: var(--minColor) !important;
+}
 
 .skeleton-loading{
   opacity: .7;
