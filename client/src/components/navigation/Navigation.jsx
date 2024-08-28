@@ -14,20 +14,23 @@ const Navigation = ({
  
 }) => {
 const dispatch = useDispatch()
-  const handelPlusPagination = () => {
-   
-   dispatch(PlusAction(+1));
-  };
+
+ 
+
+  const handelPlusPagination = useCallback(() => {
+    dispatch(PlusAction(+1));
+
+  },[dispatch]);
   // prev page
-  const minusActions = () => {
-    // Pagination >1 && Pagination--
+
+  const minusActions = useCallback(() => {
     dispatch(minusAction(+1));
-  };
+  },[dispatch]);
 
   // prev page
-  const handelcurrentPage = (e) => {
+  const handelcurrentPage = useCallback((e) => {
     dispatch(currentPage(e));
-  };
+  },[dispatch]);
 
   // Create page Pagination buttons
   const pages = useCallback(() => {
@@ -37,18 +40,18 @@ const dispatch = useDispatch()
         <li key={index} className="page-item">
           <span
             style={{
-              background: status?.currentPage === index + 1 ? "var(--minColor)" : "transparent",
-              cursor: "pointer",
+              background: status?.currentPage === index + 1 ? "var(--bgColor)" : "transparent",
+             color:'var(--btn-bg-color)!important' 
             }}
             onClick={() => handelcurrentPage(index + 1)}
-            className="page-link"
+            className="page-link pointer"
           >
             {isLoading ? <span className="spinner-border"></span> : index + 1}
           </span>
         </li>
       ))
     );
-  }, [isSuccess, status?.numperOfPages, status?.currentPage, isLoading]);
+  }, [isSuccess, status?.numperOfPages, status?.currentPage, isLoading, handelcurrentPage]);
 
   return (
     <div aria-label="Page navigation example">
@@ -59,7 +62,7 @@ const dispatch = useDispatch()
             onClick={minusActions}
             className="page-item"
           >
-            <span className="page-link">السابق</span>
+            <span className="page-link pointer">السابق</span>
           </li>
         )}
 
@@ -69,7 +72,7 @@ const dispatch = useDispatch()
 >
               
               <span 
-              // style={{ background: "var(--bgColor) !important",color:'var(--btn-bg-color)!important' }} 
+              style={{ background: "var(--bgColor) !important",color:'var(--btn-bg-color)!important' }} 
               
               className="page-link"
               >
@@ -81,10 +84,10 @@ const dispatch = useDispatch()
               </span>
             </li>
             <li className="page-item mx-2" >
-              <span className="page-link">
+              <span className="page-link  ">
                 {isLoading ? (
                   <span                       
-                  style={{color:'red !important', borderWidth:'4px !important',cursor: "pointer"}}
+                  
                   className="spinner-border"></span>
                 ) : (
                   `عدد الصفحات (${status?.numperOfPages})`
@@ -98,11 +101,11 @@ const dispatch = useDispatch()
 
         {isSuccess && status?.nextPage && (
           <li
-            style={{ cursor: "pointer" }}
+           
             onClick={handelPlusPagination}
             className="page-item"
           >
-            <span className="page-link">التالي</span>
+            <span className="page-link pointer">التالي</span>
           </li>
         )}
       </ul>
