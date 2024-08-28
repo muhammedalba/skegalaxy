@@ -17,11 +17,11 @@ header {
   
   .active {
     svg {
-      background-color: var(--text-color);
-      color: var(--bgColor) !important;
+      /* background-color: var(--text-color); */
+      color: var(--text-color) !important;
     }
-    background-color: var(--text-color);
-    color: var(--bgColor) !important;
+    background-color: var(--bgColor);
+    color: var(--text-color) !important;
     -o-border-radius: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
@@ -36,7 +36,7 @@ header {
 nav ul li:hover svg,
 nav ul li:hover a {
   transition: 0.5 !important;
-  color: var(--spancolor) !important;
+  /* color: var( --text-white) !important; */
 
 }
 nav a {
