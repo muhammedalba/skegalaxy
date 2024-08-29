@@ -174,6 +174,9 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
 
             <span className="text-danger">(شامل ضريبة القيمة المضافة 15%)</span>
           </div>
+          {  product?.quantity.toFixed(0) > 0 ?<span className="text-dark fs-5">الكميه: ({ product?.quantity.toFixed(0)})</span>:
+            <span className="text-dark fs-5">الكميه:متوفر عند الطلب</span>
+          }
 
           <button
             disabled={createLoding?true:false}

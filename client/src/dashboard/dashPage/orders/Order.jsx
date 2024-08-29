@@ -45,7 +45,6 @@ console.log(order);
       // states
       
         const openImge = (imageUrl) => {
-          console.log(imageUrl);
           
           window.open(imageUrl, '_blank'); // تفتح الصورة في نافذة جديدة
         }; 
@@ -206,6 +205,7 @@ console.log(order);
         return;
       }
     };
+    // send file to server
     const sendInvoice =useCallback( (e) => {
     
       e.preventDefault();
@@ -350,7 +350,7 @@ console.log(order);
               className="p-1 fs-5 d-flex align-items-center gap-1"
               htmlFor="orderPdf"
             >
-                   ارسال فاتوره(pdf) 
+                   ارسال فاتوره(pdf) :{ order?.data?.orderPdf?<span className="text-success"> ( تم الارسال )     </span>:'' }
             </label>
             <input
               accept=".pdf"
@@ -384,9 +384,9 @@ console.log(order);
                     </span>
                 </Fade>
                 <Fade delay={0} direction='up' triggerOnce={true}    >
-                <button disabled={updateLoading||isLoading || order?.data?.isPaid } 
+                <button disabled={updateLoading || isLoading ||createLoading} 
                  onClick={sendInvoice }
-                 className={order?.data?.isPaid?" btn btn-success   ":'btn btn-primary '}>
+                 className={order?.data?.orderPdf?" btn btn-success   ":'btn btn-primary '}>
                       ارسال فاتورة
                  </button>
                 </Fade>

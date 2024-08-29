@@ -69,7 +69,7 @@ const [
 
 const showDownloadBtn=product?.data?.infoProductPdf?'d-block':'d-none'
   //  show Quantity
-  const showQuantity =isSuccess && product.data.quantity <= 3 ? " d-block" : "d-none";
+  const showQuantity =isSuccess && product.data.quantity <= 100 ? " d-block" : "d-none";
 // داخل دالة InfoProduct
 const shareUrl = window.location.href; // URL الصفحة الحالية
 const title =  "شركه مجرة السماء للتجارة "; // العنوان للمشاركة
@@ -272,28 +272,29 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
                         <h1 style={{ backgroundColor: 'var(--bgColor)'}}  className="card-title py-2 mb-3  text-center text-danger border border-end-0 border-start-0">
                           {product?.data.title}
                         </h1>
-                        <div className={product?.data.brand?.name?"fw-bold  fs-4 ":"d-none"}>
+                        <div className={product?.data.brand?.name?"fw-bold  fs-5 ":"d-none"}>
                           <span className="card-title ps-3">الشركة :</span>
                           <span className="text-secondary ps-2">
                             {product?.data.brand?.name}
                           </span>
                         </div>
-                        <div className={product?.data.category?.name?"fw-bold  fs-4 pt-2": "d-none"}>
-                          <span className="card-title "> القسم :  </span>
+                        <div className={product?.data.category?.name?"fw-bold  fs-5 pt-2": "d-none"}>
+                          <span className="card-title ps-3"> القسم :  </span>
                           <span className="text-secondary ps-2">
                             {product?.data.category?.name}
                           </span>
                         </div>
-                        <div className={`fw-bold fs-4 pt-2  show ${showQuantity}`}>
-                          <span className="card-title ps-3">الكمية:</span>
-                          <span className="text-secondary ps-2">
-                            {product?.data?.quantity}
+                        <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  show `}>
+                          <span className="card-title ps-3">الكمية  :</span>
+                          <span className="text-secondary d-flex align-items-center">
+                           ({product?.data?.quantity.toFixed(0)})
+                          <span className={`text-danger d fs-6${showQuantity} `}>   كميه محدودة يتوفر عند الطلب</span>
                           </span>
-                          <span className="text-danger "> كميه محدودة</span>
                         </div>
-                        <div className="fw-bold fs-4 pt-2">
-                          <span className="card-title ps-3">سعر المنتج : </span>
-                          <span className="text-secondary ps-2">
+                        <div className="fw-bold fs-4 pt-2 d-flex align-items-center">
+                          <span className="card-title fs-5 ps-3">سعر المنتج : </span>
+                            
+                          <span className="text-secondary ">
                             <span className="text-success"> SAR</span>
                             <i className={
                                 product?.data?.priceAfterDiscount
@@ -301,7 +302,15 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
                                   : "d-none"
                             }>({product?.data.price})</i>
 
-                            <span
+                       
+                          </span>
+                       
+                          
+                        </div>
+                        <div className="fw-bold fs-4 d-flex align-items-center">
+                          <span className="card-title fs-5 ps-1"> السعر بعد الخصم : </span>
+                            
+                          <span
                               className={
                                 product?.data?.priceAfterDiscount
                                   ? " p-1"
@@ -311,9 +320,13 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
                               ( {product?.data?.priceAfterDiscount})
                               <span className="text-success"> SAR</span>
                             </span>
-                          </span>
+                       
                           
                         </div>
+
+
+
+                        
                         <span className="text-danger">(شامل ضريبة القيمة المضافة 15%)</span>
                         </Fade>
                 </div>

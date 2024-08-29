@@ -106,11 +106,14 @@ const TopBar = () => {
     },
   ];
 
-  // navLink in map
+  // navLink in map   dispatch(searchItem(''));
+  const resetSearch=()=>{
+    dispatch(searchItem(''));
+  }
 
   const nav_link_show = navLinks.map((link, index) => {
     return (
-      <li
+      <li onClick={resetSearch}
         key={index}
         className={
           role === "user" && link.path === "/dashboard"

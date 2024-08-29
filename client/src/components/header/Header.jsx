@@ -95,6 +95,7 @@ const Header = () => {
  const resetNavegation = () => {
   dispatch(Results(10));
   dispatch(currentPage(1));
+  dispatch(searchItem(''));
 };
   // Auth links
   const AuthLinks = [

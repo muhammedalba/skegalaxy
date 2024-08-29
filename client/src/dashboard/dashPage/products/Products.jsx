@@ -32,6 +32,9 @@ const Products = () => {
   
   // brand our category filter
   const [filter, setFilter] = useState("");
+  const [filterDrands, setfilterDrands] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   // get products from the database
   const {
@@ -39,23 +42,25 @@ const Products = () => {
     error,
     isLoading,
     isSuccess,
-  } = useGetDataQuery(`products?limit=${limit}&page=${Pagination}&${filter}`);
-  console.log(filter);
-  console.log(error);
+  } = useGetDataQuery(
+    `products?limit=${limit}&page=${Pagination}&${filterDrands}&${filter}&keywords=${search}`
+  );
+
+
   // get brands from the database
   const {
     data: brands,
     // error: errorbrands,
     isLoading: loadingbrands,
-    // isSuccess: successbrands,
-  } = useGetDataQuery(`brands`);
+    isSuccess: successbrands,
+  } = useGetDataQuery(`brands?limit=500`);
   // get brands from the database
   const {
     data: categories,
     // error: errorcategories,
     isLoading: loadingcategories,
-    // isSuccess: successcategories,
-  } = useGetDataQuery(`categories`);
+    isSuccess: successcategories,
+  } = useGetDataQuery(`categories?limit=500`);
   // delete products from the database
   const [
     deletOne,
@@ -75,7 +80,40 @@ const Products = () => {
       errorNotify("خطأ في الخادم الداخلي");
     }
   }, [SuccessDelet, LoadingDelet, errorDelet, error]);
+ // handleCategoryChange
+ const handleBrandChange = useCallback(
+  (e) => {
+    const selectedValue = e.target.value;
+    setfilterDrands(`brand=${e.target.value}`);
+    
+    const selectedBrand = brands.data.find(
+      (brand) => brand._id === selectedValue
+    );
+    setSelectedBrand(selectedBrand ? selectedBrand.name : "");
+  },
+  [brands?.data]
+);
+// // handleCategoryChange
+const handleCategoryChange = useCallback(
+  (e) => {
+    const selectedValue = e.target.value;
+    setFilter(`category=${e.target.value}`);
+   
 
+    const selectedcategory = categories?.data.find(
+      (cate) => cate._id === selectedValue
+    );
+    setSelectedCategory(selectedcategory ? selectedcategory.name : "");
+  },
+  [categories?.data]
+);
+// handel reset filter
+const resetFilter=()=> {
+  setFilter('');
+  setfilterDrands('');
+  setSelectedBrand('');
+  setSelectedCategory('');
+}
   // handel delet one
   const handelDelet = useCallback(
     (id) => {
@@ -113,7 +151,7 @@ const Products = () => {
           <td>
           <Fade delay={0} direction='up' triggerOnce={true}     >
 
-            {product.title?.slice(0, 40) }
+            {product.title?.slice(0, 80) }
             </Fade>
             </td>
           <td
@@ -198,22 +236,36 @@ const Products = () => {
   // view brands
   const showbrands = useMemo(() => {
     if (loadingbrands && brands?.data?.length ===0) return <option value="">لايوجد معلومات</option>;
-    return brands?.data?.map((brand, index) => (
-      <option key={index} value={brand._id}>
-        {brand.name}
-      </option>
-    ));
-  }, [brands, loadingbrands]);
+    if ( successbrands&& brands?.data?.length > 0) {
+      const sortedBrands = [...brands.data].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+     
+      
+      return sortedBrands.map((brand, index) => (
+        <option key={index} value={brand._id}>
+          {brand.name}
+        </option>
+      ));
+    }
+  }, [brands?.data, loadingbrands, successbrands]);
 
   // view categories
   const showCategorie = useMemo(() => {
     if (loadingcategories && categories?.data?.length ===0 ) return <option value="">لايوجد بيانات</option>;
-    return categories?.data?.map((category, index) => (
-      <option key={index} value={category._id}>
-        {category.name}
-      </option>
-    ));
-  }, [categories, loadingcategories]);
+  
+    if ( successcategories && categories?.data?.length > 0) {
+
+      const sortedcategories = [...categories.data].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+      return sortedcategories.map((category, index) => (
+        <option key={index} value={category._id}>
+          {category.name}
+        </option>
+      ));
+    }
+  }, [categories?.data, loadingcategories, successcategories]);
   // loading styles st
 
   // loading styles end
@@ -252,11 +304,12 @@ const Products = () => {
             <select
               disabled={isLoading}
               className="form-select  py-2"
-              onChange={ useCallback((e) => {
-                setFilter(`category=${e.target.value}`)
-              }, [])}
+              onChange={handleCategoryChange}
               id="category"
-              value={''}
+              value={
+                categories?.data?.find((brand) => brand.name === selectedCategory)
+                  ?._id || ""
+              }
               aria-label="Default select example"
             >
               <option value='' disabled >  اختر القسم </option>
@@ -278,8 +331,11 @@ const Products = () => {
               id="brand"
               name="brand"
               aria-label="Default select example"
-              onChange={useCallback((e) => setFilter(`brand=${e.target.value}`), [])}
-              value=''        >
+              onChange={handleBrandChange}
+              value={
+                brands?.data?.find((brand) => brand.name === selectedBrand)
+                  ?._id || ""
+              }       >
               <option disabled value=''> اختر الشركه  </option>
               {showbrands}
             </select>
@@ -287,7 +343,7 @@ const Products = () => {
           {/* reset data button */}
           <div className="col-sm-4 d-flex align-items-end justify-center my-2">
             <button
-              onClick={() => setFilter("")}
+              onClick={resetFilter}
               type="button"
               className="btn btn-primary"
             >

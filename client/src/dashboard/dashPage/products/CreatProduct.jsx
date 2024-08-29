@@ -34,14 +34,14 @@ const CreatProduct = () => {
     isLoading: loadingCatego,
     isSuccess: SucccessCatego,
     data: categories,
-  } = useGetOneQuery(`categories`);
+  } = useGetOneQuery(`categories?limit=500&page=1`);
 
    // get Brands from db
    const {
 
     data: Brands,
     error:errorBrand
-  } = useGetOneQuery(`brands`);
+  } = useGetOneQuery(`brands?limit=500&page=1`);
 
   console.log(Brands);
 

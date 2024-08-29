@@ -93,7 +93,7 @@ const Categories = () => {
           </td>
           <td  >
           <Fade delay={0} direction='up' triggerOnce={true}   >
-            <span className="">{category.name}</span>
+            <span className="">{category.name.slice(0.50)}</span>
             </Fade>
             </td>
 

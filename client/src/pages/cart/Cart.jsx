@@ -46,6 +46,7 @@ const Cart = () => {
     isLoading,
     isSuccess,
   } = useGetDataQuery(`cart`);
+console.log(products);
 
   const [
     deletOne,
@@ -119,6 +120,7 @@ const Cart = () => {
     imageUrl: "",
   });
  
+console.log(errorUpdate);
 
   // Effect for handling deletion success
   useEffect(() => {
@@ -212,14 +214,17 @@ const Cart = () => {
   };
 
   // Handle Increase and Decrease Quantity
-  const handleQuantityChange = useCallback((index, increment) => {
+  const handleQuantityChange = useCallback((index, increment,inputValue) => {
     // show Confirm button
     setConfirm(true);
 
     setProductsDetails((prevDetails) => {
       const newCartItems = prevDetails.cartItems.map((item, i) => {
         if (i === index) {
-          const newQuantity = item.quantity + increment;
+          let newQuantity;
+          !inputValue? newQuantity = +item.quantity + +increment:newQuantity = +increment
+          console.log(newQuantity);
+          
           return { ...item, quantity: Math.max(newQuantity, 1) };
         }
         return item;
@@ -317,6 +322,10 @@ const Cart = () => {
                   ({product?.product?.priceAfterDiscount} )
                   <i className="text-success"> SAR</i>
                 </span>
+                <span className=" text-danger">
+                  <i className="text-dark">  الكمية المتوفرة :</i>
+                  ({product?.product?.quantity} )
+                </span>
               </div>
             </Fade>
           </td>
@@ -329,7 +338,17 @@ const Cart = () => {
                   color="blue"
                   onClick={() => handleQuantityChange(index, 1)}
                 />
-                {productsDetails.cartItems[index].quantity}
+                <input min={1} 
+                max={2000}
+                  style={{width:'5rem'}}
+                  onChange={(e) => handleQuantityChange(index, e.target.value,true)}
+                  type="number"
+                  className="form-control  border-1  text-center bg-transparent"
+                  id="quantity"
+                  placeholder={productsDetails.cartItems[index].quantity}
+                  value={productsDetails.cartItems[index].quantity}
+                   name="quantity"  />
+                
                 <RiSubtractLine
                   cursor={"pointer"}
                   fontSize={"25px"}
@@ -471,7 +490,7 @@ const Cart = () => {
       infoNotify("الرمز المدخل غير صحيح");
     }
   };
-console.log(errorUpdate);
+
 
   return (
     <div className="container-fluid pt-5  ">

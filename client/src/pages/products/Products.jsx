@@ -25,8 +25,10 @@ const Products = () => {
 
   // brand our category filter
   const [filter, setFilter] = useState("");
+  const [filterDrands, setfilterDrands] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [shortproducts, setShortproducts] = useState(1);
 
 
 
@@ -37,7 +39,7 @@ const Products = () => {
     isLoading,
     isSuccess,
   } = useGetDataQuery(
-    `products?limit=${limit}&page=${Pagination}&${filter}&keywords=${search}`
+    `products?limit=${limit}&page=${Pagination}&${filterDrands}&${filter}&keywords=${search}`
   );
 
   // get brands from the database
@@ -56,9 +58,10 @@ const Products = () => {
 
   const section1Ref = useRef(null);
 
+
+// Go to products and filter
   const scrollToSection = (ref, id) => {
-    setbrandValue(id);
-    setcategoryiys(id);
+    setFilter(id);
     ref.current.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -86,7 +89,11 @@ const Products = () => {
     }
 
     if (isSuccess && filteredProducts?.length > 0) {
-      return products?.data.map((product, index) => (
+      const sortedproducts = [...products.data].sort((a, b) =>
+        shortproducts > 0? a.title.localeCompare(b.title):
+         b.title.localeCompare(a.title)
+      ); 
+      return sortedproducts?.map((product, index) => (
         <Card key={index} product={product} imgePath={products?.imageUrl} />
       ));
     }
@@ -96,15 +103,9 @@ const Products = () => {
         لا يوجد بيانات
       </div>
     );
-  }, [
-    filteredProducts?.length,
-    isLoading,
-    isSuccess,
-    products?.data,
-    products?.imageUrl,
-  ]);
+  }, [filteredProducts?.length, isLoading, isSuccess, products?.data, products?.imageUrl, shortproducts]);
 
-  // view brands
+  // view brands carousel
   const showbrands = useMemo(() => {
     if (successbrands && brands?.data?.length === 0) {
       return <option value="">لايوجد معلومات</option>;
@@ -127,8 +128,8 @@ const Products = () => {
   const handleBrandChange = useCallback(
     (e) => {
       const selectedValue = e.target.value;
-      setFilter(`brand=${e.target.value}`);
-      setSelectedCategory('')
+      setfilterDrands(`brand=${e.target.value}`);
+  
       // العثور على العلامة التجارية التي تطابق القيمة المحددة
       const selectedBrand = brands.data.find(
         (brand) => brand._id === selectedValue
@@ -142,7 +143,7 @@ const Products = () => {
     (e) => {
       const selectedValue = e.target.value;
       setFilter(`category=${e.target.value}`);
-      setSelectedBrand('')
+     
 
       const selectedcategory = categories?.data.find(
         (cate) => cate._id === selectedValue
@@ -151,7 +152,23 @@ const Products = () => {
     },
     [categories?.data]
   );
-  // view categories
+  //handel  sort products
+  const handleSort = useCallback((e) => {
+   const sorted=e.target.value;
+   
+   setShortproducts(sorted);
+   
+  },[]);
+
+  // handel reset filter
+const resetFilter=()=> {
+  setFilter('');
+  setfilterDrands('');
+  setSelectedBrand('');
+  setSelectedCategory('');
+  setShortproducts(1)
+}
+  // view categories carousel
   const showCategorie = useMemo(() => {
     if (isSuccess && categories?.data?.length === 0) {
       return <option value="">لايوجد بيانات</option>;
@@ -172,10 +189,6 @@ const Products = () => {
 
   // if sucsses and data is not empty  show the categories
   const showCategoriesData = useMemo(() => {
-    if (isSuccess && categories?.data?.length === 0) {
-      return <option value="">لايوجد بيانات</option>;
-    }
-
     if (isSuccess && categories?.data?.length > 0) {
       return categories?.data?.map((category, index) => (
         // <button  onClick={() => scrollToSection(section1Ref,`category=${category._id}`)}
@@ -213,10 +226,11 @@ const Products = () => {
         //   </Fade>
         // </button>
         <button
+        style={{minWidth:'75%'}}
           onClick={() =>
             scrollToSection(section1Ref, `category=${category._id}`)
           }
-          className=" btn d-block m-auto w-100 "
+          className=" btn d-block m-auto w-100 0 "
           key={index}
         >
           <div
@@ -261,6 +275,7 @@ const Products = () => {
     if (brands?.data?.length > 0) {
       return brands?.data.map((brand, index) => (
         <button
+        style={{minWidth:'75%'}}
           onClick={() => scrollToSection(section1Ref, `brand=${brand._id}`)}
           className=" btn d-block m-auto w-100"
           key={index}
@@ -361,8 +376,8 @@ const Products = () => {
             style={{ backgroundColor: "var(--bgColor)" }}
             className="pb-2 mb-3  fs-3 border border-end-0 border-start-0 text-center"
           >
-            {" "}
-            شركاء النجاح{" "}
+          
+            شركاء النجاح
           </p>
           <Carousel
             responsive={responsive}
@@ -435,10 +450,33 @@ const Products = () => {
                 {showbrands}
               </select>
             </div>
+            <div className=" p-2">
+              <select
+                className="form-select py-2"
+                disabled={isLoading}
+                id="short"
+                name="short"
+                aria-label="Default select example"
+                onChange={handleSort}
+                value={
+                shortproducts
+                }
+              >
+                <option disabled value="">
+                   ترتيب
+                </option>
+                <option  value={0}>
+                 تصاعدي
+                </option>
+                <option  value={1}>
+                 تنازلي
+                </option>
+              </select>
+            </div>
             {/* reset data button */}
             {/* <div className="col-sm-4 d-flex align-items-end justify-center my-2"> */}
             <button
-              onClick={() => setFilter("")}
+              onClick={resetFilter}
               type="button"
               className="btn btncolor h-50"
             >
@@ -446,6 +484,7 @@ const Products = () => {
             </button>
             {/* </div> */}
           </div>
+        
 
           {/* products data */}
           <div className="row w-100 justify-content-center gap-2">

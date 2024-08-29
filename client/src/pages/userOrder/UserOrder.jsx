@@ -120,12 +120,12 @@ import Cookies from "universal-cookie";
                 
               <img
                 style={{ width: "7rem", height: "5rem" }}
-                src={`${order.imageUrl}/${product.product.imageCover}`}
+                src={`${order?.imageUrl.replace('orders','products')}/${product?.product?.imageCover}`}
                 alt="avatar"
               />
               <Rating ratingsAverage={product?.product?.ratingsAverage || 0}  />
               <div className="">
-             ( { product.price} )
+             ( { product?.price} )
               <i className="text-success"> SAR</i>
               </div>
                 
@@ -135,7 +135,7 @@ import Cookies from "universal-cookie";
           <td className="d-none  d-sm-table-cell">
           <Fade delay={0} direction='up' triggerOnce={true}>
 
-            {product.product.title.slice(0,30)}
+            {product?.product?.title.slice(0,30)}
             </Fade>
             </td> 
           <td
@@ -145,10 +145,10 @@ import Cookies from "universal-cookie";
             <Fade delay={0} direction='up' triggerOnce={true} >
             <div className="d-flex flex-column align-items-center">
                 <span className="d-flex flex-column align-items-center"> <i className="text-primary"> اسم القسم :</i> 
-                 {product?.product?.category ? product?.product.category?.name : "غير محدد"}
+                 {product?.product?.category ? product?.product?.category?.name : "غير محدد"}
                 </span>
                 <span className="d-flex flex-column align-items-center"> <i className="text-primary"> اسم الشركه  :</i>
-                 {product?.product?.brand ? product?.product.brand?.name : "غير محدد"}
+                 {product?.product?.brand ? product?.product?.brand?.name : "غير محدد"}
                 </span>
             </div>
           

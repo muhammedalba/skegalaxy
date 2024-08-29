@@ -101,7 +101,7 @@ const filteredUsers= FilterData(users?.data,'users',search)?.sort((a, b) => sort
             {user.firstname}
           </Fade>
         </td>
-        <td style={{ maxWidth: '140px', overflow: 'hidden' }} className="d-none d-sm-table-cell">
+        <td style={{ maxWidth: '10rem', overflow: 'hidden' }} className="d-none d-sm-table-cell">
         <Fade delay={0} direction='up' triggerOnce={true}>
 
           {user.email}
