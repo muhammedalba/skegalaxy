@@ -381,7 +381,7 @@ const CreatProduct = () => {
             <input
               disabled={isLoading ? true : false}
               minLength={3}
-              maxLength={32}
+              maxLength={70}
               className="form-control"
               id={"title"}
               name={"title"}

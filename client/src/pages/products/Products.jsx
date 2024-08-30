@@ -256,9 +256,14 @@ const resetFilter=()=> {
                 height: "10rem",
                 backgroundColor: "var(--bgColor)!important",
               }}
-              className="fs-5 border  p-2 w-100  text-center  d-block"
+              className="fs-5 border  p-2 w-100  text-center d-flex flex-column"
             >
-              {category?.name}
+              <span>
+              {category?.name.split('_')[0]}
+              </span> 
+              <span>
+              {category?.name.split('_')[1]}
+              </span> 
             </span>
           </div>
         </button>
@@ -298,9 +303,14 @@ const resetFilter=()=> {
                 height: "10rem",
                 backgroundColor: "var(--bgColor)!important",
               }}
-              className="fs-5 border  p-2  w-100 text-center  d-block"
+              className="fs-5 border  p-2  w-100 text-center  d-flex flex-column"
             >
-              {brand?.name}{" "}
+             <span>
+              {brand?.name.split('_')[0]}
+              </span> 
+              <span>
+              {brand?.name.split('_')[1]}
+              </span> 
             </span>
           </div>
         </button>
@@ -393,7 +403,7 @@ const resetFilter=()=> {
             // centerMode={true}
             lazyLoad={true} // تحسين الأداء باستخدام التحميل المؤجل
           >
-            {showBrandsSlide}
+            {showBrandsSlide || SkeletonCard}
           </Carousel>
         </div>
       )}

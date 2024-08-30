@@ -91,12 +91,18 @@ const Brands = () => {
             {index + 1}
           </Fade>
           </td>
-          <td ><span className="">
-          <Fade delay={0} direction='up' triggerOnce={true} >
-            {brand.name.slice(0,50)}
+          <td >
+          <Fade delay={0} direction='up' triggerOnce={true} cascade >
+            <span className="">
+            {brand.name.split('_')[0]}
+            
 
-          </Fade>
-            </span>
+          </span>
+          <span>
+          {brand.name.split('_')[1]}
+          </span>
+            
+            </Fade>
           </td>
 
           <td className="d-none d-md-table-cell">

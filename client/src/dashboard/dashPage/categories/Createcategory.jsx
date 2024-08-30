@@ -50,8 +50,8 @@ const Createcategory = () => {
       const handleSubmit = async (e) => {
         e.preventDefault();
     
-        if(formData.name.length < 3|| formData.name.length > 32  ){
-          errorNotify('يجب ان يكون الاسم يحتوي على اكثر من 3 احرف واقل من 32')   
+        if(formData.name.length < 3|| formData.name.length > 70  ){
+          errorNotify('يجب ان يكون الاسم يحتوي على اكثر من 3 احرف واقل من 70')   
         }else{
           const form = new FormData();
           Object.keys(formData).forEach((key) => form.append(key, formData[key]));
@@ -131,7 +131,7 @@ const Createcategory = () => {
               </label>
               <input
                 required
-                maxLength={32}
+                maxLength={70}
                 min={3}
                 disabled={isLoading}
                 className="form-control"

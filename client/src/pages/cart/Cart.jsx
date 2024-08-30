@@ -42,11 +42,11 @@ const Cart = () => {
   // API Queries and Mutations
   const {
     data: products,
-   
+   error,
     isLoading,
     isSuccess,
   } = useGetDataQuery(`cart`);
-console.log(products);
+console.log(error);
 
   const [
     deletOne,

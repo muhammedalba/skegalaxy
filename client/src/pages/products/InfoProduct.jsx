@@ -73,6 +73,7 @@ const showDownloadBtn=product?.data?.infoProductPdf?'d-block':'d-none'
 // داخل دالة InfoProduct
 const shareUrl = window.location.href; // URL الصفحة الحالية
 const title =  "شركه مجرة السماء للتجارة "; // العنوان للمشاركة
+const description =product?.data?.description?.split('_');
 
 
 
@@ -126,6 +127,7 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
    
 
    const addToCart = (productId) => {
+
  
     
     // تحقق من أن المستخدم مسجل الدخول وأن معرف المنتج صالح
@@ -272,23 +274,27 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
                         <h1 style={{ backgroundColor: 'var(--bgColor)'}}  className="card-title py-2 mb-3  text-center text-danger border border-end-0 border-start-0">
                           {product?.data.title}
                         </h1>
-                        <div className={product?.data.brand?.name?"fw-bold  fs-5 ":"d-none"}>
-                          <span className="card-title ps-3">الشركة :</span>
+                        <div className={product?.data.brand?.name?"fw-bold p-1 fs-6 d-flex  border-bottom":"d-none"}>
+                          <span className="card-title fs-5 ps-3">الشركة :</span>
                           <span className="text-secondary ps-2">
-                            {product?.data.brand?.name}
+                            {product?.data.category?.name.split('_')[0]}
+                            <br/>
+                            {product?.data.category?.name.split('_')[1]}
                           </span>
                         </div>
-                        <div className={product?.data.category?.name?"fw-bold  fs-5 pt-2": "d-none"}>
-                          <span className="card-title ps-3"> القسم :  </span>
+                        <div className={product?.data.category?.name?"fw-bold  border-bottom p-1  fs-6 pt-2 d-flex": "d-none"}>
+                          <span className="card-title fs-5 ps-3 h-100"> القسم :  </span>
                           <span className="text-secondary ps-2">
-                            {product?.data.category?.name}
+                            {product?.data.category?.name.split('_')[0]}
+                            <br/>
+                            {product?.data.category?.name.split('_')[1]}
                           </span>
                         </div>
                         <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  show `}>
                           <span className="card-title ps-3">الكمية  :</span>
                           <span className="text-secondary d-flex align-items-center">
                            ({product?.data?.quantity.toFixed(0)})
-                          <span className={`text-danger d fs-6${showQuantity} `}>   كميه محدودة يتوفر عند الطلب</span>
+                          <span className={`text-danger  fs-6 ${showQuantity} `}>   كميه محدودة يتوفر عند الطلب</span>
                           </span>
                         </div>
                         <div className="fw-bold fs-4 pt-2 d-flex align-items-center">
@@ -333,7 +339,12 @@ const title =  "شركه مجرة السماء للتجارة "; // العنوا
                 
                 <div className="fs-6 ">
                   <Fade delay={0} direction="up" triggerOnce={true}>
-                    <p className="card-title ps-3">{product?.data.description}</p> 
+                    <span className="card-title fs-4 ps-3 d-block"> مواصفات المنتج :  </span>
+                    {description.map((ele)=>
+                      <p key={ele} className="card-title fs-6 px-2">* {ele}</p> )
+
+                    }
+
                   </Fade>
                 </div>
                 <Fade delay={0} direction="up" triggerOnce={true} >

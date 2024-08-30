@@ -79,7 +79,7 @@ const Categories = () => {
   //// search categories based on the search input  by name,&& sorted (a,b)
   const filtereCategories =FilterData(categories?.data,'name',search)
 
-  // if sucsses and data is not empty  show the categories
+  // if sucsses and data is not empty  show the categories 
   const showData =
     isSuccess &&
     !isLoading &&filtereCategories.length > 0 ?
@@ -87,14 +87,15 @@ const Categories = () => {
       return (
         <tr key={index}>
           <td className="d-none d-sm-table-cell" scope="row">
-          <Fade delay={0} direction='right' triggerOnce={true}   >
+          <Fade delay={0} direction='up' triggerOnce={true}   >
             {index + 1}
             </Fade>
           </td>
           <td  >
           <Fade delay={0} direction='up' triggerOnce={true}   >
-            <span className="">{category.name.slice(0.50)}</span>
-            </Fade>
+            <span className="">{category.name.split('_')[0]}</span>
+            <span className="">{category.name.split('_')[1]}</span>
+          </Fade>
             </td>
 
           <td className="d-none d-md-table-cell">
@@ -115,7 +116,7 @@ const Categories = () => {
             </Fade>
           </td>
           <td>
-          <Fade delay={0} direction='left' triggerOnce={true}   >
+          <Fade delay={0} direction='up' triggerOnce={true}   >
 
             <button
               disabled={LoadingDelet ? true : false}

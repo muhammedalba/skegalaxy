@@ -159,7 +159,7 @@ const handleChange=(e)=>{
               disabled={isLoading || loading ? true : false}
               
               minLength={ 3}
-              maxLength={32}
+              maxLength={70}
               className="form-control"
               id={'name'}
               name={'name'}
