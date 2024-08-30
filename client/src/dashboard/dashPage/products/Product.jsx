@@ -216,6 +216,11 @@ console.log(updateError);
           form.append("images", images[i]);
         }
       }
+      if (infoProductPdf) {
+        
+          form.append("infoProductPdf", infoProductPdf);
+        
+      }
       //  send form data to server
       updateOne({
         url: `/products/${productId}`,
