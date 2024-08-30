@@ -24,7 +24,7 @@ const Products = () => {
   const Pagination = useSelector((state) => state.Pagination);
 
   // brand our category filter
-  const [filter, setFilter] = useState("");
+  const [filterCategorirs, setfilterCategorirs] = useState("");
   const [sortFilter, setsortFilter] = useState("");
   const [filterDrands, setfilterDrands] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -38,7 +38,7 @@ const Products = () => {
     isLoading,
     isSuccess,
   } = useGetDataQuery(
-    `products?limit=${limit}&page=${Pagination}${filterDrands}${filter}${sortFilter}&keywords=${search}`
+    `products?limit=${limit}&page=${Pagination}${filterDrands}${filterCategorirs}${sortFilter}&keywords=${search}`
   );
   console.log(products?.data);
 
@@ -60,7 +60,7 @@ const Products = () => {
 
   // Go to products and filter
   const scrollToSection = (ref, id) => {
-    setFilter(id);
+    setfilterCategorirs(id);
     ref.current.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -134,7 +134,7 @@ const Products = () => {
   const handleCategoryChange = useCallback(
     (e) => {
       const selectedValue = e.target.value;
-      setFilter(`&category=${e.target.value}`);
+      setfilterCategorirs(`&category=${e.target.value}`);
 
       const selectedcategory = categories?.data.find(
         (cate) => cate._id === selectedValue
@@ -158,7 +158,7 @@ const Products = () => {
 
   // handel reset filter
   const resetFilter = () => {
-    setFilter("");
+    setfilterCategorirs("");
     setfilterDrands("");
     setSelectedBrand("");
     setSelectedCategory("");

@@ -294,7 +294,9 @@ const description =product?.data?.description?.split('_');
                         <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  show `}>
                           <span className="card-title ps-3">الكمية  :</span>
                           <span className="text-secondary d-flex align-items-center">
-                          ({ product?.quantity>0?product?.quantity.toFixed(0):0})
+                          ({ +product?.data?.quantity >= 0 ? product?.data?.quantity.toFixed(0) : 0 })
+                     
+                          
                           <span className={`text-danger  fs-6 ${showQuantity} `}>   كميه محدودة   </span>
                           <span className={`text-danger  fs-6 ${showQuantityMsg} `}>     يتوفر عند الطلب</span>
                           </span>
