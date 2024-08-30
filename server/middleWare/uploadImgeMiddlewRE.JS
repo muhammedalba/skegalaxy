@@ -146,6 +146,19 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       );
       req.body.image = filename; // Save image into our db 
     }
+    if (req.files.DeliveryReceiptImage) {
+     
+      
+      const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
+      await processAndSaveImage(
+        req.files.DeliveryReceiptImage[0].buffer,
+        `uploads/${path}/${filename}`,
+        800,
+        600,
+        70
+      );
+      req.body.DeliveryReceiptImage = filename; // Save image into our db 
+    }
     if (req.files.carouselImage) {
       const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
       await processAndSaveImage(
@@ -227,6 +240,16 @@ exports.updatemageFromFolder = asyncHandler(async (id, model, req) => {
 
       const baseUrl = req.baseUrl.split("/").slice(2).join("/");
       const imagePath = `uploads/${baseUrl}/${findImgeInDB.carouselImage}`;
+
+      // Verify the file exists before deleting it
+      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+
+      //
+    }
+    if (req.body.DeliveryReceiptImage ) {
+
+      const baseUrl = req.baseUrl.split("/").slice(2).join("/");
+      const imagePath = `uploads/${baseUrl}/${findImgeInDB.DeliveryReceiptImage}`;
 
       // Verify the file exists before deleting it
       if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);

@@ -47,6 +47,7 @@ const orderSchema = new mongoose.Schema(
       default: "cash",
     },
     image: { type: String,required:true},
+    DeliveryReceiptImage: { type: String,},
     isPaid: { type: Boolean, default: false },
     paidAt: { type: Date },
     isDelivered: { type: Boolean, default: false },

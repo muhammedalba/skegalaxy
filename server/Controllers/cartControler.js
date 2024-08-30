@@ -18,18 +18,21 @@ const calcTotalCartPrice = (cart) => {
 
 // post http://localhost:4000/api/cart
 exports.addProductToCart = asyncHandler(async (req, res, next) => {
-  const { productId, color } = req.body;
+  const { productId } = req.body;
+
+ 
+
   
   // get productbyID
   const product = await productModel.findById(productId);
-
+ 
   const price =product.priceAfterDiscount?product.priceAfterDiscount:product.price
 
 
   // 1-get cart for logged  user
   let cart = await cartModel.findOne({ user: req.user._id });
 // chek product If available add to cart
-if(product.quantity > 0) {
+// if(product.quantity > 0) {
 
   if (!cart  ) {
     cart = await cartModel.create({
@@ -38,7 +41,7 @@ if(product.quantity > 0) {
         {
           product: productId,
           price: price,
-          color,
+         
         },
       ],
     });
@@ -53,27 +56,27 @@ if(product.quantity > 0) {
     
     if (productIndex > -1 ) {
 // If the required quantity is available
-      if( product.quantity > cart.cartItems[productIndex].quantity){
-        cart.cartItems[productIndex].quantity += 1;
+    cart.cartItems[productIndex].quantity += 1;
+      // if( product.quantity > cart.cartItems[productIndex].quantity){
       
-      }else{
-        return next(new ApiError("out of stock", 400));
-      }
+      // }else{
+      //   return next(new ApiError("out of stock", 400));
+      // }
     } else {
       // if product is not exist in cart
       cart.cartItems.push({
         product: productId,
         price: price,
-        color,
+       
         quantity: 1,
       });
     }
   }
 
-}else{
-  return next(new ApiError("out of stock", 400));
+// }else{
+//   return next(new ApiError("out of stock", 400));
  
-}
+// }
 
 
   //   calculate total cart price

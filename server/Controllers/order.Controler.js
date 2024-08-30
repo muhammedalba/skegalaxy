@@ -13,8 +13,8 @@ const productModel = require("../models/productModule");
 const UserModel = require("../models/users.module");
 
 
-// upload single image and orderPdf
-exports.uploadorderImge=uploadImage([{name:'image',maxCount:1},{name:'orderPdf',maxCount:1}])
+// upload single image && DeliveryReceiptImage  and orderPdf 
+exports.uploadorderImge=uploadImage([{name:'image',maxCount:1},{name:'orderPdf',maxCount:1},{name:'DeliveryReceiptImage',maxCount:1}])
 
 //post  create cash order
 // /api/orders/:cartId
@@ -230,7 +230,7 @@ exports.updateOrderToPaid = asyncHandler(async (req, res, next) => {
   res.status(200).json({ data: updateOrder });
 });
 
-// put update order delivered status to paid
+// put update order delivered status 
 // /api/orders/:id/deliver
 exports.updateOrderTodelivered = asyncHandler(async (req, res, next) => {
   const order = await orderModul.findById(req.params.id);
@@ -248,7 +248,7 @@ exports.updateOrderTodelivered = asyncHandler(async (req, res, next) => {
   res.status(200).json({ data: updateOrder });
 });
 
-// put update order paid status to paid
+// put update order pdf 
 // /api/orders/:id/invoice
 exports.updateOrderSendInvoice = asyncHandler(async (req, res, next) => {
   const order = await orderModul.findById(req.params.id);
@@ -270,8 +270,27 @@ exports.updateOrderSendInvoice = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ data: updateOrder });
 });
+// send Delivery-receipt-image
+exports.updateOrderDeliveryReceiptImage = asyncHandler(async (req, res, next) => {
+  const order = await orderModul.findById(req.params.id);
+  if (!order) {
+    return next(
+      new ApiError(`there is such a order with id : ${req.params.id}`, 404)
+    );
+  }
+  // chek If this order has an invoice
+ 
+  // if(order.orderPdf){
+      // update imge from uploads folder
+      await updatemageFromFolder(req.params.id, orderModul, req);
+  // }
+  order.DeliveryReceiptImage = req.body.DeliveryReceiptImage;
+ 
 
+  const updateOrder = await order.save();
 
+  res.status(200).json({ data: updateOrder });
+});
 // get checkout session from stripe and send it as response
 // /api/orders/checkout-session/cartId
 exports.checkoutSession = asyncHandler(async (req, res, next) => {

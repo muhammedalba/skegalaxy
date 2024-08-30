@@ -11,6 +11,7 @@ const {
   findSpecificOrder,
   createcashOrder,
   filterOrderForLoggedUser,
+  updateOrderDeliveryReceiptImage,
   updateOrderToPaid,
   updateOrderTodelivered,
 } = require("../Controllers/order.Controler");
@@ -28,6 +29,7 @@ router.get("/:id", findSpecificOrder);
 router.post("/checkout-session/:cartId",protect,allowedTo(role.ADMIN, role.MANGER, role.USER), checkoutSession);
 router.put("/:id/pay", allowedTo(role.ADMIN, role.MANGER), updateOrderToPaid);
 router.put( "/:id/deliver",allowedTo(role.ADMIN, role.MANGER),updateOrderTodelivered);
+router.post( "/:id/Delivery-receipt-image",allowedTo(role.ADMIN, role.MANGER),uploadorderImge,resizeImge,updateOrderDeliveryReceiptImage);
 router.put( "/:id/invoice",allowedTo(role.ADMIN, role.MANGER),uploadorderImge,resizeImge,updateOrderSendInvoice);
 
 module.exports = router;
