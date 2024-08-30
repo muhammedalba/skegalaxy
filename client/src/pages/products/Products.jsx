@@ -97,7 +97,7 @@ const Products = () => {
     );
   }, [isLoading, isSuccess, products?.data, products?.imageUrl]);
 
-  // view brands carousel
+  // view brands select
   const showbrands = useMemo(() => {
     if (successbrands && brands?.data?.length === 0) {
       return <option value="">لايوجد معلومات</option>;
@@ -164,7 +164,7 @@ const Products = () => {
     setSelectedCategory("");
    setsortFilter('')
   };
-  // view categories carousel
+  // view categories select
   const showCategorie = useMemo(() => {
     if (isSuccess && categories?.data?.length === 0) {
       return <option value="">لايوجد بيانات</option>;
@@ -190,7 +190,7 @@ const Products = () => {
         <button
           style={{ minWidth: "75%" }}
           onClick={() =>
-            scrollToSection(section1Ref, `category=${category._id}`)
+            scrollToSection(section1Ref, `&category=${category._id}`)
           }
           className=" btn d-block m-auto w-100 0 "
           key={index}
@@ -239,7 +239,7 @@ const Products = () => {
       return brands?.data.map((brand, index) => (
         <button
           style={{ minWidth: "75%" }}
-          onClick={() => scrollToSection(section1Ref, `brand=${brand._id}`)}
+          onClick={() => scrollToSection(section1Ref, `&brand=${brand._id}`)}
           className=" btn d-block m-auto w-100"
           key={index}
         >
