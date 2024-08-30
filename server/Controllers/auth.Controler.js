@@ -107,15 +107,15 @@ exports.logout = asyncHandler(async (req, res, next) => {
 
   //  remove token
   
-  res.cookie("token", '', {
+  res.cookie("token", ' ', {
     httpOnly: false,// javascript only
     secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
    
 });
 
-res.cookie("refreshToken", '', {
-  httpOnly: true,
+res.cookie("refreshToken", ' ', {
+  httpOnly: false,
   secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
 
@@ -170,7 +170,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
           const newAccessToken = createToken(refUser);
           console.log('Setting new access token:', newAccessToken);
-          // res.setHeader('Content-Type', 'application/json');
+         
          
           res.cookie("token", newAccessToken, {
             httpOnly: false,// javascript only
