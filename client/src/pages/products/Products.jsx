@@ -25,11 +25,10 @@ const Products = () => {
 
   // brand our category filter
   const [filter, setFilter] = useState("");
+  const [sortFilter, setsortFilter] = useState("");
   const [filterDrands, setfilterDrands] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [shortproducts, setShortproducts] = useState(1);
-
 
 
   // get products from the database
@@ -39,8 +38,9 @@ const Products = () => {
     isLoading,
     isSuccess,
   } = useGetDataQuery(
-    `products?limit=${limit}&page=${Pagination}&${filterDrands}&${filter}&keywords=${search}`
+    `products?limit=${limit}&page=${Pagination}${filterDrands}${filter}${sortFilter}&keywords=${search}`
   );
+  console.log(products?.data);
 
   // get brands from the database
   const {
@@ -58,8 +58,7 @@ const Products = () => {
 
   const section1Ref = useRef(null);
 
-
-// Go to products and filter
+  // Go to products and filter
   const scrollToSection = (ref, id) => {
     setFilter(id);
     ref.current.scrollIntoView({ behavior: "smooth" });
@@ -70,12 +69,6 @@ const Products = () => {
       errorNotify("حدث خطا في السيرفر");
     }
   }, [error]);
-
-  let filteredProducts = [];
-
-  if (isSuccess && products?.data?.length > 0) {
-    filteredProducts = [...products.data];
-  }
 
   // if sucsses and data is not empty  show the products
   const showData = useMemo(() => {
@@ -88,11 +81,10 @@ const Products = () => {
       );
     }
 
-    if (isSuccess && filteredProducts?.length > 0) {
-      const sortedproducts = [...products.data].sort((a, b) =>
-        shortproducts > 0? a.title.localeCompare(b.title):
-         b.title.localeCompare(a.title)
-      ); 
+    if (isSuccess && products?.data?.length > 0) {
+      const sortedproducts = [...products.data];
+   
+
       return sortedproducts?.map((product, index) => (
         <Card key={index} product={product} imgePath={products?.imageUrl} />
       ));
@@ -103,7 +95,7 @@ const Products = () => {
         لا يوجد بيانات
       </div>
     );
-  }, [filteredProducts?.length, isLoading, isSuccess, products?.data, products?.imageUrl, shortproducts]);
+  }, [isLoading, isSuccess, products?.data, products?.imageUrl]);
 
   // view brands carousel
   const showbrands = useMemo(() => {
@@ -128,8 +120,8 @@ const Products = () => {
   const handleBrandChange = useCallback(
     (e) => {
       const selectedValue = e.target.value;
-      setfilterDrands(`brand=${e.target.value}`);
-  
+      setfilterDrands(`&brand=${e.target.value}`);
+
       // العثور على العلامة التجارية التي تطابق القيمة المحددة
       const selectedBrand = brands.data.find(
         (brand) => brand._id === selectedValue
@@ -142,8 +134,7 @@ const Products = () => {
   const handleCategoryChange = useCallback(
     (e) => {
       const selectedValue = e.target.value;
-      setFilter(`category=${e.target.value}`);
-     
+      setFilter(`&category=${e.target.value}`);
 
       const selectedcategory = categories?.data.find(
         (cate) => cate._id === selectedValue
@@ -152,22 +143,27 @@ const Products = () => {
     },
     [categories?.data]
   );
-  //handel  sort products
-  const handleSort = useCallback((e) => {
-   const sorted=e.target.value;
-   
-   setShortproducts(sorted);
-   
-  },[]);
+
+  // hanle sort products
+  const handleSortProducts = useCallback((e) => {
+    const selectedValue = e.target.value;
+    setsortFilter(selectedValue);
+
+    // العثور على العلامة التجارية التي تطابق القيمة المحددة
+    // const selectedBrand = brands.data.find(
+    //   (brand) => brand._id === selectedValue
+    // );
+    // setSelectedBrand(selectedBrand ? selectedBrand.name : "");
+  }, []);
 
   // handel reset filter
-const resetFilter=()=> {
-  setFilter('');
-  setfilterDrands('');
-  setSelectedBrand('');
-  setSelectedCategory('');
-  setShortproducts(1)
-}
+  const resetFilter = () => {
+    setFilter("");
+    setfilterDrands("");
+    setSelectedBrand("");
+    setSelectedCategory("");
+   setsortFilter('')
+  };
   // view categories carousel
   const showCategorie = useMemo(() => {
     if (isSuccess && categories?.data?.length === 0) {
@@ -191,42 +187,8 @@ const resetFilter=()=> {
   const showCategoriesData = useMemo(() => {
     if (isSuccess && categories?.data?.length > 0) {
       return categories?.data?.map((category, index) => (
-        // <button  onClick={() => scrollToSection(section1Ref,`category=${category._id}`)}
-        //   key={index}
-        //   type="button"
-        //   className=" btn col-12 col-sm-6 col-md-4 p-2 col-lg-3 col-xl-2 "
-        //   style={{ cursor: "pointer" }}
-        // >
-        //   <Fade
-        //     style={{ margin: "auto" }}
-        //     duration={500}
-        //     delay={0}
-        //     direction="up"
-        //     triggerOnce={true}
-        //     cascade
-        //   >
-        //     <div
-
-        //       className="d-flex rounded-3 border align-items-center accordion-body overflow-hidden"
-        //     >
-        //       <img
-        //         style={{ height: "100px", width: "100px" }}
-        //         src={
-        //           category.image
-        //             ? `${categories?.imageUrl}/${category.image}`
-        //             : logo
-        //         }
-        //         className="d-sm-block"
-        //         alt="category"
-        //       />
-        //       <div style={{ height: "3rem" }} className="card-body w-100 h-100">
-        //         <h5 className="text-dark m-0">{category.name} </h5>
-        //       </div>
-        //     </div>
-        //   </Fade>
-        // </button>
         <button
-        style={{minWidth:'75%'}}
+          style={{ minWidth: "75%" }}
           onClick={() =>
             scrollToSection(section1Ref, `category=${category._id}`)
           }
@@ -258,12 +220,8 @@ const resetFilter=()=> {
               }}
               className="fs-5 border  p-2 w-100  text-center d-flex flex-column"
             >
-              <span>
-              {category?.name.split('_')[0]}
-              </span> 
-              <span>
-              {category?.name.split('_')[1]}
-              </span> 
+              <span>{category?.name.split("_")[0]}</span>
+              <span>{category?.name.split("_")[1]}</span>
             </span>
           </div>
         </button>
@@ -280,7 +238,7 @@ const resetFilter=()=> {
     if (brands?.data?.length > 0) {
       return brands?.data.map((brand, index) => (
         <button
-        style={{minWidth:'75%'}}
+          style={{ minWidth: "75%" }}
           onClick={() => scrollToSection(section1Ref, `brand=${brand._id}`)}
           className=" btn d-block m-auto w-100"
           key={index}
@@ -305,12 +263,8 @@ const resetFilter=()=> {
               }}
               className="fs-5 border  p-2  w-100 text-center  d-flex flex-column"
             >
-             <span>
-              {brand?.name.split('_')[0]}
-              </span> 
-              <span>
-              {brand?.name.split('_')[1]}
-              </span> 
+              <span>{brand?.name.split("_")[0]}</span>
+              <span>{brand?.name.split("_")[1]}</span>
             </span>
           </div>
         </button>
@@ -386,7 +340,6 @@ const resetFilter=()=> {
             style={{ backgroundColor: "var(--bgColor)" }}
             className="pb-2 mb-3  fs-3 border border-end-0 border-start-0 text-center"
           >
-          
             شركاء النجاح
           </p>
           <Carousel
@@ -430,8 +383,9 @@ const resetFilter=()=> {
                 aria-label="Default select example"
                 onChange={handleCategoryChange}
                 value={
-                  categories?.data?.find((brand) => brand.name === selectedCategory)
-                    ?._id || ""
+                  categories?.data?.find(
+                    (brand) => brand.name === selectedCategory
+                  )?._id || ""
                 }
               >
                 <option value="" disabled>
@@ -460,41 +414,47 @@ const resetFilter=()=> {
                 {showbrands}
               </select>
             </div>
+            {/* sortFilter */}
             <div className=" p-2">
               <select
                 className="form-select py-2"
                 disabled={isLoading}
-                id="short"
-                name="short"
+                id="sortFilter"
+                name="sortFilter"
                 aria-label="Default select example"
-                onChange={handleSort}
-                value={
-                shortproducts
-                }
+                onChange={handleSortProducts}
+                value={sortFilter}
               >
                 <option disabled value="">
-                   ترتيب
+                  فلتره
                 </option>
-                <option  value={0}>
-                 تصاعدي
+                <option value={"&sort=-updatedAt"}>جديدنا</option>
+                <option value={"&sort=-sold"}>ترتيب حسب الكثر مبيعا</option>
+                <option value={"&sort=-ratingsAverage"}>
+                  ترتيب حسب الاعلى تقييما
                 </option>
-                <option  value={1}>
-                 تنازلي
+                <option value="&sort=priceAfterDiscount">من الاقل الى الاعلى سعرا</option>
+                <option value="&sort=-priceAfterDiscount">من الاعلى سعرالى الاقل</option>
+                <option value={"&sort=-title"}>
+                  ترتيب حسب الاسم من a الى z
+                </option>
+                <option value={"&sort=title"}>
+                  ترتيب حسب الاسم من z الى a
                 </option>
               </select>
             </div>
+
             {/* reset data button */}
             {/* <div className="col-sm-4 d-flex align-items-end justify-center my-2"> */}
             <button
               onClick={resetFilter}
               type="button"
-              className="btn btncolor h-50"
+              className="btn btn-danger h-50"
             >
-              كل المنتجات
+              مسح الاختيارات
             </button>
             {/* </div> */}
           </div>
-        
 
           {/* products data */}
           <div className="row w-100 justify-content-center gap-2">

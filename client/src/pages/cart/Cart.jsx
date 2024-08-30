@@ -48,11 +48,12 @@ const Cart = () => {
   } = useGetDataQuery(`cart`);
 console.log(error);
 
+
   const [
     deletOne,
     { error: errorDelete, isLoading: LoadingDelet, isSuccess: successDelete },
   ] = useDeletOneMutation();
-
+console.log(errorDelete);
   const [
     updateOne,
     {

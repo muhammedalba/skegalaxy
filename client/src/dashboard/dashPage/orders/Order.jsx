@@ -107,7 +107,7 @@ console.log(order);
                 alt="avatar"
               />
               <div className="">
-             ( { product.price} )
+             ( { product.price.toFixed(2)} )
               <i className="text-success"> SAR</i>
               </div>
               </div>
@@ -190,16 +190,18 @@ console.log(order);
  
 
     const [invoicePdf, setinvoicePdf] = useState(null);
+    const [DeliveryReceiptImage, setDeliveryReceiptImage] = useState(null);
     // handle  pdf
-    const handleImageChange = (event) => {
+    const handleImageChange = (event,type) => {
       const file = event.target.files[0];
-
+      const imgFile =file.type.split('/')[0]
       const pdfFile =file.type.split('/')[1]
   
-     
-     if (pdfFile === 'pdf') {
+      if (imgFile === 'image'&&type==='image') {
+        setDeliveryReceiptImage(file);
+   }
+    else if (pdfFile === 'pdf'&& type==='pdf') {
       setinvoicePdf(file);
-     
       }else{
         warnNotify(`الملف ${file.name} ليس بصيغة صحيحة`);
         return;
@@ -246,8 +248,44 @@ console.log(order);
         [createOne, invoicePdf, orderId]
       );
 
+// send Delivery Receipt Image
+const sendDeliveryReceiptImage =useCallback( (e) => {
+    
+  e.preventDefault();
+  if (DeliveryReceiptImage == null) {
+    warnNotify(" يجب اختيار صورة وصل التسليم اولا");
+    return;
+  }
+ 
+  
+  if (
+    DeliveryReceiptImage != null 
+
+  ) {  
+    // handel form data
+    const form = new FormData();
+    if (DeliveryReceiptImage) {
+      form.append("DeliveryReceiptImage", DeliveryReceiptImage);
+    }
+    
+
+    //  send form data to server
+    createOne({
+      url: `/orders/${orderId}/Delivery-receipt-image`,
+      body: form,
+      method: "post",
+    });
+    
 
 
+  } 
+
+  
+   
+     
+    },
+    [createOne, DeliveryReceiptImage, orderId]
+  );
 
 
     
@@ -346,10 +384,10 @@ console.log(order);
                 </div>
                 {/* send pdf */}
                 <div className="col-md-12 py-3 fs-5 py-2 border col-12  text-primary">
-            <label
-              className="p-1 fs-5 d-flex align-items-center gap-1"
-              htmlFor="orderPdf"
-            >
+                  <label
+                    className="p-1 fs-5 d-flex align-items-center gap-1"
+                    htmlFor="orderPdf"
+                  >
                    ارسال فاتوره(pdf) :{ order?.data?.orderPdf?<span className="text-success"> ( تم الارسال )     </span>:'' }
             </label>
             <input
@@ -360,7 +398,26 @@ console.log(order);
               id="orderPdf"
               name="orderPdf"
               type="file"
-              onChange={(e)=>handleImageChange(e)}           
+              onChange={(e)=>handleImageChange(e,'pdf')}           
+               />
+               </div>
+                    {/* send pdf */}
+                    <div className="col-md-12 py-3 fs-5 py-2 border col-12  text-primary">
+                  <label
+                    className="p-1 fs-5 d-flex align-items-center gap-1"
+                    htmlFor="DeliveryReceiptImage"
+                  >
+                   ارسال صورة وصل التسليم:{ order?.data?.DeliveryReceiptImage?<span className="text-success"> ( تم الارسال )     </span>:'' }
+            </label>
+            <input
+          
+              
+              disabled={isLoading ? true : false}
+              className="form-control"
+              id="DeliveryReceiptImage"
+              name="DeliveryReceiptImage"
+              type="file"
+              onChange={(e)=>handleImageChange(e,'image')}           
                />
                </div>
                 {/* buttons  str*/}
@@ -388,6 +445,13 @@ console.log(order);
                  onClick={sendInvoice }
                  className={order?.data?.orderPdf?" btn btn-success   ":'btn btn-primary '}>
                       ارسال فاتورة
+                 </button>
+                </Fade>
+                <Fade delay={0} direction='up' triggerOnce={true}    >
+                <button disabled={updateLoading || isLoading ||createLoading} 
+                 onClick={sendDeliveryReceiptImage }
+                 className={order?.data?.DeliveryReceiptImage?" btn btn-success   ":'btn btn-primary '}>
+                      ارسال صورة وصل التسليم
                  </button>
                 </Fade>
                 <Fade delay={0} direction='up' triggerOnce={true}    >

@@ -149,9 +149,18 @@ const resetFilter=()=> {
             </Fade>
           </td>
           <td>
-          <Fade delay={0} direction='up' triggerOnce={true}     >
+          <Fade delay={0} direction='up' triggerOnce={true}  cascade   >
+          <span className="">
+          {product.title?.split('_')[0]?.slice(0, 80) }
+            
 
-            {product.title?.slice(0, 80) }
+          </span>
+    
+          <span className="">
+          {product.title?.split('_')[1]?.slice(0, 80) }
+            
+
+          </span>
             </Fade>
             </td>
           <td

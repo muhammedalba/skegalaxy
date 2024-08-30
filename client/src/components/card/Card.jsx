@@ -42,8 +42,11 @@ const Card = ({ product, imgePath }) => {
     { error: createError, isLoading: createLoding ,data:crerateData},
   ] = useCreateOneMutation();
 
+  //  show Quantity
+  const showQuantity =product.quantity <= 100 && product.quantity !== 0? " d-block" : "d-none";
+  const showQuantityMsg =  product.quantity === 0 ? " d-block" : "d-none";
 
-
+console.log(createError);
 
   const dispatch = useDispatch();
 
@@ -80,6 +83,8 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
   const addToCart = useCallback((productId) => {
     // تحقق من أن المستخدم مسجل الدخول وأن معرف المنتج صالح
     if (token && typeof(productId) !== "undefined") {
+      console.log(productId);
+      
       createOne({
         url: "cart",
         method: "POST",
@@ -174,10 +179,17 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
 
             <span className="text-danger">(شامل ضريبة القيمة المضافة 15%)</span>
           </div>
-          {  product?.quantity.toFixed(0) > 0 ?<span className="text-dark fs-5">الكميه: ({ product?.quantity.toFixed(0)})</span>:
+          {/* {  product?.quantity.toFixed(0) > 0 ?<span className="text-dark fs-5">الكميه: ({ product?.quantity.toFixed(0)})</span>:
             <span className="text-dark fs-5">الكميه:متوفر عند الطلب</span>
-          }
-
+          } */}
+               <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  justify-content-center `}>
+                  <span className="card-title ps-1">الكمية  :</span>
+                  <span className="text-secondary d-flex align-items-center ">
+                      ({ product?.quantity>0?product?.quantity.toFixed(0):0})
+                      <span className={`text-danger  fs-6 ${showQuantity} `}>   كميه محدودة   </span>
+                      <span className={`text-danger  fs-6 ${showQuantityMsg} `}>     يتوفر عند الطلب</span>
+                  </span>
+                </div>
           <button
             disabled={createLoding?true:false}
           style={{ whiteSpace: 'nowrap'}}

@@ -69,7 +69,8 @@ const [
 
 const showDownloadBtn=product?.data?.infoProductPdf?'d-block':'d-none'
   //  show Quantity
-  const showQuantity =isSuccess && product.data.quantity <= 100 ? " d-block" : "d-none";
+  const showQuantity =isSuccess && product.data.quantity <= 100 && product.data.quantity > 0? " d-block" : "d-none";
+  const showQuantityMsg =isSuccess && product.data.quantity <= 0 ? " d-block" : "d-none";
 // داخل دالة InfoProduct
 const shareUrl = window.location.href; // URL الصفحة الحالية
 const title =  "شركه مجرة السماء للتجارة "; // العنوان للمشاركة
@@ -277,9 +278,9 @@ const description =product?.data?.description?.split('_');
                         <div className={product?.data.brand?.name?"fw-bold p-1 fs-6 d-flex  border-bottom":"d-none"}>
                           <span className="card-title fs-5 ps-3">الشركة :</span>
                           <span className="text-secondary ps-2">
-                            {product?.data.category?.name.split('_')[0]}
+                            {product?.data.brand?.name.split('_')[0]}
                             <br/>
-                            {product?.data.category?.name.split('_')[1]}
+                            {product?.data.brand?.name.split('_')[1]}
                           </span>
                         </div>
                         <div className={product?.data.category?.name?"fw-bold  border-bottom p-1  fs-6 pt-2 d-flex": "d-none"}>
@@ -293,8 +294,9 @@ const description =product?.data?.description?.split('_');
                         <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  show `}>
                           <span className="card-title ps-3">الكمية  :</span>
                           <span className="text-secondary d-flex align-items-center">
-                           ({product?.data?.quantity.toFixed(0)})
-                          <span className={`text-danger  fs-6 ${showQuantity} `}>   كميه محدودة يتوفر عند الطلب</span>
+                          ({ product?.quantity>0?product?.quantity.toFixed(0):0})
+                          <span className={`text-danger  fs-6 ${showQuantity} `}>   كميه محدودة   </span>
+                          <span className={`text-danger  fs-6 ${showQuantityMsg} `}>     يتوفر عند الطلب</span>
                           </span>
                         </div>
                         <div className="fw-bold fs-4 pt-2 d-flex align-items-center">

@@ -294,11 +294,18 @@ import Cookies from "universal-cookie";
                   
                   <span className=" text-dark "> : {shippingAddress?.detalis} </span>
                 </div>
-                <div onClick={()=>openImge(`${order?.imageUrl}/${order?.data?.image}`)} className="fs-5 py-2 border col-12  text-primary " >
+                {/* imges */}
+                <div onClick={()=>openImge(`${order?.imageUrl}/${order?.data?.image}`)} className="fs-5 py-2 border col-12 col-sm-6  text-primary " >
                   وصل التحويل 
 
-                  <img  height={150} width={150} className=" text-dark m-auto d-block pointer" src={`${order?.imageUrl}/${order?.data?.image}`}/>
+                  <img  height={200} width={100} className=" text-dark m-auto d-block pointer w-100" src={`${order?.imageUrl}/${order?.data?.image}`}/>
                 </div>
+                <div onClick={()=>openImge(`${order?.imageUrl}/${order?.data?.DeliveryReceiptImage}`)} className="fs-5 py-2 border col-12 col-sm-6  text-primary " >
+                  وصل التسليم 
+
+                  <img  height={200} width={100} className=" w-100 text-dark m-auto d-block pointer" src={`${order?.imageUrl}/${order?.data?.DeliveryReceiptImage}`}/>
+                </div>
+
                 <div className={" fs-5 py-2 border  text-primary d-block "} >
                    كود الاستلام : 
                    <span className="p-1 text-dark">
