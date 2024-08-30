@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { signup, login, signupUploadUserImge ,forgotPassword,resetPassword,verifyResetCode} = require("../Controllers/auth.Controler");
+const { signup, login,logout, signupUploadUserImge ,forgotPassword,resetPassword,verifyResetCode} = require("../Controllers/auth.Controler");
 const {
   signUpValidator,
   logInValidator,
@@ -19,6 +19,7 @@ router.route("/login").post(logInValidator, login);
 router.route("/forgotPassword").post(forgotPassword);
 router.route("/verifyResetCode").post(verifyResetCode);
 router.route("/resetPassword").put(resetPassword);
+router.route("/logout").post(logout);
 
 
 // router

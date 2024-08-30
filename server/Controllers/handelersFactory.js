@@ -13,6 +13,8 @@ const {
 
 exports.createOne = (model) =>
   asyncHandler(async (req, res) => {
+    console.log(req.user);
+    
     const imageUrl=`${req.protocol}://${req.get('host')}/uploads/${req.baseUrl.split("/").slice(2).join("/")}`;
     
     const Newdocument = await model.create(req.body);

@@ -28,8 +28,19 @@ dotenv.config({ path: ".env" });
 app.use(cookieParser());
 
 // enable other domains to access routes
-app.use(cors());
-app.options("*", cors());
+// إعداد خيارات CORS
+const corsOptions = {
+  origin:  process.env.FRONTEND_ORIGIN, // أصل الفرونت إند
+  // allowedHeaders: ['Content-Type', 'Authorization'],
+  // secure: false,
+  credentials: true // تمكين دعم ملفات تعريف الارتباط (credentials)
+};
+
+// تطبيق إعدادات CORS على كل الطلبات
+app.use(cors(corsOptions));
+
+// إذا كنت تستخدم OPTIONS لتحديد إعدادات CORS لجميع المسارات
+app.options('*', cors(corsOptions));
 // compression all responses
 app.use(compression());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

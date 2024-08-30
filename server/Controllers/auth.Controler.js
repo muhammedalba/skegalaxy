@@ -40,11 +40,23 @@ exports.signup = asyncHandler(async (req, res) => {
   const user = await UserModel.create(req.body);
 
   // generate token
+
   const token = createToken(user);
   const refreshToken  = createRefreshToken(user);
-  res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' }); // `secure: true` للتأكد من أن الكوكي تُرسل فقط عبر HTTPS
+  res.cookie("token", token, {
+    httpOnly: false,// javascript only
+    secure: false,//HTTPS
+    sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+});
+res.cookie("refreshToken", refreshToken, {
+  httpOnly: true,
+  secure: false,
+  sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+});
 
-  res.status(201).json({status:'success', data: sanitizeUser(user), token ,imageUrl});
+  res.status(201).json({status:'success', data: sanitizeUser(user),refreshToken,token ,imageUrl});
 });
 
 // post http://localhost:4000/api/users/auth/signup
@@ -73,51 +85,48 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
   // generate token
   const token = createToken(user);
   const refreshToken  = createRefreshToken(user);
- 
-  
-  res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: false, sameSite: 'Strict' });
-
-
-  res.status(200).json({status:'success', data: sanitizeUser(user), token,imageUrl });
+  res.cookie("token", token, {
+    httpOnly: false,// javascript only
+    secure: false,//HTTPS
+    sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+});
+res.cookie("refreshToken", refreshToken, {
+  httpOnly: true,
+  secure: false,
+  sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 });
 
-// authMiddleware.js
+
+  res.status(200).json({status:'success', data: sanitizeUser(user),refreshToken ,token,imageUrl });
+});
+// public
+exports.logout = asyncHandler(async (req, res, next) => {
+console.log('logout');
+
+  //  remove token
+  
+  res.cookie("token", '', {
+    httpOnly: false,// javascript only
+    secure: false,//HTTPS
+    sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+   
+});
+
+res.cookie("refreshToken", '', {
+  httpOnly: false,
+  secure: false,
+  sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+
+});
 
 
-// const authenticateToken = (req, res, next) => {
-//   const authHeader = req.headers['authorization'];
-//   const token = authHeader && authHeader.split(' ')[1];
-
-//   if (!token) return res.sendStatus(401);
-
-//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-//     if (err) {
-//       if (err.name === 'TokenExpiredError') {
-//         // جلب رمز التحديث من الـ cookie
-//         const refreshToken = req.cookies.refreshToken;
-
-//         if (!refreshToken) return res.sendStatus(403);
-
-//         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-//           if (err) return res.sendStatus(403);
-
-//           const newAccessToken = jwt.sign({ username: user.username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-//           res.setHeader('Authorization', `Bearer ${newAccessToken}`);
-//           req.user = user;
-//           next();
-//         });
-//       } else {
-//         return res.sendStatus(403);
-//       }
-//     } else {
-//       req.user = user;
-//       next();
-//     }
-//   });
-// };
+  res.status(200).json({status:'success', data: 'Logged out successfully' });
+});
 
 
-
+// Check the user if the password is updated and his identity
 const handleAuthenticatedUser = async (user, req, next) => {
   const currentUser = await UserModel.findById(user.userId);
   if (!currentUser) {
@@ -127,7 +136,6 @@ const handleAuthenticatedUser = async (user, req, next) => {
   if (currentUser.passwordChangeAt) {
     const passwordChangeTimestamp = parseInt(currentUser.passwordChangeAt.getTime() / 1000, 10);
 
-    // Password changed after token creation (error)
     if (passwordChangeTimestamp > user.iat) {
       return next(new ApiErorr('User recently changed his password. Please log in again...', 401));
     }
@@ -136,11 +144,10 @@ const handleAuthenticatedUser = async (user, req, next) => {
   req.user = currentUser;
   next();
 };
+
 // check token
 exports.protect = asyncHandler(async (req, res, next) => {
-  // 1 - Check if token exists
   let token;
-  
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     token = req.headers.authorization.split(' ')[1];
@@ -150,11 +157,10 @@ exports.protect = asyncHandler(async (req, res, next) => {
     return next(new ApiErorr('You are not logged in. Please log in to access this route', 401));
   }
 
-  // 2 - Verify token (handle expired or invalid tokens)
   jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, user) => {
     if (err) {
       if (err.name === 'TokenExpiredError') {
-        const { refreshToken } = req.cookies;
+        const {refreshToken} = req.cookies;
         if (!refreshToken) {
           return next(new ApiErorr('Refresh token is missing', 403));
         }
@@ -163,9 +169,16 @@ exports.protect = asyncHandler(async (req, res, next) => {
           if (refError) return next(new ApiErorr('Invalid refresh token', 403));
 
           const newAccessToken = createToken(refUser);
-          res.setHeader('Authorization', `Bearer ${newAccessToken}`);
-
-          // Continue with the request
+          console.log('Setting new access token:', newAccessToken);
+          // res.setHeader('Content-Type', 'application/json');
+         
+          res.cookie("token", newAccessToken, {
+            httpOnly: false,// javascript only
+            secure: false,//HTTPS
+            sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        }); 
+        res.setHeader('Authorization', `Bearer ${newAccessToken}`);
           await handleAuthenticatedUser(refUser, req, next);
         });
       } else {
@@ -176,11 +189,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
     }
   });
 });
-
-
-
-
-
 
 
 
@@ -247,7 +255,7 @@ exports.verifyResetCode = asyncHandler(async (req, res, next) => {
     passwordResetCode: hashedResetCode,
     passwordResetExpires: { $gt: Date.now() },
   });
-  console.log(user,'user');
+
   if (!user) {
     return next(
       new ApiErorr(`reset code invalid or expired ${req.body.resetCode}  `, 404)
@@ -290,6 +298,20 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
   await user.save();
   // 4-  if everything is ok ,generate token
   const token = createToken(user);
+
+  const refreshToken  = createRefreshToken(user);
+  res.cookie("token", token, {
+    httpOnly: false,// javascript only
+    secure: false,//HTTPS
+    sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+});
+res.cookie("refreshToken", refreshToken, {
+  httpOnly: true,
+  secure: false,
+  sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+});
   res.status(200).json({status:'success', data: user, token,imageUrl });
 });
 
