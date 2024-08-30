@@ -19,7 +19,7 @@ exports.createCategoryValidator = [
     .withMessage("Category required")
     .isLength({ min: 3 })
     .withMessage("too short category name")
-    .isLength({ max: 32 })
+    .isLength({ max: 70 })
     .withMessage("too short category name")
     .custom(async(value,{ req})=>{
       const gategory = await categoryModule.findOne({name:value});

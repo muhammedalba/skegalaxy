@@ -7,7 +7,7 @@ const brandSchema = new mongoose.Schema(
       required: [true, "name required"],
       unique: [true, "brand must be unique"],
       minlength: [3, "Too short brand name"],
-      maxlength: [32, "Too long brand name"],
+      maxlength: [70, "Too long brand name"],
     },
     //  A B /=> a-b
     slug: {

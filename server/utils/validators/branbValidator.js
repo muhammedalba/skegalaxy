@@ -15,7 +15,7 @@ exports.createBrandValidator = [
     .withMessage("Brand required")
     .isLength({ min: 3 })
     .withMessage("too short Brand name")
-    .isLength({ max: 32 })
+    .isLength({ max: 70 })
     .withMessage("too short Brand name")
     .custom(async (valeu, { req }) => {
       await brandModule.findOne({ name: valeu }).then((brand) => {

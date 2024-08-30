@@ -18,7 +18,7 @@ exports.createProductValidator = [
     .withMessage("product title required")
     .isLength({ min: 3 })
     .withMessage("too short product title  name")
-    .isLength({ max: 40 })
+    .isLength({ max: 70 })
     .withMessage("too long product title  name")
   .custom((val,{ req})=>{
     req.body.slug=slugify(val);
