@@ -81,22 +81,31 @@ const Header = () => {
     window.scrollTo(0, 0);
   };
 
+  useEffect(() =>{
+
+    if(isSuccess) { 
+       const cookies = new Cookies();
+      cookies.remove();
+       cookies.remove("firstname");
+       cookies.remove("image");
+       cookies.remove("imageUrl");
+       cookies.remove("role");
+       cookies.remove("token");
+       cookies.remove("refreshToken");
+       window.location.pathname='/'
+     
+     }
+  },[isSuccess])
   // handel Logout
   const Logout = () => {
-    const cookies = new Cookies();
+  
     Autapi({
       url:'logout',
      body:'',
       method: "post",
     });
-    cookies.remove();
-    cookies.remove("firstname");
-    cookies.remove("image");
-    cookies.remove("imageUrl");
-    cookies.remove("role");
-    cookies.remove("token");
+
     
-    window.location.pathname='/'
  
   };
  // reset navigation to 10 items per page and update navigation property

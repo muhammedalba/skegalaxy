@@ -259,11 +259,11 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
 };
 
 FormInputs.propTypes = {
-  path: PropTypes.string.isRequired,
-  method: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  InputData: PropTypes.array.isRequired,
-  formdata: PropTypes.object.isRequired,
+  path: PropTypes.string,
+  method: PropTypes.string,
+  title: PropTypes.string,
+  name: PropTypes.string,
+  InputData: PropTypes.array,
+  formdata: PropTypes.object,
 };
 export default FormInputs;
