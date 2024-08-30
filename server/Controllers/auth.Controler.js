@@ -47,13 +47,13 @@ exports.signup = asyncHandler(async (req, res) => {
     httpOnly: false,// javascript only
     secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
   secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 
   res.status(201).json({status:'success', data: sanitizeUser(user),refreshToken,token ,imageUrl});
@@ -89,13 +89,13 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
     httpOnly: false,// javascript only
     secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
   secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 
 
@@ -103,7 +103,7 @@ res.cookie("refreshToken", refreshToken, {
 });
 // public
 exports.logout = asyncHandler(async (req, res, next) => {
-console.log('logout');
+
 
   //  remove token
   
@@ -115,7 +115,7 @@ console.log('logout');
 });
 
 res.cookie("refreshToken", '', {
-  httpOnly: false,
+  httpOnly: true,
   secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
 
