@@ -178,7 +178,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
             sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
             maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
         }); 
-        // res.setHeader('Authorization', `Bearer ${newAccessToken}`);
+        res.setHeader('Authorization', `Bearer ${newAccessToken}`);
           await handleAuthenticatedUser(refUser, req, next);
         });
       } else {
