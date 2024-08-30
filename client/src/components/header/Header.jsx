@@ -24,10 +24,14 @@ import { BiTransfer } from "react-icons/bi";
 import { Results } from "../../redux/features/Slice/QuantityResultSlice";
 import { currentPage } from "../../redux/features/Slice/NavigationSlice";
 
+import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
+
 
 
 
 const Header = () => {
+  const [Autapi, { data: user, error: eror, isLoading, isSuccess }] =
+  useAutapiMutation();
 
 
   const cookies = new Cookies();
@@ -80,7 +84,12 @@ const Header = () => {
   // handel Logout
   const Logout = () => {
     const cookies = new Cookies();
-    // cookies.remove();
+    Autapi({
+      url:'logout',
+     body:'',
+      method: "post",
+    });
+    cookies.remove();
     cookies.remove("firstname");
     cookies.remove("image");
     cookies.remove("imageUrl");

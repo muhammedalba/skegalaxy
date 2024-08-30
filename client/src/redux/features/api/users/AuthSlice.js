@@ -1,12 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import Cookies from 'universal-cookie';
 
-// const cookies = new Cookies();
-// const token = cookies.get("token");
 export const authSlice = createApi({
   reducerPath: "authapi",
+   
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_AUTH_API,
+    credentials: "include",
   }),
   // انشاء تاغ
   tagTypes: ["Users"],

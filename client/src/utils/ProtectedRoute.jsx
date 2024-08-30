@@ -3,7 +3,9 @@ import Cookies from "universal-cookie";
 
 const ProtectedRoute = ({   children }) => {
 const cookies= new Cookies();
- const token = cookies.get("token");
+
+const token = cookies.get("token");
+
  const role = cookies.get("role")?.toLowerCase();
 
 

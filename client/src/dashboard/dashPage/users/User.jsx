@@ -29,7 +29,7 @@ const User = () => {
       data: updatedUser,
     },
   ] = useUpdateOneMutation();
-  console.log(updateError, "error");
+  error&& console.log(error, "error");
   // states
   const [formData, setFormData] = useState({
     firstname: "",

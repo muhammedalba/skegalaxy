@@ -71,15 +71,18 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
     }
   }, [eror, name]);
   //  if success
+  console.log(eror);
+  
   useEffect(() => {
     // const notify = () =>
-    if (isSuccess) {
+    if (isSuccess && user.token) {
       //if res = success set data to cookies
       const cookies = new Cookies();
       cookies.set("role", user.data.role);
       cookies.set("firstname", user.data.firstname);
       cookies.set("image", user.data.image);
-      cookies.set("token", user.token);
+      // cookies.set("token", user.token);
+      // cookies.set("refreshToken", user.refreshToken);
       cookies.set("imageUrl", user.imageUrl);
       //
      successNotify(`تمت ${title} بنجاح`);
