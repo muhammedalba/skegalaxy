@@ -4,7 +4,7 @@
     import { FaImage } from "react-icons/fa";
     import { useNavigate } from "react-router-dom";
     import logo from '../../../imges/logo.webp'
-import { errorNotify, successNotify } from "../../../utils/Toast";
+import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
 
 
 
@@ -68,7 +68,11 @@ const CreateBrands = () => {
 
 
         }
-      
+        useEffect(() => {
+          if(error?.status ===401){
+            warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+          }
+        },[error?.status])
     //  handel error message
       useEffect(() => {
         if (error) {

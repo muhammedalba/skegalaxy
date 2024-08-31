@@ -30,8 +30,8 @@ import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 
 
 const Header = () => {
-  const [Autapi, { data: user, error: eror, isLoading, isSuccess }] =
-  useAutapiMutation();
+  const [Autapi, { isSuccess }] =  useAutapiMutation();
+
 
 
   const cookies = new Cookies();
@@ -44,7 +44,7 @@ const Header = () => {
   
   const [scroll, setscroll] = useState(false);
   const [trans, settrans] = useState(false);
-  
+ 
   const dispatch = useDispatch();
 
   const handleScroll = useCallback(() => {
@@ -84,7 +84,7 @@ const Header = () => {
   useEffect(() =>{
 
     if(isSuccess) { 
-       const cookies = new Cookies();
+      
       cookies.remove();
        cookies.remove("firstname");
        cookies.remove("image");
@@ -95,16 +95,22 @@ const Header = () => {
        window.location.pathname='/'
      
      }
-  },[isSuccess])
+  },[cookies, isSuccess])
   // handel Logout
   const Logout = () => {
   
     Autapi({
       url:'logout',
-     body:'',
+     body:{},
       method: "post",
     });
-
+    cookies.remove();
+    cookies.remove("firstname");
+    cookies.remove("image");
+    cookies.remove("imageUrl");
+    cookies.remove("role");
+    cookies.remove("token");
+    cookies.remove("refreshToken");
     
  
   };

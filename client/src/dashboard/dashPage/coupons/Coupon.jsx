@@ -8,7 +8,7 @@
     import { FaImage, FaUser } from 'react-icons/fa';
     
     import { ToastContainer, } from 'react-toastify';
-    import { errorNotify, infoNotify, successNotify } from '../../../utils/Toast';
+    import { errorNotify, infoNotify, successNotify, warnNotify } from '../../../utils/Toast';
 import { convertDateTime } from '../../../utils/convertDateTime';
     
     const Coupon = () => {
@@ -36,7 +36,11 @@ import { convertDateTime } from '../../../utils/convertDateTime';
 
  
     
-    
+    useEffect(() => {
+      if(error?.status ===401){
+        warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+      }
+    },[error?.status])
     
     
     // isSuccess 

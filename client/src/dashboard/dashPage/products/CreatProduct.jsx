@@ -102,6 +102,11 @@ const CreatProduct = () => {
     }
   
   }, [error]);
+  useEffect(() => {
+    if(error?.status ===401){
+      warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+    }
+  },[error?.status])
 
   // handleSubmit
   const handleSubmit = (e) => {

@@ -6,12 +6,16 @@ import { ToastContainer } from "react-toastify";
 import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
 import { SkeletonCustomerAndAdress, SkeletonTeble } from "../../../utils/skeleton";
 import { convertDateTime } from "../../../utils/convertDateTime";
+import Cookies from "universal-cookie";
 
 
  const Order = () => {   
    
         //   get user id from params
         const {orderId}=useParams();
+
+        const cookies = new Cookies();
+        const Token=cookies.get('token');
     
       // get order from the database
       const {
@@ -41,7 +45,11 @@ import { convertDateTime } from "../../../utils/convertDateTime";
       const shippingAddress = order?.data?.shippingAddress
 console.log(order);
 
-
+useEffect(() => {
+  if(error?.status ===401){
+    warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+  }
+},[error?.status])
       // states
       
         const openImge = (imageUrl) => {
@@ -85,7 +93,52 @@ console.log(order);
         [updateOne]
       );
 
+// download order PDF
+const DownloadPdf = async( ) => {
+  const baseUrl=import.meta.env.VITE_API
+   if(Token){
+    try {
+      const response = await fetch(`${baseUrl}/orders/${orderId}/?download=pdf`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Token}`,
+          'Content-Type': 'application/pdf',
+        },
+      });
 
+      // تحقق من حالة الاستجابة
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // تحقق من نوع المحتوى
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('pdf')) {
+        // أنشئ رابط لتحميل الـ PDF
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'document.pdf'); // اسم الملف الذي سيتم تنزيله
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        successNotify('تم تنزيل الملف بنجاح')
+      } else {
+        console.error('Error: Response is not a PDF file');
+      }
+      console.log(response);
+    
+    } catch (error) {
+      console.error('Error fetching PDF:', error);
+      errorNotify('حثة مشكلة اثناء تنزيل الملف')
+    }
+   }else{
+    warnNotify('الرجاء تسجيل الدخول')
+   }
+
+     
+    };
 
    // if sucsses and data is not empty  show the products
    const showData = useMemo(() => {
@@ -384,11 +437,17 @@ const sendDeliveryReceiptImage =useCallback( (e) => {
                 </div>
                 {/* send pdf */}
                 <div className="col-md-12 py-3 fs-5 py-2 border col-12  text-primary">
+                
                   <label
                     className="p-1 fs-5 d-flex align-items-center gap-1"
                     htmlFor="orderPdf"
                   >
                    ارسال فاتوره(pdf) :{ order?.data?.orderPdf?<span className="text-success"> ( تم الارسال )     </span>:'' }
+                   <button disabled={isLoading|| createLoading||updateLoading}  className= {order?.data?.orderPdf?'m-2 btn btn-success p-1 text-white':'d-none' }
+                    type="button" onClick={DownloadPdf}   >
+                  تحميل الفاتورة      
+               </button>
+
             </label>
             <input
               accept=".pdf"
@@ -401,8 +460,8 @@ const sendDeliveryReceiptImage =useCallback( (e) => {
               onChange={(e)=>handleImageChange(e,'pdf')}           
                />
                </div>
-                    {/* send pdf */}
-                    <div className="col-md-12 py-3 fs-5 py-2 border col-12  text-primary">
+                  {/* send imge  */}
+                <div className="col-md-12 py-3 fs-5 py-2 border col-12  text-primary">
                   <label
                     className="p-1 fs-5 d-flex align-items-center gap-1"
                     htmlFor="DeliveryReceiptImage"
@@ -432,7 +491,7 @@ const sendDeliveryReceiptImage =useCallback( (e) => {
                         order?.data?.isDelivered ? (
                         "تم التوصيل"
                       ) : (
-                        <button disabled={order?.data?.isDelivered||updateLoading || isLoading} 
+                        <button disabled={order?.data?.isDelivered||updateLoading || isLoading||createLoading} 
                         onClick={()=>handleAction(order?.data?._id,'deliver')} 
                         className=" btn btn-primary   ">
                             تاكيد التوصيل
@@ -463,7 +522,7 @@ const sendDeliveryReceiptImage =useCallback( (e) => {
                     ( {order?.data.VerificationCode} )
                  
                     </span>:
-                          <button disabled={order?.data?.isPaid||updateLoading}
+                          <button disabled={order?.data?.isPaid||updateLoading||isLoading||createLoading}
                           onClick={()=>handleAction(order?.data?._id,'pay')} 
                           className=" btn btn-primary   ">
                              ارسال كود التحقق   

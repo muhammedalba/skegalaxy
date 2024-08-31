@@ -46,7 +46,7 @@ const Cart = () => {
     isLoading,
     isSuccess,
   } = useGetDataQuery(`cart`);
-console.log(error);
+console.log(products);
 
 
   const [
@@ -142,6 +142,12 @@ console.log(errorUpdate);
       focus.current.focus();
     }
   }, [display]);
+
+  useEffect(() => {
+    if(error?.status ===401){
+      warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+    }
+  },[error?.status])
 
   // Effect for handling product data retrieval
   useEffect(() => {
@@ -285,7 +291,7 @@ console.log(errorUpdate);
             <Fade delay={0} direction="up" triggerOnce={true}>
               <button
                 disabled={LoadingDelet || LoadingUpdate}
-                onClick={() => handelDelet(product?.product?._id)}
+                onClick={() => handelDelet(product?._id)}
                 className="btn border-0 text-danger fs-3"
               >
                 {LoadingDelet || LoadingCreate ? (
@@ -301,14 +307,14 @@ console.log(errorUpdate);
               <img
                 style={{ width: "100px", height: "80px" }}
                 src={`${products?.imageUrl}/${product?.product?.imageCover}`}
-                alt="avatar"
+                alt="product"
               />
             </Fade>
           </td>
           <td className="d-none d-sm-table-cell text-end">
             <Fade delay={0} direction="up" triggerOnce={true}>
               <div className="d-flex flex-column w-100 h-100">
-                {product.product?.title?.slice(0, 50)}..
+                {product.product ? product.product?.title?.slice(0, 50):<span className="text-danger"> هذا المنتج غير متوفر حاليا</span>}
                 <span
                   className={`${
                     product?.product?.priceAfterDiscount

@@ -37,6 +37,7 @@ const ClientOrders = () => {
       } = useGetDataQuery(
         `orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}`
       );
+    console.log(error);
     
       useEffect(() => {
         if (error) {

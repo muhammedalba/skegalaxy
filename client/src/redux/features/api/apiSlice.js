@@ -1,24 +1,12 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import Cookies from 'universal-cookie';
 
-const cookies = new Cookies();
-const token = cookies.get('token');
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API,
     credentials: 'include',
-   
-    prepareHeaders: (headers) => {   
-     
-    
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
 
-      return headers;
-    },
   }),
   tagTypes: ['data'],
   endpoints: (builder) => ({

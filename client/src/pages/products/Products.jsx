@@ -433,8 +433,8 @@ const Products = () => {
                 <option value={"&sort=-ratingsAverage"}>
                   ترتيب حسب الاعلى تقييما
                 </option>
-                <option value="&sort=priceAfterDiscount">من الاقل الى الاعلى سعرا</option>
-                <option value="&sort=-priceAfterDiscount">من الاعلى سعرالى الاقل</option>
+                <option value="&sort=price">من الاقل الى الاعلى سعرا</option>
+                <option value="&sort=-price">من الاعلى سعرالى الاقل</option>
                 <option value={"&sort=-title"}>
                   ترتيب حسب الاسم من a الى z
                 </option>
@@ -449,7 +449,7 @@ const Products = () => {
             <button
               onClick={resetFilter}
               type="button"
-              className="btn btn-danger h-50"
+              className="btn btn-outline-danger h-50 text-primary"
             >
               مسح الاختيارات
             </button>

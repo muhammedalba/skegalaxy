@@ -119,25 +119,7 @@ console.log(updateError);
         brand: product.data.brand?.name,
         images: product.data?.images,
       });
-      // setFormData({
-      //   title: product.data?.title,
-      //   description: product.data?.description,
-      //   price: product.data?.price,
     
-      //   quantity: product.data?.quantity,
-      //   category: product.data.category?._id,
-      //   brand: product.data.brand?._id,
-      // });
-      // product.data?.priceAfterDiscount &&  setFormData({
-     
-      //       title: product.data?.title,
-      //   description: product.data?.description,
-      //   price: product.data?.price,
-      //   priceAfterDiscount: product.data?.priceAfterDiscount,
-      //   quantity: product.data?.quantity,
-      //   category: product.data.category?._id,
-      //   brand: product.data.brand?._id,
-      // });
 
 
       const baseFormData = {
@@ -167,6 +149,11 @@ console.log(updateError);
   }, [product, isSuccess, updatesuccess, navegate]);
 
   // handel errors
+  useEffect(() => {
+    if(error?.status ===401){
+      warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+    }
+  },[error?.status])
   useEffect(() => {
     updateError && console.log(updateError?.data.error?.code);
     if (updateError?.data.error?.code === "LIMIT_UNEXPECTED_FILE") {

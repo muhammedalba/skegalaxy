@@ -7,7 +7,7 @@ import { useCreateOneMutation } from "../../../redux/features/api/apiSlice";
 import { FaImage, FaUser } from "react-icons/fa";
 
 import { ToastContainer } from "react-toastify";
-import { errorNotify, infoNotify, successNotify } from "../../../utils/Toast";
+import { errorNotify, infoNotify, successNotify, warnNotify } from "../../../utils/Toast";
 import { convertDateTime } from "../../../utils/convertDateTime";
 
 const CreateCoupons = () => {
@@ -27,7 +27,11 @@ console.log(error?.data);
     expires: "",
     // createdAt: "",
   });
-  //  state
+  useEffect(() => {
+    if(error?.status ===401){
+      warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+    }
+  },[error?.status])
 
   // isSuccess
   useEffect(() => {

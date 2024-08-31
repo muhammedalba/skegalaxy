@@ -13,7 +13,7 @@ import Navigation from "../../../components/navigation/Navigation";
 import QuantityResults from "../../../components/QuantityResults/QuantityResults";
 
 import { ToastContainer } from "react-toastify";
-import { errorNotify, successNotify } from "../../../utils/Toast";
+import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
 // icons
 
 import { FilterData } from "../../../utils/filterSearh";
@@ -49,7 +49,11 @@ console.log(errorDelet);
 
   
 console.log(error);
-
+useEffect(() => {
+  if(error?.status ===401){
+    warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+  }
+},[error?.status])
   
   //handel error our  success message 
 

@@ -7,9 +7,9 @@
     
     import { TiArrowSortedDown } from "react-icons/ti";
     import { TiArrowSortedUp } from "react-icons/ti";
-    
-    import { errorNotify, successNotify } from "../../../utils/Toast";
-    import { useGetDataQuery, useUpdateOneMutation } from "../../../redux/features/api/apiSlice";
+    import { RiDeleteBin6Line } from "react-icons/ri";
+    import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
+    import { useDeletOneMutation, useGetDataQuery, useUpdateOneMutation } from "../../../redux/features/api/apiSlice";
     import QuantityResults from "../../../components/QuantityResults/QuantityResults";
     import Navigation from "../../../components/navigation/Navigation";
     import { useSelector } from "react-redux";
@@ -39,6 +39,7 @@ import { FilterData } from "../../../utils/filterSearh";
         isLoading,
         isSuccess,
       } = useGetDataQuery(`orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}`);
+     console.log(error);
 
 
       const[updateOne, {
@@ -49,8 +50,17 @@ import { FilterData } from "../../../utils/filterSearh";
        
       
       }] = useUpdateOneMutation();
+      const[deletOne, {
+     
+        error: deletError,
+        isLoading: deletLoading,
+        isSuccess: deletSuccess,
+       
+      
+      }] = useDeletOneMutation();
     
       isSuccess&&  console.log(orders, "order");
+    console.log(deletError);
     
       // states
       const [sorted, setsorted] = useState(false);
@@ -60,13 +70,23 @@ import { FilterData } from "../../../utils/filterSearh";
         if (updateSuccess) {
           successNotify("تم تحديث العنصر بنجاح");
         }
-      }, [updateSuccess]);
-    
+        if (deletSuccess) {
+          successNotify("تم تحديث العنصر بنجاح");
+        }
+      }, [deletSuccess, updateSuccess]);
+      useEffect(() => {
+        if(error?.status ===401){
+          warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+        }
+      },[error?.status])
    useEffect(() => {
         if (error||updateError) {
           errorNotify("خطا في الخادم");
         }
-      }, [error, updateError]);
+        if (deletError?.status==402) {
+          errorNotify("غير مصرح لك فعل ذلك");
+        }
+      }, [deletError?.status, error, updateError]);
     
       // handel sort
  const handleSort = () => {
@@ -92,9 +112,20 @@ import { FilterData } from "../../../utils/filterSearh";
         });
   
         }
-    
-        const handlidisplayOrders =
-        useCallback(()=>setconfirmed(!confirmed),[confirmed])   
+    // delete order
+    const deletOrder=(id)=>{
+      if(id){
+        if (confirm("هل انت متاكد بانك تريد حذف هذا العنصر")) {
+            //  send form data to server
+            deletOne( `/orders/${id}` );
+      
+        }
+        } else{
+        warnNotify('العنصر غير موجود')
+      }
+       
+    }
+        // const handlidisplayOrders =useCallback(()=>setconfirmed(!confirmed),[confirmed])   
 
 
       //// search orders based on the search input  by email, firstname, lastname && sorted (a,b)
@@ -157,7 +188,7 @@ import { FilterData } from "../../../utils/filterSearh";
                        order.isDelivered ? (
                       "تم التوصيل"
                     ) : (
-                      <button disabled={order.isDelivered|| updateLoading} onClick={()=>handelDelivered(order._id)} className=" btn btn-primary   ">
+                      <button disabled={order.isDelivered|| updateLoading || deletLoading} onClick={()=>handelDelivered(order._id)} className=" btn btn-primary   ">
                           تاكيد التوصيل
                    </button>
                     )}
@@ -178,7 +209,7 @@ import { FilterData } from "../../../utils/filterSearh";
                     </span>
 
                     :
-                      <button disabled={order?.isPaid||updateLoading} onClick={()=>handliPay(order._id)} className=" btn btn-primary   ">
+                      <button disabled={order?.isPaid||updateLoading||deletLoading} onClick={()=>handliPay(order._id)} className=" btn btn-primary   ">
                          ارسال كود الاستلام   
                        </button>}
                   </span>
@@ -199,6 +230,18 @@ import { FilterData } from "../../../utils/filterSearh";
                   <Link to={`${order._id}`} className="btn btn-success text-white">
                     عرض
                   </Link>
+                  </Fade>
+                </td>
+                <td>
+                <Fade delay={0} direction='up' triggerOnce={true}    >
+
+                <button
+              disabled={updateLoading || updateLoading||isLoading}
+              onClick={() => deletOrder(order._id)}
+              className=" border-0"
+            >
+                <RiDeleteBin6Line  fontSize={'1.5rem'} color="red"/>
+            </button>
                   </Fade>
                 </td>
               </tr>
@@ -280,6 +323,7 @@ import { FilterData } from "../../../utils/filterSearh";
                 <th className="d-none d-sm-table-cell" scope="col"> حالة الدفع </th>
                 <th  className="nowrap d-none d-sm-table-cell" scope="col">نوع الدفع</th>
                 <th scope="col">عرض</th>
+                <th scope="col">حذف</th>
               </tr>
             </thead>
             <tbody className="">{isLoading ? SkeletonTeble : showData}</tbody>

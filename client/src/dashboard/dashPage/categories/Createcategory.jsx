@@ -3,7 +3,7 @@
     import {  ToastContainer } from "react-toastify";
     import { FaImage } from "react-icons/fa";
     import { useNavigate } from "react-router-dom";
-    import { errorNotify, successNotify } from "../../../utils/Toast";
+    import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
     import logo from '../../../imges/logo.webp'
 import { Fade } from "react-awesome-reveal";
 
@@ -82,6 +82,11 @@ const Createcategory = () => {
           }
         }
       }, [error]);
+      useEffect(() => {
+        if(error?.status ===401){
+          warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+        }
+      },[error?.status])
     //  handle  is successful
       useEffect(() => {
         if (!isLoading && isSuccess) {

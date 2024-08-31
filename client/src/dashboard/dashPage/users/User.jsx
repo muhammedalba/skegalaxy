@@ -4,7 +4,7 @@ import {
   useUpdateOneMutation,
   useGetOneQuery,
 } from "../../../redux/features/api/apiSlice";
-import { errorNotify, infoNotify, successNotify } from "../../../utils/Toast";
+import { errorNotify, infoNotify, successNotify, warnNotify } from "../../../utils/Toast";
 
 // icons
 import { FaImage, FaUser } from "react-icons/fa";
@@ -62,7 +62,11 @@ const User = () => {
       errorNotify("خطأ في الخادم");
     }
   }, [data, isSuccess, updateSuccess, navigate, updateError, updatedUser]);
-
+  useEffect(() => {
+    if(error?.status ===401){
+      warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+    }
+  },[error?.status])
   // handleSubmit
   const handleSubmit = useCallback(
     (e) => {

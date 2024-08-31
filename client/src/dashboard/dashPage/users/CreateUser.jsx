@@ -8,7 +8,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import logo from '../../../imges/logo.webp'
 import { Fade } from "react-awesome-reveal";
-import { errorNotify, successNotify } from "../../../utils/Toast";
+import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
 const CreateUser = () => {
   const [createOne, { error, isLoading, isSuccess }] = useCreateOneMutation();
 
@@ -65,7 +65,11 @@ const CreateUser = () => {
       return;
     }
   };
-
+  useEffect(() => {
+    if(error?.status ===401){
+      warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+    }
+  },[error?.status])
   useEffect(() => {
     if (error) {
       if (error?.status === 400) {

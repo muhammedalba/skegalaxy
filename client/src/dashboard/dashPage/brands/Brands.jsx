@@ -12,7 +12,7 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import Navigation from "../../../components/navigation/Navigation";
 import { useSelector } from "react-redux";
 import QuantityResults from "../../../components/QuantityResults/QuantityResults";
-import { errorNotify, successNotify } from "../../../utils/Toast";
+import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
 import { Fade } from "react-awesome-reveal";
 import { SkeletonTeble } from "../../../utils/skeleton";
 import { FilterData } from "../../../utils/filterSearh";
@@ -45,7 +45,11 @@ const Brands = () => {
 
   
 
-  
+  useEffect(() => {
+    if(error?.status ===401){
+      warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+    }
+  },[error?.status])
   //handel error our  success message 
 
   useEffect(() => {
