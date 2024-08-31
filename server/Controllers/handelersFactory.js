@@ -2,18 +2,21 @@ const asyncHandler = require("express-async-handler");
 const path = require('path');
 const ApiError = require("../utils/apiError");
 const ApiFeatures = require("../utils/apiFeatures");
+const cartModel = require("../models/cartModel");
 
 const {
   deletImageFromFolder,
   updatemageFromFolder,
 } = require("../middleWare/uploadImgeMiddlewRE.JS");
+const orderModul = require("../models/orderModel");
+
 
 
 
 
 exports.createOne = (model) =>
   asyncHandler(async (req, res) => {
-    console.log(req.user);
+
     
     const imageUrl=`${req.protocol}://${req.get('host')}/uploads/${req.baseUrl.split("/").slice(2).join("/")}`;
     
@@ -28,22 +31,27 @@ exports.createOne = (model) =>
 
   exports.getAll = (model, modelName) =>
     asyncHandler(async (req, res, next) => {
-         let newUrl;
-      // Make sure it is a single path and does not contain a connected path.
-      if(req.baseUrl.split("/").length >=3 ){
+      //    let newUrl;
+      // // Make sure it is a single path and does not contain a connected path.
+      // if(req.baseUrl.split("/").length >=3 ){
 
-        const parts = req.baseUrl.split('/');
-        const lastWord = parts[parts.length - 1];   
-        newUrl = `${req.protocol}://${req.get('host')}/uploads/${lastWord}`;
+      //   const parts = req.baseUrl.split('/');
+      //   const lastWord = parts[parts.length - 1];   
+      //   newUrl = `${req.protocol}://${req.get('host')}/uploads/${lastWord}`;
 
-      }else{
+      // }else{
 
-        newUrl = `${req.protocol}://${req.get('host')}/uploads/${req.baseUrl.split("/").slice(2, 3).join("/")}`;
+      //   newUrl = `${req.protocol}://${req.get('host')}/uploads/${req.baseUrl.split("/").slice(2, 3).join("/")}`;
         
-      }
+      // } 
+      //  const imageUrl = newUrl.replace(/orders/g, 'products');
+const pathParts = req.baseUrl.split('/').filter(part => part);
+ // Remove empty parts
+const lastSegment = pathParts[pathParts.length - 1];
+const newUrl = `${req.protocol}://${req.get('host')}/uploads/${lastSegment}`;
+const imageUrl = newUrl.replace(/orders/g, 'products');
       
-      
-      const imageUrl = newUrl.replace(/orders/g, 'products');
+   
       
   
   
@@ -53,7 +61,7 @@ exports.createOne = (model) =>
       }
   
       // إنشاء نسخة من ApiFeatures وتنفيذ الفلترة والترتيب والبحث وتحديد الحقول
-      const apiFeatures = new ApiFeatures(model.find(filter), req.query)
+      const apiFeatures = new ApiFeatures(model.find(filter).lean(), req.query)
         .filter()
         .sort()
         .search(modelName)
@@ -90,7 +98,7 @@ exports.getOne = (model, populationOpt) =>
     
     const { id } = req.params;
     // build query
-    let query = model.findById(id);
+    let query = model.findById(id).lean();
     if (populationOpt) {
       query = query.populate(populationOpt);
     }
@@ -142,21 +150,64 @@ exports.getOne = (model, populationOpt) =>
    
   }});
 
-exports.deleteOne = (model) =>
-  asyncHandler(async (req, res, next) => {
-    const { id } = req.params;
-      // delet imge from uploads folder
-    await deletImageFromFolder(id, model,req);
+  exports.deleteOne = (model, type) =>
+    asyncHandler(async (req, res, next) => {
+      const { id } = req.params;
+  
+      try {
+        if (type === 'user') {
+          // 1- Delete user cart
+          await cartModel.deleteOne({ user: id });
+  
+          // 2- Delete images from order folder
+          await deletImageFromFolder(id, orderModul, req, 'allorderimage');
+  
+          // 3- Delete user orders
+          await orderModul.deleteOne({ user: id });
+            // Delete avatar from user folder
+           await deletImageFromFolder(id, model, req);
+          // 4- Delete user from database
+          const document = await model.findByIdAndDelete(id);
+        
+  
+          if (!document) {
+            return next(new ApiError(`No document found for the id ${id}`, 404));
+          }
+          return res.status(204).send();
+        }
+        if (type === 'order') {
+          // 1- Delete images from order folder
+          await deletImageFromFolder(id, model, req, 'orderimages');
+          // 2- Delete order from orders list
+          const document = await model.findByIdAndDelete(id);
+          if (!document) {
+            return next(new ApiError(`No document found for the id ${id}`, 404));
+          }
+          return res.status(204).send();
+        }
+        // For non-user type operations
+        // Delete images from uploads folder
+        await deletImageFromFolder(id, model, req);
+        const document = await model.findByIdAndDelete(id);
+        
+  
+        if (!document) {
+          return next(new ApiError(`No document found for the id ${id}`, 404));
+        }
+  
+        // trigger "remove" event when update document
+        await document.deleteOne();
+        return res.status(204).send();
+      } catch (error) {
+        // Handle unexpected errors
+        return next(new ApiError(error.message,'error in delet', 500));
+      }
+    });
 
-    const document = await model.findByIdAndDelete(id);
 
-    if (!document) {
-      return next(new ApiError(` no document for the id ${id}`, 404));
-    }
-    // trigger "remove" event when update document
-    await document.deleteOne();
-    return res.status(204).send();
-  });
+
+
+
 exports.updateOne = (model) =>
   asyncHandler(async (req, res, next) => {
 

@@ -100,6 +100,8 @@ exports.getCart = asyncHandler(async (req, res, next) => {
    const newUrl = imageUrl.replace("cart", "products");
 
   const cart = await cartModel.findOne({ user: req.user._id });
+ 
+  
   if (!cart) {
     return next(
       new ApiError(` there is no cart this user id ${req.user._id} `, 404)
@@ -116,6 +118,8 @@ exports.getCart = asyncHandler(async (req, res, next) => {
 // remove item from cart
 // delet http://localhost:4000/api/cart/:itemid
 exports.removeCartItem = asyncHandler(async (req, res, next) => {
+ 
+  
   try {
     // التحقق من وجود الـ cart
     const cart = await cartModel.findOneAndUpdate(
@@ -123,7 +127,7 @@ exports.removeCartItem = asyncHandler(async (req, res, next) => {
       {
         $pull: {
           cartItems: {
-            product: req.params.itemid,
+            _id: req.params.itemid,
           },
         },
       },

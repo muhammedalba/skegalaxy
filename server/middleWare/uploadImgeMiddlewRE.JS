@@ -1,12 +1,16 @@
+
+
+
 /* eslint-disable import/no-extraneous-dependencies */
 const multer = require("multer");
 
 const fs = require("fs");
-
+// const paths = require('path');
 const sharp = require("sharp");
 const { v4: uuidv4 } = require("uuid");
 
 const asyncHandler = require("express-async-handler");
+
 const ApiError = require("../utils/apiError");
 
 const multerOptions = () => {
@@ -14,7 +18,7 @@ const multerOptions = () => {
   const fileFilter = (req, file, cb) => {
     const imagType = file.mimetype.split("/")[0];
     const pdfType = file.mimetype.split("/")[1];
-  console.log(req.baseUrl,'req.baseUrl');
+
   
     if (
       imagType === "image" ||
@@ -33,56 +37,6 @@ const multerOptions = () => {
 };
 // upload single image
 exports.uploadImage = (arrayOfFislds) => multerOptions().fields(arrayOfFislds);
-
-// image processing
-// exports.resizeImge = asyncHandler(async (req, res, next) => {
-
-//   if (req.files.imageCover) {
-//     const path = req.baseUrl.split("/")[2];
-//     const filename = `${path}-imageCover-${Date.now()}-${uuidv4()}.WebP`;
-//     await sharp(req.files.imageCover[0].buffer)
-//       .resize(2000, 1333)
-//       .toFormat("WebP")
-//       .WebP({ quality: 90 })
-//       .toFile(`uploads/${path}/${filename}`);
-
-//     // save image into our db
-//     req.body.imageCover = filename;
-
-//   }
-//   if (req.files.image) {
-
-//     const path = req.baseUrl.split("/")[2];
-//     const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
-//     await sharp(req.files.image[0].buffer)
-//       .resize(600, 600)
-//       .toFormat("WebP")
-//       .WebP({ quality: 90 })
-//       .toFile(`uploads/${path}/${filename}`);
-//     // save image into our db
-//     req.body.image = filename;
-//
-//   }
-//   if (req.files.images) {
-//     const path = req.baseUrl.split("/")[2];
-//     req.body.images = [];
-//     await Promise.all(
-//       req.files.images.map(async (image, index) => {
-//         const filename = `${path}-image-${index + 1}-${Date.now()}-${uuidv4()}.WebP`;
-//         await sharp(image.buffer)
-//           .resize(800, 800)
-//           .toFormat("WebP")
-//           .WebP({ quality: 95 })
-//           .toFile(`uploads/${path}/${filename}`);
-//         // save image into our db
-//         req.body.images.push(filename);
-//       })
-//     );
-//   }
-
-//   next();
-// });
-
 
 // image processing
 exports.resizeImge = asyncHandler(async (req, res, next) => {
@@ -194,153 +148,119 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
 });
 
 exports.updatemageFromFolder = asyncHandler(async (id, model, req) => {
-  const findImgeInDB = await model.findById(id);
+  // const findImgeInDB = await model.findById(id);
   //  console.log(`${req.protocol}://${req.get('host')}`);
   //  console.log(`${process.env.BASE_URL}`);
   //  console.log( findImgeInDB.image);
-
-  if (findImgeInDB) {
-    if (
-      req.body.image &&
-      findImgeInDB.image !== `1.png` &&
-      findImgeInDB.image !== undefined
-    ) {
-      // const imgePath = findImgeInDB.image.split("/").slice(3).join("/");
-      const baseUrl = req.baseUrl.split("/").slice(2).join("/");
-      const imagePath = `uploads/${baseUrl}/${findImgeInDB.image}`;
-
-      // Verify the file exists before deleting it
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-
-      //
-    }
-    if (req.body.imageCover || req.body.images) {
-      if (req.body.imageCover) {
-        // const imgePath = findImgeInDB.imageCover.split("/").slice(3).join("/");
-        const pathImge = req.baseUrl.split("/").slice(2).join("/");
-        const base = `uploads/${pathImge}/${findImgeInDB.imageCover}`;
-        // Verify the file exists before deleting it
-        if (fs.existsSync(base)) fs.unlinkSync(base);
+    const pathImge = req.baseUrl.split("/").slice(2).join("/");
+    const imageInDB = await model.findById(id);
+    const deleteFileIfExists = (filePath) => {
+      const fullPath = `uploads/${filePath}`;
+      if (fs.existsSync(fullPath)) {
+        try {
+          fs.unlinkSync(fullPath);
+        } catch (error) {
+          console.error(`Error deleting file ${fullPath}:`, error);
+        }
       }
-
-      if (req.body.images && findImgeInDB.images.length > 0) {
-        findImgeInDB.images.forEach((imge) => {
-          console.log(imge);
-          // const imgePaths = imge.split("/").slice(3).join("/");
-          const pathImge = req.baseUrl.split("/").slice(2).join("/");
-          const base = `uploads/${pathImge}/${imge}`;
-          // Verify the file exists before deleting it
-          if (fs.existsSync(base)) fs.unlinkSync(base);
-        });
-      }
-
-      // return true;
-    }
-    if (req.body.carouselImage ) {
-
-      const baseUrl = req.baseUrl.split("/").slice(2).join("/");
-      const imagePath = `uploads/${baseUrl}/${findImgeInDB.carouselImage}`;
-
-      // Verify the file exists before deleting it
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-
-      //
-    }
-    if (req.body.DeliveryReceiptImage ) {
-
-      const baseUrl = req.baseUrl.split("/").slice(2).join("/");
-      const imagePath = `uploads/${baseUrl}/${findImgeInDB.DeliveryReceiptImage}`;
-
-      // Verify the file exists before deleting it
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-
-      //
-    }
-    if (
-      req.body.infoProductPdf) {
-      // const imgePath = findImgeInDB.image.split("/").slice(3).join("/");
-      const baseUrl = req.baseUrl.split("/").slice(2).join("/");
-      const imagePath = `uploads/${baseUrl}/${findImgeInDB.infoProductPdf}`;
-
-      // Verify the file exists before deleting it
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-
-      //
-    }
-    if (
-      req.body.orderPdf) {
-      // const imgePath = findImgeInDB.image.split("/").slice(3).join("/");
-      const baseUrl = req.baseUrl.split("/").slice(2).join("/");
-      const imagePath = `uploads/${baseUrl}/${findImgeInDB.orderPdf}`;
-
-      // Verify the file exists before deleting it
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-
-      //
-    }
-  }
-});
-
-exports.deletImageFromFolder = asyncHandler(async (id, model, req) => {
- 
+    };
   
-  const findImgeInDB = await model.findById(id);
-  if (findImgeInDB) {
-    // findImgeInDB.image !==  `${req.protocol}://${req.get('host')}/uploads/users/1.WebP`
-    if (findImgeInDB.image !== `1.png` && findImgeInDB.image !== undefined) {
-      // const imgePath = findImgeInDB.image.split("/").slice(3).join("/");
-      const pathImge = req.baseUrl.split("/").slice(2).join("/");
-      const base = `uploads/${pathImge}/${findImgeInDB.image}`;
-      // Verify the file exists before deleting it
-      if (fs.existsSync(base)) fs.unlinkSync(base);
-    }
-    if (findImgeInDB.imageCover) {
-      // const imgePath = findImgeInDB.imageCover.split("/").slice(3).join("/");
-      const pathImge = req.baseUrl.split("/").slice(2).join("/");
-      const base = `uploads/${pathImge}/${findImgeInDB.imageCover}`;
-      // Verify the file exists before deleting it
-      if (fs.existsSync(base)) fs.unlinkSync(base);
-    }
-    if (findImgeInDB.images && findImgeInDB.images.length !== 0) {
-      findImgeInDB.images.forEach((imge) => {
-        // const imgePath = imge.split("/").slice(3).join("/");
-        const pathImge = req.baseUrl.split("/").slice(2).join("/");
-        const base = `uploads/${pathImge}/${imge}`;
 
-        // Verify the file exists before deleting it
-        if (fs.existsSync(base)) fs.unlinkSync(base);
+  
+    if (imageInDB) {
+      if (req.body.image && imageInDB.image !== '1.png') {
+        deleteFileIfExists(`${pathImge}/${imageInDB.image}`);
+      }
+      if (req.body.imageCover) {
+        deleteFileIfExists(`${pathImge}/${imageInDB.imageCover}`);
+      }
+      if (req.body.images && imageInDB.images.length > 0) {
+        imageInDB.images.forEach((img) => deleteFileIfExists(`${pathImge}/${img}`));
+      }
+      if (req.body.infoProductPdf) {
+        deleteFileIfExists(`${pathImge}/${imageInDB.infoProductPdf}`);
+      }
+      if (req.body.orderPdf) {
+        deleteFileIfExists(`${pathImge}/${imageInDB.orderPdf}`);
+      }
+      if (req.body.carouselImage) {
+        deleteFileIfExists(`${pathImge}/${imageInDB.carouselImage}`);
+      }
+    }
+  
+    return true;
+  });
+  
+
+
+exports.deletImageFromFolder = asyncHandler(async (id, model, req, type) => {
+  // const basePath = paths.join(__dirname, '../uploads');
+
+
+  // get folder name use base url   => (product/brand/users)
+  const pathImge = req.baseUrl.split("/").slice(2).join("/");
+  console.log(pathImge);
+   
+  // Helper function to delete a file if it exists
+  const deleteFileIfExists = (filePath) => {
+    const fullPath =  `uploads/${filePath}`;
+    if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
+  };
+
+  // Delete all order from user orders list 
+  if (type === 'allorderimage') {
+    const imagesInDB = await model.find({ user: id });
+
+    if (imagesInDB && imagesInDB.length > 0) {
+      imagesInDB.forEach((image) => {
+        deleteFileIfExists(`orders/${image.image}`);
+        deleteFileIfExists(`orders/${image.DeliveryReceiptImage}`);
+        deleteFileIfExists(`orders/${image.orderPdf}`);
       });
-      return true;
     }
-    if (findImgeInDB.infoProductPdf) {
-      // const imgePath = findImgeInDB.image.split("/").slice(3).join("/");
-      const baseUrl = req.baseUrl.split("/").slice(2).join("/");
-      const imagePath = `uploads/${baseUrl}/${findImgeInDB.infoProductPdf}`;
 
-      // Verify the file exists before deleting it
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+    return true;
+  } 
+  // delet order from user orders list
+  if (type === 'orderimages') {
+    const imagesInDB = await model.findById(id);
+    console.log(imagesInDB);
+    
+    if (imagesInDB ) {
+      
+        deleteFileIfExists(`orders/${imagesInDB.image}`);
+        deleteFileIfExists(`orders/${imagesInDB.DeliveryReceiptImage}`);
+        deleteFileIfExists(`orders/${imagesInDB.orderPdf}`);
+      }
+    
 
-      //
+    return true;
+  }
+  // Delete individual image or PDF
+  const imageInDB = await model.findById(id);
+
+  if (imageInDB) {
+   
+    if (imageInDB.image && imageInDB.image !== '1.png') {
+      deleteFileIfExists(`${pathImge}/${imageInDB.image}`);
     }
-    if (findImgeInDB.orderPdf) {
-      // const imgePath = findImgeInDB.image.split("/").slice(3).join("/");
-      const baseUrl = req.baseUrl.split("/").slice(2).join("/");
-      const imagePath = `uploads/${baseUrl}/${findImgeInDB.orderPdf}`;
-
-      // Verify the file exists before deleting it
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-
-      //
+    if (imageInDB.imageCover) {
+      deleteFileIfExists(`${pathImge}/${imageInDB.imageCover}`);
     }
-    if (findImgeInDB.carouselImage ) {
-
-      const pathImge = req.baseUrl.split("/").slice(2).join("/");
-      const imagePath = `uploads/${pathImge}/${findImgeInDB.carouselImage}`;
-
-      // Verify the file exists before deleting it
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-
-      //
+    if (imageInDB.images && imageInDB.images.length > 0) {
+      imageInDB.images.forEach((img) => deleteFileIfExists(`${pathImge}/${img}`));
+    }
+    if (imageInDB.infoProductPdf) {
+      deleteFileIfExists(`${pathImge}/${imageInDB.infoProductPdf}`);
+    }
+    if (imageInDB.orderPdf) {
+      deleteFileIfExists(`${pathImge}/${imageInDB.orderPdf}`);
+    }
+    if (imageInDB.carouselImage) {
+      deleteFileIfExists(`${pathImge}/${imageInDB.carouselImage}`);
     }
   }
+
+  return true;
 });
+

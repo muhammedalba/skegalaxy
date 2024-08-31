@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-
+const { promisify } = require('util');
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const UserModel = require("../models/users.module");
@@ -47,13 +47,13 @@ exports.signup = asyncHandler(async (req, res) => {
     httpOnly: false,// javascript only
     secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-    maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
+    // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
   secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-  maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
+  // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 
   res.status(201).json({status:'success', data: sanitizeUser(user),refreshToken,token ,imageUrl});
@@ -89,13 +89,13 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
     httpOnly: false,// javascript only
     secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-    maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
+    // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
   secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-  maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
+  // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 
 
@@ -107,14 +107,14 @@ exports.logout = asyncHandler(async (req, res, next) => {
 
   //  remove token
   
-  res.cookie("token", ' ', {
+  res.cookie("token", '', {
     httpOnly: false,// javascript only
     secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
    
 });
 
-res.cookie("refreshToken", ' ', {
+res.cookie("refreshToken", '', {
   httpOnly: false,
   secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
@@ -128,68 +128,137 @@ res.cookie("refreshToken", ' ', {
 
 // Check the user if the password is updated and his identity
 const handleAuthenticatedUser = async (user, req, next) => {
-  const currentUser = await UserModel.findById(user.userId);
-  if (!currentUser) {
-    return next(new ApiErorr('The user belonging to this token no longer exists', 401));
-  }
 
-  if (currentUser.passwordChangeAt) {
-    const passwordChangeTimestamp = parseInt(currentUser.passwordChangeAt.getTime() / 1000, 10);
+  try {
 
-    if (passwordChangeTimestamp > user.iat) {
-      return next(new ApiErorr('User recently changed his password. Please log in again...', 401));
+    const currentUser = await UserModel.findById(user.userId).lean()
+    if (!currentUser) {
+      return next(new ApiErorr('The user belonging to this token no longer exists', 401));
     }
-  }
 
-  req.user = currentUser;
-  next();
+    if (currentUser.passwordChangeAt) {
+      const passwordChangeTimestamp = parseInt(currentUser.passwordChangeAt.getTime() / 1000, 10);
+      if (passwordChangeTimestamp > user.iat) {
+        return next(new ApiErorr('User recently changed his password. Please log in again...', 401));
+      }
+    }
+
+    req.user = currentUser;
+    next();
+  } catch (error) {
+    console.error('Error in handleAuthenticatedUser:', error);
+    return next(new ApiErorr('Internal server error', 500));
+  }
 };
 
-// check token
-exports.protect = asyncHandler(async (req, res, next) => {
-  let token;
 
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    token = req.headers.authorization.split(' ')[1];
-  }
+// check token
+// exports.protect = asyncHandler(async (req, res, next) => {
+  
+ 
+//   const {refreshToken} = req.cookies;
+//   const {token} = req.cookies;
+// // chek token 
+//   // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+//   //   token = req.headers.authorization.split(' ')[1];
+//   // }
+//   if (!token) {
+//     return next(new ApiErorr('You are not logged in. Please log in to access this route', 401));
+//   }
+// // Check token validity
+//   jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, user) => {
+
+//     if (err) {
+//       //if Token Expired Error
+//       if (err.name === 'TokenExpiredError') {
+        
+//         if (!refreshToken) {
+//           return next(new ApiErorr('Refresh token is missing', 403));
+//         }
+//         // Check refreshToken validity
+//         jwt.verify(refreshToken, process.env.JWT_SECRET_KEY, async (refError, refUser) => {
+
+//           if (refError) return next(new ApiErorr('Invalid refresh token', 403));
+//           // Create a new Token
+//           const newAccessToken = createToken(refUser);
+          
+         
+//          console.log('new token :',newAccessToken);
+//         //  Token update
+//           res.cookie("token", newAccessToken, {
+//             httpOnly: false,// javascript only
+//             secure: false,//HTTPS
+//             sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+        
+//         }); 
+//         res.setHeader('Authorization', `Bearer ${newAccessToken}`);
+//           await handleAuthenticatedUser(refUser, req, next);
+//         });
+//       } // If the token is invalid
+//       else {
+        
+//         return next(new ApiErorr('Invalid access token', 403));
+//       }
+//     } 
+//     // If the token is valid
+//     else {
+//       await handleAuthenticatedUser(user, req, next);
+//     }
+//   });
+// });
+
+exports.protect = asyncHandler(async (req, res, next) => {
+  // let token;
+ const {refreshToken} = req.cookies;
+ const {token} = req.cookies;
+  // Check for token in headers
+  // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+  //   token = req.headers.authorization.split(' ')[1];
+  // }
+
   if (!token) {
     return next(new ApiErorr('You are not logged in. Please log in to access this route', 401));
   }
 
-  jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, user) => {
-    if (err) {
-      if (err.name === 'TokenExpiredError') {
-        const {refreshToken} = req.cookies;
-        if (!refreshToken) {
-          return next(new ApiErorr('Refresh token is missing', 403));
-        }
+  try {
+    // Verify access token
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
 
-        jwt.verify(refreshToken, process.env.JWT_SECRET_KEY, async (refError, refUser) => {
-          if (refError) return next(new ApiErorr('Invalid refresh token', 403));
+    
+    await handleAuthenticatedUser(decoded, req, next);
+  } catch (err) {
+    // Token expired
+    if (err.name === 'TokenExpiredError') {
+     
+      if (!refreshToken) {
+        return next(new ApiErorr('Refresh token is missing', 403));
+      }
 
-          const newAccessToken = createToken(refUser);
-          console.log('Setting new access token:', newAccessToken);
-         
-         
-          res.cookie("token", newAccessToken, {
-            httpOnly: false,// javascript only
-            secure: false,//HTTPS
-            sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-            maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
-        }); 
-        res.setHeader('Authorization', `Bearer ${newAccessToken}`);
-          await handleAuthenticatedUser(refUser, req, next);
+      try {
+        // Verify refresh token
+        const decodedRefreshToken = await promisify(jwt.verify)(refreshToken, process.env.JWT_SECRET_KEY);
+        
+        // Generate new access token
+        const newAccessToken = createToken(decodedRefreshToken);
+        
+        // Update cookie and authorization header
+        res.cookie("token", newAccessToken, {
+          httpOnly: false,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict', 
         });
-      } else {
-        return next(new ApiErorr('Invalid access token', 403));
+        res.setHeader('Authorization', `Bearer ${newAccessToken}`);
+        
+        await handleAuthenticatedUser(decodedRefreshToken, req, next);
+      } catch (refreshError) {
+        return next(new ApiErorr('Invalid refresh token', 403));
       }
     } else {
-      await handleAuthenticatedUser(user, req, next);
+      // Invalid access token
+      return next(new ApiErorr('Invalid access token', 403));
     }
-  });
+  }
 });
-
-
 
 // post forgotPassword
 //  http://localhost:4000/api/users/auth/forgotPassword

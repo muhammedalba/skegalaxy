@@ -14,6 +14,7 @@ const {
   updateOrderDeliveryReceiptImage,
   updateOrderToPaid,
   updateOrderTodelivered,
+  deletOrder,
 } = require("../Controllers/order.Controler");
 
 const router = express.Router();
@@ -26,6 +27,7 @@ router.get(
   getAllOrders
 );
 router.get("/:id", findSpecificOrder);
+router.delete("/:id", protect,allowedTo(role.ADMIN),deletOrder);
 router.post("/checkout-session/:cartId",protect,allowedTo(role.ADMIN, role.MANGER, role.USER), checkoutSession);
 router.put("/:id/pay", allowedTo(role.ADMIN, role.MANGER), updateOrderToPaid);
 router.put( "/:id/deliver",allowedTo(role.ADMIN, role.MANGER),updateOrderTodelivered);

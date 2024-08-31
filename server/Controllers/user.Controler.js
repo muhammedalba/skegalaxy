@@ -39,7 +39,7 @@ const updatetUserById = factory.updateOne(UserModel);
 // delet user
 // delet http://localhost:4000/api/users/id
 
-const deletUser = factory.deleteOne(UserModel, "addresses");
+const deletUser = factory.deleteOne(UserModel,'user' ,"addresses");
 
 // changeUserPassword (admin)
 // patch http://localhost:4000/api/users/changePassword/id

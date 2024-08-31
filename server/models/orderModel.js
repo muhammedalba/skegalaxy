@@ -39,6 +39,7 @@ const orderSchema = new mongoose.Schema(
       country:String,
       street:String,
     },
+
     totalOrderPrice: { type: Number },
     VerificationCode: { type: Number },
     paymentMethodType: {
@@ -48,13 +49,16 @@ const orderSchema = new mongoose.Schema(
     },
     image: { type: String,required:true},
     DeliveryReceiptImage: { type: String,},
+    orderPdf: {
+    type: String,
+  },
+
     isPaid: { type: Boolean, default: false },
     paidAt: { type: Date },
     isDelivered: { type: Boolean, default: false },
     deliveredAt: { type: Date },
-    orderPdf: {
-    type: String,
-  },
+ 
+
   },
 
   { timestamps: true }
