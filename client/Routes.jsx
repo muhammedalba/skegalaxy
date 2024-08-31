@@ -138,5 +138,5 @@ export const routes = createBrowserRouter([
 
     ],
   },
-  {path:'/*', element:<Error404 />},
+  {path:'*', element:<Error404 />},
 ]);

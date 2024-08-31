@@ -112,6 +112,26 @@ background-position: -315px 0, 0 0, 0px 190px, 50px 195px;
 .react-multi-carousel-track{
   margin: auto !important;
 }
+.react-multiple-carousel__arrow  {
+  background-color: var( --bgColor) !important;
+}
 table th{
   background-color: var( --bgColor) !important;
+}
+::-webkit-scrollbar-thumb{
+  background-color: var( --bgColor) !important;
+  -webkit-border-radius: 4rem;
+  -moz-border-radius: 4rem;
+  -ms-border-radius: 4rem;
+  -o-border-radius: 4rem;
+  border-radius: 4rem;
+}
+
+
+::-webkit-scrollbar-track-piece{
+ 
+  background-color: white !important;
+}
+::-webkit-scrollbar{
+   width: 0.6rem;
 }
