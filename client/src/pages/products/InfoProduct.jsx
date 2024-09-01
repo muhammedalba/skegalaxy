@@ -201,7 +201,7 @@ const InfoProduct = () => {
             <div className="col-lg-4 col-md-6 d-xl-flex gap-2">
               <ul
                 className="list-group gap-2 d-none d-xl-flex   
-                    justify-content-center  "
+                    justify-content-start  "
               >
                 <Fade delay={0} direction="up" triggerOnce={true}>
                   <li
@@ -337,10 +337,10 @@ const InfoProduct = () => {
                       </span>
                     </div>
                     <div className="fw-bold fs-4 pt-2 d-flex align-items-center">
-                      <span className="card-title fs-5 ">سعر المنتج : </span>
+                      <span className="card-title fs-5 px-1"> سعر المنتج   :  </span>
 
-                      <span className="text-secondary ">
-                        <span className="text-success"> SAR</span>
+                      <span className="text-secondary PX-1">
+                        <span className="text-success PX-1"> SAR </span>
                         <i
                           className={
                             product?.data?.priceAfterDiscount

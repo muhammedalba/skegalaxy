@@ -215,7 +215,7 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
 
 Card.propTypes = {
   imgePath: PropTypes.string,
-  reverse: PropTypes.string,
+  reverse: PropTypes.bool,
   product: PropTypes.object,
 };
 export default Card;
