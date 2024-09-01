@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 import QuantityResults from "../../../components/QuantityResults/QuantityResults";
 import { errorNotify, successNotify } from "../../../utils/Toast";
 import { Fade } from "react-awesome-reveal";
-import { FilterData } from "../../../utils/filterSearh";
+
 import { SkeletonTeble } from "../../../utils/skeleton";
 import DeleteModal from "../../../components/deletModal/DeleteModal";
 
@@ -143,14 +143,15 @@ const handleDelete =useCallback((id) => {
 
  
 
-  const filteredProducts = FilterData(products?.data,'products',search)?.sort((a, b) => sorted ? b.title.localeCompare(a.title) : a.title.localeCompare(b.title)) 
+
 
   // if sucsses and data is not empty  show the products
   const showData = useMemo(() => {
     if (isLoading) {
   return SkeletonTeble
     }
-    if (isSuccess && filteredProducts.length > 0) {
+    if (isSuccess && products?.data?.length > 0) {
+      const filteredProducts =[...products.data]
       return filteredProducts.map((product, index) => (
         <tr  key={index}>
           <td className="d-none d-sm-table-cell" scope="row">
@@ -244,7 +245,7 @@ const handleDelete =useCallback((id) => {
         </td>
       </tr>
     );
-  }, [isLoading, isSuccess, filteredProducts, products?.imageUrl, LoadingDelet, openModal]);
+  }, [isLoading, isSuccess, products?.data, products?.imageUrl, LoadingDelet, openModal]);
 
   // view brands
   const showbrands = useMemo(() => {
@@ -301,7 +302,7 @@ const handleDelete =useCallback((id) => {
       isLoading={isLoading}
         path={"createproduct"}
         isSuccess={isSuccess}
-        dataLength={filteredProducts?.length}
+        dataLength={products?.data?.length}
       />
       {/* category   brand  and reset data button*/}
       <div className="col-sm-12">

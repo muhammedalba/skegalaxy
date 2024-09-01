@@ -1,7 +1,7 @@
 
 
 
-    import { useCallback, useEffect, useState } from "react";
+    import { useCallback, useEffect, useMemo, useState } from "react";
     import {
       useGetDataQuery,
       useDeletOneMutation,
@@ -23,7 +23,7 @@ import { CiEdit } from "react-icons/ci";
     import { TiArrowSortedDown } from "react-icons/ti";
     import { TiArrowSortedUp } from "react-icons/ti";
 import { convertDateTime } from "../../../utils/convertDateTime";
-import { FilterData } from "../../../utils/filterSearh";
+
 import DeleteModal from "../../../components/deletModal/DeleteModal";
     
   const Coupons = () => {
@@ -42,7 +42,7 @@ import DeleteModal from "../../../components/deletModal/DeleteModal";
         error,
         isLoading,
         isSuccess,
-      } = useGetDataQuery(`coupons?limit=${limit}&page=${Pagination}`);
+      } = useGetDataQuery(`coupons?limit=${limit}&page=${Pagination}&keywords=${search}`);
       console.log(error);
       // delete coupons from the database
       const [
@@ -95,64 +95,131 @@ const handleDelete =useCallback((id) => {
 }
 ,[deletOne]);
     
-      //// search coupons based on the search input  by email, firstname, lastname && sorted (a,b)
-      const filterCoupons =FilterData(coupons?.data,'name',search)?.sort((a, b) =>
-              sorted ? b.name.localeCompare(a.name) : a.name.localeCompare(b.name)
-            );
+    
+  
     
       // if sucsses and data is not empty  show the coupons
-      const showData =
-        isSuccess &&
-        !isLoading &&filterCoupons.length > 0 ?
-        filterCoupons.map((coupons, index) => {
-          return (
-            <tr key={index}>
-              <td className="d-none d-md-table-cell" scope="row">
-              <Fade delay={0} direction='up' triggerOnce={true}   >
-                {index + 1}
-                </Fade>
-              </td>
-              <td  >
-              <Fade delay={0} direction='up' triggerOnce={true}   >
-                <span className="">{coupons.name}</span>
-                </Fade>
+      // const showData =
+      //   isSuccess &&
+      //   !isLoading &&filterCoupons.length > 0 ?
+      //   filterCoupons.map((coupons, index) => {
+      //     return (
+      //       <tr key={index}>
+      //         <td className="d-none d-md-table-cell" scope="row">
+      //         <Fade delay={0} direction='up' triggerOnce={true}   >
+      //           {index + 1}
+      //           </Fade>
+      //         </td>
+      //         <td  >
+      //         <Fade delay={0} direction='up' triggerOnce={true}   >
+      //           <span className="">{coupons.name}</span>
+      //           </Fade>
+      //           </td>
+    
+      //         <td className="d-none d-sm-table-cell">
+      //           <Fade delay={0} direction='up' triggerOnce={true}   >
+      //           <span className="">{convertDateTime(coupons.createdAt)}</span>
+
+      //           </Fade> 
+      //        </td>
+      //        <td className="d-none d-md-table-cell">
+      //           <Fade delay={0} direction='up' triggerOnce={true}   >
+      //           <span className="">{coupons.discount}<i className="text-success">%</i> </span>
+
+      //           </Fade> 
+      //        </td>
+      //         <td>
+      //         <Fade delay={0} direction='up' triggerOnce={true}   >
+    
+      //           <Link to={coupons._id} className="btn btn-outline-primary">
+      //              <CiEdit   />  
+      //           </Link>
+      //           </Fade>
+      //         </td>
+      //         <td>
+      //         <Fade delay={0} direction='up' triggerOnce={true}   >
+    
+      //           <button
+      //             disabled={LoadingDelet ? true : false}
+      //               onClick={() => openModal(coupons._id)}
+      //             className="btn btn-outline-danger"
+      //           >  <RiDeleteBin6Line/>
+      //           </button>
+      //           </Fade>
+      //         </td>
+      //       </tr>
+      //     );
+      //   }): (<tr><td className="text-center p-3 fs-5 text-primary"colSpan={7} scope="row">العنصر المراد البحث عنه غير موجود   </td></tr>);
+     
+   const showData = useMemo(() => {
+    if (isLoading) {
+  return SkeletonTeble
+    }
+    if (isSuccess && coupons?.data?.length > 0) {
+      const filteredProducts =[...coupons.data]
+      return filteredProducts.map((coupons, index) => {
+      
+           return   <tr key={index}>
+                <td className="d-none d-md-table-cell" scope="row">
+                <Fade delay={0} direction='up' triggerOnce={true}   >
+                  {index + 1}
+                  </Fade>
                 </td>
-    
-              <td className="d-none d-sm-table-cell">
+                <td  >
                 <Fade delay={0} direction='up' triggerOnce={true}   >
-                <span className="">{convertDateTime(coupons.createdAt)}</span>
-
-                </Fade> 
-             </td>
-             <td className="d-none d-md-table-cell">
+                  <span className="">{coupons.name}</span>
+                  </Fade>
+                  </td>
+      
+                <td className="d-none d-sm-table-cell">
+                  <Fade delay={0} direction='up' triggerOnce={true}   >
+                  <span className="">{convertDateTime(coupons.createdAt)}</span>
+  
+                  </Fade> 
+               </td>
+               <td className="d-none d-md-table-cell">
+                  <Fade delay={0} direction='up' triggerOnce={true}   >
+                  <span className="">{coupons.discount}<i className="text-success">%</i> </span>
+  
+                  </Fade> 
+               </td>
+                <td>
                 <Fade delay={0} direction='up' triggerOnce={true}   >
-                <span className="">{coupons.discount}<i className="text-success">%</i> </span>
-
-                </Fade> 
-             </td>
-              <td>
-              <Fade delay={0} direction='up' triggerOnce={true}   >
-    
-                <Link to={coupons._id} className="btn btn-outline-primary">
-                   <CiEdit   />  
-                </Link>
-                </Fade>
-              </td>
-              <td>
-              <Fade delay={0} direction='up' triggerOnce={true}   >
-    
-                <button
-                  disabled={LoadingDelet ? true : false}
-                    onClick={() => openModal(coupons._id)}
-                  className="btn btn-outline-danger"
-                >  <RiDeleteBin6Line/>
-                </button>
-                </Fade>
-              </td>
-            </tr>
-          );
-        }): (<tr><td className="text-center p-3 fs-5 text-primary"colSpan={7} scope="row">العنصر المراد البحث عنه غير موجود   </td></tr>);
-    
+      
+                  <Link to={coupons._id} className="btn btn-outline-primary">
+                     <CiEdit   />  
+                  </Link>
+                  </Fade>
+                </td>
+                <td>
+                <Fade delay={0} direction='up' triggerOnce={true}   >
+      
+                  <button
+                    disabled={LoadingDelet ? true : false}
+                      onClick={() => openModal(coupons._id)}
+                    className="btn btn-outline-danger"
+                  >  <RiDeleteBin6Line/>
+                  </button>
+                  </Fade>
+                </td>
+              </tr>
+            
+          });
+    }
+    return (
+      <tr>
+        <td
+          className="text-center p-3 fs-5 text-primary"
+          colSpan={7}
+          scope="row"
+        >
+          لايوجد بيانات
+        </td>
+      </tr>
+    );
+  }, [isLoading, isSuccess, coupons?.data, LoadingDelet, openModal]);
+  console.log(coupons);
+  
       return (
         <div className="w-100 pt-5 ">
           {/* tosat compunenet */}
@@ -173,7 +240,7 @@ const handleDelete =useCallback((id) => {
             isSuccess={isSuccess}
             isLoading={isLoading}
             path={"createCoupon"}
-            dataLength={filterCoupons?.length}
+            dataLength={coupons?.data?.length}
           />
     
           {/* data table */}

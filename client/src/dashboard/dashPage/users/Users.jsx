@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   useGetDataQuery,
   useDeletOneMutation,
@@ -17,7 +17,6 @@ import QuantityResults from "../../../components/QuantityResults/QuantityResults
 import { Fade } from "react-awesome-reveal";
 import { errorNotify, successNotify } from "../../../utils/Toast";
 import { SkeletonTeble } from "../../../utils/skeleton";
-import { FilterData } from "../../../utils/filterSearh";
 import DeleteModal from "../../../components/deletModal/DeleteModal";
 import Cookies from "universal-cookie";
 
@@ -38,7 +37,7 @@ const Users = () => {
   const role = cookies.get("role");
 
   const show=role.toLowerCase() === "admin"?'block':'none' 
-  const show1=role.toLowerCase() === "manger" && role.toLowerCase()=='admin'?'none':'block' 
+   
   console.log(show);
   
   // states
@@ -46,7 +45,7 @@ const Users = () => {
   const [selectedBrandId, setSelectedBrandId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   // get users from the database 
-  const {data:users, error,isLoading,isSuccess,} = useGetDataQuery(`users?limit=${QuantityResult}&page=${Pagination}`);
+  const {data:users, error,isLoading,isSuccess,} = useGetDataQuery(`users?limit=${QuantityResult}&page=${Pagination}&keywords=${search}`);
     console.log(error);
   // delete users from the database
   const [
@@ -102,76 +101,87 @@ const handleDelete =useCallback((id) => {
     setsorted(!sorted)
   };
 
-// search users based on the search input  by email, firstname, lastname && sorted (a,b)
-
-
-const filteredUsers= FilterData(users?.data,'users',search)?.sort((a, b) => sorted ?b.firstname.localeCompare(a.firstname): a.firstname.localeCompare(b.firstname));
-
 // if sucsses and data is not empty  show the users
-  const showData = isSuccess && !isLoading && filteredUsers.length > 0  ? filteredUsers.map((user, index) => {
-    return (
-      <tr key={index}>
-        <td className="d-none d-sm-table-cell" scope="row">
-            <Fade delay={0} direction='up' triggerOnce={true}>
-
-              {index +1}
-            </Fade>
-          </td>
-        <td>
-          <Fade delay={0} direction='up' triggerOnce={true}>
-
-            {user.firstname}
-          </Fade>
-        </td>
-        <td style={{ maxWidth: '10rem', overflow: 'hidden' }} className="d-none d-sm-table-cell">
-        <Fade delay={0} direction='up' triggerOnce={true}>
-
-          {user.email}
-          </Fade>
-          </td>
-        <td className="d-none d-md-table-cell">
-        <Fade delay={0} direction='up' triggerOnce={true}>
-        {user.role}
-        </Fade></td>
-        <td className="d-none d-md-table-cell">
-        <Fade delay={0} direction='up' triggerOnce={true}>
-
-          <img
-            style={{ width: "4rem", height: "4rem" , borderRadius: "50%" }}
-            
-            src={`${users.imageUrl}/${user.image}`}
-            alt="avatar"
-          /></Fade>
-        </td>
-        <td>
-        <Fade delay={0} direction='up' triggerOnce={true}>
-
-          <Link to={user._id} className={`btn btn-outline-success d-${role.toLowerCase() === "manger" &&user. role.toLowerCase()=='admin'?'none':'' }`}>
-              <CiEdit   />  
-          </Link></Fade>
-        </td>
-        <td>              
-          <Fade delay={0} direction='up' triggerOnce={true} >
-
+ 
+   const showData = useMemo(() => {
+    if (isLoading) {
+  return SkeletonTeble
+    }
+    if (isSuccess && users?.data?.length > 0) {
+      const filteredProducts =[...users.data]
+      return filteredProducts.map((user, index) => (
+        <tr key={index}>
+               <td className="d-none d-sm-table-cell" scope="row">
+                   <Fade delay={0} direction='up' triggerOnce={true}>
+      
+                   {index +1}
+                   </Fade>
+                 </td>
+               <td>
+                 <Fade delay={0} direction='up' triggerOnce={true}>
+      
+                 {user.firstname}
+               </Fade>
+               </td>
+               <td style={{ maxWidth: '10rem', overflow: 'hidden' }} className="d-none d-sm-table-cell">
+               <Fade delay={0} direction='up' triggerOnce={true}>
+  
+                 {user.email}
+                 </Fade>
+                 </td>
+               <td className="d-none d-md-table-cell">
+               <Fade delay={0} direction='up' triggerOnce={true}>
+               {user.role}
+               </Fade></td>
+               <td className="d-none d-md-table-cell">
+               <Fade delay={0} direction='up' triggerOnce={true}>
+  
+                 <img
+                   style={{ width: "4rem", height: "4rem" , borderRadius: "50%" }}
+              
+                   src={`${users.imageUrl}/${user.image}`}
+                   alt="avatar"
+                 /></Fade>
+               </td>
+               <td>
+               <Fade delay={0} direction='up' triggerOnce={true}>
+  
+                 <Link to={user._id} className={`btn btn-outline-success d-${role.toLowerCase() === "manger" &&user. role.toLowerCase()=='admin'?'none':'' }`}>
+                     <CiEdit   />  
+                 </Link></Fade>
+               </td>
+               <td>              
+                 <Fade delay={0} direction='up' triggerOnce={true} >
+  
+           
+                   <button
+                     disabled={LoadingDelet ? true : false}
+                     className={`btn btn-outline-danger d-${role.toLowerCase() === "manger" &&user. role.toLowerCase()=='admin'?'none':'block' } `}
+                    onClick={() => openModal(user._id)}
+                  >
+                         <RiDeleteBin6Line/>
+                  </button>
+           
          
-            <button
-              disabled={LoadingDelet ? true : false}
-              className={`btn btn-outline-danger d-${role.toLowerCase() === "manger" &&user. role.toLowerCase()=='admin'?'none':'block' } `}
-              onClick={() => openModal(user._id)}
-            >
-                   <RiDeleteBin6Line/>
-            </button>
-          
-        
-          
-          
-       </Fade>
+           
+           
+             </Fade>
+              </td>
+            </tr>
+      ));
+    }
+    return (
+      <tr>
+        <td
+          className="text-center p-3 fs-5 text-primary"
+          colSpan={7}
+          scope="row"
+        >
+          لايوجد بيانات
         </td>
       </tr>
     );
-  }): (<tr><td className="text-center p-3 fs-5 text-primary"colSpan={7} scope="row">العنصر المراد البحث عنه غير موجود   </td></tr>)
-     
- 
+  }, [isLoading, isSuccess, users?.data, users?.imageUrl, role, LoadingDelet, openModal]);
 
   return (
   <div className="w-100 pt-5 ">
@@ -194,7 +204,7 @@ const filteredUsers= FilterData(users?.data,'users',search)?.sort((a, b) => sort
         isSuccess ={isSuccess}
         isLoading={isLoading}
        path={'createUser'}
-       dataLength={filteredUsers?.length}/>
+       dataLength={users?.data?.length}/>
             
       {/* data table */}
       <table className="table table-striped pt-5 mt-3">

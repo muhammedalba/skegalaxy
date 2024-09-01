@@ -1,5 +1,5 @@
 
-    import {  useCallback, useEffect, useState } from "react";
+    import {  useCallback, useEffect, useMemo, useState } from "react";
     import {Fade} from'react-awesome-reveal';
     import { Link } from "react-router-dom";
     
@@ -9,7 +9,7 @@
     import { TiArrowSortedUp } from "react-icons/ti";
    
     import { RiDeleteBin6Line } from "react-icons/ri";
-import { CiEdit } from "react-icons/ci";
+
     import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
     import { useDeletOneMutation, useGetDataQuery, useUpdateOneMutation } from "../../../redux/features/api/apiSlice";
     import QuantityResults from "../../../components/QuantityResults/QuantityResults";
@@ -17,7 +17,7 @@ import { CiEdit } from "react-icons/ci";
     import { useSelector } from "react-redux";
 
 import { SkeletonTeble } from "../../../utils/skeleton";
-import { FilterData } from "../../../utils/filterSearh";
+
 import DeleteModal from "../../../components/deletModal/DeleteModal";
     
     const Orders = () => {
@@ -41,7 +41,7 @@ import DeleteModal from "../../../components/deletModal/DeleteModal";
         error,
         isLoading,
         isSuccess,
-      } = useGetDataQuery(`orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}`);
+      } = useGetDataQuery(`orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}&keywords=${search}`);
      console.log(error);
 
 
@@ -113,7 +113,7 @@ if(id){
 }
 }
 ,[deletOne]);
-  const handelDelivered=(id)=>{
+  const handelDelivered=useCallback((id)=>{
        
       //  send form data to server
       updateOne({
@@ -121,37 +121,45 @@ if(id){
         method: "put",
       });
 
-      }
+      },[updateOne])
       
 // Handi pay 
-  const handliPay=(id)=>{
+  const handliPay=useCallback((id)=>{
         //  send form data to server
         updateOne({
           url: `/orders/${id}/pay`,
           method: "put",
         });
   
-        }
+        },[updateOne]);
 
         // const handlidisplayOrders =useCallback(()=>setconfirmed(!confirmed),[confirmed])   
 
-
-      //// search orders based on the search input  by email, firstname, lastname && sorted (a,b)
-      const filteredUsers = FilterData(orders?.data,'users',search)?.sort(
-            
-        (a, b) =>
-          sorted ? a._id.localeCompare(b._id): b._id.localeCompare(a._id) 
-      );
-
+      const showData = useMemo(() => {
+        if (isSuccess && orders?.data?.length === 0 && search.length > 0) {
+          return (
+            <tr>
+              <td
+                className="text-center p-3 fs-5 text-primary"
+                colSpan={7}
+                scope="row"
+              >
+                <Fade delay={0} direction="up" triggerOnce={true}>
+                  العنصر المراد البحث عنه غير موجود
+                </Fade>
+              </td>
+            </tr>
+          );
+        }
     
-
-      // if sucsses and data is not empty  show the orders
-      const showData =
-        isSuccess && !isLoading && filteredUsers.length > 0 ? (
-          
-          filteredUsers.map((order, index) => {
+        if (isSuccess && orders?.data?.length > 0) {
+          const filterBrands = [...orders.data]?.sort((a, b) =>
+            sorted ? b._id.localeCompare(a._id) : a._id.localeCompare(b._id)
+          );
+    
+          return filterBrands.map((order, index) => {
             return (
-              <tr className="text-center" key={index}>
+                    <tr className="text-center" key={index}>
 
     
                 <td className="">
@@ -196,7 +204,7 @@ if(id){
                        order.isDelivered ? (
                       "تم التوصيل"
                     ) : (
-                      <button disabled={order.isDelivered|| updateLoading || deletLoading} onClick={()=>handelDelivered(order._id)} className=" btn btn-primary   ">
+                      <button disabled={order.isDelivered|| updateLoading || deletLoading} onClick={()=>handelDelivered(order._id)} className=" btn btn-success   ">
                           تاكيد التوصيل
                    </button>
                     )}
@@ -217,7 +225,7 @@ if(id){
                     </span>
 
                     :
-                      <button disabled={order?.isPaid||updateLoading||deletLoading} onClick={()=>handliPay(order._id)} className=" btn btn-primary   ">
+                      <button disabled={order?.isPaid||updateLoading||deletLoading} onClick={()=>handliPay(order._id)} className=" btn btn-success   ">
                          ارسال كود الاستلام   
                        </button>}
                   </span>
@@ -254,21 +262,9 @@ if(id){
                 </td>
               </tr>
             );
-          })
-        ) : (
-          <tr>
-            <td
-              className="text-center p-3 fs-5 text-primary"
-              colSpan={8}
-              scope="row"
-            >
-              {search.length !== 0
-                ? " العنصر المراد البحث عنه غير موجود في هذه الصفحه"
-                : "لا توجد أي عناصر"}
-            </td>
-          </tr>
-        );
-
+          });
+        }
+      }, [deletLoading, handelDelivered, handliPay, isLoading, isSuccess, openModal, orders?.data, search?.length, sorted, updateLoading]);
 
       return (
         <div className="w-100 pt-5 ">

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   useGetDataQuery,
   useDeletOneMutation,
@@ -17,7 +17,6 @@ import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
 // icons
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
-import { FilterData } from "../../../utils/filterSearh";
 import DeleteModal from "../../../components/deletModal/DeleteModal";
 
 const Carouseles = () => {
@@ -26,17 +25,15 @@ const Carouseles = () => {
   const Pagination = useSelector((state) => state.Pagination);
   const search = useSelector((state) => state.serch);
 
-
-
-  
-
   // get carousel from the database
   const {
     data: Carouseles,
     error,
     isLoading,
     isSuccess,
-  } = useGetDataQuery(`carousel?limit=${limit}&page=${Pagination}`);
+  } = useGetDataQuery(
+    `carousel?limit=${limit}&page=${Pagination}&keywords=${search}`
+  );
 
   // delete carousel from the database
   const [
@@ -44,21 +41,19 @@ const Carouseles = () => {
     { error: errorDelet, isLoading: LoadingDelet, isSuccess: SuccessDelet },
   ] = useDeletOneMutation();
 
-console.log(errorDelet);
+  console.log(errorDelet);
 
-const [selectedBrandId, setSelectedBrandId] = useState(null);
-const [showModal, setShowModal] = useState(false);
+  const [selectedBrandId, setSelectedBrandId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
+  console.log(error);
+  useEffect(() => {
+    if (error?.status === 401) {
+      warnNotify("انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا");
+    }
+  }, [error?.status]);
 
-  
-console.log(error);
-useEffect(() => {
-  if(error?.status ===401){
-    warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
-  }
-},[error?.status])
-  
-  //handel error our  success message 
+  //handel error our  success message
 
   useEffect(() => {
     if (!LoadingDelet && SuccessDelet) {
@@ -68,82 +63,100 @@ useEffect(() => {
     if (errorDelet || error) {
       errorNotify("خطأ في الخادم الداخلي");
     }
-  }, [ SuccessDelet, LoadingDelet, errorDelet, error]);
+  }, [SuccessDelet, LoadingDelet, errorDelet, error]);
 
-
-  
-    // handel open modale and seve item id in selectedBrandId
-    const openModal = useCallback((id) => {
-  
-      setSelectedBrandId(id);
-      setShowModal(true); // فتح الـ modal
-    
-  },[])
+  // handel open modale and seve item id in selectedBrandId
+  const openModal = useCallback((id) => {
+    setSelectedBrandId(id);
+    setShowModal(true); // فتح الـ modal
+  }, []);
   // delet item from database
-  const handleDelete =useCallback((id) => {
+  const handleDelete = useCallback(
+    (id) => {
+      if (id) {
+        deletOne(`/carousel/${id}`);
+        setShowModal(false); // إغلاق الـ modal بعد الحذف
+      }
+    },
+    [deletOne]
+  );
 
-    if(id){
-      deletOne(`/carousel/${id}`);
-      setShowModal(false); // إغلاق الـ modal بعد الحذف
-
-    }
-  }
-  ,[deletOne]);
- 
-
-  //// search Carouseles based on the search input  by name,&& sorted (a,b)
-  const filtereCategories =FilterData(Carouseles?.data,'name',search)
-
-  // if sucsses and data is not empty  show the Carouseles
-  const showData =
-    isSuccess &&
-    !isLoading &&filtereCategories.length > 0 ?
-    filtereCategories.map((carousel, index) => {
+  const showData = useMemo(() => {
+    if (isSuccess && Carouseles?.data?.length === 0 && search.length > 0) {
       return (
-        <tr key={index}>
-          <td className="d-none d-sm-table-cell" scope="row">
-          <Fade delay={0} direction='right' triggerOnce={true}   >
-            {index + 1}
-            </Fade>
-          </td>
-          <td  >
-          <Fade delay={0} direction='up' triggerOnce={true}   >
-            <span className="">{carousel.name}</span>
-            </Fade>
-            </td>
-
-          <td className="d-none d-md-table-cell">
-          <Fade delay={0} direction='up' triggerOnce={true}   >
-
-            { carousel.carouselImage?<img
-              style={{ width: "5rem", height: "5rem", }}
-              src={`${Carouseles.imageUrl}/${carousel.carouselImage}`}
-              alt="avatar"
-            />:'لا يوجد صورة'}
-         </Fade> </td>
-          <td>
-          <Fade delay={0} direction='up' triggerOnce={true}   >
-
-            <Link to={carousel._id} className="btn btn-outline-primary">
-              <CiEdit   />  
-            </Link>
-            </Fade>
-          </td>
-          <td>
-          <Fade delay={0} direction='up' triggerOnce={true}   >
-
-            <button
-              disabled={LoadingDelet ? true : false}
-                onClick={() => openModal(carousel._id)}
-              className="btn btn-outline-danger"
-            >
-            <RiDeleteBin6Line/>
-            </button>
+        <tr>
+          <td
+            className="text-center p-3 fs-5 text-primary"
+            colSpan={7}
+            scope="row"
+          >
+            <Fade delay={0} direction="up" triggerOnce={true}>
+              العنصر المراد البحث عنه غير موجود
             </Fade>
           </td>
         </tr>
       );
-    }): (<tr><td className="text-center p-3 fs-5 text-primary"colSpan={7} scope="row">العنصر المراد البحث عنه غير موجود في هذه الصفحه</td></tr>);
+    }
+
+    if (isSuccess && Carouseles?.data?.length > 0) {
+      const filterCarouseles = [...Carouseles.data];
+      return filterCarouseles.map((carousel, index) => {
+        return (
+          <tr key={index}>
+            <td className="d-none d-sm-table-cell" scope="row">
+              <Fade delay={0} direction="right" triggerOnce={true}>
+                {index + 1}
+              </Fade>
+            </td>
+            <td>
+              <Fade delay={0} direction="up" triggerOnce={true}>
+                <span className="">{carousel.name}</span>
+              </Fade>
+            </td>
+
+            <td className="d-none d-md-table-cell">
+              <Fade delay={0} direction="up" triggerOnce={true}>
+                {carousel.carouselImage ? (
+                  <img
+                    style={{ width: "5rem", height: "5rem" }}
+                    src={`${Carouseles.imageUrl}/${carousel.carouselImage}`}
+                    alt="avatar"
+                  />
+                ) : (
+                  "لا يوجد صورة"
+                )}
+              </Fade>{" "}
+            </td>
+            <td>
+              <Fade delay={0} direction="up" triggerOnce={true}>
+                <Link to={carousel?._id} className="btn btn-outline-primary">
+                  <CiEdit />
+                </Link>
+              </Fade>
+            </td>
+            <td>
+              <Fade delay={0} direction="up" triggerOnce={true}>
+                <button
+                  disabled={LoadingDelet ? true : false}
+                  onClick={() => openModal(carousel?._id)}
+                  className="btn btn-outline-danger"
+                >
+                  <RiDeleteBin6Line />
+                </button>
+              </Fade>
+            </td>
+          </tr>
+        );
+      });
+    }
+  }, [
+    LoadingDelet,
+    Carouseles?.data,
+    Carouseles?.imageUrl,
+    isSuccess,
+    openModal,
+    search.length,
+  ]);
 
   return (
     <div className="w-100 pt-5 ">
@@ -165,17 +178,15 @@ useEffect(() => {
         isSuccess={isSuccess}
         isLoading={isLoading}
         path={"createcarousel"}
-        dataLength={filtereCategories?.length}
+        dataLength={Carouseles?.data?.length}
       />
 
       {/* data table */}
       <table className="table table-striped  pt-5 mt-3">
         <thead>
           <tr>
-            <th   className="d-none  d-sm-table-cell"
-              scope="col"
-            >
-            ترتيب
+            <th className="d-none  d-sm-table-cell" scope="col">
+              ترتيب
             </th>
             <th scope="col">الاسم </th>
             <th className="d-none d-md-table-cell" scope="col">
@@ -186,12 +197,13 @@ useEffect(() => {
           </tr>
         </thead>
         <tbody className="">{isLoading ? SkeletonTeble : showData}</tbody>
-
       </table>
       {/*Modal */}
-  <DeleteModal
+      <DeleteModal
         show={showModal}
-        onClose={useCallback(() =>{ setShowModal(false)},[])}
+        onClose={useCallback(() => {
+          setShowModal(false);
+        }, [])}
         onDelete={handleDelete}
         itemId={selectedBrandId}
       />
@@ -201,10 +213,9 @@ useEffect(() => {
         isLoading={isLoading}
         isSuccess={isSuccess}
         status={Carouseles?.poginationResult || {}}
-       
       />
     </div>
   );
 };
 
-export default Carouseles
+export default Carouseles;

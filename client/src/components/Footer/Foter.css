@@ -2,6 +2,7 @@
 
 .footer{
     background-color:var(--bgColor);
+    overflow-x: hidden;
     color: var(--text-color) !important;
     .services{
         span{

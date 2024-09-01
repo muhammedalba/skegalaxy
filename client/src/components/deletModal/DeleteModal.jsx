@@ -1,7 +1,7 @@
 
 import PropTypes from "prop-types";
 
-const DeleteModal = ({ show, onClose, onDelete, itemId }) => {
+const DeleteModal = ({ show, onClose, onDelete, onCleaar,itemId }) => {
   return (
     <div className={`modal fade ${show ? 'show' : ''}`} id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden={!show} style={{ display: show ? 'block' : 'none' ,backgroundColor:'#021526b4'}}>
       <div className="modal-dialog">

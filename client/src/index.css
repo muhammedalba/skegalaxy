@@ -90,3 +90,33 @@ table th {
     background-position: 315px 0, 0 0, 0 190px, 50px 195px;
   }
 }
+.container-marquee {
+  display: flex;
+  width: 100%;
+  overflow: hidden; /* لإخفاء النص عند خروجه من حدود الـ div */
+  white-space: nowrap; /* لمنع التفاف النص */
+  .marquee {
+    -webkit-animation: marquee 20s linear infinite;
+    animation: marquee 20s linear infinite;
+}
+
+}
+
+
+
+ @keyframes marquee {
+  from {
+    -webkit-transform: translateX(-99%);
+    -moz-transform: translateX(-99%);
+    -ms-transform: translateX(-99%);
+    -o-transform: translateX(-99%);
+    transform: translateX(-99%);
+}
+  to {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%);
+}
+}

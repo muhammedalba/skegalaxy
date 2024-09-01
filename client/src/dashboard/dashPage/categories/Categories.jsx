@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   useGetDataQuery,
   useDeletOneMutation,
@@ -19,7 +19,6 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";
-import { FilterData } from "../../../utils/filterSearh";
 import DeleteModal from "../../../components/deletModal/DeleteModal";
 
 const Categories = () => {
@@ -38,7 +37,7 @@ const Categories = () => {
     error,
     isLoading,
     isSuccess,
-  } = useGetDataQuery(`categories?limit=${limit}&page=${Pagination}`);
+  } = useGetDataQuery(`categories?limit=${limit}&page=${Pagination}&keywords=${search}`);
   console.log(categories?.data);
   // delete category from the database
   const [
@@ -91,60 +90,86 @@ if(id){
   };
  
 
-  //// search categories based on the search input  by name,&& sorted (a,b)
-  const filtereCategories =FilterData(categories?.data,'name',search)
-
   // if sucsses and data is not empty  show the categories 
-  const showData =
-    isSuccess &&
-    !isLoading &&filtereCategories.length > 0 ?
-    filtereCategories.map((category, index) => {
-      return (
-        <tr key={index}>
-          <td className="d-none d-sm-table-cell" scope="row">
-          <Fade delay={0} direction='up' triggerOnce={true}   >
-            {index + 1}
-            </Fade>
-          </td>
-          <td  >
-          <Fade delay={0} direction='up' triggerOnce={true}   >
-            <span className="">{category.name.split('_')[0]}</span>
-            <span className="">{category.name.split('_')[1]}</span>
-          </Fade>
-            </td>
 
-          <td className="d-none d-md-table-cell">
-          <Fade delay={0} direction='up' triggerOnce={true}   >
-
-            { category.image?<img
-                style={{ width: "5rem", height: "5rem", }}
-              src={`${categories.imageUrl}/${category.image}`}
-              alt="avatar"
-            />:'لا يوجد صورة'}
-         </Fade> </td>
-          <td>
-          <Fade delay={0} direction='up' triggerOnce={true}   >
-
-            <Link to={category._id} className="btn btn-outline-primary">
-               <CiEdit   />  
-            </Link>
-            </Fade>
-          </td>
-          <td>
-          <Fade delay={0} direction='up' triggerOnce={true}   >
-
-            <button
-              disabled={LoadingDelet ? true : false}
-                onClick={() => openModal(category._id)}
-              className="btn btn-outline-danger"
+    const showData = useMemo(() => {
+      if (isSuccess && categories?.data?.length === 0 && search.length > 0) {
+        return (
+          <tr>
+            <td
+              className="text-center p-3 fs-5 text-primary"
+              colSpan={7}
+              scope="row"
             >
-             <RiDeleteBin6Line/>
+              <Fade delay={0} direction="up" triggerOnce={true}>
+                العنصر المراد البحث عنه غير موجود
+              </Fade>
+            </td>
+          </tr>
+        );
+      }
+  
+      if (isSuccess && categories?.data?.length > 0) {
+        const filterBrands = [...categories.data]?.sort((a, b) =>
+          sorted ? b.name.localeCompare(a.name) : a.name.localeCompare(b.name)
+        );
+  
+        return filterBrands.map((brand, index) => {
+          return (
+            <tr key={index}>
+              <td className="d-none d-sm-table-cell" scope="row">
+                <Fade delay={0} direction="up" triggerOnce={true}>
+                  {index + 1}
+                </Fade>
+              </td>
+              <td>
+                <Fade delay={0} direction="up" triggerOnce={true} cascade>
+                  <span className="">{brand.name.split("_")[0]}</span>
+                  <span>{brand.name.split("_")[1]}</span>
+                </Fade>
+              </td>
+  
+              <td className="d-none d-md-table-cell">
+                <Fade delay={0} direction="up" triggerOnce={true}>
+                  {brand.image ? (
+                    <img
+                      style={{ width: "5rem", height: "5rem" }}
+                      src={`${categories.imageUrl}/${brand.image}`}
+                      alt="avatar"
+                    />
+                  ) : (
+                    "لا يوجد صورة"
+                  )}
+                </Fade>
+              </td>
+              <td>
+                <Fade delay={0} direction="up" triggerOnce={true}>
+                  <Link
+                    to={!LoadingDelet && brand._id}
+                    className="btn btn-outline-primary"
+                  >
+                     <CiEdit   />  
+                  </Link>
+                </Fade>
+              </td>
+              <td>
+                <Fade delay={0} direction="up" triggerOnce={true}>
+    
+                    <button
+              disabled={LoadingDelet ? true : false}
+              type="button"
+              className="btn btn-outline-danger "
+              onClick={() => openModal(brand._id)}
+            >
+           <RiDeleteBin6Line/>
             </button>
-            </Fade>
-          </td>
-        </tr>
-      );
-    }): (<tr><td className="text-center p-3 fs-5 text-primary"colSpan={7} scope="row">العنصر المراد البحث عنه غير موجود في هذه الصفحه</td></tr>);
+                </Fade>
+              </td>
+            </tr>
+          );
+        });
+      }
+    }, [LoadingDelet, categories?.data, categories?.imageUrl, isSuccess, openModal, search.length, sorted]);
 
   return (
     <div className="w-100 pt-5 ">
@@ -166,7 +191,7 @@ if(id){
         isSuccess={isSuccess}
         isLoading={isLoading}
         path={"createcategory"}
-        dataLength={filtereCategories?.length}
+        dataLength={categories?.data.length}
       />
 
       {/* data table */}

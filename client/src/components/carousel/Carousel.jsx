@@ -41,7 +41,7 @@ const Carousel = () => {
       <div
         key={index}
         className={`carousel-item ${index === 0 ? "active" : ""} h-100 w-100 pb-5 pb-sm-1`}
-        data-bs-interval={`${index * 500}`}
+        data-bs-interval={`${index * 100}`}
       >
         <img
           width={'100%'} height={200}

@@ -1,6 +1,6 @@
 import "./cart.css";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import iban from '../../imges/ibanLatterAr.pdf'
+import iban from "../../imges/ibanLatterAr.pdf";
 import vizaImge from "../../imges/viza-preview.webp";
 import { useDispatch } from "react-redux";
 import {
@@ -17,6 +17,7 @@ import {
   successNotify,
   warnNotify,
 } from "../../utils/Toast";
+import DeleteModal from "../../components/deletModal/DeleteModal";
 // Icons
 
 import { SkeletonTeble } from "../../utils/skeleton";
@@ -35,6 +36,7 @@ import { IoAddOutline } from "react-icons/io5";
 import { RiSubtractLine } from "react-icons/ri";
 import { BsCheck2 } from "react-icons/bs";
 import { Fade } from "react-awesome-reveal";
+import Cookies from "universal-cookie";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -42,18 +44,17 @@ const Cart = () => {
   // API Queries and Mutations
   const {
     data: products,
-   error,
+    error,
     isLoading,
     isSuccess,
   } = useGetDataQuery(`cart`);
-console.log(products);
-
+  console.log(products);
 
   const [
     deletOne,
     { error: errorDelete, isLoading: LoadingDelet, isSuccess: successDelete },
   ] = useDeletOneMutation();
-console.log(errorDelete);
+  console.log(errorDelete);
   const [
     updateOne,
     {
@@ -78,20 +79,34 @@ console.log(errorDelete);
   // Recipient Description
   const [Company, setCompany] = useState(false);
   const [image, setImage] = useState(null);
-   // handle Image Change
-   const handleImageChange = (event) => {
+
+  const [selectedBrandId, setSelectedBrandId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+const cookies=new Cookies();
+const token=cookies.get('token')
+
+  // handel open modale and seve item id in selectedBrandId
+  const openModal = useCallback((id) => {
+    setSelectedBrandId(id);
+    setShowModal(true); // فتح الـ modal
+  }, []);
+  // delet item from database
+  const handleDelete = useCallback(
+    (productId) => {
+      if (productId) {
+        deletOne(`cart/${productId}`);
+        setShowModal(false); // إغلاق الـ modal بعد الحذف
+      }
+    },
+    [deletOne]
+  );
+  // handle Image Change
+  const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-        setImage(file);
+      setImage(file);
     }
-};
-
-
-
-
-
-
-
+  };
 
   const [shippingAddress, setshippingAddress] = useState({
     title: "",
@@ -120,8 +135,8 @@ console.log(errorDelete);
     cartItems: [],
     imageUrl: "",
   });
- 
-console.log(errorUpdate);
+
+  console.log(errorUpdate);
 
   // Effect for handling deletion success
   useEffect(() => {
@@ -144,10 +159,10 @@ console.log(errorUpdate);
   }, [display]);
 
   useEffect(() => {
-    if(error?.status ===401){
-      warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
+    if (error?.status === 401&& token) {
+      warnNotify("انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا");
     }
-  },[error?.status])
+  }, [error?.status, token]);
 
   // Effect for handling product data retrieval
   useEffect(() => {
@@ -172,7 +187,7 @@ console.log(errorUpdate);
     products?.resnumOfCartItems,
     successCreate,
   ]);
-// Link to go to the payment page
+  // Link to go to the payment page
   const PaymentPage = dataCreate?.data?.url;
 
   //handel success Create order our error message
@@ -203,16 +218,13 @@ console.log(errorUpdate);
     if (errorUpdate) {
       if (errorUpdate.status === 404) {
         warnNotify("الرمز خطأ او منتهي الصلاحيه");
-      }else if (errorUpdate.status === 400) {
+      } else if (errorUpdate.status === 400) {
         warnNotify("هذه الكميه غير متوفرة حاليا");
-      }
-      else {
+      } else {
         warnNotify("خطا في الخادم المحلي");
       }
     }
   }, [errorUpdate, successUpdate]);
-
-  
 
   // handle Purchase Change
   const handleshippingAddress = (e) => {
@@ -221,7 +233,7 @@ console.log(errorUpdate);
   };
 
   // Handle Increase and Decrease Quantity
-  const handleQuantityChange = useCallback((index, increment,inputValue) => {
+  const handleQuantityChange = useCallback((index, increment, inputValue) => {
     // show Confirm button
     setConfirm(true);
 
@@ -229,9 +241,11 @@ console.log(errorUpdate);
       const newCartItems = prevDetails.cartItems.map((item, i) => {
         if (i === index) {
           let newQuantity;
-          !inputValue? newQuantity = +item.quantity + +increment:newQuantity = +increment
+          !inputValue
+            ? (newQuantity = +item.quantity + +increment)
+            : (newQuantity = +increment);
           console.log(newQuantity);
-          
+
           return { ...item, quantity: Math.max(newQuantity, 1) };
         }
         return item;
@@ -243,30 +257,20 @@ console.log(errorUpdate);
 
   // Handle Quantity Update to Server
   const handelQuantity = useCallback(
-    (itemId, quantity,productId) => {
+    (itemId, quantity, productId) => {
       setConfirm(false);
-      
+
       if (quantity > 0) {
         updateOne({
           url: `/cart/${itemId}`,
           method: "PUT",
-          body: { quantity , productId },
-        }); 
+          body: { quantity, productId },
+        });
       } else {
         warnNotify("لا يمكن أن تكون الكمية أقل من 1");
       }
     },
     [updateOne]
-  );
-
-  // Handle Product Deletion
-  const handelDelet = useCallback(
-    (productId) => {
-      if (confirm("هل انت متاكد بانك تريد حذف هذا العنصر")) {
-        deletOne(`cart/${productId}`);
-      }
-    },
-    [deletOne]
   );
 
   // Clear Cart
@@ -285,13 +289,13 @@ console.log(errorUpdate);
     }
     if (isSuccess && productsDetails?.resnumOfCartItems > 0) {
       return productsDetails.cartItems.map((product, index) => (
-        <tr key={index}>{
-        }
+        <tr key={index}>
+          {}
           <td className=" d-table-cell" scope="row">
             <Fade delay={0} direction="up" triggerOnce={true}>
               <button
                 disabled={LoadingDelet || LoadingUpdate}
-                onClick={() => handelDelet(product?._id)}
+                onClick={() => openModal(product?._id)}
                 className="btn border-0 text-danger fs-3"
               >
                 {LoadingDelet || LoadingCreate ? (
@@ -314,7 +318,14 @@ console.log(errorUpdate);
           <td className="d-none d-sm-table-cell text-end">
             <Fade delay={0} direction="up" triggerOnce={true}>
               <div className="d-flex flex-column w-100 h-100">
-                {product.product ? product.product?.title?.slice(0, 50):<span className="text-danger"> هذا المنتج غير متوفر حاليا</span>}
+                {product.product ? (
+                  product.product?.title?.slice(0, 50)
+                ) : (
+                  <span className="text-danger">
+                    {" "}
+                    هذا المنتج غير متوفر حاليا
+                  </span>
+                )}
                 <span
                   className={`${
                     product?.product?.priceAfterDiscount
@@ -330,8 +341,8 @@ console.log(errorUpdate);
                   <i className="text-success"> SAR</i>
                 </span>
                 <span className=" text-danger">
-                  <i className="text-dark">  الكمية المتوفرة :</i>
-                  ({product?.product?.quantity} )
+                  <i className="text-dark"> الكمية المتوفرة :</i>(
+                  {product?.product?.quantity} )
                 </span>
               </div>
             </Fade>
@@ -345,24 +356,28 @@ console.log(errorUpdate);
                   color="blue"
                   onClick={() => handleQuantityChange(index, 1)}
                 />
-                <input min={1} 
-                max={2000}
-                  style={{width:'5rem'}}
-                  onChange={(e) => handleQuantityChange(index, e.target.value,true)}
+                <input
+                  min={1}
+                  max={2000}
+                  style={{ width: "5rem" }}
+                  onChange={(e) =>
+                    handleQuantityChange(index, e.target.value, true)
+                  }
                   type="number"
                   className="form-control  border-1  text-center bg-transparent"
                   id="quantity"
                   placeholder={productsDetails.cartItems[index].quantity}
                   value={productsDetails.cartItems[index].quantity}
-                   name="quantity"  />
-                
+                  name="quantity"
+                />
+
                 <RiSubtractLine
                   cursor={"pointer"}
                   fontSize={"25px"}
                   color="red"
                   onClick={() => handleQuantityChange(index, -1)}
                 />
-                {(
+                {
                   <button
                     type="button"
                     disabled={
@@ -370,19 +385,21 @@ console.log(errorUpdate);
                         ? true
                         : false
                     }
-                    className={Confirm?"btn  m-0 border-0 p-0 text-success":'d-none'}
+                    className={
+                      Confirm ? "btn  m-0 border-0 p-0 text-success" : "d-none"
+                    }
                     onClick={() =>
                       handelQuantity(
                         product?._id,
                         productsDetails?.cartItems[index].quantity,
-                         product?.product?._id
+                        product?.product?._id
                       )
                     }
                   >
                     تاكيد
                     <BsCheck2 fontSize={"25px"} />
                   </button>
-                )}
+                }
               </div>
             </Fade>
           </td>
@@ -401,7 +418,20 @@ console.log(errorUpdate);
         </tr>
       );
     }
-  }, [isLoading, isSuccess, productsDetails?.resnumOfCartItems, productsDetails?.cartItems, LoadingDelet, LoadingUpdate, LoadingCreate, products?.imageUrl, Confirm, handelDelet, handleQuantityChange, handelQuantity]);
+  }, [
+    isLoading,
+    isSuccess,
+    productsDetails?.resnumOfCartItems,
+    productsDetails?.cartItems,
+    LoadingDelet,
+    LoadingUpdate,
+    LoadingCreate,
+    products?.imageUrl,
+    Confirm,
+    openModal,
+    handleQuantityChange,
+    handelQuantity,
+  ]);
 
   // handel Create Order
   const handelCreateOrder = (e) => {
@@ -409,8 +439,8 @@ console.log(errorUpdate);
 
     // Validate the form data
     const formErrors = validateFormData(shippingAddress, Company);
-    formErrors.phone && setshippingAddress({ ...shippingAddress, phone: formErrors.phone })
-      ;
+    formErrors.phone &&
+      setshippingAddress({ ...shippingAddress, phone: formErrors.phone });
 
     if (Object.keys(formErrors.errors).length > 0) {
       // Handle the errors (e.g., set error state, display error messages)
@@ -421,8 +451,8 @@ console.log(errorUpdate);
 
       return;
     }
-    if (image===null){
-      warnNotify(' الرجاء ارسال صورة الوصل')
+    if (image === null) {
+      warnNotify(" الرجاء ارسال صورة الوصل");
       return;
     }
     // Send data to backend if valid
@@ -432,14 +462,16 @@ console.log(errorUpdate);
     ) {
       const cartId = productsDetails.id;
       const form = new FormData();
-          Object.keys(shippingAddress).forEach((key) => form.append(key, shippingAddress[key]));
-         
-          if (image) form.append("image", image);
+      Object.keys(shippingAddress).forEach((key) =>
+        form.append(key, shippingAddress[key])
+      );
+
+      if (image) form.append("image", image);
       // create order
       CreateOne({
         url: `/orders/${cartId}`,
         method: "post",
-        body:  form ,
+        body: form,
       });
     } else {
       infoNotify("لايوجد منتجات في السلة");
@@ -498,7 +530,6 @@ console.log(errorUpdate);
     }
   };
 
-
   return (
     <div className="container-fluid pt-5  ">
       <ToastContainer
@@ -512,12 +543,14 @@ console.log(errorUpdate);
         pauseOnHover
         theme="colored"
       />
-        {/* products results && table &&coupon */}
+      {/* products results && table &&coupon */}
       <div className="row flex-row-reverse ">
         {/* products results && table */}
         <div className="col-12 col-lg-9 border-end flex">
           <Fade delay={0} direction="up" triggerOnce={true}>
-            <h1 className="text-center m-3 py-3 border-bottom">سلة مشترياتي </h1>
+            <h1 className="text-center m-3 py-3 border-bottom">
+              سلة مشترياتي{" "}
+            </h1>
           </Fade>
 
           {/* products results */}
@@ -554,11 +587,17 @@ console.log(errorUpdate);
         </div>
 
         {/* coupon and checkout start*/}
-        <div className={productsDetails?.resnumOfCartItems>0?"col-12 col-sm-7 mx-auto col-lg-3  totale z-2":"col-12 col-sm-6 mx-auto col-lg-3 totale"}>
+        <div
+          className={
+            productsDetails?.resnumOfCartItems > 0
+              ? "col-12 col-sm-7 mx-auto col-lg-3  totale z-2"
+              : "col-12 col-sm-6 mx-auto col-lg-3 totale"
+          }
+        >
           {/* coupon start*/}
           {/* {isSuccess && productsDetails?.resnumOfCartItems > 0 &&  */}
           <form
-          style={{backgroundColor:'var(--minColor)'}}
+            style={{ backgroundColor: "var(--minColor)" }}
             className=" w-100 shadow-none pt-5 border-bottom p-2"
             onSubmit={handelcoupon}
           >
@@ -566,44 +605,46 @@ console.log(errorUpdate);
               {/* <p className="m-0 fs-4 px-1">هل لديك كود خصم؟</p> */}
               <Fade direction="up" triggerOnce={true} cascade>
                 <label className="fs-4 my-2  px-1 " htmlFor="couponInput ">
-                
                   هل لديك كود خصم؟
                 </label>
 
-
-                
-
-              <div className="w-100 d-flex border border-1 gap-1">
-                
+                <div className="w-100 d-flex border border-1 gap-1">
                   <input
-                  minLength={3}
-                  onChange={(e) => setCoupon(e.target.value)}
-                  type="text"
-                  className="form-control  border-0 shadow-none"
-                  id="couponInput"
-                  placeholder="ادخل رمز القسيمة"
-                  value={coupon}
-                  required
-                 />
-                <button
-                style={{ background:'var(--bgColor)'}}
-                  disabled={
-                    LoadingUpdate ||
-                    LoadingCreate ||
-                    productsDetails?.resnumOfCartItems === 0
-                  }
-                  type="supmit "
-                  className="btn rounded-0"
-                >
-                  التحقق
-                </button>
-              </div> 
+                    minLength={3}
+                    onChange={(e) => setCoupon(e.target.value)}
+                    type="text"
+                    className="form-control  border-0 shadow-none"
+                    id="couponInput"
+                    placeholder="ادخل رمز القسيمة"
+                    value={coupon}
+                    required
+                  />
+                  <button
+                    style={{ background: "var(--bgColor)" }}
+                    disabled={
+                      LoadingUpdate ||
+                      LoadingCreate ||
+                      productsDetails?.resnumOfCartItems === 0
+                    }
+                    type="supmit "
+                    className="btn rounded-0"
+                  >
+                    التحقق
+                  </button>
+                </div>
               </Fade>
             </div>
           </form>
           {/* coupon end */}
           {/* checkout start  && totale*/}
-          <div   style={{backgroundColor:'var(--minColor)'}} className= {isSuccess && productsDetails?.resnumOfCartItems > 0 ?" w-100   d-flex p-2  align-items-center  flex-column gap-1":'d-none'}>
+          <div
+            style={{ backgroundColor: "var(--minColor)" }}
+            className={
+              isSuccess && productsDetails?.resnumOfCartItems > 0
+                ? " w-100   d-flex p-2  align-items-center  flex-column gap-1"
+                : "d-none"
+            }
+          >
             {updateData?.data?.totalPriceAfterDiscount && !display && (
               <Fade delay={0} direction="up" triggerOnce={true}>
                 <span className="d-flex border-bottom flex-wrap py-3  justify-content-center  fs-5 ">
@@ -615,7 +656,6 @@ console.log(errorUpdate);
               </Fade>
             )}
 
-        
             <Fade delay={0} direction="up" triggerOnce={true}>
               <span className="  fs-5 py-3 ">
                 المجموع : (
@@ -624,15 +664,20 @@ console.log(errorUpdate);
                   : updateData?.data?.totalPriceAfterDiscount?.toFixed(2)}
                 ) <span className="ps-1 text-success">SAR</span>
               </span>
-              <span className="text-danger text-center d-block">  التوصيل مجانا داخل مدينة الرياض لاي طلب يتجاوز  (6000) الاف ريال</span>
-              <span className="text-primary text-center d-block">اجور التوصيل تختلف حسب المكان والكمية تواصل  معنا لمعرفة تكلفة التوصيل 
-              <a className="d-block " href="tel:+966598909991" >
-               ( 966598909991+)
+              <span className="text-danger text-center d-block">
+                {" "}
+                التوصيل مجانا داخل مدينة الرياض لاي طلب يتجاوز (6000) الاف ريال
+              </span>
+              <span className="text-primary text-center d-block">
+                اجور التوصيل تختلف حسب المكان والكمية تواصل معنا لمعرفة تكلفة
+                التوصيل
+                <a className="d-block " href="tel:+966598909991">
+                  ( 966598909991+)
                 </a>
-                او يمكنك استلام طلبيتك من احد فروعنا         
+                او يمكنك استلام طلبيتك من احد فروعنا
               </span>
             </Fade>
-           
+
             {/* delet itims */}
             {isSuccess && productsDetails?.resnumOfCartItems > 0 && (
               <div className="d-flex align-items-center gap-2">
@@ -679,9 +724,16 @@ console.log(errorUpdate);
           </div>
           {/* checkout end */}
         </div>
-       
       </div>
-
+      {/*Modal */}
+      <DeleteModal
+        show={showModal}
+        onClose={useCallback(() => {
+          setShowModal(false);
+        }, [])}
+        onDelete={handleDelete}
+        itemId={selectedBrandId}
+      />
       {/* order form start */}
       <div
         className="p-1 w-100  "
@@ -695,21 +747,17 @@ console.log(errorUpdate);
           zIndex: 1000,
         }}
       >
-        <form className="m-auto col-11 col-md-10 col-lg-9 p-3 rounded-4 mt-5 "
+        <form
+          className="m-auto col-11 col-md-10 col-lg-9 p-3 rounded-4 mt-5 "
           style={{
             backgroundColor: "var(--bgColor)",
             color: "var(--text-color)",
           }}
-         
-         
         >
           <p className="w-100 fs-4  text-center border-bottom ">
             معلومات الدفع ولاستلام
           </p>
-          <div
-       
-            className="col-sm-12 py-2"
-          >
+          <div className="col-sm-12 py-2">
             <div className="row">
               <div className="col-sm-6">
                 <label
@@ -717,19 +765,16 @@ console.log(errorUpdate);
                   htmlFor={"iban"}
                 >
                   <MdOutlineLocalPostOffice />
-                   اسم صاحب الحساب
+                  اسم صاحب الحساب
                 </label>
                 <input
-
-                  
-                disabled
+                  disabled
                   className="form-control"
                   id={"iban"}
                   name={"iban"}
                   type={"text"}
                   placeholder={" اسم صاحب الحساب"}
                   value={"شركة مجرة السماء للتجارة"}
-                 
                 />
               </div>
               <div className="col-sm-6">
@@ -738,7 +783,7 @@ console.log(errorUpdate);
                   htmlFor={"iban"}
                 >
                   <MdOutlineLocalPostOffice />
-                   رقم الحساب -الايبان
+                  رقم الحساب -الايبان
                 </label>
                 <input
                   disabled
@@ -747,9 +792,7 @@ console.log(errorUpdate);
                   name={"iban"}
                   type={"text"}
                   placeholder={"   رقم الحساب -الايبان"}
-                  value={'289000010006089786591'}
-                 
-                
+                  value={"289000010006089786591"}
                 />
               </div>
               <div className="col-sm-12 p-2">
@@ -758,7 +801,7 @@ console.log(errorUpdate);
                   htmlFor={"iban"}
                 >
                   <MdOutlineLocalPostOffice />
-                   رقم الحساب الدولي -الايبان
+                  رقم الحساب الدولي -الايبان
                 </label>
                 <input
                   disabled
@@ -767,28 +810,26 @@ console.log(errorUpdate);
                   name={"iban"}
                   type={"text"}
                   placeholder={"   رقم الحساب -الايبان"}
-                  value={'SA2180000289608019786591'}
-                 
-                
+                  value={"SA2180000289608019786591"}
                 />
               </div>
               {/* imge input */}
-            <div className="col-md-12 py-2">
-              <label
-                className="p-1 fs-5 d-flex align-items-center gap-1"
-                htmlFor="image"
-              >
-                 صورة وصل التحويل
-              </label>
-              <input
-              required
-                className="form-control"
-                id="image"
-                name="image"
-                type="file"
-                onChange={handleImageChange}
-              />
-            </div>
+              <div className="col-md-12 py-2">
+                <label
+                  className="p-1 fs-5 d-flex align-items-center gap-1"
+                  htmlFor="image"
+                >
+                  صورة وصل التحويل
+                </label>
+                <input
+                  required
+                  className="form-control"
+                  id="image"
+                  name="image"
+                  type="file"
+                  onChange={handleImageChange}
+                />
+              </div>
             </div>
           </div>
           {/* title Customer */}
@@ -1022,7 +1063,11 @@ console.log(errorUpdate);
                   onChange={handleshippingAddress}
                 />
 
-                <img className="w-50 my-2 m-auto d-block" src={vizaImge} alt="viza" />
+                <img
+                  className="w-50 my-2 m-auto d-block"
+                  src={vizaImge}
+                  alt="viza"
+                />
               </div>
             </div>
           </div>
@@ -1033,9 +1078,8 @@ console.log(errorUpdate);
               onClick={handelCreateOrder}
               type="submit"
               className="btn btn-success"
-          
             >
-              دفع عن طريق حوالة  
+              دفع عن طريق حوالة
             </button>
             <button
               disabled
@@ -1047,12 +1091,18 @@ console.log(errorUpdate);
             </button>
             <button
               disabled={isLoading || LoadingCreate ? true : false}
-              
               type="button"
               className="btn btn-primary"
             >
-            <a className="text-white" href={iban} id='Download' download={"muhammed.pdf"}> تنزيل شهادة ايبان </a>
-              
+              <a
+                className="text-white"
+                href={iban}
+                id="Download"
+                download={"muhammed.pdf"}
+              >
+                {" "}
+                تنزيل شهادة ايبان{" "}
+              </a>
             </button>
             <span
               onClick={useCallback(() => {

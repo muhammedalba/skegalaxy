@@ -183,7 +183,7 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
       />
 
       <form onSubmit={handleSubmit} className="m-auto p-3">
-      <Fade duration={500} direction='up' triggerOnce={true} cascade>
+      <Fade  direction='up' triggerOnce={true} cascade>
 
         <div className="w-100 py-2">
           <img
@@ -242,17 +242,18 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
             {Error}
           </span>
         )}
-
+</Fade>
+<Fade duration={1500} direction='up' triggerOnce={true} cascade>
         <button
           disabled={isLoading ? true : false}
-          className="btn btncolor my-4 d-flex align-items-center"
+          className="btn btncolor text-white my-4 d-flex align-items-center"
           type="submit"
         >
           {isLoading && <span className="spinner-border"></span>}
           {!isLoading && <span className="">ارسال</span>}
         </button>
-
-          </Fade>
+</Fade>
+          
       </form>
     </div>
   );

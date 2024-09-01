@@ -148,12 +148,6 @@ const Products = () => {
   const handleSortProducts = useCallback((e) => {
     const selectedValue = e.target.value;
     setsortFilter(selectedValue);
-
-    // العثور على العلامة التجارية التي تطابق القيمة المحددة
-    // const selectedBrand = brands.data.find(
-    //   (brand) => brand._id === selectedValue
-    // );
-    // setSelectedBrand(selectedBrand ? selectedBrand.name : "");
   }, []);
 
   // handel reset filter
@@ -297,6 +291,15 @@ const Products = () => {
   };
   return (
     <div className="container-fluid ">
+      {/*animation */}
+        <div className="container-marquee">
+            <div  className="marquee  p-3 ps-5 ms-5 fs-3">
+                  شركه مجرة السماء للتجارة الالكترونية كل ماتريده وتبحث عنه موجود لدينا  افضل الانواع واجودها  مصداقيه امانة تفاني  
+
+            </div>
+       
+           
+        </div>
       {/* categgories */}
 
       {/* {  successcategories&&    <div className=" d-none text-center d-sm-block mt-4 p-1">
@@ -450,7 +453,7 @@ const Products = () => {
             <button
               onClick={resetFilter}
               type="button"
-              className="btn btn-outline-danger h-50 text-primary"
+              className="btn btn-outline-danger h-50 mx-2"
             >
               مسح الاختيارات
             </button>

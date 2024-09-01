@@ -493,7 +493,7 @@ const sendDeliveryReceiptImage =useCallback( (e) => {
                       ) : (
                         <button disabled={order?.data?.isDelivered||updateLoading || isLoading||createLoading} 
                         onClick={()=>handleAction(order?.data?._id,'deliver')} 
-                        className=" btn btn-primary   ">
+                        className=" btn btn-outline-primary   ">
                             تاكيد التوصيل
                         </button>
                       )}
@@ -502,14 +502,14 @@ const sendDeliveryReceiptImage =useCallback( (e) => {
                 <Fade delay={0} direction='up' triggerOnce={true}    >
                 <button disabled={updateLoading || isLoading ||createLoading} 
                  onClick={sendInvoice }
-                 className={order?.data?.orderPdf?" btn btn-success   ":'btn btn-primary '}>
+                 className={order?.data?.orderPdf?" btn btn-outline-success   ":'btn btn-primary '}>
                       ارسال فاتورة
                  </button>
                 </Fade>
                 <Fade delay={0} direction='up' triggerOnce={true}    >
                 <button disabled={updateLoading || isLoading ||createLoading} 
                  onClick={sendDeliveryReceiptImage }
-                 className={order?.data?.DeliveryReceiptImage?" btn btn-success   ":'btn btn-primary '}>
+                 className={order?.data?.DeliveryReceiptImage?" btn btn-outline-success   ":'btn btn-primary '}>
                       ارسال صورة وصل التسليم
                  </button>
                 </Fade>
