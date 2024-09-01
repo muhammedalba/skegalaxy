@@ -82,31 +82,8 @@ const Cart = () => {
 
   const [selectedBrandId, setSelectedBrandId] = useState(null);
   const [showModal, setShowModal] = useState(false);
-const cookies=new Cookies();
-const token=cookies.get('token')
-
-  // handel open modale and seve item id in selectedBrandId
-  const openModal = useCallback((id) => {
-    setSelectedBrandId(id);
-    setShowModal(true); // فتح الـ modal
-  }, []);
-  // delet item from database
-  const handleDelete = useCallback(
-    (productId) => {
-      if (productId) {
-        deletOne(`cart/${productId}`);
-        setShowModal(false); // إغلاق الـ modal بعد الحذف
-      }
-    },
-    [deletOne]
-  );
-  // handle Image Change
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImage(file);
-    }
-  };
+  const cookies = new Cookies();
+  const token = cookies.get("token");
 
   const [shippingAddress, setshippingAddress] = useState({
     title: "",
@@ -127,6 +104,7 @@ const token=cookies.get('token')
   const [display, setdisplay] = useState(false);
   const [VizaCard, setVizaCard] = useState(false);
   const [Confirm, setConfirm] = useState(false);
+  const [clearAll, setClearAll] = useState(false);
   const focus = useRef(null);
   const [productsDetails, setProductsDetails] = useState({
     id: "",
@@ -159,7 +137,7 @@ const token=cookies.get('token')
   }, [display]);
 
   useEffect(() => {
-    if (error?.status === 401&& token) {
+    if (error?.status === 401 && token) {
       warnNotify("انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا");
     }
   }, [error?.status, token]);
@@ -275,13 +253,39 @@ const token=cookies.get('token')
 
   // Clear Cart
   const clearCart = useCallback(() => {
-    if (confirm("هل انت متاكد بانك تريد مسح كافة العناصر من السلة")) {
-      deletOne(`/cart`);
-      setProductsDetails([]);
-      setRemoveCart(true);
-    }
+    deletOne(`/cart`);
+    setProductsDetails([]);
+    setRemoveCart(true);
+    setShowModal(false);
   }, [deletOne]);
+  // delet item from database
+  const handleDelete = useCallback(
+    (productId) => {
+      if (productId) {
+        deletOne(`cart/${productId}`);
+        setShowModal(false); // إغلاق الـ modal بعد الحذف
+      }
+    },
+    [deletOne]
+  );
+  // handle Image Change
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImage(file);
+    }
+  };
+  // handle   open modale and seve item id in selectedBrandId
+  const openModalAndDeleteOne = useCallback((id) => {
+    setClearAll(false);
+    setSelectedBrandId(id);
+    setShowModal(true);
+  }, []);
+  const openModalAndClearCart = useCallback(() => {
+    setClearAll(true);
 
+    setShowModal(true);
+  }, []);
   // Show Product Data
   const showData = useMemo(() => {
     if (isLoading) {
@@ -295,7 +299,9 @@ const token=cookies.get('token')
             <Fade delay={0} direction="up" triggerOnce={true}>
               <button
                 disabled={LoadingDelet || LoadingUpdate}
-                onClick={() => openModal(product?._id)}
+                onClick={() => {
+                  openModalAndDeleteOne(product?._id);
+                }}
                 className="btn border-0 text-danger fs-3"
               >
                 {LoadingDelet || LoadingCreate ? (
@@ -428,7 +434,7 @@ const token=cookies.get('token')
     LoadingCreate,
     products?.imageUrl,
     Confirm,
-    openModal,
+    openModalAndDeleteOne,
     handleQuantityChange,
     handelQuantity,
   ]);
@@ -709,7 +715,7 @@ const token=cookies.get('token')
                       LoadingCreate ||
                       productsDetails?.length <= 0
                     }
-                    onClick={clearCart}
+                    onClick={openModalAndClearCart}
                     className="btn btn-danger "
                   >
                     {LoadingDelet || LoadingCreate ? (
@@ -731,9 +737,11 @@ const token=cookies.get('token')
         onClose={useCallback(() => {
           setShowModal(false);
         }, [])}
-        onDelete={handleDelete}
+        clearAll={clearAll}
+        onDelete={clearAll ? clearCart : handleDelete}
         itemId={selectedBrandId}
       />
+
       {/* order form start */}
       <div
         className="p-1 w-100  "

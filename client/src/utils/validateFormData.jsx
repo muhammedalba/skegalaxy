@@ -78,3 +78,52 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
   
     return {errors ,phone};
   };
+
+
+  export const validateCreateProduct = (formData,imageCover) => {
+    const errors = {};
+  // check imageCover
+  if (!imageCover) {
+    errors.imageCover = "يرجى إختيار صورة المنتج.";
+  }
+
+    // Check Title and description
+    if (!formData.title || formData.title.trim() === "") {
+      errors.title = "يرجى إدخال اسم المنتج.";
+    } else if (formData.title.length < 3) {
+      errors.title = "يرجى إدخال اسم منتج اكثر من ثلاث احرف.";
+    } else if (formData.title.length > 70) {
+      errors.title = "يرجى إدخال اسم منتج اقل من 70 احرف.";
+    }
+   if (formData.description.length > 2000) {
+    errors.title = "يرجى إدخال اسم منتج اقل من 2000 احرف.";
+  }
+  if (formData.description.length > 2000) {
+    errors.title = "يرجى إدخال اسم منتج اكثر من 15 احرف.";
+  }
+    // Check Price
+    if (formData.price === ''|| formData.price === 0) {
+      errors.price = "يجب أن لا يكون السعر فارغ.";
+    } else if (+formData.price <= +formData?.priceAfterDiscount) {
+      errors.price = "يجب أن لا يكون السعر بعد التخفيض أكبر من السعر.";
+    }
+  
+    // Check Category
+    if (formData.category === undefined || formData.category === '') {
+      errors.category = "يجب أن لا يكون القسم فارغ.";
+    }
+  
+    // Check Brand
+    if (formData.brand === undefined || formData.brand === '') {
+      errors.brand = "يجب أن لا تكون الشركة فارغة.";
+    }
+  
+    // Check Quantity 
+    if (formData.quantity < 0|| !formData.quantity) {
+      errors.quantity = "يجب أن لا يكون الكمية سلبية.";
+    }
+  
+    console.log(errors);
+  
+    return errors;
+  };
