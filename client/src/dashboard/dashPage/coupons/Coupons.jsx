@@ -1,7 +1,7 @@
 
 
 
-    import { useEffect, useState } from "react";
+    import { useCallback, useEffect, useState } from "react";
     import {
       useGetDataQuery,
       useDeletOneMutation,
@@ -18,10 +18,13 @@
     import { ToastContainer } from "react-toastify";
     import { errorNotify, successNotify } from "../../../utils/Toast";
     // icons
+    import { RiDeleteBin6Line } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
     import { TiArrowSortedDown } from "react-icons/ti";
     import { TiArrowSortedUp } from "react-icons/ti";
 import { convertDateTime } from "../../../utils/convertDateTime";
 import { FilterData } from "../../../utils/filterSearh";
+import DeleteModal from "../../../components/deletModal/DeleteModal";
     
   const Coupons = () => {
       // Get the lookup value from the store
@@ -49,7 +52,8 @@ import { FilterData } from "../../../utils/filterSearh";
     
       // states
       const [sorted, setsorted] = useState(false);
-    
+      const [selectedBrandId, setSelectedBrandId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
     
     
       
@@ -67,18 +71,29 @@ import { FilterData } from "../../../utils/filterSearh";
         }
       }, [ SuccessDelet, LoadingDelet, errorDelet, error]);
     
-      // handel delet one
-        const handelDelet = (id) => {
-          const delet = confirm("هل انت متاكد بانك تريد حذف هذا العنصر");
-          // if (confirm) true delet user from database
-          delet && deletOne(`/coupons/${id}`);
-        };
+
     
       // handel sort
-      const handleSort = () => {
+const handleSort = () => {
         setsorted(!sorted);
-      };
-     
+  };
+       // handel open modale and seve item id in selectedBrandId
+  const openModal = useCallback((id) => {
+  
+    setSelectedBrandId(id);
+    setShowModal(true); // فتح الـ modal
+  
+},[])
+// delet item from database
+const handleDelete =useCallback((id) => {
+
+  if(id){
+    deletOne(`/coupons/${id}`);
+    setShowModal(false); // إغلاق الـ modal بعد الحذف
+
+  }
+}
+,[deletOne]);
     
       //// search coupons based on the search input  by email, firstname, lastname && sorted (a,b)
       const filterCoupons =FilterData(coupons?.data,'name',search)?.sort((a, b) =>
@@ -118,8 +133,8 @@ import { FilterData } from "../../../utils/filterSearh";
               <td>
               <Fade delay={0} direction='up' triggerOnce={true}   >
     
-                <Link to={coupons._id} className="btn btn-success">
-                  تعديل
+                <Link to={coupons._id} className="btn btn-outline-primary">
+                   <CiEdit   />  
                 </Link>
                 </Fade>
               </td>
@@ -128,16 +143,15 @@ import { FilterData } from "../../../utils/filterSearh";
     
                 <button
                   disabled={LoadingDelet ? true : false}
-                    onClick={() => handelDelet(coupons._id)}
-                  className="btn btn-danger"
-                >
-                  {LoadingDelet ? <span className="spinner-border"></span> : "حذف"}
+                    onClick={() => openModal(coupons._id)}
+                  className="btn btn-outline-danger"
+                >  <RiDeleteBin6Line/>
                 </button>
                 </Fade>
               </td>
             </tr>
           );
-        }): (<tr><td className="text-center p-3 fs-5 text-primary"colSpan={7} scope="row">العنصر المراد البحث عنه غير موجود في هذه الصفحه</td></tr>);
+        }): (<tr><td className="text-center p-3 fs-5 text-primary"colSpan={7} scope="row">العنصر المراد البحث عنه غير موجود   </td></tr>);
     
       return (
         <div className="w-100 pt-5 ">
@@ -186,7 +200,14 @@ import { FilterData } from "../../../utils/filterSearh";
             <tbody className="">{isLoading ? SkeletonTeble : showData}</tbody>
     
           </table>
-    
+    {/*Modal */}
+  <DeleteModal
+        show={showModal}
+        onClose={useCallback(() =>{ setShowModal(false)},[])}
+        onDelete={handleDelete}
+        itemId={selectedBrandId}
+      />
+
           {/*navigation start  */}
           <Navigation
             isLoading={isLoading}

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   useGetDataQuery,
   useDeletOneMutation,
@@ -15,8 +15,10 @@ import QuantityResults from "../../../components/QuantityResults/QuantityResults
 import { ToastContainer } from "react-toastify";
 import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
 // icons
-
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
 import { FilterData } from "../../../utils/filterSearh";
+import DeleteModal from "../../../components/deletModal/DeleteModal";
 
 const Carouseles = () => {
   // Get the lookup value from the store
@@ -44,7 +46,8 @@ const Carouseles = () => {
 
 console.log(errorDelet);
 
-
+const [selectedBrandId, setSelectedBrandId] = useState(null);
+const [showModal, setShowModal] = useState(false);
 
 
   
@@ -67,14 +70,25 @@ useEffect(() => {
     }
   }, [ SuccessDelet, LoadingDelet, errorDelet, error]);
 
-  // handel delet one
-    const handelDelet = (id) => {
-      const delet = confirm("هل انت متاكد بانك تريد حذف هذا العنصر");
-      // if (confirm) true delet user from database
-      delet && deletOne(`/carousel/${id}`);
-    };
 
   
+    // handel open modale and seve item id in selectedBrandId
+    const openModal = useCallback((id) => {
+  
+      setSelectedBrandId(id);
+      setShowModal(true); // فتح الـ modal
+    
+  },[])
+  // delet item from database
+  const handleDelete =useCallback((id) => {
+
+    if(id){
+      deletOne(`/carousel/${id}`);
+      setShowModal(false); // إغلاق الـ modal بعد الحذف
+
+    }
+  }
+  ,[deletOne]);
  
 
   //// search Carouseles based on the search input  by name,&& sorted (a,b)
@@ -110,20 +124,20 @@ useEffect(() => {
           <td>
           <Fade delay={0} direction='up' triggerOnce={true}   >
 
-            <Link to={carousel._id} className="btn btn-success">
-              تعديل
+            <Link to={carousel._id} className="btn btn-outline-primary">
+              <CiEdit   />  
             </Link>
             </Fade>
           </td>
           <td>
-          <Fade delay={0} direction='left' triggerOnce={true}   >
+          <Fade delay={0} direction='up' triggerOnce={true}   >
 
             <button
               disabled={LoadingDelet ? true : false}
-                onClick={() => handelDelet(carousel._id)}
-              className="btn btn-danger"
+                onClick={() => openModal(carousel._id)}
+              className="btn btn-outline-danger"
             >
-              {LoadingDelet ? <span className="spinner-border"></span> : "حذف"}
+            <RiDeleteBin6Line/>
             </button>
             </Fade>
           </td>
@@ -174,6 +188,13 @@ useEffect(() => {
         <tbody className="">{isLoading ? SkeletonTeble : showData}</tbody>
 
       </table>
+      {/*Modal */}
+  <DeleteModal
+        show={showModal}
+        onClose={useCallback(() =>{ setShowModal(false)},[])}
+        onDelete={handleDelete}
+        itemId={selectedBrandId}
+      />
 
       {/*navigation start  */}
       <Navigation

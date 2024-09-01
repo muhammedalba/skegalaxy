@@ -14,6 +14,7 @@ import { Fade } from "react-awesome-reveal";
 import { useDispatch } from "react-redux";
 import { Results } from "../../../redux/features/Slice/QuantityResultSlice";
 import { currentPage } from "../../../redux/features/Slice/NavigationSlice";
+import { searchItem } from "../../../redux/features/Slice/SerchSlice";
 
 const SideBar = () => {
   const [open, setopen] = useState(false);
@@ -90,8 +91,9 @@ const SideBar = () => {
   // reset navigation to 10 items per page and update navigation property
 
   const resetNavegation = () => {
-    dispatch(Results(10));
+    dispatch(Results(15));
     dispatch(currentPage(1));
+    dispatch(searchItem(''));
   };
 
   // navLink in map

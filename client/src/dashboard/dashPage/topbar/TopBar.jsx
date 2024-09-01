@@ -22,6 +22,8 @@ import { BsFillTelephoneFill } from "react-icons/bs";
 import { searchItem } from "../../../redux/features/Slice/SerchSlice";
 import { useDispatch } from "react-redux";
 import { Fade } from "react-awesome-reveal";
+import { Results } from "../../../redux/features/Slice/QuantityResultSlice";
+import { currentPage } from "../../../redux/features/Slice/NavigationSlice";
 // import { Fade } from "react-awesome-reveal";
 
 const TopBar = () => {
@@ -34,6 +36,10 @@ const TopBar = () => {
  // handel serche
  const handelserche = (e) => {
   // console.log(e.target.value);
+
+    dispatch(Results(15));
+    dispatch(currentPage(1));
+ 
   dispatch(searchItem(e.target.value));
 };
 
@@ -204,8 +210,8 @@ const TopBar = () => {
               placeholder="...بحث"
               onChange={handelserche}
             />
-            <label>
-              <CiSearch />
+            <label >
+              <CiSearch  />
             </label>
           </div>
 

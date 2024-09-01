@@ -22,6 +22,7 @@ import { errorNotify, successNotify } from "../../../utils/Toast";
 import { Fade } from "react-awesome-reveal";
 import { FilterData } from "../../../utils/filterSearh";
 import { SkeletonTeble } from "../../../utils/skeleton";
+import DeleteModal from "../../../components/deletModal/DeleteModal";
 
 const Products = () => {
   // Get the lookup value from the store
@@ -68,6 +69,8 @@ const Products = () => {
   ] = useDeletOneMutation();
 
   // states
+  const [selectedBrandId, setSelectedBrandId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [sorted, setsorted] = useState(false);
 
 // handle ERROR OUR SUCCESS PRODUCT
@@ -114,17 +117,25 @@ const resetFilter=()=> {
   setSelectedBrand('');
   setSelectedCategory('');
 }
-  // handel delet one
-  const handelDelet = useCallback(
-    (id) => {
-      // if (confirm) true delet product from database
-      if (confirm("هل انت متاكد بانك تريد حذف هذا العنصر")) {
-        deletOne(`/products/${id}`);
-      }
-    },
-    [deletOne]
-  );
+ 
+ 
+  // handel open modale and seve item id in selectedBrandId
+  const openModal = useCallback((id) => {
+  
+    setSelectedBrandId(id);
+    setShowModal(true); // فتح الـ modal
+  
+},[])
+// delet item from database
+const handleDelete =useCallback((id) => {
 
+  if(id){
+    deletOne(`/products/${id}`);
+    setShowModal(false); // إغلاق الـ modal بعد الحذف
+
+  }
+}
+,[deletOne]);
   // handel sort
   const handleSort = useCallback(() => {
     setsorted(!sorted);
@@ -203,8 +214,8 @@ const resetFilter=()=> {
           <td>
           <Fade delay={0} direction='up' triggerOnce={true}    >
 
-            <Link to={!LoadingDelet && product._id} className="">
-              <CiEdit  color="blue" fontSize={'1.5rem'}/>     
+            <Link to={!LoadingDelet && product._id} className="btn  btn-outline-primary">
+              <CiEdit   />     
             </Link>
             </Fade>
           </td>
@@ -212,10 +223,10 @@ const resetFilter=()=> {
           <Fade delay={0} direction='up' triggerOnce={true}    >
             <button
               disabled={LoadingDelet}
-              onClick={() => handelDelet(product._id)}
-              className=" border-0"
+              onClick={() => openModal(product._id)}
+              className="btn btn-outline-danger "
             >
-                <RiDeleteBin6Line  fontSize={'1.5rem'} color="red"/>
+                <RiDeleteBin6Line   />
             </button>
             </Fade>
           </td>
@@ -233,14 +244,7 @@ const resetFilter=()=> {
         </td>
       </tr>
     );
-  }, [
-    isLoading,
-    isSuccess,
-    filteredProducts,
-    products,
-    LoadingDelet,
-    handelDelet,
-  ]);
+  }, [isLoading, isSuccess, filteredProducts, products?.imageUrl, LoadingDelet, openModal]);
 
   // view brands
   const showbrands = useMemo(() => {
@@ -392,7 +396,13 @@ const resetFilter=()=> {
         </thead>
         <tbody className="">{showData}</tbody>
       </table>
-
+  {/*Modal */}
+  <DeleteModal
+        show={showModal}
+        onClose={useCallback(() =>{ setShowModal(false)},[])}
+        onDelete={handleDelete}
+        itemId={selectedBrandId}
+      />
       {/*navigation start  */}
       <Navigation
         isLoading={isLoading}

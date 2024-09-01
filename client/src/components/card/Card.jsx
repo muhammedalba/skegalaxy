@@ -31,7 +31,7 @@ import {
 
 } from 'react-share';
 
-const Card = ({ product, imgePath }) => {
+const Card = ({ product, imgePath,reverse }) => {
 
 
   
@@ -46,7 +46,7 @@ const Card = ({ product, imgePath }) => {
   const showQuantity =product.quantity <= 100 && product.quantity !== 0? " d-block" : "d-none";
   const showQuantityMsg =  product.quantity === 0 ? " d-block" : "d-none";
 
-console.log(createError);
+
 
   const dispatch = useDispatch();
 
@@ -81,9 +81,11 @@ const shareUrl = window.location.href; // URL الصفحة الحالية
 const title =  "   شركه مجرة السماء! للتجارة"; // العنوان للمشاركة
 
   const addToCart = useCallback((productId) => {
+    console.log(productId);
+    
     // تحقق من أن المستخدم مسجل الدخول وأن معرف المنتج صالح
     if (token && typeof(productId) !== "undefined") {
-      console.log(productId);
+      
       
       createOne({
         url: "cart",
@@ -93,7 +95,7 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
 
     } else {
       warnNotify("يجب عليك تسجيل دخول اولا");
-      console.log("login");
+     
     }
   }, [createOne, token]);
 
@@ -103,9 +105,10 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
  }
   return (
     <div className="card-product m-auto ">
+
    
       <IoShareSocial style={{ top: "4rem" }} className="cart-icon " onClick={showIcons} />
-      <Link to={`/products/${product.id}`}>
+      <Link to={`/products/${product?._id}`}>
       <PiEyeThin style={{ top: "1rem" }} className="cart-icon " />
      
       <div style={{    transform:display?'translateX(0)':' translateX(158%)'}}
@@ -182,18 +185,19 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
           {/* {  product?.quantity.toFixed(0) > 0 ?<span className="text-dark fs-5">الكميه: ({ product?.quantity.toFixed(0)})</span>:
             <span className="text-dark fs-5">الكميه:متوفر عند الطلب</span>
           } */}
-               <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  justify-content-center `}>
-                  <span className="card-title ps-1">الكمية  :</span>
+               <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  justify-content-center ${reverse?'flex-row-reverse':''} `}>
+                  <span className={`card-title ps-1 d-${ product?.quantity === 0?'none':''}`}>الكمية  </span>
                   <span className="text-secondary d-flex align-items-center ">
-                      ({ product?.quantity>0?product?.quantity.toFixed(0):0})
-                      <span className={`text-danger  fs-6 ${showQuantity} `}>   كميه محدودة   </span>
-                      <span className={`text-danger  fs-6 ${showQuantityMsg} `}>     يتوفر عند الطلب</span>
-                  </span>
+                      { product?.quantity> 0 ?`( ${product?.quantity.toFixed(0)} )`:''}
+
+                  </span>                      
+                    <span className={`text-danger  fs-6 ${showQuantity} `}>   كميه محدودة   </span>
+                    <span className={`text-danger  fs-6 ${showQuantityMsg} `}>     يتوفر عند الطلب</span>
                 </div>
           <button
             disabled={createLoding?true:false}
           style={{ whiteSpace: 'nowrap'}}
-            onClick={() => addToCart(product.id)}
+            onClick={() => addToCart(product?._id)}
             className="buy border-0"
           >
        {    createLoding? <span className=" spinner-border"></span>:' اضافه الى السلة'}
@@ -211,6 +215,7 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
 
 Card.propTypes = {
   imgePath: PropTypes.string,
+  reverse: PropTypes.string,
   product: PropTypes.object,
 };
 export default Card;

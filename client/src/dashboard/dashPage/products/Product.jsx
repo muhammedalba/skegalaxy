@@ -173,7 +173,11 @@ console.log(updateError);
       setErrorMsge(" يجب ان لايكون السعر بعد التخفيض اكبر من السعر ");
       return;
     }
-   
+    if (formData.title == '' ||  formData.title.length>70  ) {
+      infoNotify(" يجب ان لايكون الاسم     اطول من 70 حرف  ");
+      setErrorMsge(" يجب ان لايكون الاسم     اطول من 70 حرف  ");
+      return;
+    }
     if (formData.category === undefined || formData.category == ''||
          formData.brand === undefined || formData.brand == '') {
       infoNotify(" يجب ان لايكون القسم او الشركه فارغ  ");
@@ -462,7 +466,7 @@ console.log(updateError);
             <input
               disabled={isLoading || loading ? true : false}
               minLength={3}
-              maxLength={32}
+              maxLength={70}
               className="form-control"
               id={"title"}
               name={"title"}

@@ -171,11 +171,11 @@ const Products = () => {
     }
 
     if (isSuccess && categories?.data?.length > 0) {
-      const sortedBrands = [...categories.data].sort((a, b) =>
+      const sortedcategories = [...categories.data].sort((a, b) =>
         a.name.localeCompare(b.name)
       );
 
-      return sortedBrands.map((category, index) => (
+      return sortedcategories.map((category, index) => (
         <option key={index} value={category._id}>
           {category.name}
         </option>
@@ -351,6 +351,7 @@ const Products = () => {
             transitionDuration={1000}
             customTransition={"transform 3000ms ease-in-out"}
             focusOnSelect={false}
+            
             ssr={true}
             rtl={true}
             // centerMode={true}

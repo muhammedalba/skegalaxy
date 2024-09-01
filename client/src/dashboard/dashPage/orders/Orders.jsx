@@ -7,7 +7,9 @@
     
     import { TiArrowSortedDown } from "react-icons/ti";
     import { TiArrowSortedUp } from "react-icons/ti";
+   
     import { RiDeleteBin6Line } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
     import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
     import { useDeletOneMutation, useGetDataQuery, useUpdateOneMutation } from "../../../redux/features/api/apiSlice";
     import QuantityResults from "../../../components/QuantityResults/QuantityResults";
@@ -16,6 +18,7 @@
 
 import { SkeletonTeble } from "../../../utils/skeleton";
 import { FilterData } from "../../../utils/filterSearh";
+import DeleteModal from "../../../components/deletModal/DeleteModal";
     
     const Orders = () => {
 
@@ -64,7 +67,8 @@ import { FilterData } from "../../../utils/filterSearh";
     
       // states
       const [sorted, setsorted] = useState(false);
-    
+      const [selectedBrandId, setSelectedBrandId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
       useEffect(() => {
         if (updateSuccess) {
@@ -92,7 +96,23 @@ import { FilterData } from "../../../utils/filterSearh";
  const handleSort = () => {
         setsorted(!sorted);
       };
+ // handel open modale and seve item id in selectedBrandId
+ const openModal = useCallback((id) => {
+  
+  setSelectedBrandId(id);
+  setShowModal(true); // فتح الـ modal
 
+},[])
+// delet item from database
+const handleDelete =useCallback((id) => {
+
+if(id){
+  deletOne(`/orders/${id}`);
+  setShowModal(false); // إغلاق الـ modal بعد الحذف
+
+}
+}
+,[deletOne]);
   const handelDelivered=(id)=>{
        
       //  send form data to server
@@ -112,19 +132,7 @@ import { FilterData } from "../../../utils/filterSearh";
         });
   
         }
-    // delete order
-    const deletOrder=(id)=>{
-      if(id){
-        if (confirm("هل انت متاكد بانك تريد حذف هذا العنصر")) {
-            //  send form data to server
-            deletOne( `/orders/${id}` );
-      
-        }
-        } else{
-        warnNotify('العنصر غير موجود')
-      }
-       
-    }
+
         // const handlidisplayOrders =useCallback(()=>setconfirmed(!confirmed),[confirmed])   
 
 
@@ -227,7 +235,7 @@ import { FilterData } from "../../../utils/filterSearh";
                 <td>
                 <Fade delay={0} direction='up' triggerOnce={true}    >
 
-                  <Link to={`${order._id}`} className="btn btn-success text-white">
+                  <Link to={`${order._id}`} className="btn btn-outline-success ">
                     عرض
                   </Link>
                   </Fade>
@@ -237,10 +245,10 @@ import { FilterData } from "../../../utils/filterSearh";
 
                 <button
               disabled={updateLoading || updateLoading||isLoading}
-              onClick={() => deletOrder(order._id)}
-              className=" border-0"
+              onClick={() => openModal(order._id)}
+              className=" btn btn-outline-danger "
             >
-                <RiDeleteBin6Line  fontSize={'1.5rem'} color="red"/>
+                <RiDeleteBin6Line />
             </button>
                   </Fade>
                 </td>
@@ -289,12 +297,12 @@ import { FilterData } from "../../../utils/filterSearh";
 
           {/* data table */}
 
-          <button disabled={confirmed}  className={!confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1 ":'m-1  btn btn-success fs-5 pointer text-white' }
+          <button disabled={confirmed}  className={!confirmed?" btn btn btn-outline-primary fs-5  pointer  m-1":'m-1  btn btn-success fs-5 pointer text-white' }
           onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
            الطلبات السابقة
            
            </button>
-           <button disabled={!confirmed}  className={confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1":' m-1 btn btn-success fs-5 pointer text-white'  }
+           <button disabled={!confirmed}  className={confirmed?" btn btn-outline-primary fs-5  pointer  m-1":' m-1 btn btn-success fs-5 pointer text-white'  }
           onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
           الطلبات الحاليه 
            
@@ -328,7 +336,13 @@ import { FilterData } from "../../../utils/filterSearh";
             </thead>
             <tbody className="">{isLoading ? SkeletonTeble : showData}</tbody>
           </table>
-    
+      {/*Modal */}
+  <DeleteModal
+        show={showModal}
+        onClose={useCallback(() =>{ setShowModal(false)},[])}
+        onDelete={handleDelete}
+        itemId={selectedBrandId}
+      />
           {/*navigation start  */}
           <Navigation
             isLoading={isLoading}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   useGetDataQuery,
   useDeletOneMutation,
@@ -8,7 +8,8 @@ import { ToastContainer } from "react-toastify";
 
 import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";
-
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
 
 import Navigation from "../../../components/navigation/Navigation";
 import { useSelector } from "react-redux";
@@ -17,7 +18,8 @@ import { Fade } from "react-awesome-reveal";
 import { errorNotify, successNotify } from "../../../utils/Toast";
 import { SkeletonTeble } from "../../../utils/skeleton";
 import { FilterData } from "../../../utils/filterSearh";
-
+import DeleteModal from "../../../components/deletModal/DeleteModal";
+import Cookies from "universal-cookie";
 
 
 
@@ -32,9 +34,17 @@ const Users = () => {
   const QuantityResult = useSelector((state) => state.QuantityResult);
   const Pagination = useSelector((state) => state.Pagination);
   
+  const cookies= new Cookies()
+  const role = cookies.get("role");
+
+  const show=role.toLowerCase() === "admin"?'block':'none' 
+  const show1=role.toLowerCase() === "manger" && role.toLowerCase()=='admin'?'none':'block' 
+  console.log(show);
   
   // states
   const [sorted, setsorted] = useState(false);
+  const [selectedBrandId, setSelectedBrandId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   // get users from the database 
   const {data:users, error,isLoading,isSuccess,} = useGetDataQuery(`users?limit=${QuantityResult}&page=${Pagination}`);
     console.log(error);
@@ -67,13 +77,24 @@ console.log(errorDelet);
 
 
 
-// handel delet one
-  const handelDelet = (id) => {
-    const delet = confirm("هل انت متاكد بانك تريد حذف هذا العنصر");
-    // if (confirm) true delet user from database
-    delet && deletOne(`/users/${id}`);
-  };
 
+  // handel open modale and seve item id in selectedBrandId
+  const openModal = useCallback((id) => {
+  
+    setSelectedBrandId(id);
+    setShowModal(true); // فتح الـ modal
+  
+},[])
+// delet item from database
+const handleDelete =useCallback((id) => {
+
+  if(id){
+    deletOne(`/users/${id}`);
+    setShowModal(false); // إغلاق الـ modal بعد الحذف
+
+  }
+}
+,[deletOne]);
 
 
   // handel sort
@@ -125,35 +146,25 @@ const filteredUsers= FilterData(users?.data,'users',search)?.sort((a, b) => sort
         <td>
         <Fade delay={0} direction='up' triggerOnce={true}>
 
-          <Link to={user._id} className="btn btn-success">
-            تعديل
+          <Link to={user._id} className={`btn btn-outline-success d-${role.toLowerCase() === "manger" &&user. role.toLowerCase()=='admin'?'none':'' }`}>
+              <CiEdit   />  
           </Link></Fade>
         </td>
         <td>              
           <Fade delay={0} direction='up' triggerOnce={true} >
 
-          {user.role.toLowerCase() !== "admin" ? (
+         
             <button
               disabled={LoadingDelet ? true : false}
-              onClick={() => handelDelet(user._id)}
-              className="btn btn-danger"
+              className={`btn btn-outline-danger d-${role.toLowerCase() === "manger" &&user. role.toLowerCase()=='admin'?'none':'block' } `}
+              onClick={() => openModal(user._id)}
             >
-           {  LoadingDelet? <span className="spinner-border"></span>:
-              'حذف'}
+                   <RiDeleteBin6Line/>
             </button>
-          )
-          : (
-            <button
-              disabled
-             
-              className="d-none"
-            >
-           {  LoadingDelet? <span className="spinner-border"></span>:
-              'حذف'}
-            </button>
-          )
           
-          }
+        
+          
+          
        </Fade>
         </td>
       </tr>
@@ -200,7 +211,13 @@ const filteredUsers= FilterData(users?.data,'users',search)?.sort((a, b) => sort
         </thead>
         <tbody className="">{isLoading ? SkeletonTeble : showData}</tbody>
       </table>
-      
+        {/*Modal */}
+  <DeleteModal
+        show={showModal}
+        onClose={useCallback(() =>{ setShowModal(false)},[])}
+        onDelete={handleDelete}
+        itemId={selectedBrandId}
+      />
       {/*navigation start  */}
       <Navigation 
       isLoading={isLoading}

@@ -1,5 +1,5 @@
 
-import  { useCallback, useEffect, useState } from "react";
+import  { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { searchItem } from "../../redux/features/Slice/SerchSlice";
@@ -34,7 +34,8 @@ const Header = () => {
 
 
 
-  const cookies = new Cookies();
+  const cookies = useMemo(() => new Cookies(), []);
+  
   const imgeUrl = cookies.get("imageUrl");
   const image = cookies.get("image");
   const role = cookies.get("role");
@@ -73,8 +74,12 @@ const Header = () => {
 
   // handel serche
   const handelserche = (e) => {
+
     // console.log(e.target.value);
+    dispatch(currentPage(1));
     dispatch(searchItem(e.target.value));
+
+      
   };
 
   const Scrolto = () => {
@@ -117,7 +122,7 @@ const Header = () => {
  // reset navigation to 10 items per page and update navigation property
 
  const resetNavegation = () => {
-  dispatch(Results(10));
+  dispatch(Results(15));
   dispatch(currentPage(1));
   dispatch(searchItem(''));
 };

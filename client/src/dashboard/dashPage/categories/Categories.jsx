@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   useGetDataQuery,
   useDeletOneMutation,
@@ -15,9 +15,12 @@ import QuantityResults from "../../../components/QuantityResults/QuantityResults
 import { ToastContainer } from "react-toastify";
 import { errorNotify, successNotify } from "../../../utils/Toast";
 // icons
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";
 import { FilterData } from "../../../utils/filterSearh";
+import DeleteModal from "../../../components/deletModal/DeleteModal";
 
 const Categories = () => {
   // Get the lookup value from the store
@@ -45,7 +48,8 @@ const Categories = () => {
 
   // states
   const [sorted, setsorted] = useState(false);
-
+  const [selectedBrandId, setSelectedBrandId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
 
   
@@ -63,13 +67,24 @@ const Categories = () => {
     }
   }, [ SuccessDelet, LoadingDelet, errorDelet, error]);
 
-  // handel delet one
-    const handelDelet = (id) => {
-      const delet = confirm("هل انت متاكد بانك تريد حذف هذا العنصر");
-      // if (confirm) true delet user from database
-      delet && deletOne(`/categories/${id}`);
-    };
 
+ // handel open modale and seve item id in selectedBrandId
+ const openModal = useCallback((id) => {
+  
+  setSelectedBrandId(id);
+  setShowModal(true); // فتح الـ modal
+
+},[])
+// delet item from database
+const handleDelete =useCallback((id) => {
+
+if(id){
+  deletOne(`/categories/${id}`);
+  setShowModal(false); // إغلاق الـ modal بعد الحذف
+
+}
+}
+,[deletOne]);
   // handel sort
   const handleSort = () => {
     setsorted(!sorted);
@@ -110,8 +125,8 @@ const Categories = () => {
           <td>
           <Fade delay={0} direction='up' triggerOnce={true}   >
 
-            <Link to={category._id} className="btn btn-success">
-              تعديل
+            <Link to={category._id} className="btn btn-outline-primary">
+               <CiEdit   />  
             </Link>
             </Fade>
           </td>
@@ -120,10 +135,10 @@ const Categories = () => {
 
             <button
               disabled={LoadingDelet ? true : false}
-                onClick={() => handelDelet(category._id)}
-              className="btn btn-danger"
+                onClick={() => openModal(category._id)}
+              className="btn btn-outline-danger"
             >
-              {LoadingDelet ? <span className="spinner-border"></span> : "حذف"}
+             <RiDeleteBin6Line/>
             </button>
             </Fade>
           </td>
@@ -176,7 +191,13 @@ const Categories = () => {
         <tbody className="">{isLoading ? SkeletonTeble : showData}</tbody>
 
       </table>
-
+  {/*Modal */}
+  <DeleteModal
+        show={showModal}
+        onClose={useCallback(() =>{ setShowModal(false)},[])}
+        onDelete={handleDelete}
+        itemId={selectedBrandId}
+      />
       {/*navigation start  */}
       <Navigation
         isLoading={isLoading}
