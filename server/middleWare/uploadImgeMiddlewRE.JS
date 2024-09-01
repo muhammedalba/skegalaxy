@@ -45,6 +45,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
   // Function to process and save image
   async function processAndSaveImage(buffer, filePath, width, height,quality) {
     try {
+      
       await sharp(buffer)
         .resize(width, height, { fit: 'inside', withoutEnlargement: true })
         .toFormat('WebP')
@@ -52,10 +53,12 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
         .toFile(filePath);
     } catch (error) {
       console.error(`خطأ في معالجة الصورة ${filePath}:`, error);
-      throw new Error('خطأ في معالجة الصورة');
+    return  next (new ApiError('خطأ في معالجة الصورة',405))
     }
   }
   if (req.files) {
+   
+ 
     if (req.files.imageCover) {
       const filename = `${path}-imageCover-${Date.now()}-${uuidv4()}.WebP`;
       await processAndSaveImage(
