@@ -21,6 +21,7 @@ import { ToastContainer } from "react-toastify";
 import Rating from "../../../components/Rating/Rating";
 import { errorNotify, infoNotify, successNotify, warnNotify } from "../../../utils/Toast";
 import { convertDateTime } from "../../../utils/convertDateTime";
+import { validateCreateProduct } from "../../../utils/validateFormData";
 
 const Product = () => {
   // Bring the user number Id
@@ -165,37 +166,20 @@ console.log(updateError);
 
   // handleSubmit
   const handleSubmit = (e) => {
-    
-   
-    e.preventDefault();
-    if (formData.price !== '' && +formData.price <= +formData.priceAfterDiscount ) {
-      infoNotify(" يجب ان لايكون السعر بعد التخفيض اكبر من السعر ");
-      setErrorMsge(" يجب ان لايكون السعر بعد التخفيض اكبر من السعر ");
-      return;
-    }
-    if (formData.title == '' ||  formData.title.length>70  ) {
-      infoNotify(" يجب ان لايكون الاسم     اطول من 70 حرف  ");
-      setErrorMsge(" يجب ان لايكون الاسم     اطول من 70 حرف  ");
-      return;
-    }
-    if (formData.category === undefined || formData.category == ''||
-         formData.brand === undefined || formData.brand == '') {
-      infoNotify(" يجب ان لايكون القسم او الشركه فارغ  ");
-      setErrorMsge(" يجب ان لايكون القسم او الشركه فارغ  ");
-      return;
-    }
-    if (
-      formData.title != "" &&
-      formData.description.length >= 20  &&
-      formData.quantity !== 0 &&
-      formData.price > 0 &&
-      
-      formData.category !== undefined &&
-      formData.category !== "" &&
-      formData.brand !== undefined &&
-      formData.brand !== "" &&
-      images.length <= 4
-    ) {  
+   e.preventDefault();
+
+   const formErrors = validateCreateProduct(formData, imageCover);
+
+   if (Object.keys(formErrors).length > 0) {
+     // Handle the errors (e.g., set error state, display error messages)
+     Object.values(formErrors).forEach((error, i) => {
+       infoNotify(` ${i + 1}: ${error}`);
+       setErrorMsge(` ${i + 1}: ${error}`);
+     });
+
+     return;
+   }
+    if (Object.keys(formErrors).length === 0) {  
       // handel form data
       const form = new FormData();
       Object.keys(formData).forEach((key) => form.append(key, formData[key]));

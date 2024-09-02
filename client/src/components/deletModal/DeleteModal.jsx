@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
+import { useCallback } from "react";
 
 const DeleteModal = ({ show, onClose, onDelete, clearAll, itemId }) => {
-  console.log(clearAll);
+  
 
   return (
     <div
@@ -15,9 +16,9 @@ const DeleteModal = ({ show, onClose, onDelete, clearAll, itemId }) => {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h1 className="modal-title fs-5" id="exampleModalLabel">
-              حذف العنصر
-            </h1>
+            {/* <h1 className="modal-title fs-5" id="exampleModalLabel">
+               
+            </h1> */}
             <button
               type="button"
               className="btn-close"
@@ -43,7 +44,7 @@ const DeleteModal = ({ show, onClose, onDelete, clearAll, itemId }) => {
             <button
               type="button"
               className="btn btn-danger"
-              onClick={() => onDelete(itemId)}
+              onClick={useCallback(() => onDelete(itemId),[itemId, onDelete])}
             >
               حذف
             </button>

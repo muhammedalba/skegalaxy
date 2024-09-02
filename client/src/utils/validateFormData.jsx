@@ -83,7 +83,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
   export const validateCreateProduct = (formData,imageCover) => {
     const errors = {};
   // check imageCover
-  if (!imageCover) {
+  if (imageCover&&imageCover === null) {
     errors.imageCover = "يرجى إختيار صورة المنتج.";
   }
 
@@ -119,8 +119,42 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
     }
   
     // Check Quantity 
-    if (formData.quantity < 0|| !formData.quantity) {
-      errors.quantity = "يجب أن لا يكون الكمية سلبية.";
+    if (+formData.quantity < 0|| !formData.quantity) {
+      errors.quantity = "يجب أن لا يكون الكمية فارغه.";
+    }
+  
+    console.log(errors);
+  
+    return errors;
+  };
+  export const validateCreateUser= (formData) => {
+    const errors = {};
+ 
+
+    // Check Title and description
+    if (!formData.firstname || formData.firstname.trim() === "") {
+      errors.firstname = " يرجى إدخال اسم .";
+    } else if (formData.firstname.length < 3) {
+      errors.firstname = "يرجى إدخال اسم  اكثر من ثلاث احرف.";
+    } else if (formData.firstname.length > 70) {
+      errors.firstname = "يرجى إدخال اسم  اقل من 32 احرف.";
+    }
+    if (!formData.lastname || formData.lastname.trim() === "") {
+      errors.lastname = " يرجى إدخال اسم .";
+    } else if (formData.lastname.length < 3) {
+      errors.lastname = "يرجى إدخال اسم  اكثر من ثلاث احرف.";
+    } else if (formData.lastname.length > 70) {
+      errors.lastname = "يرجى إدخال اسم  اقل من 32 احرف.";
+    }
+    // Check email address
+    if(!formData.email ) {
+      errors.lastname = "يرجى إدخال بريد الكتروني.";
+    }
+    
+    // Check Quantity 
+    if (  formData.password !== formData.passwordConfirm ){
+     
+      errors.quantity = "     كلمة السر غير متطابقة";
     }
   
     console.log(errors);

@@ -293,13 +293,14 @@ const Products = () => {
     <div className="container-fluid ">
       {/*animation */}
         <div className="container-marquee">
-            <div  className="marquee  p-3 ps-5 ms-5 fs-3">
+            <div  className="marquee pb-3 pt-md-3 ps-5 ms-5 fs-3">
                   شركه مجرة السماء للتجارة الالكترونية كل ماتريده وتبحث عنه موجود لدينا  افضل الانواع واجودها  مصداقيه امانة تفاني  
 
             </div>
-       
+   
            
         </div>
+ 
       {/* categgories */}
 
       {/* {  successcategories&&    <div className=" d-none text-center d-sm-block mt-4 p-1">

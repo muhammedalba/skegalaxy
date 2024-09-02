@@ -8,7 +8,8 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import logo from '../../../imges/logo.webp'
 import { Fade } from "react-awesome-reveal";
-import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
+import { errorNotify, infoNotify, successNotify, warnNotify } from "../../../utils/Toast";
+import { validateCreateUser } from "../../../utils/validateFormData";
 const CreateUser = () => {
   const [createOne, { error, isLoading, isSuccess }] = useCreateOneMutation();
 
@@ -44,8 +45,18 @@ const CreateUser = () => {
   const handleSubmit = async (e) => {
     console.log(formData);
     e.preventDefault();
+    const formErrors = validateCreateUser(formData);
 
-    if (formData.password === formData.passwordConfirm) {
+    if (Object.keys(formErrors).length > 0) {
+      // Handle the errors (e.g., set error state, display error messages)
+      Object.values(formErrors).forEach((error, i) => {
+        infoNotify(` ${i + 1}: ${error}`);
+        
+      });
+
+      return;
+    }
+    if (Object.keys(formErrors).length === 0) {
       const form = new FormData();
       Object.keys(formData).forEach((key) => form.append(key, formData[key]));
       if (image) form.append("image", image);

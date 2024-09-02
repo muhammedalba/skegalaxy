@@ -94,7 +94,7 @@ const CreatProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formErrors = validateCreateProduct(formData, imageCover);
+    const formErrors = validateCreateProduct(formData);
 
     if (Object.keys(formErrors).length > 0) {
       // Handle the errors (e.g., set error state, display error messages)
