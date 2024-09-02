@@ -154,7 +154,7 @@ if(id){
     
         if (isSuccess && orders?.data?.length > 0) {
           const filterBrands = [...orders.data]?.sort((a, b) =>
-            sorted ? b._id.localeCompare(a._id) : a._id.localeCompare(b._id)
+            !sorted ? b._id.localeCompare(a._id) : a._id.localeCompare(b._id)
           );
     
           return filterBrands.map((order, index) => {

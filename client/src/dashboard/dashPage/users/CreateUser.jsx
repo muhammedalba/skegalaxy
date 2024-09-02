@@ -13,8 +13,8 @@ import { validateCreateUser } from "../../../utils/validateFormData";
 const CreateUser = () => {
   const [createOne, { error, isLoading, isSuccess }] = useCreateOneMutation();
 
-    const [preview, setPreview] = useState([]);
   const navigate = useNavigate();
+  const [preview, setPreview] = useState([]);
   const [image, setImage] = useState("");
   const [eror, seteror] = useState("");
  
@@ -43,7 +43,7 @@ const CreateUser = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(formData);
+
     e.preventDefault();
     const formErrors = validateCreateUser(formData);
 
@@ -69,13 +69,11 @@ const CreateUser = () => {
         });
       } catch (error) {
         console.error(error);
+        errorNotify(" خطا في السيرفر");
       }
-    } else {
-      seteror("");
-      errorNotify("كلمة السرغير متطابقة");
-      return;
     }
   };
+  // handel error message
   useEffect(() => {
     if(error?.status ===401){
       warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
@@ -120,7 +118,7 @@ const CreateUser = () => {
             <img
               className="logo rounded m-auto d-none d-sm-block"
               src={
-                 preview.length>0  ?
+                 preview.length > 0  ?
                   preview : 
                   logo
               }
@@ -251,33 +249,13 @@ const CreateUser = () => {
             onChange={handleChange}
           />
         </div>
-          {/* phone */}
-        {/* <div className="col-md-12 py-2">
-          <label
-            className="p-1 fs-5 d-flex align-items-center gap-1"
-            htmlFor="phone"
-          >
-            <FaImage color="var(--spancolor )" fontSize="1rem" />
-             رقم الهاتف
-          </label>
-          <input
-            required
-            minLength={9}
-            maxLength={13}
-            disabled={isLoading}
-            className="form-control"
-            id="phone"
-            name="phone"
-            type="tel"
-            onChange={handleChange}
-          />
-        </div> */}
+   
         {/* select */}
         <select
           className="form-select my-3 py-2"
           onChange={handleChange}
           defaultValue={formData.role}
-          //  disabled={isLoading&& true}
+           disabled={isLoading&& true}
           aria-label="Default select example"
           name="role"
           id="role"
@@ -288,19 +266,7 @@ const CreateUser = () => {
           <option value="manger">manger</option>
         </select>
 
-        <select
-          disabled={isLoading && true}
-          id="active"
-          name="active"
-          onChange={handleChange}
-          className="form-select my-3 py-2"
-          defaultValue={formData.active}
-          aria-label="Default select example"
-        >
-          <option value={"true"}>اختر الحالة</option>
-          <option value="true">نشط</option>
-          <option value="false">غير نشط</option>
-        </select>
+  
 
         {eror && (
           <span className="w-100 text-center d-block text-danger pt-3">

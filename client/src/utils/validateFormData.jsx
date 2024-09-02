@@ -83,7 +83,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
   export const validateCreateProduct = (formData,imageCover) => {
     const errors = {};
   // check imageCover
-  if (imageCover&&imageCover === null) {
+  if (imageCover && imageCover === null) {
     errors.imageCover = "يرجى إختيار صورة المنتج.";
   }
 

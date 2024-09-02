@@ -13,8 +13,11 @@ import { Fade } from "react-awesome-reveal";
 import { errorNotify, successNotify, warnNotify } from "../../utils/Toast";
 
 const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
+
   const [Autapi, { data: user, error: eror, isLoading, isSuccess }] =
     useAutapiMutation();
+
+
   const navigate = useNavigate();
   const focus = useRef(null);
 
@@ -71,19 +74,17 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
     }
   }, [eror, name]);
   //  if success
-  console.log(eror);
+
   
   useEffect(() => {
     // const notify = () =>
     if (isSuccess && user.token) {
       //if res = success set data to cookies
       const cookies = new Cookies();
-      cookies.set("role", user.data.role);
-      cookies.set("firstname", user.data.firstname);
-      cookies.set("image", user.data.image);
-      // cookies.set("token", user.token);
-      // cookies.set("refreshToken", user.refreshToken);
-      cookies.set("imageUrl", user.imageUrl);
+      cookies.set("role", user?.data.role);
+      cookies.set("firstname", user?.data.firstname);
+      cookies.set("image", user?.data.image);
+      cookies.set("imageUrl", user?.imageUrl);
       //
      successNotify(`تمت ${title} بنجاح`);
 
