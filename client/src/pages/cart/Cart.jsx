@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import "./cart.css";
 import { useDispatch } from "react-redux";
 import {
@@ -29,8 +29,11 @@ import { IoAddOutline } from "react-icons/io5";
 import { RiSubtractLine } from "react-icons/ri";
 import { BsCheck2 } from "react-icons/bs";
 
-import MemoizedPayment from "../../components/Payment";
-import MemoizedApplayCoupon from "../../components/applayCoupon/ApplayCoupon";
+const MemoizedPayment = React.lazy(() => import("../../components/Payment"));
+const MemoizedApplayCoupon = React.lazy(() => import("../../components/applayCoupon/ApplayCoupon"));
+
+
+
 
 
 
@@ -426,13 +429,16 @@ const openModalAndClearCart = useCallback(() => {
           {/* data table  end*/}
         </div>
 
-        {/* coupon and checkout start*/}
-        <MemoizedApplayCoupon  Confirm={displayDiscount} LoadingDelet={LoadingDelet} openModalAndClearCart={openModalAndClearCart} productsDetails={productsDetails} openPaymntCommpount={openPaymntCommpount} HideDiscount={HideDiscount}
+      
+        <Suspense >
+          {/* coupon and checkout start*/}
+          <MemoizedApplayCoupon  Confirm={displayDiscount} LoadingDelet={LoadingDelet} openModalAndClearCart={openModalAndClearCart} productsDetails={productsDetails} openPaymntCommpount={openPaymntCommpount} HideDiscount={HideDiscount}
         />
-        
+        <MemoizedPayment  display={display} productsDetails={productsDetails} setdisplay={openPaymntCommpount}/>
+      </Suspense>
       </div>
+{/* paymnt form */}
 
-<MemoizedPayment  display={display} productsDetails={productsDetails} setdisplay={openPaymntCommpount}/>
 
 
 

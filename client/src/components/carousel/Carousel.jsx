@@ -3,13 +3,14 @@ import { ToastContainer } from "react-toastify";
 
 import { useGetDataQuery } from "../../redux/features/api/apiSlice";
 import { errorNotify } from "../../utils/Toast";
-import './categories.css';
+
 
 
 
 const Carousel = () => {
   // Get categories from the database
-  const { data: carouseles, error, isLoading, isSuccess } = useGetDataQuery('carousel');
+  const { data: carouseles, error, isLoading, isSuccess } = useGetDataQuery('carousel?fields=carouselImage');
+
 
   useEffect(() => {
     if (error) {

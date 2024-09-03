@@ -8,6 +8,7 @@ import { Fade } from "react-awesome-reveal";
 import PropTypes from "prop-types";
 import { useCreateOneMutation } from "../../redux/features/api/apiSlice";
 import { useCallback, useEffect, useState } from "react";
+import { CiHeart } from "react-icons/ci";
 
 import { successNotify, warnNotify } from "../../utils/Toast";
 import Cookies from "universal-cookie";
@@ -39,33 +40,42 @@ const Card = ({ product, imgePath,reverse }) => {
 // add product to cart
   const [
     createOne,
-    { error: createError, isLoading: createLoding ,data:crerateData},
+    { error: createError,isSuccess:  successCreeate, isLoading: createLoding ,data:crerateData},
   ] = useCreateOneMutation();
 
   //  show Quantity
   const showQuantity =product.quantity <= 100 && product.quantity !== 0? " d-block" : "d-none";
   const showQuantityMsg =  product.quantity === 0 ? " d-block" : "d-none";
 
-
+console.log(createError);
+console.log(successCreeate);
 
   const dispatch = useDispatch();
+  useEffect(()=>{
+    if(  createError?.status == 401 ){
+      
+       warnNotify("يجب عليك تسجيل دخول اولا");
+    
+     }
+  },[createError?.status])
 
-
+useEffect(() => {
+  if(successCreeate){
+    successNotify('تم اضافه المنتج بنجاح ')
+  
+  }
+},[successCreeate])
   useEffect(()=>{
 
     if( crerateData?.status ===201  ){
       // Update the number of items in the shopping cart
          dispatch(cartitems(crerateData?.resnumOfCartItems)) 
         successNotify('تم اضافه المنتج بنجاح ')
- 
- }
- 
-
- if(  createError?.status == 401 ){
      
-   warnNotify("يجب عليك تسجيل دخول اولا");
-
  }
+ 
+
+
  if(  createError?.status == 400 ){
      
   warnNotify("هذه الكميه غير موجوده حاليا");
@@ -75,29 +85,45 @@ const Card = ({ product, imgePath,reverse }) => {
 },[createError?.status, crerateData?.resnumOfCartItems, crerateData?.status, dispatch])
 
 const [display ,setDisplay]=useState(false);
+const [displed ,setdispled]=useState(false);
 const cokkies = new Cookies();
 const token = cokkies.get("token");
 const shareUrl = window.location.href; // URL الصفحة الحالية
 const title =  "   شركه مجرة السماء! للتجارة"; // العنوان للمشاركة
 
-  const addToCart = useCallback((productId) => {
-    console.log(productId);
+
+
+useEffect(()=>{
+
+  // displed create 
+if(createLoding){
+  setdispled(true); 
+}
+if(createError || successCreeate){
+  setdispled(false) 
+}
+},[createError, createLoding, successCreeate])
+
+
+
+  const addproducToCartOurWishlist = useCallback((productId,route) => {
+ 
     
     // تحقق من أن المستخدم مسجل الدخول وأن معرف المنتج صالح
-    if (token && typeof(productId) !== "undefined") {
+    if (token && typeof(productId) !== "undefined"&& !displed) {
       
       
       createOne({
-        url: "cart",
+        url: `${route}`,
         method: "POST",
         body: { productId },
       })
-
+      setdispled(true)
     } else {
       warnNotify("يجب عليك تسجيل دخول اولا");
      
     }
-  }, [createOne, token]);
+  }, [createOne, displed, token]);
 
 
  const showIcons=()=>{
@@ -107,9 +133,11 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
     <div className="card-product m-auto ">
 
    
-      <IoShareSocial style={{ top: "4rem" }} className="cart-icon " onClick={showIcons} />
+      <IoShareSocial style={{ top: "4rem" }} className="cart-icon mx-2" onClick={showIcons} />
+      <CiHeart onClick={() => addproducToCartOurWishlist(product?._id,'wishlist')}  style={{ top: "1rem",left:'auto'}} className="cart-icon-Heart mx-2 start-0 " />
       <Link to={`/products/${product?._id}`}>
-      <PiEyeThin style={{ top: "1rem" }} className="cart-icon " />
+      <PiEyeThin style={{ top: "1rem" }} className="cart-icon mx-2 " />
+    
      
       <div style={{    transform:display?'translateX(0)':' translateX(158%)'}}
        className=" cart-share  d-flex align-items-center justify-content-center gap-2 flex-column">
@@ -144,6 +172,9 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
       {/* <IoIosHeartEmpty className="cart-icon" /> */}
       <div className="imgBox pt-1">
         <img
+         loading="lazy"
+            decoding="async"
+          width={225} 
           src={`${imgePath}/${product?.imageCover}`}
           alt="mouse corsair"
           className="mouse w-100 h-100"
@@ -197,7 +228,7 @@ const title =  "   شركه مجرة السماء! للتجارة"; // العن�
           <button
             disabled={createLoding?true:false}
           style={{ whiteSpace: 'nowrap'}}
-            onClick={() => addToCart(product?._id)}
+            onClick={() => addproducToCartOurWishlist(product?._id,'cart')}
             className="buy border-0"
           >
        {    createLoding? <span className=" spinner-border"></span>:' اضافه الى السلة'}

@@ -4,11 +4,17 @@ import { useUpdateOneMutation } from '../../redux/features/api/apiSlice';
 import { Fade } from 'react-awesome-reveal';
 import PropTypes from "prop-types";
 
+import { useSelector } from 'react-redux';
+
 const ApplayCoupon = ({productsDetails,openPaymntCommpount,LoadingDelet,openModalAndClearCart,
 Confirm ,HideDiscount}) => {
     const [updateOne,{ error: errorUpdate,isLoading: LoadingUpdate,isSuccess: successUpdate,data: updateData,},] = useUpdateOneMutation();
-   
+    const cartitems = useSelector((state) => state.cart);
+    console.log(cartitems,'cartitems');
+    
   const [coupon, setCoupon] = useState("");
+ 
+  
   
   useEffect(() => {
     if (successUpdate) {
@@ -104,7 +110,7 @@ Confirm ,HideDiscount}) => {
               : "d-none"
           }
         >
-          {updateData?.data?.totalPriceAfterDiscount && Confirm    && (
+          {updateData?.data?.totalPriceAfterDiscount && cartitems > 0 && Confirm    && (
             <Fade delay={0} direction="up" triggerOnce={true}>
               <span className="d-flex border-bottom flex-wrap py-3  justify-content-center  fs-5 ">
                 المجموع قبل الخصم :
@@ -114,7 +120,7 @@ Confirm ,HideDiscount}) => {
               </span>
             </Fade>
           )}
-     {   console.log(updateData?.data?.totalPriceAfterDiscount)}
+
         
           <Fade delay={0} direction="up" triggerOnce={true}>
             <span className="  fs-5 py-3 ">

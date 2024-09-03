@@ -39,30 +39,31 @@ const Products = () => {
     isLoading,
     isSuccess,
   } = useGetDataQuery(
-    `products?limit=${limit}&page=${Pagination}${filterDrands}${filterCategorirs}${sortFilter}&keywords=${search}`
+    `products?limit=${limit}&page=${Pagination}${filterDrands}${filterCategorirs}${sortFilter}&keywords=${search}&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage`
   );
-  console.log(products?.data);
+  
 
   // get brands from the database
   const {
     data: brands,
 
     isSuccess: successbrands,
-  } = useGetDataQuery("brands?limit=500");
+  } = useGetDataQuery("brands?fields=name,image&limit=500");
   // get brands from the database
   const {
     data: categories,
     // error: errorcategories,
     isLoading: loadingcategories,
     isSuccess: successcategories,
-  } = useGetDataQuery("categories?limit=500");
+  } = useGetDataQuery("categories?fields=name,image&limit=500");
 
   const section1Ref = useRef(null);
 
+
   // Go to products and filter
-  const scrollToSection = (ref, id) => {
+  const scrollToSection =useCallback( (ref, id) => {
     setfilterCategorirs(id);
-    console.log(id.split('=')[1]);
+  
     
     const selectedcategory = categories?.data.find(
       (cate) => cate._id === id.split('=')[1]
@@ -74,7 +75,7 @@ const Products = () => {
     setSelectedBrand(selectedBrand ? selectedBrand.name : "");
   
     ref.current.scrollIntoView({ behavior: "smooth" });
-  };
+  },[brands?.data, categories?.data]);
 
   useEffect(() => {
     if (error) {
@@ -211,7 +212,9 @@ const Products = () => {
             align-items-center justify-content-between  m-auto pointer overflow-hidden"
           >
             <img
-              width={150}
+            loading="lazy"
+            decoding="async"
+              width={250}
               height={150}
               src={
                 category.image
@@ -219,12 +222,12 @@ const Products = () => {
                   : logo
               }
               className=" d-sm-block m-1"
-              alt="brand"
+              alt="brand" style={{objectFit: 'contain'}}
             />
 
             <span
               style={{
-                height: "10rem",
+                height: "4.8rem",
                 backgroundColor: "var(--bgColor)!important",
               }}
               className="fs-5 border  p-2 w-100  text-center d-flex flex-column"
@@ -236,7 +239,7 @@ const Products = () => {
         </button>
       ));
     }
-  }, [categories?.data, categories?.imageUrl, isSuccess]);
+  }, [categories?.data, categories?.imageUrl, isSuccess, scrollToSection]);
 
   // show Brands Slide
   const showBrandsSlide = useMemo(() => {
@@ -259,6 +262,8 @@ const Products = () => {
             align-items-center justify-content-between  m-auto pointer overflow-hidden"
           >
             <img
+            loading="lazy"
+            decoding="async"
               width={150}
               height={150}
               src={brand.image ? `${brands?.imageUrl}/${brand?.image}` : logo}
@@ -267,7 +272,7 @@ const Products = () => {
             />
             <span
               style={{
-                height: "10rem",
+                height: "4.2rem",
                 backgroundColor: "var(--bgColor)!important",
               }}
               className="fs-5 border  p-2  w-100 text-center  d-flex flex-column"
@@ -279,7 +284,7 @@ const Products = () => {
         </button>
       ));
     }
-  }, [brands?.data, brands?.imageUrl, isLoading]);
+  }, [brands?.data, brands?.imageUrl, isLoading, scrollToSection]);
 
   // slide settings
   const responsive = {
@@ -324,7 +329,7 @@ const Products = () => {
           { showCategoriesData}
         </div>
       </div>} */}
-      {/* brands */}
+      {/* categories */}
       {successcategories && (
         <div className="">
           <p

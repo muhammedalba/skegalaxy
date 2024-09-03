@@ -41,12 +41,12 @@ const Carouseles = () => {
     { error: errorDelet, isLoading: LoadingDelet, isSuccess: SuccessDelet },
   ] = useDeletOneMutation();
 
-  console.log(errorDelet);
+ 
 
   const [selectedBrandId, setSelectedBrandId] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  console.log(error);
+
   useEffect(() => {
     if (error?.status === 401) {
       warnNotify("انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا");

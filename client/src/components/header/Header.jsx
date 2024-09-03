@@ -20,11 +20,13 @@ import { FaRegUser } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { Fade } from "react-awesome-reveal";
-import { BiTransfer } from "react-icons/bi";
+
 import { Results } from "../../redux/features/Slice/QuantityResultSlice";
 import { currentPage } from "../../redux/features/Slice/NavigationSlice";
-
+import { CiHeart } from "react-icons/ci";
 import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
+import { IoStorefrontOutline } from "react-icons/io5";
+import { MdOutlineWifiProtectedSetup } from "react-icons/md";
 
 
 
@@ -169,7 +171,12 @@ const Header = () => {
   const nav_Links = [ {
       title: " طلباتي",
       path: "/orders",
-      icon: <BiTransfer fontSize={"1.7rem"} color="var( --text-color)" />,
+      icon: <MdOutlineWifiProtectedSetup fontSize={"1.7rem"} color="var( --text-color)" />,
+    },
+    {
+      title: " المفضلة",
+      path: "/Favorite",
+      icon: <CiHeart fontSize={"1.7rem"} color="var( --text-color)" />,
     },
     {
       title: "سلة مشترياتي",
@@ -179,7 +186,7 @@ const Header = () => {
     {
       title: "الصفحة الرئيسية",
       path: "/",
-      icon: <IoMdHome fontSize={"1.7rem"} color="var( --text-color)" />,
+      icon: <IoStorefrontOutline fontSize={"1.7rem"} color="var( --text-color)" />,
     },
    
     {
@@ -191,7 +198,7 @@ const Header = () => {
     },
   ];
 
-  // get property
+  // get property 
   // const bgColor = document.styleSheets[0].cssRules[0].style.getPropertyValue("--bg-color");
 
 
@@ -252,7 +259,11 @@ const Header = () => {
               <Fade delay={0} direction="down" triggerOnce={true} >
                   <Link to={'/'}>    
                    <img
-                  style={{ width: "50px ", height: "50px" }}
+                       loading="lazy"
+                       decoding="async"
+                         width={50}
+                         height={50}
+              
                   className="logo  rounded-circle  d-sm-block  "
                   src={logo}
                   alt="logo"
@@ -278,6 +289,10 @@ const Header = () => {
 
                 <Link to={role ? "ProfileAccount" : "login"}>
                   <img
+                   loading="lazy"
+                   decoding="async"
+                     width={50}
+                     height={50}
                     className="logo d-none d-sm-block rounded-circle dropdown-toggle border-1"
                     src={
                       !image || image === "undefined"

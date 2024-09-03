@@ -41,7 +41,7 @@ const InfoProduct = () => {
     error,
     isLoading,
     isSuccess,
-  } = useGetOneQuery(`products/${productId}`);
+  } = useGetOneQuery(`products/${productId}?&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage,description`);
 
   // Fetch category data for related products
   const { isSuccess: categorySuccess, data: categoryData } = useGetOneQuery(
@@ -209,6 +209,9 @@ const InfoProduct = () => {
                     style={{ height: "4.5rem" }}
                   >
                     <img
+                       loading="lazy"
+                       decoding="async"
+                     width={250} 
                       className="d-block h-100 rounded w-100 "
                       src={`${product?.imageUrl}/${product?.data?.imageCover}`}
                       alt="productImge"

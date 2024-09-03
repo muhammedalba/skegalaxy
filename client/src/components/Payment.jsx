@@ -7,7 +7,7 @@ import { FaMountainCity } from "react-icons/fa6";
 import { GiModernCity } from "react-icons/gi";
 import { BsTelephoneFill } from "react-icons/bs";
 import { BiMessageAltDetail } from "react-icons/bi";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import  React, { useCallback, useEffect, useRef, useState } from "react";
 import { errorNotify, infoNotify, successNotify, warnNotify } from "../utils/Toast";
 import { useDispatch } from "react-redux";
 import { useCreateOneMutation } from "../redux/features/api/apiSlice";
@@ -21,6 +21,7 @@ import PropTypes from "prop-types";
 
 const Payment = ({ display ,productsDetails,setdisplay}) => {
 
+console.log(productsDetails);
 
     const [ CreateOne,{error: errorCreate,isLoading: LoadingCreate,isSuccess: successCreate,data: dataCreate,},] = useCreateOneMutation();
     const focus = useRef(null);
@@ -52,16 +53,22 @@ const Payment = ({ display ,productsDetails,setdisplay}) => {
           focus.current.focus();
         }
       }, [display]);
+
+      
       useEffect(() => {
         if ( successCreate) {
-          dispatch(cartitems(0));
-          successNotify("تم طلب العنصر بنجاح");
+          dispatch(cartitems(0)) 
           setdisplay(false);
+          successNotify("تم طلب العنصر بنجاح");
           VizaCard && window.open(PaymentPage, "_blank");
+          window.location.pathname='/';
+   
+
+         
         }
     
        
-      }, [LoadingCreate, PaymentPage, VizaCard, dispatch, setdisplay, successCreate]);
+      }, [PaymentPage, VizaCard, dispatch, setdisplay, successCreate]);
 
 
       useEffect(() => {
@@ -561,6 +568,6 @@ Payment.propTypes = {
   
   };
 
-const MemoizedPayment = React.memo(Payment);
+const MemoizedPayment =React.memo(Payment);
 
 export default MemoizedPayment;

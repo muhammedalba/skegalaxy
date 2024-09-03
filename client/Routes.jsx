@@ -67,6 +67,8 @@ import SingleCarousel from "./src/dashboard/dashPage/carousel/SingleCarousel";
 import CreateCarousel from "./src/dashboard/dashPage/carousel/CreateCarousel";
 import Error404 from "./src/components/Error404/Error404";
 
+import Favorite from "./src/pages/Favorite/Favorite";
+
 
 
 
@@ -86,6 +88,7 @@ export const routes = createBrowserRouter([
       { path: "forgotPassword", element: <ForgotPassword /> },
       
       { path: "cart", element: < Cart/> },
+      { path: "Favorite", element: < Favorite/> },
 
       { path: "products/:productId", element: < InfoProduct/> },
       

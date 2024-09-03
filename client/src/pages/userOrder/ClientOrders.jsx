@@ -150,12 +150,13 @@ const ClientOrders = () => {
           />
           
        
-          <button disabled={confirmed}  className={!confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1 ":'m-1  btn btn-success fs-5 pointer text-white' }
+          
+          <button disabled={confirmed}  className={!confirmed?" btn btn btn-outline-primary fs-5  pointer  m-1":'m-1  btn btn-success fs-5 pointer text-white' }
           onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
            الطلبات السابقة
            
            </button>
-           <button disabled={!confirmed}  className={confirmed?" btn btn-primary fs-5 text-white pointer text-primary m-1":' m-1 btn btn-success fs-5 pointer text-white'  }
+           <button disabled={!confirmed}  className={confirmed?" btn btn-outline-primary fs-5  pointer  m-1":' m-1 btn btn-success fs-5 pointer text-white'  }
           onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
           الطلبات الحاليه 
            
