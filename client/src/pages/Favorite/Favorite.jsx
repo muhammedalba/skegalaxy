@@ -233,7 +233,7 @@ const Favorite = () => {
         </tr>
       );
     }
-  }, [LoadingDelet, isLoading, isSuccess, openModalAndDeleteOne, products?.data, products?.imageUrl, products?.result]);
+  }, [LoadingDelet, isLoading, isSuccess, openModalAndDeleteOne, products?.data, products?.result]);
 
   
 

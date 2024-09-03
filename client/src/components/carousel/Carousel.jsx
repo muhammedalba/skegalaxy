@@ -45,7 +45,9 @@ const Carousel = () => {
         data-bs-interval={`${index * 100}`}
       >
         <img
-          width={'100%'} height={200}
+             
+              decoding="async"
+            width={1024} 
           className=" h-100  w-100 "
           src={`${carouseles?.imageUrl}/${preview?.carouselImage}`}
           alt={`Preview${index}`}
