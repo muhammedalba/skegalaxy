@@ -29,6 +29,7 @@ const Products = () => {
   const [filterDrands, setfilterDrands] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedValue, setselectedValue] = useState("");
 
 
   // get products from the database
@@ -61,6 +62,17 @@ const Products = () => {
   // Go to products and filter
   const scrollToSection = (ref, id) => {
     setfilterCategorirs(id);
+    console.log(id.split('=')[1]);
+    
+    const selectedcategory = categories?.data.find(
+      (cate) => cate._id === id.split('=')[1]
+    );
+    setSelectedCategory(selectedcategory ? selectedcategory.name : "");
+    const selectedBrand = brands.data.find(
+      (brand) => brand._id === id.split('=')[1]
+    );
+    setSelectedBrand(selectedBrand ? selectedBrand.name : "");
+  
     ref.current.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -119,12 +131,13 @@ const Products = () => {
   // handleCategoryChange
   const handleBrandChange = useCallback(
     (e) => {
-      const selectedValue = e.target.value;
+      setselectedValue(e.target.value);
+      const value=e.target.value
       setfilterDrands(`&brand=${e.target.value}`);
 
       // العثور على العلامة التجارية التي تطابق القيمة المحددة
       const selectedBrand = brands.data.find(
-        (brand) => brand._id === selectedValue
+        (brand) => brand._id === value
       );
       setSelectedBrand(selectedBrand ? selectedBrand.name : "");
     },
@@ -133,11 +146,12 @@ const Products = () => {
   // // handleCategoryChange
   const handleCategoryChange = useCallback(
     (e) => {
-      const selectedValue = e.target.value;
+       setselectedValue(e.target.value);
+       const value=e.target.value
       setfilterCategorirs(`&category=${e.target.value}`);
 
       const selectedcategory = categories?.data.find(
-        (cate) => cate._id === selectedValue
+        (cate) => cate._id === value
       );
       setSelectedCategory(selectedcategory ? selectedcategory.name : "");
     },
@@ -157,6 +171,7 @@ const Products = () => {
     setSelectedBrand("");
     setSelectedCategory("");
    setsortFilter('')
+   setselectedValue('')
   };
   // view categories select
   const showCategorie = useMemo(() => {
@@ -434,12 +449,12 @@ const Products = () => {
                   فلتره
                 </option>
                 <option value={"&sort=-updatedAt"}>جديدنا</option>
-                <option value={"&sort=-sold"}>ترتيب حسب الكثر مبيعا</option>
+                <option value={"&sort=-sold"}>ترتيب حسب الاكثر مبيعا</option>
                 <option value={"&sort=-ratingsAverage"}>
                   ترتيب حسب الاعلى تقييما
                 </option>
-                <option value="&sort=price">من الاقل الى الاعلى سعرا</option>
-                <option value="&sort=-price">من الاعلى سعرالى الاقل</option>
+                <option value="&sort=price">    ترتيب حسب السعر من الأقل للاعلى</option>
+                <option value="&sort=-price">ترتيب حسب السعر من  الأعلى للاقل </option>
                 <option value={"&sort=-title"}>
                   ترتيب حسب الاسم من a الى z
                 </option>

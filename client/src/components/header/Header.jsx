@@ -7,7 +7,7 @@ import Cookies from "universal-cookie";
 import "./header.css";
 
 // img
-import logo from "../../imges/logo1.webp";
+import logo from "../../imges/logo1..webp";
 import avatar from "../../imges/avatar.webp";
 // icons
 import { CiSearch } from "react-icons/ci";
@@ -271,6 +271,7 @@ const Header = () => {
             {/* logo end */}
             <div className=" d-lg-block">
               <ul className="my-0 h-100 d-flex  align-items-center gap-2">
+                <li className="nav-item d-flex align-items-center"></li>
                 <Fade delay={0} direction="down" triggerOnce={true} cascade>
                   {nav_link_show}
                 </Fade>
