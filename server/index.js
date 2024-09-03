@@ -43,8 +43,7 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 // compression all responses
 app.use(compression());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
+app.use("/uploads", express.static(path.join(__dirname, "uploads"), {maxAge: '1d'}));
 // webhook-checkout
 app.post(
   "/webhook-checkout",
@@ -95,7 +94,9 @@ dbconnection();
 //mount Routes
 MountRoutes(app);
 // Static file declaration
-app.use(express.static(path.join(__dirname, "../client/dist")));
+app.use(express.static(path.join(__dirname, "../client/dist"), {
+  maxAge: '1d' // التخزين المؤقت للملفات لمدة يوم واحد
+}));
 // Serve the React app
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));

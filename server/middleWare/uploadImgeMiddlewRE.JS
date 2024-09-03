@@ -64,9 +64,11 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       await processAndSaveImage(
         req.files.imageCover[0].buffer,
         `uploads/${path}/${filename}`,
-        800,
-        600,
-        70
+        225,
+        225,
+        
+        80
+        
       );
       req.body.imageCover = filename; // Save image into our db
     }
@@ -97,9 +99,9 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       await processAndSaveImage(
         req.files.image[0].buffer,
         `uploads/${path}/${filename}`,
-        800,
-        600,
-        70
+        250,
+        150,
+        80
       );
       req.body.image = filename; // Save image into our db 
     }
@@ -110,8 +112,8 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       await processAndSaveImage(
         req.files.DeliveryReceiptImage[0].buffer,
         `uploads/${path}/${filename}`,
-        800,
-        600,
+        450,
+      300,
         70
       );
       req.body.DeliveryReceiptImage = filename; // Save image into our db 
@@ -121,8 +123,8 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       await processAndSaveImage(
         req.files.carouselImage[0].buffer,
         `uploads/${path}/${filename}`,
-        1920,
-        1080,
+        1024 ,
+        500,
         100
         
       );
@@ -137,8 +139,9 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
           await processAndSaveImage(
             image.buffer,
             `uploads/${path}/${filename}`,
-            800,
-            600
+            250,
+            150,
+            80
           );
           req.body.images.push(filename); // Save image into our db
         })

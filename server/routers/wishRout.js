@@ -9,7 +9,7 @@ const { creatProductToWishlistValidator,deletProductFromWishlistValidator } = re
 
 
 const router = express.Router();
-router.use(protect,allowedTo(role.USER))
+router.use(protect,allowedTo(role.USER,role.ADMIN))
 
 router.route("/")
 .get(getLoggedUserWishlist)

@@ -41,9 +41,21 @@ const deletProductFromWishlist  = asyncHandler(async (req, res, next) => {
 // get products from wishlist
 // get http://localhost:4000/api/wishlist
 const getLoggedUserWishlist  = asyncHandler(async (req, res, next) => {
+    const imageUrl=`${req.protocol}://${req.get('host')}/uploads/products`;
+
+    const user = await UserModel.findById(req.user._id)
+    .populate({
+        path: "wishlist",
+        select: "title price imageCover description ratingsAverage priceAfterDiscount quantity", // تحديد الحقول التي تريد استرجاعها من المنتج
+    });
+
+// إذا كنت تريد إضافة الصورة في نفس الاستجابة، يمكنك بناء URL الصورة لكل منتج في wishlist
+const wishlistWithImages = user.wishlist.map(product => ({
+    ...product.toObject(), // تحويل الوثيقة إلى كائن عادي للحصول على التحكم الكامل
+    imageCover: `${imageUrl}/${product.imageCover}`, // بناء رابط الصورة
+}));
     
-    const user =await UserModel.findById(req.user._id ).populate("wishlist")
-    res.status(200).json({status:"success", result:user.wishlist.length,data:user.wishlist})
+    res.status(200).json({status:"success", result:wishlistWithImages.length,data:wishlistWithImages,imageUrl})
 })
 
 
