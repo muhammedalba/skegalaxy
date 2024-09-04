@@ -23,7 +23,7 @@
 
 /* Global Styles */
 body {
-  font-family: 'Amiri', serif;
+  font-family: 'Amiri', serif !important;
   scroll-behavior: smooth;
   overflow-x: hidden;
   background-color: var(--minColor);
