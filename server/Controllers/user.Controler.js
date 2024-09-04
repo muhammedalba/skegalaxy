@@ -58,6 +58,7 @@ const changeUserPassword = asyncHandler(async (req, res, next) => {
   if (!changePassword) {
     return next(new ApiError(`no document for this id ${req.params.id}`, 404));
   }
+
   return res.json({status:'success',changePassword});
 });
 
@@ -80,9 +81,16 @@ const updateLoggedUserPassword = asyncHandler(async (req, res) => {
     },
     { new: true }
   );
-  const token = createToken(user);
-  res.status(200).json({ status:'success',data: user, token });
+  res.cookie("token", '', {
+    httpOnly: false,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict', 
+  });
+
+  res.status(200).json({ status:'success',data: user });
 });
+
+
 // update logged User  (wiyhout password role)
 // get http://localhost:4000/api/users/updatLoggedUser
 const updatLoggedUser = asyncHandler(async (req, res, next) => {

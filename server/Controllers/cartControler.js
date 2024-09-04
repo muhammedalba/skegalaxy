@@ -185,13 +185,11 @@ exports.updateCartItemQuantity = asyncHandler(async (req, res, next) => {
   );
   if (productIndex > -1) {
  
-    if(quantity <= product.quantity) {
+
       cart.cartItems[productIndex].quantity = quantity;
       
 
-    }else{
-      return next(new ApiError("out of stock", 400));
-    }
+   
   } else {
     return next(
       new ApiError(` there is no item for id  ${req.params.itemid} `, 404)

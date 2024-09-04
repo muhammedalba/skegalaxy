@@ -30,7 +30,7 @@ const router = express.Router();
 router.get(
   "/getMe",
   protect,
-  // allowedTo(role.USER),
+
   getLoggedUserData,
   getUserValidator,
   getUserById
@@ -38,7 +38,7 @@ router.get(
 router.put(
   "/changeMyPassword",
   protect,
-  allowedTo(role.USER),
+
   updateLoggedUserPassword
 );
 router.put("/updatLoggedUser", protect, allowedTo(role.USER),uploadUserImge,updatLoggedUserValidator, resizeImge, updatLoggedUser);

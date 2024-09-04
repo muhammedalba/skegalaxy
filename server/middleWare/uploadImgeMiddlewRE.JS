@@ -114,7 +114,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
         `uploads/${path}/${filename}`,
         450,
       300,
-        70
+        80
       );
       req.body.DeliveryReceiptImage = filename; // Save image into our db 
     }
