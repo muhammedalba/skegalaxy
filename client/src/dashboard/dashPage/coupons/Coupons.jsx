@@ -167,7 +167,7 @@ const handleDelete =useCallback((id) => {
                 </td>
                 <td  >
                 <Fade delay={0} direction='up' triggerOnce={true}   >
-                  <span className="">{coupons.name}</span>
+                  <span style={{textTransform:"none"}} className="">{coupons.name}</span>
                   </Fade>
                   </td>
       

@@ -120,3 +120,6 @@ table th {
     transform: translateX(100%);
 }
 }
+.form-control{
+text-transform: none !important;;
+}

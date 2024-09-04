@@ -74,7 +74,7 @@ Confirm ,HideDiscount}) => {
               </label>
 
               <div className="w-100 d-flex border border-1 gap-1">
-                <input
+                <input 
                   minLength={3}
                   onChange={(e) => setCoupon(e.target.value)}
                   type="text"
