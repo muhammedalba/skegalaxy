@@ -37,7 +37,7 @@ const Categories = () => {
     error,
     isLoading,
     isSuccess,
-  } = useGetDataQuery(`categories?limit=${limit}&page=${Pagination}&keywords=${search}`);
+  } = useGetDataQuery(`categories?limit=${limit}&page=${Pagination}&keywords=${search}&fields=name,image`);
   console.log(categories?.data);
   // delete category from the database
   const [

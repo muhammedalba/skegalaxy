@@ -45,7 +45,7 @@ const Users = () => {
   const [selectedBrandId, setSelectedBrandId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   // get users from the database 
-  const {data:users, error,isLoading,isSuccess,} = useGetDataQuery(`users?limit=${QuantityResult}&page=${Pagination}&keywords=${search}`);
+  const {data:users, error,isLoading,isSuccess,} = useGetDataQuery(`users?limit=${QuantityResult}&page=${Pagination}&keywords=${search}&fields=firstname,email,image,role`);
     console.log(error);
   // delete users from the database
   const [
@@ -57,7 +57,7 @@ const Users = () => {
 
   
 
-console.log(errorDelet);
+console.log(users);
 
 
 

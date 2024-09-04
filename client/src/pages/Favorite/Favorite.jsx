@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
 
+  useCreateOneMutation,
   useDeletOneMutation,
   useGetDataQuery,
 
@@ -37,7 +38,7 @@ const Favorite = () => {
  
   const [ deletOne,{ error: errorDelete, isLoading: LoadingDelet, isSuccess: successDelete },] = useDeletOneMutation();
   
-
+  const [ createOne,{ error: errorCreate, isLoading: LoadingCreatet, isSuccess: successCreate },] = useCreateOneMutation();
 
 
   // State Management
@@ -51,7 +52,15 @@ const Favorite = () => {
   const [showModal, setShowModal] = useState(false);
    
 
-
+  useEffect(() => {
+    if(successCreate){
+      successNotify('تم اضافه المنتج بنجاح ')
+    
+    }
+    if(errorCreate){
+      errorNotify('خطأ في اضافه المنتج ')
+    }
+  },[errorCreate, successCreate])
 
 
 
@@ -103,7 +112,24 @@ const Favorite = () => {
 
 
 
-
+  const addproducToCartOurWishlist = useCallback((productId) => {
+ 
+    
+    // تحقق من أن المستخدم مسجل الدخول وأن معرف المنتج صالح
+    if (token && typeof(productId) !== "undefined") {
+      
+      
+      createOne({
+        url: 'cart',
+        method: "POST",
+        body: { productId },
+      })
+   
+    } else {
+      warnNotify("يجب عليك تسجيل دخول اولا");
+     
+    }
+  }, [createOne, token]);
 
 
 
@@ -182,6 +208,7 @@ const Favorite = () => {
           <td className="d-none d-sm-table-cell  pe-3">
             <Fade delay={0} direction="up" triggerOnce={true}>
               <div className="d-flex flex-column text-end w-100 h-100">
+
                 {product ? (
                 <span className=""> { product?.title?.slice(0, 70)}</span>
                 ) : (
@@ -200,12 +227,14 @@ const Favorite = () => {
                   ({product?.price} )
                   <i className="text-success"> SAR</i>
                 </span>
-                <span className={product?.priceAfterDiscount?"py-2 text-danger":"d-none"}>
+
+                <span className={product?.priceAfterDiscount?"py-1 text-danger":"d-none"}>
                   ({product?.priceAfterDiscount} )
                   <i className="text-success"> SAR</i>
                 </span>
+
                 {/*handle quantity  */}
-                <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  `}>
+                <div className={`fw-bold fs-5 pt-1 d-flex align-items-center  `}>
                   <span className={`card-title ps-1 d-${ product?.quantity === 0?'none':''}`}>الكمية  </span>
                   <span className="text-secondary d-flex align-items-center ">
                       { product?.quantity> 0 ?`( ${product?.quantity.toFixed(0)} )`:''}
@@ -214,10 +243,22 @@ const Favorite = () => {
                     <span className={`text-danger  fs-6 ${product?.quantity <= 100 && product?.quantity !== 0? " d-block" : "d-none"} `}>   كميه محدودة   </span>
                     <span className={`text-danger  fs-6 ${product?.quantity === 0 ? " d-block" : "d-none"} `}>     يتوفر عند الطلب</span>
                 </div>
+             
               </div>
             </Fade>
           </td>
-          
+          <td>
+               {/* add to cart */}
+               <button
+            disabled={LoadingCreatet || isLoading}
+          style={{ whiteSpace: 'nowrap'}}
+            onClick={() => addproducToCartOurWishlist(product?._id,'cart')}
+            className="btn btn-primary  border-0"
+          >
+       {    isLoading? <span className=" spinner-border"></span>:' اضافه الى السلة'}
+             
+                </button>
+          </td>
         </tr>
       ));
     } else {
@@ -233,7 +274,7 @@ const Favorite = () => {
         </tr>
       );
     }
-  }, [LoadingDelet, isLoading, isSuccess, openModalAndDeleteOne, products?.data, products?.result]);
+  }, [LoadingCreatet, LoadingDelet, addproducToCartOurWishlist, isLoading, isSuccess, openModalAndDeleteOne, products?.data, products?.result]);
 
   
 
@@ -273,6 +314,7 @@ const Favorite = () => {
               </span>
             </Fade>
           )}
+         
 
           {/* data table  start*/}
           <table className="table table-striped pt-5 mt-3 text-center">
@@ -284,10 +326,12 @@ const Favorite = () => {
                 <th className="d-table-cell" scope="col">
                   صورة المنتج
                 </th>
-                <th className="d-none d-sm-table-cell" scope="col">
+                <th className="d-none d-sm-table-cell text-end" scope="col">
                   معلومات المنتج
                 </th>
-                
+                <th className="d-none d-sm-table-cell " scope="col">
+                 اضافه الى السلة
+                </th>
               </tr>
             </thead>
             <tbody className="">{showData}</tbody>

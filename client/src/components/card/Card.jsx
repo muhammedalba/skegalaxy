@@ -47,10 +47,16 @@ const Card = ({ product, imgePath,reverse }) => {
   const showQuantity =product.quantity <= 100 && product.quantity !== 0? " d-block" : "d-none";
   const showQuantityMsg =  product.quantity === 0 ? " d-block" : "d-none";
 
-console.log(createError);
-console.log(successCreeate);
 
-  const dispatch = useDispatch();
+
+    const dispatch = useDispatch();
+    const [display ,setDisplay]=useState(false);
+    const [displed ,setdispled]=useState(false);
+    const cokkies = new Cookies();
+    const token = cokkies.get("token");
+    const shareUrl = window.location.href; // URL الصفحة الحالية
+    const title =  "   شركه مجرة السماء! للتجارة"; // العنوان للمشاركة
+  
   useEffect(()=>{
     if(  createError?.status == 401 ){
       
@@ -59,12 +65,17 @@ console.log(successCreeate);
      }
   },[createError?.status])
 
+
+
 useEffect(() => {
   if(successCreeate){
     successNotify('تم اضافه المنتج بنجاح ')
   
   }
 },[successCreeate])
+
+
+
   useEffect(()=>{
 
     if( crerateData?.status ===201  ){
@@ -75,21 +86,9 @@ useEffect(() => {
  }
  
 
+},[crerateData?.resnumOfCartItems, crerateData?.status, dispatch])
 
- if(  createError?.status == 400 ){
-     
-  warnNotify("هذه الكميه غير موجوده حاليا");
 
-}
-
-},[createError?.status, crerateData?.resnumOfCartItems, crerateData?.status, dispatch])
-
-const [display ,setDisplay]=useState(false);
-const [displed ,setdispled]=useState(false);
-const cokkies = new Cookies();
-const token = cokkies.get("token");
-const shareUrl = window.location.href; // URL الصفحة الحالية
-const title =  "   شركه مجرة السماء! للتجارة"; // العنوان للمشاركة
 
 
 
@@ -105,7 +104,7 @@ if(createError || successCreeate){
 },[createError, createLoding, successCreeate])
 
 
-
+// add to cart our wish list
   const addproducToCartOurWishlist = useCallback((productId,route) => {
  
     
@@ -129,6 +128,8 @@ if(createError || successCreeate){
  const showIcons=()=>{
   setDisplay(!display)
  }
+
+
   return (
     <div className="card-product m-auto ">
 

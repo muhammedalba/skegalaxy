@@ -109,8 +109,13 @@
   align-items: center;
 
   z-index: 1;
+
   img{
-    
+    -webkit-transition: transform 0.5s;
+    -moz-transition: transform 0.5s;
+    -ms-transition: transform 0.5s;
+    -o-transition: transform 0.5s;
+    transition: transform 0.5s;
     object-fit: contain
   }
 
@@ -169,6 +174,15 @@
 
  
 
+}
+
+.card-product:hover .imgBox img {
+  -webkit-transform: scale(1.08);
+  -moz-transform: scale(1.08);
+  -ms-transform: scale(1.08);
+  -o-transform: scale(1.08);
+ 
+  transform: scale(1.08);
 }
 
 @media screen and (max-width:340px ){

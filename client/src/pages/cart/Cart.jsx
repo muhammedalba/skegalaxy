@@ -288,9 +288,9 @@ const openModalAndClearCart = useCallback(() => {
                   ({product?.product?.priceAfterDiscount} )
                   <i className="text-success"> SAR</i>
                 </span>
-                <span className=" text-danger">
+                <span className=" text-success">
                   <i className="text-dark"> الكمية المتوفرة :</i>(
-                  {product?.product?.quantity} )
+                  {product?.product?.quantity>0 ?product?.product?.quantity:"متوفر عند الطلب"})
                 </span>
               </div>
             </Fade>

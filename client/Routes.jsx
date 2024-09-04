@@ -4,9 +4,10 @@ import {
   // createRoutesFromElements,
 } from "react-router-dom";
 import App from "./src/App";
+  import SignUp from "./src/auth/signup/SignUp"
+  import Login from "./src/auth/login/Login"
 
-import SignUp from "./src/auth/signup/SignUp";
-import Login from "./src/auth/login/Login";
+
 import ForgotPassword from "./src/auth/forgotPassword/ForgotPassword";
 import ResetPassword from "./src/auth/resetPassword/ResetPassword";
 import Verifyresetcode from "./src/auth/Verifyresetcode/VerifyResetCode";
@@ -29,24 +30,17 @@ import Product from "./src/dashboard/dashPage/products/Product";
 import Products from "./src/dashboard/dashPage/products/Products";
 import CreatProduct from "./src/dashboard/dashPage/products/CreatProduct";
 
-// import SubCategory from "./src/dashboard/dashPage/subcategory/SubCategory";
-// import SubCategories from "./src/dashboard/dashPage/subcategory/SubCategories";
-// import CreateSubCategory from "./src/dashboard/dashPage/subcategory/CreateSubCategory";
+
 
 import Brands from "./src/dashboard/dashPage/brands/Brands";
 import CreateBrands from "./src/dashboard/dashPage/brands/CreateBrands";
 import Brand from "./src/dashboard/dashPage/brands/Brand";
-// import Transfers from "./src/dashboard/dashPage/transfers/transfers";
-// import Transfer from "./src/dashboard/dashPage/transfers/Transfer";
+
 import ProtectedRoute from "./src/utils/ProtectedRoute";
 
-// import ProductsCategory from "./src/pages/ProductsCategory";
-// import Cart from "./src/pages/cart/Cart";
-import ProfileAccount from "./src/pages/ProfileAccount/ProfileAccount";
-// import UserTransfer from "./src/pages/userTransfer/UserTransfer";
 
-// import AddTransfer from "./src/pages/userTransfer/AddTransfer";
-// import TransFer from "./src/pages/userTransfer/TransFer";
+import ProfileAccount from "./src/pages/ProfileAccount/ProfileAccount";
+
 
 import UserOrder from "./src/pages/userOrder/UserOrder";
 
@@ -72,13 +66,18 @@ import Favorite from "./src/pages/Favorite/Favorite";
 
 
 
+
+
 export const routes = createBrowserRouter([
+
   // HOME PAGE
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "", element: <HomePage /> },
+      { path: "", element:  
+<HomePage />
+ },
       // { path: "category/:CategoryId", element: <ProductsCategory /> },
 
       { path: "verifyresetcode", element: <Verifyresetcode /> },
@@ -86,6 +85,7 @@ export const routes = createBrowserRouter([
       { path: "signup", element: <SignUp /> },
       { path: "login", element: <Login /> },
       { path: "forgotPassword", element: <ForgotPassword /> },
+
       
       { path: "cart", element: < Cart/> },
       { path: "Favorite", element: < Favorite/> },

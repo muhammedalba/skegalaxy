@@ -41,8 +41,8 @@ import DeleteModal from "../../../components/deletModal/DeleteModal";
         error,
         isLoading,
         isSuccess,
-      } = useGetDataQuery(`orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}&keywords=${search}`);
-     console.log(error);
+      } = useGetDataQuery(`orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}&keywords=${search}&fields=VerificationCode,isDelivered,isPaid,paymentMethodType,totalOrderPrice`);
+     console.log(orders);
 
 
       const[updateOne, {

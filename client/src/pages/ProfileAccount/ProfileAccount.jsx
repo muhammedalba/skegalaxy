@@ -6,20 +6,24 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaImage, FaUser } from 'react-icons/fa';
 import { MdOutlineEmail } from "react-icons/md";
 import { ToastContainer } from 'react-toastify';
-import { BiTransfer } from "react-icons/bi";
 
+import { MdOutlineWifiProtectedSetup } from "react-icons/md";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 
 
 import { useGetOneQuery, useUpdateOneMutation } from '../../redux/features/api/apiSlice';
-import { errorNotify, infoNotify, successNotify } from '../../utils/Toast';
+import { errorNotify, infoNotify, successNotify, warnNotify } from '../../utils/Toast';
 
 import { Fade } from 'react-awesome-reveal';
+import Cookies from 'universal-cookie';
 
 const User = () => {
   
   
   const navigate = useNavigate();
+
+
 
   //get data (rtk redux) 
    const { isLoading, isSuccess, data, error } = useGetOneQuery(`users/getMe`);
@@ -40,10 +44,12 @@ const User = () => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [password, setPassword] = useState('');
- 
+
 
   const isDisabled = isLoading || updateLoading;
 
+
+ 
 
   // handel isSuccess  oue error
   useEffect(() => {
@@ -61,7 +67,8 @@ const User = () => {
     }
     if (updateSuccess) {
       successNotify('تمت التعديل بنجاح');
-      password &&  navigate('/login');
+    
+         
     }
     if (updateError) {
      
@@ -69,6 +76,29 @@ const User = () => {
     }
   }, [data, isSuccess, updateSuccess, navigate, updateError, updatedUser, error?.status, password]);
 
+  // handel isSuccess  oue error
+  useEffect(() => {
+
+    if (updateSuccess && password) {
+      successNotify('تمت التعديل بنجاح');
+       const cookies=new Cookies();
+      
+        cookies.remove("role");
+        cookies.remove("token");
+        cookies.remove("refreshToken");
+        cookies.remove("image");
+navigate('/login');
+      
+         
+    }
+    if (updateError) {
+     
+      errorNotify('خطأ في الخادم');
+    }
+    if(error?.status===402){
+      warnNotify('غير مصرح للمسؤولين دخول الر هنا')
+    }
+  }, [data, isSuccess, updateSuccess, navigate, updateError, updatedUser, error?.status, password]);
 
 
   // handleSubmit
@@ -149,7 +179,7 @@ const User = () => {
 
         <div className="w-100 py-2">
           <img
-          style={{border:' 5px solid var(--spancolor)'}}
+          style={{border:' 0.5rem solid var(--bgColor)'}}
             className="logo rounded-circle m-auto d-block "
             src={isSuccess && !preview ? `${data?.imageUrl}/${data?.data?.image}` : preview}
             alt="avatar"
@@ -158,7 +188,7 @@ const User = () => {
 
         
         <div className="d-flex align-items-center flex-wrap justify-content-between">
-            <Link to={`/orders`} className=' fs-3 m-1'> <BiTransfer color='green' />  الذهاب الى طلباتي </Link>
+            <Link to={`/orders`} className=' fs-3 m-1'> <MdOutlineWifiProtectedSetup color='green' />  الذهاب الى طلباتي </Link>
         </div>
         <div className="col-md-12 py-2">
           <label className="p-1 fs-5 d-flex align-items-center gap-1" htmlFor="firstname">
@@ -214,7 +244,7 @@ const User = () => {
         </div>
         <div className="col-md-12 py-2">
           <label className="p-1 fs-5 d-flex align-items-center gap-1" htmlFor="password">
-            <MdOutlineEmail />
+            <RiLockPasswordLine  />
             تغيير كلمه المرور
           </label>
           <input
@@ -259,7 +289,7 @@ const User = () => {
         )}
         <button
           disabled={isDisabled}
-          className="btn btn-primary my-4 d-flex align-items-center"
+          className="btn btn-primary  my-4 d-flex align-items-center"
           type="submit"
         >
           {isDisabled ? <span className="spinner-border"></span> : 'تعديل'}

@@ -28,6 +28,8 @@ const ClientOrders = () => {
       const Pagination = useSelector((state) => state.Pagination);
       // felter orders status
       const [confirmed, setconfirmed] = useState(false);
+      const [showbtns, setshowbtns] = useState(false);
+      const display=showbtns?'inline-block':'none'
       // get orders from the database
       const {
         data: orders,
@@ -35,7 +37,7 @@ const ClientOrders = () => {
         isLoading,
         isSuccess,
       } = useGetDataQuery(
-        `orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}`
+        `orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}&fields=VerificationCode,isDelivered,isPaid,paymentMethodType,totalOrderPrice createdAt`
       );
     console.log(error);
     
@@ -52,6 +54,7 @@ const ClientOrders = () => {
           return SkeletonTeble;
         }
         if (isSuccess && orders?.data.length > 0) {
+          setshowbtns(true)
           return orders?.data.map((order, index) => (
             <tr className="text-center" key={index}>
               <td className="d-none d-md-table-cell" scope="row">
@@ -118,7 +121,7 @@ const ClientOrders = () => {
                 colSpan={7}
                 scope="row"
               >
-                لا توجد أي عناصر
+                لا توجد أي طلبات بعد 
               </td>
             </tr>
           );
@@ -151,12 +154,12 @@ const ClientOrders = () => {
           
        
           
-          <button disabled={confirmed}  className={!confirmed?" btn btn btn-outline-primary fs-5  pointer  m-1":'m-1  btn btn-success fs-5 pointer text-white' }
+          <button disabled={confirmed}   className={!confirmed?` d-${display} btn btn btn-outline-primary fs-5  pointer  m-1`:'m-1  btn btn-success fs-5 pointer text-white' }
           onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
            الطلبات السابقة
            
            </button>
-           <button disabled={!confirmed}  className={confirmed?" btn btn-outline-primary fs-5  pointer  m-1":' m-1 btn btn-success fs-5 pointer text-white'  }
+           <button disabled={!confirmed}  className={confirmed?` btn btn-outline-primary fs-5  pointer  m-1`:` d-${display} m-1 btn btn-success fs-5 pointer text-white`  }
           onClick={useCallback(() => setconfirmed(!confirmed), [confirmed])} > 
           الطلبات الحاليه 
            

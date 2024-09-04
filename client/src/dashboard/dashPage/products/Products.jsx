@@ -44,9 +44,10 @@ const Products = () => {
     isLoading,
     isSuccess,
   } = useGetDataQuery(
-    `products?limit=${limit}&page=${Pagination}&${filterDrands}&${filter}&keywords=${search}`
+    `products?limit=${limit}&page=${Pagination}&${filterDrands}&${filter}&keywords=${search}&fields=price,title,imageCover,priceAfterDiscount`
   );
 
+console.log(products);
 
   // get brands from the database
   const {
@@ -181,7 +182,13 @@ const handleDelete =useCallback((id) => {
           >
             <Fade delay={0} direction='up' triggerOnce={true}    >
 
-            {product?.category ? product.category?.name : "غير محدد"}
+          
+            {product?.category ?
+            (<>
+            <span>{product?.category?.name.split('_')[0]}</span>
+            <br/>
+            <span>{product?.category?.name.split('_')[1]}</span>
+            </>): "غير محدد"}
             </Fade>
           </td>
           <td
@@ -190,16 +197,20 @@ const handleDelete =useCallback((id) => {
           >
           <Fade delay={0} direction='up' triggerOnce={true}    >
 
-            {product?.brand ? product.brand?.name : "غير محدد"}
+            {product?.brand ?
+            (<>
+            <span>{product?.brand?.name.split('_')[0]}</span>
+            <br/>
+            <span>{product?.brand?.name.split('_')[1]}</span>
+            </>): "غير محدد"}
             </Fade>
           </td>
           <td className="d-none d-md-table-cell">
           <Fade delay={0} direction='up' triggerOnce={true}    >
-
-          <span>
-                    {product?.price?.toFixed(2)}
-                    <span className="ps-2 text-success">SAR</span>
-                  </span>
+            {product?.priceAfterDiscount?  <span>{product?.priceAfterDiscount?.toFixed(2)}</span>:
+                <span>{product?.price.toFixed(2)}</span> }
+            <span className="ps-2 text-success">SAR</span>
+               
             </Fade>
             </td>
           <td className="d-none d-md-table-cell">

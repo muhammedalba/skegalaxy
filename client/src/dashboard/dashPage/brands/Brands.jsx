@@ -33,7 +33,7 @@ const Brands = () => {
     isLoading,
     isSuccess,
   } = useGetDataQuery(
-    `brands?limit=${limit}&page=${Pagination}&keywords=${search}`
+    `brands?limit=${limit}&page=${Pagination}&keywords=${search}&fields=name,image`
   );
   console.log(brands?.data);
   // delete brands from the database

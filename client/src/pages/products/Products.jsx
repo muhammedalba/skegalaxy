@@ -5,10 +5,10 @@ import { useGetDataQuery } from "../../redux/features/api/apiSlice";
 import Carousel from "react-multi-carousel";
 import { Fade } from "react-awesome-reveal";
 import { SkeletonCard } from "../../utils/skeleton";
-
+import { Fragment,  } from 'react';
 import { SkeletonProduct } from "../../utils/skeleton";
 import Navigation from "../../components/navigation/Navigation";
-
+import './products.css'
 // icons
 
 import logo from "../../imges/logo.webp";
@@ -29,7 +29,7 @@ const Products = () => {
   const [filterDrands, setfilterDrands] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedValue, setselectedValue] = useState("");
+
 
 
   // get products from the database
@@ -46,7 +46,7 @@ const Products = () => {
   // get brands from the database
   const {
     data: brands,
-
+    isLoading: LoadingBrand,
     isSuccess: successbrands,
   } = useGetDataQuery("brands?fields=name,image&limit=500");
   // get brands from the database
@@ -115,6 +115,9 @@ const Products = () => {
     if (successbrands && brands?.data?.length === 0) {
       return <option value="">لايوجد معلومات</option>;
     }
+  if (LoadingBrand ) {
+      return <option value=""> جاري جلب البيانات</option>;
+    }
 
     if (successbrands && brands?.data?.length > 0) {
       const sortedBrands = [...brands.data].sort((a, b) =>
@@ -122,17 +125,23 @@ const Products = () => {
       );
 
       return sortedBrands.map((brand, index) => (
-        <option key={index} value={brand._id}>
-          {brand.name}
+     <Fragment key={index}>
+        <option   value={brand._id}>
+          {brand?.name.split("_")[0]}
         </option>
+          <option  className={`d-${brand?.name.split("_")[1]?'block':'none'}`}key={index} value={brand._id}>
+            {brand?.name.split("_")[1]}
+          </option>
+     
+     </Fragment>
       ));
     }
-  }, [brands?.data, successbrands]);
+  }, [LoadingBrand, brands?.data, successbrands]);
   // selct brand
   // handleCategoryChange
   const handleBrandChange = useCallback(
     (e) => {
-      setselectedValue(e.target.value);
+    
       const value=e.target.value
       setfilterDrands(`&brand=${e.target.value}`);
 
@@ -147,7 +156,7 @@ const Products = () => {
   // // handleCategoryChange
   const handleCategoryChange = useCallback(
     (e) => {
-       setselectedValue(e.target.value);
+   
        const value=e.target.value
       setfilterCategorirs(`&category=${e.target.value}`);
 
@@ -172,10 +181,13 @@ const Products = () => {
     setSelectedBrand("");
     setSelectedCategory("");
    setsortFilter('')
-   setselectedValue('')
+
   };
-  // view categories select
+  // view categories select loadingcategories
   const showCategorie = useMemo(() => {
+    if (loadingcategories ) {
+      return <option value=""> جاري جلب البيانات</option>;
+    }
     if (isSuccess && categories?.data?.length === 0) {
       return <option value="">لايوجد بيانات</option>;
     }
@@ -186,12 +198,19 @@ const Products = () => {
       );
 
       return sortedcategories.map((category, index) => (
-        <option key={index} value={category._id}>
-          {category.name}
+        <Fragment key={index}>
+          
+        <option  value={category._id}>
+          {category?.name.split("_")[0]}
         </option>
+          <option  className={`d-${category?.name.split("_")[1]?'block':'none'}`} key={index} value={category._id}>
+            {category?.name.split("_")[1]}
+          </option>
+     
+     </Fragment>
       ));
     }
-  }, [categories?.data, isSuccess]);
+  }, [categories?.data, isSuccess, loadingcategories]);
 
   // if sucsses and data is not empty  show the categories
   const showCategoriesData = useMemo(() => {
@@ -202,7 +221,7 @@ const Products = () => {
           onClick={() =>
             scrollToSection(section1Ref, `&category=${category._id}`)
           }
-          className=" btn d-block m-auto w-100 0 "
+          className=" btn d-block m-auto w-100 caroselcategory "
           key={index}
         >
           <div
@@ -252,7 +271,7 @@ const Products = () => {
         <button
           style={{ minWidth: "75%" }}
           onClick={() => scrollToSection(section1Ref, `&brand=${brand._id}`)}
-          className=" btn d-block m-auto w-100"
+          className=" btn d-block m-auto w-100 caroselBrand"
           key={index}
         >
           <div
@@ -334,10 +353,10 @@ const Products = () => {
         <div className="">
           <p
             style={{ backgroundColor: "var(--bgColor)" }}
-            className="pb-2 mb-3  fs-3 border border-end-0 border-start-0 text-center"
+            className="p-2 mb-3  fs-3 border border-end-0 border-start-0 text-center"
           >
-            {" "}
-            الاقسام{" "}
+            
+            الاقسام
           </p>
           <Carousel
             responsive={responsive}
@@ -362,7 +381,7 @@ const Products = () => {
         <div className="">
           <p
             style={{ backgroundColor: "var(--bgColor)" }}
-            className="pb-2 mb-3  fs-3 border border-end-0 border-start-0 text-center"
+            className="p-2 mb-3  fs-3 border border-end-0 border-start-0 text-center"
           >
             شركاء النجاح
           </p>
@@ -391,7 +410,7 @@ const Products = () => {
         <div
           ref={section1Ref}
           style={{ backgroundColor: "var(--bgColor)" }}
-          className="w-100 text-center pb-2 fs-2 border-top py-2"
+          className="w-100 text-center p-2 fs-2 border-top py-2"
         >
           المنتجات
         </div>

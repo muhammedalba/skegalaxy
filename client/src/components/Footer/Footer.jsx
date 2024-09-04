@@ -10,7 +10,7 @@ import { FcHeadset  } from "react-icons/fc";
 import { FcAutomotive } from "react-icons/fc";
 import { FcSynchronize } from "react-icons/fc";
 import { FcUnlock } from "react-icons/fc";
-import logo from '../../imges/logo1..webp'
+import logo from '../../imges/footerImge.webp'
 import { BsTelephone } from "react-icons/bs";
 import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
@@ -84,7 +84,10 @@ const Footer = () => {
                 <div className="col-12 col-sm-4 text-center pt-3">
                     <Fade direction='up' triggerOnce={true} cascade>
                                  <Link to={'/'}>
-                                    <img className="m-auto " width={100} height={100} src={logo} alt="logo" />
+                                    <img className="m-auto "loading="lazy"
+                   decoding="async"
+                     width={100}
+                     src={logo} alt="logo" />
                                     <div className="pt-1 ">
                                         
                                         شركة مجرة السماء للتجارة 

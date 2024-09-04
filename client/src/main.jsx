@@ -9,7 +9,9 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle.js'
 import { RouterProvider } from 'react-router-dom'
 import { routes } from '../Routes.jsx'
-import '@fontsource/amiri';
+import '@fontsource/amiri/400.css'; // الوزن العادي
+import '@fontsource/amiri/700.css'; // الوزن العريض
+
 
 
 

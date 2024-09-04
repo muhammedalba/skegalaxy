@@ -156,7 +156,7 @@ Confirm ,HideDiscount}) => {
                         ? true
                         : false
                     }
-                    className="btn btn-primary "
+                    className="btn btn-success "
                   >
                     {LoadingDelet  ? (
                       <span className="spinner-border"></span>

@@ -220,7 +220,7 @@ const Header = () => {
           to={link.path}
           className="nav-link p-2 d-flex  align-items-center "
         >
-          <span className="px-1 d-none d-md-block">{link.title}</span>
+          <span className="px-1 d-none d-lg-block">{link.title}</span>
           
           {<span className=" position-relative">
              {link.icon}
@@ -287,12 +287,14 @@ const Header = () => {
                   {nav_link_show}
                 </Fade>
 
-                <Link to={role ? "ProfileAccount" : "login"}>
-                  <img
+                <Link className="rounded-circle d-none d-sm-block" style={{border:' 0.2rem solid var(--bgColor)'}} to={role ? "ProfileAccount" : "login"}>
+                {/* 
+            className="logo rounded-circle m-auto d-block " */}
+                  <img 
                    loading="lazy"
                    decoding="async"
                      width={50}
-                     height={50}
+                 
                     className="logo d-none d-sm-block rounded-circle dropdown-toggle border-1"
                     src={
                       !image || image === "undefined"
