@@ -27,6 +27,7 @@ import { CiHeart } from "react-icons/ci";
 import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { MdOutlineWifiProtectedSetup } from "react-icons/md";
+import { FaUsersRectangle } from "react-icons/fa6";
 
 
 
@@ -168,7 +169,12 @@ const Header = () => {
   });
 
   // Nav links
-  const nav_Links = [ {
+  const nav_Links = [
+    {
+      title: " من نحن",
+      path: "/About",
+      icon: <FaUsersRectangle  fontSize={"1.7rem"} color="var( --text-color)" />,
+    }, {
       title: " طلباتي",
       path: "/orders",
       icon: <MdOutlineWifiProtectedSetup fontSize={"1.7rem"} color="var( --text-color)" />,

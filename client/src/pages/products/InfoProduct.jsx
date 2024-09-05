@@ -27,6 +27,9 @@ import {
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
+
+
+
 const InfoProduct = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
@@ -511,7 +514,7 @@ const InfoProduct = () => {
           <Card
             key={prod._id}
             product={prod}
-            reverse={true}
+          
             imgePath={categoryData?.imageUrl}
           />
         ));
@@ -520,7 +523,7 @@ const InfoProduct = () => {
           responsive={responsive}
           showDots={true}
           ssr={true}
-          arrows={false}
+          arrows={true}     rtl={true}
           focusOnSelect={false}
           // centerMode={true}
           lazyLoad={true}

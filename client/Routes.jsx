@@ -62,6 +62,7 @@ import CreateCarousel from "./src/dashboard/dashPage/carousel/CreateCarousel";
 import Error404 from "./src/components/Error404/Error404";
 
 import Favorite from "./src/pages/Favorite/Favorite";
+import About from "./src/pages/About/About";
 
 
 
@@ -96,6 +97,7 @@ export const routes = createBrowserRouter([
       { path: "orders/:orderId", element: <UserOrder /> },
 
       { path: "ProfileAccount", element: <ProfileAccount /> },
+      { path: "About", element: <About /> },
 
     ],
   },

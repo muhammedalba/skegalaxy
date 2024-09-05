@@ -15,6 +15,7 @@ import logo from "../../imges/logo.webp";
 import Card from "../../components/card/Card";
 import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { errorNotify } from "../../utils/Toast";
+import TextSlide from "../../components/text_slide/Text_slide";
 
 const Products = () => {
   //
@@ -331,13 +332,12 @@ const Products = () => {
   return (
     <div className="container-fluid ">
       {/*animation */}
-        <div className="container-marquee">
-            <div  className="marquee pb-3 pt-md-3 ps-5 ms-5 fs-3">
-            شركة مجرة السماء للتجارة . يتوفر لدينا جميع انواع العوازل مائية - حرارية - مواد حقن وإصلاح خرسانة - فوم بوليرثان
-            </div>
    
-           
-        </div>
+
+<TextSlide/>
+
+
+  
  
       
       {/* categories */}
@@ -398,14 +398,14 @@ const Products = () => {
       )}
 
       {/* products */}
-      <div className="container-fluid my-3">
-        <div
+      <div className=" my-3">
+        <p
           ref={section1Ref}
           style={{ backgroundColor: "var(--bgColor)" }}
-          className="w-100 text-center p-2 fs-2 border-top py-2"
+          className="w-100 text-center fs-2 border-top py-2"
         >
           المنتجات
-        </div>
+        </p>
 
         <div className=" d-flex justify-content-center flex-column border-top pt-2 gap-2">
           <div className="w-100 flex-wrap align-items-center overflow-hidden p-1 d-flex">
@@ -414,14 +414,12 @@ const Products = () => {
               <select
                 className="form-select py-2"
                 disabled={isLoading}
-                id="brand"
-                name="brand"
+                id="gategory"
+                name="gategory"
                 aria-label="Default select example"
                 onChange={handleCategoryChange}
                 value={
-                  categories?.data?.find(
-                    (brand) => brand.name === selectedCategory
-                  )?._id || ""
+                  categories?.data?.find((gategory) => gategory.name === selectedCategory )?._id || ""
                 }
               >
                 <option value="" disabled>
@@ -487,7 +485,7 @@ const Products = () => {
               type="button"
               className="btn btn-outline-danger h-50 mx-2"
             >
-              مسح الاختيارات
+               اعادة تعيين
             </button>
             {/* </div> */}
           </div>

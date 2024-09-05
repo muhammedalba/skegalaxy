@@ -192,7 +192,7 @@ navigate('/login');
         </div>
         <div className="col-md-12 py-2">
           <label className="p-1 fs-5 d-flex align-items-center gap-1" htmlFor="firstname">
-            <FaUser />
+            <FaUser color={'var(--spancolor)'}/>
             الاسم الاول
           </label>
           <input
@@ -210,7 +210,7 @@ navigate('/login');
         </div>
         <div className="col-md-12 py-2">
           <label className="p-1 fs-5 d-flex align-items-center gap-1" htmlFor="lastname">
-            <FaUser />
+            <FaUser color={'var(--spancolor)'}/>
             الاسم الثاني
           </label>
           <input
@@ -228,7 +228,7 @@ navigate('/login');
         </div>
         <div className="col-md-12 py-2">
           <label className="p-1 fs-5 d-flex align-items-center gap-1" htmlFor="email">
-            <MdOutlineEmail />
+            <MdOutlineEmail color={'var(--spancolor)'} />
             الايميل
           </label>
           <input
@@ -244,7 +244,7 @@ navigate('/login');
         </div>
         <div className="col-md-12 py-2">
           <label className="p-1 fs-5 d-flex align-items-center gap-1" htmlFor="password">
-            <RiLockPasswordLine  />
+            <RiLockPasswordLine color={'var(--spancolor)'} />
             تغيير كلمه المرور
           </label>
           <input

@@ -43,6 +43,7 @@ import DeleteModal from "../../../components/deletModal/DeleteModal";
         isSuccess,
       } = useGetDataQuery(`orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}&keywords=${search}&fields=VerificationCode,isDelivered,isPaid,paymentMethodType,totalOrderPrice`);
      console.log(orders);
+     console.log(error);
 
 
       const[updateOne, {
@@ -141,7 +142,7 @@ if(id){
             <tr>
               <td
                 className="text-center p-3 fs-5 text-primary"
-                colSpan={7}
+                colSpan={8}
                 scope="row"
               >
                 <Fade delay={0} direction="up" triggerOnce={true}>

@@ -9,7 +9,7 @@
 
 /* CSS Variables */
 :root {
-  --spancolor: hsl(38 90% 55%);
+  --spancolor: #0f7d9f;
   --btn-bg-color: #0f7d9f;
   --minColor: #fff;
   --bgColor: #b8dce7;
@@ -20,12 +20,15 @@
   --secondary-colour: hsl(233 80% 70%);
   --star-colour: hsl(38 90% 55%);
 }
-
+.react-icons{
+  color: red !important;
+}
 /* Global Styles */
 body {
   font-family: 'Amiri', serif !important;
+  font-display:swap ;
   scroll-behavior: smooth;
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
   background-color: var(--minColor);
   color: var(--text-color);
 }
@@ -87,32 +90,38 @@ table th {
 
 
 /* Skeleton Keyframes */
+
+
+
+
+
+
+
 @keyframes skeleton {
   to {
     background-position: 315px 0, 0 0, 0 190px, 50px 195px;
   }
 }
-.container-marquee {
-  display: flex;
-  width: 100%;
-  overflow: hidden; /* لإخفاء النص عند خروجه من حدود الـ div */
-  white-space: nowrap; /* لمنع التفاف النص */
- 
-  .marquee {
-    -webkit-animation: marquee 20s linear infinite;
-    animation: marquee 20s linear infinite;
+
+/* marquee-revese */
+@keyframes marquee-revese {
+  from { transform: translateX(100%); -webkit-transform: translateX(100%); -moz-transform: translateX(100%); -ms-transform: translateX(100%); -o-transform: translateX(100%);
 }
-
+  to {
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -o-transform: translateX(0%);
+    transform: translateX(0%);
 }
-
-
+}
  @keyframes marquee {
   from {
-    -webkit-transform: translateX(-99%);
-    -moz-transform: translateX(-99%);
-    -ms-transform: translateX(-99%);
-    -o-transform: translateX(-99%);
-    transform: translateX(-99%);
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -o-transform: translateX(0%);
+    transform: translateX(0%);
 }
   to {
     -webkit-transform: translateX(100%);

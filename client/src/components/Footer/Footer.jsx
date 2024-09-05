@@ -261,9 +261,9 @@ const Footer = () => {
       {/* Footer End Section */}
       <div style={{borderColor:' var(--btn-bg-color)!important '}} className="text-center border border-2  border-end-0 border-start-0 p-2">
         <Fade direction="up" duration={500} delay={0} triggerOnce={true}>
-          <p>
+          <a href="https://wa.me/+905346833726">
             صمم بواسطه محمد. جميع الحقوق محفوظة <i>.2024 &copy; </i>
-          </p>
+          </a>
         </Fade>
       </div>
      

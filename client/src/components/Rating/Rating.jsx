@@ -12,7 +12,7 @@ const handleRatings = (rating) => {
   const showRating = [1, 2, 3, 4, 5].reverse().map((rating) => {
     return (
       <Fragment key={rating}>
-        <input
+        {/* <input
         
           checked={parseInt(ratingsAverage) === rating}
           value={rating}
@@ -22,7 +22,7 @@ const handleRatings = (rating) => {
           id={`star-${ratingsAverage}-${rating}`} // تعديل هنا لتفادي تداخل القيم
           onChange={ (e) => handleRatings(e.target.value)
          }
-        />
+        /> */}
         <label style={{width:'20px'}} className='' htmlFor={`star-${ratingsAverage}-${rating}`}>
           <div
           className='star-stroke w-100 h-100 '
