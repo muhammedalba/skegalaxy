@@ -67,7 +67,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
         225,
         225,
         
-        80
+       90
         
       );
       req.body.imageCover = filename; // Save image into our db
@@ -101,7 +101,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
         `uploads/${path}/${filename}`,
         250,
         150,
-        80
+        90
       );
       req.body.image = filename; // Save image into our db 
     }
@@ -114,7 +114,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
         `uploads/${path}/${filename}`,
         450,
       300,
-        80
+        90
       );
       req.body.DeliveryReceiptImage = filename; // Save image into our db 
     }

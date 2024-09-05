@@ -206,7 +206,7 @@ exports.filterOrderForLoggedUser = asyncHandler(async (req, res, next) => {
 
 //  get  get all orders
 // /api/orders
-exports.getAllOrders = factory.getAll(orderModul);
+exports.getAllOrders = factory.getAll(orderModul,"orders");
 exports.deletOrder = factory.deleteOne(orderModul,'order');
 
 //  get  get all orders

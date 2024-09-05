@@ -61,11 +61,12 @@ class ApiFeatures {
       if(keywords === 'users'){
              query.$or = [
           { firstname: { $regex: this.queryString.keywords, $options: "i" } },
-          { lastname: { $regex: this.queryString.keywords, $options: "i" } },
+          { email: { $regex: this.queryString.keywords, $options: "i" } },
         ];
       
       }
-      if(keywords !== 'users' && keywords !== 'products'){
+
+      if(keywords !== 'users' && keywords !== 'products' ){
         query={name:{$regex:this.queryString.keywords, $options: "i"}}
       }
        
