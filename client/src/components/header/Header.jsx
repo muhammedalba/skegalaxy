@@ -20,7 +20,7 @@ import { FaRegUser } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { Fade } from "react-awesome-reveal";
-
+import { BsWhatsapp } from "react-icons/bs";
 import { Results } from "../../redux/features/Slice/QuantityResultSlice";
 import { currentPage } from "../../redux/features/Slice/NavigationSlice";
 import { CiHeart } from "react-icons/ci";
@@ -245,7 +245,7 @@ const Header = () => {
         style={{
           transform: trans ? "translateY(-150%)" : "translateY(0)",
         }}
-        className="w-100 text-uppercase fw-semibold"
+        className=" w-100  fw-semibold"
       >
         <nav
           style={{
@@ -367,7 +367,7 @@ const Header = () => {
 
       {/* go to top start */}
       <span
-        className=""
+        className=" "
         style={{
           transform: scroll ? "translateY(0)" : "translateY(-1500px)",
         }}
@@ -377,6 +377,20 @@ const Header = () => {
         <IoChevronUpOutline />
         <IoChevronUpOutline />
       </span>
+      {/* go to top end */}
+            {/* go to whatsapp start */}
+          
+        
+       
+      
+      
+   <a   style={{
+          transform: scroll ? "translateX(0)" : "translateX(-1500px)",
+        }}id="whatsapp"href="https://wa.me/+966598909991" className="text-white ">
+                        <BsWhatsapp fontSize={"3rem"}   />
+                    
+          </a>
+      
       {/* go to top end */}
     </>
   );

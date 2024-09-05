@@ -1,13 +1,14 @@
 import "./card.css";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 
-import Rating from "../Rating/Rating";
 
+
+const Rating = React.lazy(() => import("../Rating/Rating"));
 import { PiEyeThin } from "react-icons/pi";
 import { Fade } from "react-awesome-reveal";
 
 import PropTypes from "prop-types";
 import { useCreateOneMutation } from "../../redux/features/api/apiSlice";
-import { useCallback, useEffect, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 
 import { successNotify, warnNotify } from "../../utils/Toast";
@@ -191,7 +192,10 @@ if(createError || successCreeate){
           triggerOnce={true}
           cascade
         >
+          <Suspense >
           <Rating ratingsAverage={product?.ratingsAverage || 3} />
+
+          </Suspense>
           <h3 className="my-1"> {product?.title?.slice(0, 25)} </h3>
          
           {/* price */}

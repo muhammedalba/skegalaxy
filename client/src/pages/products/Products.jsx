@@ -333,21 +333,13 @@ const Products = () => {
       {/*animation */}
         <div className="container-marquee">
             <div  className="marquee pb-3 pt-md-3 ps-5 ms-5 fs-3">
-                  شركه مجرة السماء للتجارة الالكترونية كل ماتريده وتبحث عنه موجود لدينا  افضل الانواع واجودها  مصداقيه امانة تفاني  
-
+            شركة مجرة السماء للتجارة . يتوفر لدينا جميع انواع العوازل مائية - حرارية - مواد حقن وإصلاح خرسانة - فوم بوليرثان
             </div>
    
            
         </div>
  
-      {/* categgories */}
-
-      {/* {  successcategories&&    <div className=" d-none text-center d-sm-block mt-4 p-1">
-        <span style={{ backgroundColor: 'var(--bgColor)'}} className=" fs-4 w-100 m-auto  mb-2 d-block py-3 border border-end-0 border-start-0 ">الاقسام</span>
-        <div className="d-flex  flex-wrap justify-content-around ">
-          { showCategoriesData}
-        </div>
-      </div>} */}
+      
       {/* categories */}
       {successcategories && (
         <div className="">
