@@ -35,6 +35,7 @@ const About = () => {
   })
   return (
     <div className="container pt-5 mt-3 overflow-hidden">
+      <h1 className="text-center pt-4 text-primary"> من نحن !</h1>
       {/* Video Section */}
       {/* <div className="video-container overflow-hidden w-100  ">
         <video
@@ -59,7 +60,7 @@ const About = () => {
                   }}
                   pagination={true}
                   modules={[EffectCoverflow, Pagination]}
-                  className="mySwiper mt-5 border-top pt-4"
+                  className="mySwiper  border-top pt-4"
                 >
                  {carosel}
       </Swiper>
@@ -73,13 +74,14 @@ const About = () => {
               <div className="">
                 <img width={400} height={400} src={heroImage} alt="Hero" className="w-100 rounded" />
               
-              </div></Fade>
+              </div>
+              </Fade>
             </div>
             <div className="col-md-7 ">
             <Fade direction="up" triggerOnce cascade>
               <div className="mt-4">
-                <h3> شركة مجرة السماء للتجارة </h3>
-                <span className="about_prag">شركة مجرة السماء للتجارة </span>
+                <h3 className="text-center"> شركة مجرة السماء للتجارة </h3>
+                <span className="about_prag text-center w-100 d-inline-block">شركة مجرة السماء للتجارة </span>
                 <p className="mt-3 text-dark">
                 شركة مجرة السماء هي من الشركات الكبرى في السوق السعودي في مجال العزل المائي والحراري والحماية ومعالجة الخرسانة والتي تأسست في المنطقة الوسطى في المملكة العربية السعودية بمدينة الرياض لتقديم خدمات عالية الجودة طبقاً للمواصفات والمعايير الهندسية المعتمدة من الجهات الهندسية المختصة داخل مملكتنا الحبيبة
 
@@ -89,14 +91,14 @@ const About = () => {
             </div>
 
           
-           <div className="row pt-4 border-top">
+           <div className="row pt-4 mt-4 border-top">
            <div className="col-md-7 ">
               <div className="mt-4">
                 <Fade direction="up" triggerOnce cascade>
 
                
-                <h3> رؤيتنا</h3>
-                <span className="about_prag">شركة مجرة السماء للتجارة </span>
+                <h3 className=" text-center "> رؤيتنا</h3>
+                <span className="about_prag text-center w-100 d-inline-block">شركة مجرة السماء للتجارة </span>
                 <p className="mt-3 text-dark">
                 الريادة المحلية من خلال استراتيجية تنفيذ المشاريع التي تتوافق مع أعلى معايير الجودة السعودية والعالمية لتصبح أفضل مؤسسة رائدة.  شركة جالاكسي سكاي المتخصصة والمفضلة في إدارة وتشغيل وصيانة المرافق في المملكة تهدف إلى إدارة وتشغيل وصيانة المرافق في المملكة.
 
@@ -116,60 +118,62 @@ const About = () => {
           </div>
         </div>
       </section>
-    
+    {/*contact  */}
       <section className="bg-contacts">
-        <main className="Contact container Contact-sec" id="Contact">
+        <main className=" pt-5 mt-2  Contact-items  container Contact-sec" id="Contact">
         <Fade direction="up" triggerOnce>
 
-          <div className="Contact-items border-bottom">
+          <div className="text-center border-bottom">
             <h2 className="fs-3">التواصل</h2>
             <p className="fs-4">
-             هل تريد مساعده ؟ <span className="fs-4">تواصل معنا لا تتردد</span>
+             هل تريد مساعده ؟ <span className="fs-3 text-danger">تواصل معنا لا تتردد</span>
             </p>
           </div>
-         </Fade>
-          <div className="item ">
-            <div className="one-sec">
-              <div className="demo1">
-              <Fade direction="up" triggerOnce>
+         </Fade> 
+          <div className="item pt-5">
+            <div className="one-sec row row-gap-3 flex-wrap">
+              <div className="demo1  col-12 col-md-6">
+              <Fade direction="up" triggerOnce className="w-100 h-100">
 
-                <div className="one p-3">
+                <div className="one  p-3 ">
                   <h3>الإدارة العامة</h3>
                   <p>الرياض - حي الملز - طريق صلاح الدين الايوبي</p>
-                </div></Fade>
+                </div>
+                </Fade>
               </div>
-              <div className="demo1">
-              <Fade direction="up" triggerOnce>
-                <div className="one p-3">
+              <div className="demo1 col-12 col-md-6">
+              <Fade direction="up" triggerOnce className="w-100 h-100">
+                <div className="one w-100 p-3">
                   <h3>   المنطقة الوسطى   </h3>
                   <p >الرياض - مخرج ١٧ - طريق المدينة المنورة</p>
                 </div>
                 </Fade>
               </div>
-            </div>
-            <div className="two-sec">
-              <div className="demo2">
-                <Fade direction="up " triggerOnce>
+           
+            {/* <div className="two-sec row"> */}
+              <div className="demo1 col-12 col-md-6">
+                <Fade direction="up " triggerOnce  className="w-100 h-100">
                 <div className="one p-3">
                   <h3>اتصل بنا </h3>
                   <a href="https://wa.me/+966598909991" >+966598909991</a>
                 </div>
                 </Fade>
               </div>
-              <div className="demo2">
-              <Fade direction="up " triggerOnce>
+              <div className="demo1 col-12 col-md-6">
+              <Fade direction="up " triggerOnce  className="w-100 h-100">
                 <div className="one p-3">
                 <h3>بريدنا الالكتروني</h3>
                 <a href="#">info@skygalaxyco.com</a>
                 </div> </Fade>
               </div>
-            </div>
+              </div>
+            {/* </div> */}
           </div> 
-         
+         {/*map  */}
           <div className="mt-5">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3572.7122636397758!2d50.088684!3d26.432760499999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49fd00723c33a3%3A0x81186921c4f94e68!2z2LnZiNin2LLZhCDZhdin2YrYqSDYrdix2KfYsdmK2Kkg2LHYutmI2YrYqSDZhdis2LHYqSDYp9mE2LPZhdin2KEg2YTZhNiq2KzYp9ix2Kk!5e0!3m2!1sar!2str!4v1724486500106!5m2!1sar!2str" height={250} style={{border: 0,width:'100%'}} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
 
-            </div>
+           </div>
        
         </main>
       </section>

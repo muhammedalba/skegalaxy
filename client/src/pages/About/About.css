@@ -1,262 +1,52 @@
+.Contact-items h2 {
 
-.About {
-    padding-top: 5rem;
-   
+    color: var(--btn-bg-color);
+
 }
 
-.web {
-    left: 80%;
+
+
+
+.demo1 .one {
+    background-color: #f5f5f5;
+
+}
+
+.About .one h3 {
+    font-size: 1.3rem;
+    color: var(--btn-bg-color);
+
 }
 
 .About h3 {
-    font-size: 1.875rem;
-    font-weight: 800;
-    line-height: 2.0625rem;
-    color: #343434;
-}
-
-.About .about_prag {
-    color: #999999;
-    font-size: 1rem;
-    line-height: 1.25rem;
-    letter-spacing: 0.15rem;
-}
-
-.About p {
-    font-size: 1rem;
-    color: #748182;
-}
-
-.About .about_prag,
-.About p {
-    font-weight: 400;
-}
-
-.btn-dark:hover {
-    background-color: white;
-    color: black;
+    color: var(--btn-bg-color);
 }
 
 
-.progress-bar1 {
-    animation: moving 3s 1;
-    width: 95%;
-}
-
-@keyframes moving {
-    35% {
-        width: 35%;
-        display: none;
-    }
-
-    95% {
-        width: 95%;
-        display: block;
-    }
-}
-
-.progress-bar2 {
-    animation: moving_2 3s 1;
-    width: 80%;
-}
-
-@keyframes moving_2 {
-    35% {
-        width: 35%;
-        display: none;
-    }
-
-    80% {
-        width: 80%;
-        display: block;
-    }
-}
-
-.progress-bar3 {
-    animation: moving_3 3s 1;
-    width: 90%;
-}
-
-@keyframes moving_3 {
-    35% {
-        width: 35%;
-        display: none;
-    }
-
-    90% {
-        width: 90%;
-        display: block;
-    }
-}
-
-/* ===============================Services Section============================ */
-
-.Services {
-    background-color: #f7f7f7;
-    padding-bottom: 6rem;
-}
-
-.Services h3 {
-    font-size: 2.5rem;
-    padding-top: 6rem;
-    padding-bottom: 5rem;
-    font-weight: 900;
-}
-
-.Services_contant i {
-    background-color: #f4f4f4;
-    padding-top: 1.5rem;
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
-}
-
-.Services_contant .bg-white:hover i {
-    background-color: black;
-}
-
-.Services_contant h6 {
-    font-size: 1.125rem;
-    font-weight: 800;
-    line-height: 1.2375rem;
-    color: #343434;
-}
-
-.Services_contant p {
-    line-height: 1.4rem;
-    font-weight: 400;
-    color: #748182;
-}
-.video-container {
-    position: relative;
-  height: 600px;
-  /* video{
-    height: 100%;
-    width: 100%;
-  } */
-  }
-  
-  .video-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Passt das Video so an, dass es den Container vollständig ausfüllt */
-  }
-  
-.Contact {
-    padding-top: 100px;
-    padding-bottom: 40px;
-}
-
-.Contact .Contact-items {
-    text-align: center;
-}
-
-.Contact-items h2 {
-    font-size: 14px;
-    color: #7f7f90;
-    font-family: 'Inter', sans-serif;
-}
-
-.Contact-items p {
-    font-family: "Amatic SC", sans-serif;
-    font-size: 50px;
-    color: #212529;
-    margin-top: -4px;
-    margin-bottom: 15px;
-}
-
-.Contact-items span {
-    color: #ce1212;
-    font-family: "Amatic SC", sans-serif;
-    font-size: 50px;
-
-}
-
-.Contact .ifram {
-    width: 100%;
-}
-
-.item .one-sec {
-    display: flex;
-    gap: 20px;
-}
-
-.item .one-sec .demo1 {
-    background-color: #f5f5f5;
-    width: 50%;
-}
-
-.demo1 .one h3 {
-    font-size: 20px;
-    color: #7d7d7d;
-    font-family: 'Inter', sans-serif;
-}
-
-.demo1 {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.demo1 .one p {
-    font-size: 16px;
-    color: #212529;
-    font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
-    ;
-}
-
-.demo1 .one a {
-    font-size: 16px;
-    color: #212529;
-    font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
-    ;
-    text-decoration: none;
-}
 
 
-.item i {
-    color: white;
-    padding: 15px 15px;
-    border-radius: 50%;
-    background-color: #ce1212;
-    margin-left: 25px;
-    margin-right: 15px;
-}
 
-.demo2 {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
 
-}
 
-.item .two-sec {
-    display: flex;
-    gap: 20px;
-}
 
-.item .two-sec .demo2 {
-    background-color: #f5f5f5;
-    width: 50%;
-}
+
+
 
 
 .swiper {
     width: 100%;
     padding-top: 50px;
     padding-bottom: 50px;
-  }
+}
 
-  .swiper-slide {
+.swiper-slide {
     background-position: center;
     background-size: cover;
     width: 300px !important;
     height: 300px !important;
-  }.swiper-slide img {
+}
+
+.swiper-slide img {
     display: block;
     width: 100% !important;
-  }
-  
+}
