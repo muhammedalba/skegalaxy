@@ -92,12 +92,12 @@ console.log(user);
 
       //1- If the user resets the password, go to login page
       //2-If the user is an administrator, go to the control panel
-      const path = ["admin", "manager"].includes(user.data.role)
-        ? "/"
-        : "/";
+      // const path = ["admin", "manager"].includes(user.data.role)
+      //   ? "/"
+      //   : "/";
 
-      name === "resetPassword"
-        && navigate("/login", { replace: true })
+      // name === "resetPassword"
+      //   && navigate("/login", { replace: true })
         // :window.location.pathname=path
     }
   }, [isSuccess, user, name, navigate, title]);
