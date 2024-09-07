@@ -20,6 +20,7 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
 
   const navigate = useNavigate();
   const focus = useRef(null);
+console.log(user);
 
   // state
   let [Error, setError] = useState("");
@@ -82,6 +83,7 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
       //if res = success set data to cookies
       const cookies = new Cookies();
       cookies.set("role", user?.data.role);
+      cookies.set("token", user?.data.token);
       cookies.set("firstname", user?.data.firstname);
       cookies.set("image", user?.data.image);
       cookies.set("imageUrl", user?.imageUrl);
