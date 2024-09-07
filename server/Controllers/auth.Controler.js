@@ -45,13 +45,13 @@ exports.signup = asyncHandler(async (req, res) => {
   const refreshToken  = createRefreshToken(user);
   res.cookie("token", token, {
     httpOnly: false,// javascript only
-    secure: true,//HTTPS
+    secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
     // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
-  secure: true,
+  secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
   // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
@@ -87,13 +87,13 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
   const refreshToken  = createRefreshToken(user);
   res.cookie("token", token, {
     httpOnly: false,// javascript only
-    secure: true,//HTTPS
+    secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
     // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
-  secure: true,
+  secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
   // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
@@ -109,14 +109,14 @@ exports.logout = asyncHandler(async (req, res, next) => {
   
   res.cookie("token", '', {
     httpOnly: false,// javascript only
-    secure: true,//HTTPS
+    secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
    
 });
 
 res.cookie("refreshToken", '', {
   httpOnly: false,
-  secure: true,
+  secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
 
 });
@@ -245,7 +245,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
         res.cookie("token", newAccessToken, {
           httpOnly: false,
           // secure: process.env.NODE_ENV === 'production',
-          secure: true,
+          secure: false,
           sameSite: 'strict', 
         });
         res.setHeader('Authorization', `Bearer ${newAccessToken}`);
@@ -371,13 +371,13 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
   const refreshToken  = createRefreshToken(user);
   res.cookie("token", token, {
     httpOnly: false,// javascript only
-    secure: true,//HTTPS
+    secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 });
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
-  secure: true,
+  secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 });
