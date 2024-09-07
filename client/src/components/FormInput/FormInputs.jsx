@@ -13,14 +13,12 @@ import { Fade } from "react-awesome-reveal";
 import { errorNotify, successNotify, warnNotify } from "../../utils/Toast";
 
 const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
-
   const [Autapi, { data: user, error: eror, isLoading, isSuccess }] =
     useAutapiMutation();
 
-
   const navigate = useNavigate();
   const focus = useRef(null);
-console.log(user);
+  console.log(user);
 
   // state
   let [Error, setError] = useState("");
@@ -76,19 +74,18 @@ console.log(user);
   }, [eror, name]);
   //  if success
 
-  
   useEffect(() => {
     // const notify = () =>
     if (isSuccess && user.token) {
       //if res = success set data to cookies
       const cookies = new Cookies();
       cookies.set("role", user?.data.role);
-      cookies.set("token", user?.data.token);
+      cookies.set("token", user?.token);
       cookies.set("firstname", user?.data.firstname);
       cookies.set("image", user?.data.image);
       cookies.set("imageUrl", user?.imageUrl);
       //
-     successNotify(`تمت ${title} بنجاح`);
+      successNotify(`تمت ${title} بنجاح`);
 
       //1- If the user resets the password, go to login page
       //2-If the user is an administrator, go to the control panel
@@ -98,7 +95,7 @@ console.log(user);
 
       // name === "resetPassword"
       //   && navigate("/login", { replace: true })
-        // :window.location.pathname=path
+      // :window.location.pathname=path
     }
   }, [isSuccess, user, name, navigate, title]);
 
@@ -130,23 +127,21 @@ console.log(user);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  // 
+  //
   const handleImageChange = (event) => {
-  const file = event.target.files[0];
-  if (file) {
+    const file = event.target.files[0];
+    if (file) {
       setImage(file);
-    const reader = new FileReader();
+      const reader = new FileReader();
 
+      // عرض المعاينة عند انتهاء القراءة
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
 
-    // عرض المعاينة عند انتهاء القراءة
-    reader.onloadend = () => {
-      setPreview(reader.result);
-  
-    };
-
-    reader.readAsDataURL(file);
-  }
-};
+      reader.readAsDataURL(file);
+    }
+  };
   // showInputs
   const showInputs = InputData.map(({ id, type, placeholder, icon, label }) => (
     <div className="col-md-12 py-2" key={id}>
@@ -186,77 +181,89 @@ console.log(user);
       />
 
       <form onSubmit={handleSubmit} className="m-auto p-3">
-      <Fade  direction='up' triggerOnce={true} cascade>
+        <Fade direction="up" triggerOnce={true} cascade>
+          <div className="w-100 py-2">
+            <img
+              className="logo m-auto d-none d-sm-block"
+              src={preview ? preview : logo}
+              alt="avatar"
+            />
+          </div>
+          <h2 className="w-75 text-center m-auto py-2 border-bottom">
+            {title}
+          </h2>
+          {showInputs}
 
-        <div className="w-100 py-2">
-          <img
-            className="logo m-auto d-none d-sm-block"
-            src={ preview ?  preview :logo}
-            alt="avatar"
-          />
-        </div>
-        <h2 className="w-75 text-center m-auto py-2 border-bottom">{title}</h2>
-        {showInputs}
+          {/* imge input and get to login st  */}
+          {name === "signup" && (
+            <>
+              <div className="col-md-12 py-2">
+                <label
+                  className="p-1 fs-5 d-flex align-items-center gap-1"
+                  htmlFor="image"
+                >
+                  <FaImage color="var(--spancolor)" fontSize="1rem" /> صورة
+                  الشخصية (اختياري)
+                </label>
+                <input
+                  disabled={isLoading ? true : false}
+                  className="form-control"
+                  id="image"
+                  name="image"
+                  type="file"
+                  onChange={handleImageChange}
+                />
+              </div>
+              <div className="w-100 py-2">
+                <span className="p-2 w-100 d-block">
+                  هل لديك حساب بالفعل؟
+                  <Link className="text-primary" to="/login">
+                    {" "}
+                    تسجيل دخول
+                  </Link>
+                </span>
+              </div>
+            </>
+          )}
 
-        {/* imge input and get to login st  */}
-        {name === "signup" && (
-          <>
-            <div className="col-md-12 py-2">
-              <label
-                className="p-1 fs-5 d-flex align-items-center gap-1"
-                htmlFor="image"
-              >
-                <FaImage color="var(--spancolor)" fontSize="1rem" /> صورة
-                الشخصية (اختياري)
-              </label>
-              <input
-                disabled={isLoading ? true : false}
-                className="form-control"
-                id="image"
-                name="image"
-                type="file"
-                onChange={handleImageChange}
-              />
-            </div>
+          {/*get to login end  */}
+
+          {/* Forgot your password && get to signup start*/}
+          {name === "login" && (
             <div className="w-100 py-2">
-              <span className="p-2 w-100 d-block">
-                هل لديك حساب بالفعل؟<Link className="text-primary"  to="/login"> تسجيل دخول</Link>
+              <span className="p-2 w-100 d-block" htmlFor="password">
+                انشاء حساب جديد:
+                <Link className="text-primary " to={"/signup"}>
+                  {" "}
+                  انشاء حساب
+                </Link>
+              </span>
+              <span className="p-2" htmlFor="password">
+                هل نسيت كلمة السر؟
+                <Link className="text-primary" to={"/forgotPassword"}>
+                  {" "}
+                  اضغط هنا
+                </Link>
               </span>
             </div>
-          </>
-        )}
-
-        {/*get to login end  */}
-
-        {/* Forgot your password && get to signup start*/}
-        {name === "login" && (
-          <div className="w-100 py-2">
-            <span className="p-2 w-100 d-block" htmlFor="password">
-              انشاء حساب جديد:<Link className="text-primary " to={"/signup"}> انشاء حساب</Link>
+          )}
+          {/* Forgot your password && get to signup end */}
+          {Error && (
+            <span className="w-100 text-center d-block text-danger pt-3">
+              {Error}
             </span>
-            <span className="p-2" htmlFor="password">
-              هل نسيت كلمة السر؟<Link className="text-primary" to={"/forgotPassword"}> اضغط هنا</Link>
-            </span>
-          </div>
-        )}
-        {/* Forgot your password && get to signup end */}
-        {Error && (
-          <span className="w-100 text-center d-block text-danger pt-3">
-            {Error}
-          </span>
-        )}
-</Fade>
-<Fade duration={1500} direction='up' triggerOnce={true} cascade>
-        <button
-          disabled={isLoading ? true : false}
-          className="btn btncolor text-white my-4 d-flex align-items-center"
-          type="submit"
-        >
-          {isLoading && <span className="spinner-border"></span>}
-          {!isLoading && <span className="">ارسال</span>}
-        </button>
-</Fade>
-          
+          )}
+        </Fade>
+        <Fade duration={1500} direction="up" triggerOnce={true} cascade>
+          <button
+            disabled={isLoading ? true : false}
+            className="btn btncolor text-white my-4 d-flex align-items-center"
+            type="submit"
+          >
+            {isLoading && <span className="spinner-border"></span>}
+            {!isLoading && <span className="">ارسال</span>}
+          </button>
+        </Fade>
       </form>
     </div>
   );
