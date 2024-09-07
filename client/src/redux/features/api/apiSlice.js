@@ -10,7 +10,7 @@ export const apiSlice = createApi({
     prepareHeaders: (headers, { getState }) => {
       const cookies= new Cookies()
       // الحصول على الـ token من التخزين المحلي أو من الـ state
-      const token = cookies.get('token') || getState().auth.token;
+      const token = cookies.get('token') 
   
       // إذا كان الـ token موجودًا، أضفه إلى الهيدر
       if (token) {
