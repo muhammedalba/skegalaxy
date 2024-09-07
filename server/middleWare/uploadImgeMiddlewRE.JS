@@ -205,7 +205,7 @@ exports.deletImageFromFolder = asyncHandler(async (id, model, req, type) => {
 
   // get folder name use base url   => (product/brand/users)
   const pathImge = req.baseUrl.split("/").slice(2).join("/");
-  console.log(pathImge);
+ 
    
   // Helper function to delete a file if it exists
   const deleteFileIfExists = (filePath) => {
@@ -230,7 +230,7 @@ exports.deletImageFromFolder = asyncHandler(async (id, model, req, type) => {
   // delet order from user orders list
   if (type === 'orderimages') {
     const imagesInDB = await model.findById(id);
-    console.log(imagesInDB);
+  
     
     if (imagesInDB ) {
       
