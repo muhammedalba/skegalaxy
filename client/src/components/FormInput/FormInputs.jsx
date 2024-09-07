@@ -97,8 +97,8 @@ console.log(user);
         : "/";
 
       name === "resetPassword"
-        ? navigate("/login", { replace: true })
-        :window.location.pathname=path
+        && navigate("/login", { replace: true })
+        // :window.location.pathname=path
     }
   }, [isSuccess, user, name, navigate, title]);
 
