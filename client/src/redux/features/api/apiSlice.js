@@ -18,7 +18,7 @@ export const apiSlice = createApi({
       }
   
       // إضافة المزيد من الهيدرز إذا لزم الأمر
-      headers.set('Content-Type', 'application/json');
+   
   
       return headers;
     }
