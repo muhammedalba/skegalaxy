@@ -106,7 +106,7 @@ app.use("*", (req, res, next) => {
   // const error=new Error(` can't find this route :${req.originalUrl} `)
   next(new ApiError(` can't find this route :${req.originalUrl} `, 400));
 });
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 10000;
 
 const server = app.listen(PORT, () => {
   console.log(`App is running port${PORT}`);

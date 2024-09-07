@@ -45,13 +45,13 @@ exports.signup = asyncHandler(async (req, res) => {
   const refreshToken  = createRefreshToken(user);
   res.cookie("token", token, {
     httpOnly: false,// javascript only
-    secure: false,//HTTPS
+    secure: true,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
     // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
-  secure: false,
+  secure: true,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
   // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
@@ -87,13 +87,13 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
   const refreshToken  = createRefreshToken(user);
   res.cookie("token", token, {
     httpOnly: false,// javascript only
-    secure: false,//HTTPS
+    secure: true,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
     // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
-  secure: false,
+  secure: true,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
   // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
@@ -109,14 +109,14 @@ exports.logout = asyncHandler(async (req, res, next) => {
   
   res.cookie("token", '', {
     httpOnly: false,// javascript only
-    secure: false,//HTTPS
+    secure: true,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
    
 });
 
 res.cookie("refreshToken", '', {
   httpOnly: false,
-  secure: false,
+  secure: true,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
 
 });
@@ -370,13 +370,13 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
   const refreshToken  = createRefreshToken(user);
   res.cookie("token", token, {
     httpOnly: false,// javascript only
-    secure: false,//HTTPS
+    secure: true,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 });
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
-  secure: false,
+  secure: true,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 });
