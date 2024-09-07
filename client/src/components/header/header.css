@@ -11,17 +11,18 @@ header {
   transition: 1.5s;
   background-color: var(--bgColor) !important;
   box-shadow: var(--text-color) 0px 10px 10px -10px;
-  
-.nav{
-  background-color: var(--minColor) !important;
 
-}
-  
+  .nav {
+    background-color: var(--minColor) !important;
+
+  }
+
   .active {
     svg {
       /* background-color: var(--text-color); */
       color: var(--text-color) !important;
     }
+
     background-color: var(--bgColor);
     color: var(--text-color) !important;
     -o-border-radius: 20px;
@@ -31,24 +32,46 @@ header {
     border-radius: 20px;
   }
 }
+
+header .nav-link:not(.active):after {
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 1px;
+  background-color: var(--btn-bg-color);
+  bottom: 0;
+  right: 0;
+  transition: 0.5s;
+
+}
+
 .logo {
   width: 50px;
   height: 50px;
   object-fit: contain;
-  aspect-ratio:'1',
+  aspect-ratio: '1',
 }
+
+nav ul .nav-link:hover::after {
+  width: 100%;
+  left: 0;
+  
+}
+
 nav ul li:hover svg,
 nav ul li:hover a {
-  color: var( --btn-bg-color) !important;
+  color: var(--btn-bg-color) !important;
   transition: 0.5s !important;
 
 }
+
 nav a {
   transition: 0.5s !important;
   color: var(--text-color) !important;
   text-decoration: none;
-  
+
 }
+
 .serch input {
   border: none;
 
@@ -57,9 +80,10 @@ nav a {
   font-weight: 500;
 }
 
- .serch {
+.serch {
   color: var(--text-color);
   height: 35px;
+
   label {
     width: 35px;
     height: 35px;
@@ -68,7 +92,7 @@ nav a {
     display: flex;
     align-items: center;
   }
- 
+
   div {
     border: 1px solid rgba(17, 17, 26, 0.267);
     -o-border-radius: 20px;
@@ -81,30 +105,35 @@ nav a {
 }
 
 /* dropdown-menu */
-.dropdown-menu ,
-.dropdown-menu  .dropdown-item{
-    background-color: var(--bgColor)!important;
-    color: var(--text-color);
-  }
-  .dropdown-menu  .dropdown-item:hover svg{
-    color: var(--bg-color) !important;
-  }
-  .dropdown-menu  .dropdown-item:hover{
-    background-color: var(--text-color) !important;
-    color: var(--minColor) !important;
-  }
+.dropdown-menu,
+.dropdown-menu .dropdown-item {
+  background-color: var(--bgColor) !important;
+  color: var(--text-color);
+}
+
+.dropdown-menu .dropdown-item:hover svg {
+  color: var(--bg-color) !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: var(--text-color) !important;
+  color: var(--minColor) !important;
+}
+
 @media screen and (max-width: 760px) {
   /* header .serch{
         width: 80%;
        
     } */
 }
- .serch svg {
+
+.serch svg {
   color: var(--text-color);
   font-size: 30px;
   cursor: pointer;
   z-index: 100;
 }
+
 /* .serch p{
     bottom: -140%;
     width: 100%;
@@ -125,19 +154,21 @@ header span {
 }
 
 /* span setyle */
-#whatsapp{
-  left: 5%;  
- color: var(--minColor);
-  svg{
- background-color: #33bd45;
- -webkit-border-radius: 50%;
- -moz-border-radius: 50%;
- -ms-border-radius: 50%;
- -o-border-radius: 50%;
- border-radius: 50%;
-}
+#whatsapp {
+  left: 5%;
+  color: var(--minColor);
+
+  svg {
+    background-color: #33bd45;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+  }
 
 }
+
 #whatsapp,
 #span {
   width: 50px;
@@ -145,7 +176,7 @@ header span {
   position: fixed;
   bottom: 30px;
   z-index: 1003 !important;
-    display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -155,24 +186,27 @@ header span {
   -ms-transition: 3s;
   transition: 3s;
 }
+
 #span {
   right: 5%;
-  
+
   -o-border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   border-radius: 50%;
-  background-color: var(--bgColor);  
+  background-color: var(--bgColor);
 
 
   cursor: pointer;
   border: 3px solid var(--btn-bg-color);
 }
+
 #span svg:first-child {
   -webkit-animation: top 1s infinite;
   animation: top 1s infinite;
 }
+
 #span svg:last-child {
   -webkit-animation: top 1s infinite 0.3s;
   animation: top 1s infinite;
@@ -186,6 +220,7 @@ header span {
     -ms-transform: scale(0) translateY(0px);
     transform: scale(0) translateY(0px);
   }
+
   to {
     -o-transform: scale(1) translateY(-5px);
     -webkit-transform: scale(1) translateY(-5px);
@@ -198,6 +233,7 @@ header span {
 #span:active {
   bottom: 10px !important;
 }
+
 header #span svg {
   z-index: 999 !important;
 }

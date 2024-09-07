@@ -159,11 +159,11 @@ const About = () => {
                 </div>
                 </Fade>
               </div>
-              <div className="demo1 col-12 col-md-6">
+              <div className="demo1 col-12 col-md-6 ">
               <Fade direction="up " triggerOnce  className="w-100 h-100">
                 <div className="one p-3">
                 <h3>بريدنا الالكتروني</h3>
-                <a href="#">info@skygalaxyco.com</a>
+                <a href="mailto:info@skygalaxyco.com"> info@skygalaxyco.com</a>
                 </div> </Fade>
               </div>
               </div>

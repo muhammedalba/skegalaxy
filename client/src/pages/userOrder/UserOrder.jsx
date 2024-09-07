@@ -65,9 +65,9 @@ import Cookies from "universal-cookie";
           const response = await fetch(`${baseUrl}/orders/${orderId}/?download=pdf`, {
             method: 'GET',
             headers: {
-              'Authorization': `Bearer ${Token}`,
-              'Content-Type': 'application/pdf',
+              "Content-Type": "application/pdf",
             },
+            credentials: 'include',
           });
   
           // تحقق من حالة الاستجابة

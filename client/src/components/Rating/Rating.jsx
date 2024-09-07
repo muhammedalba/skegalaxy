@@ -1,15 +1,17 @@
 import { Fragment,  } from 'react';
-import './Rating.css';
+// import './Rating.css';
 import PropTypes from 'prop-types';
+import { IoStarSharp } from "react-icons/io5";
+
 
 
 const Rating = ({ ratingsAverage }) =>{
   
-const handleRatings = (rating) => {
-  console.log("Selected rating:", rating);
-};
+// const handleRatings = (rating) => {
+//   console.log("Selected rating:", rating);
+// };
 
-  const showRating = [1, 2, 3, 4, 5].reverse().map((rating) => {
+  const showRating = [1, 2, 3, 4, 5].map((rating) => {
     return (
       <Fragment key={rating}>
         {/* <input
@@ -23,7 +25,7 @@ const handleRatings = (rating) => {
           onChange={ (e) => handleRatings(e.target.value)
          }
         /> */}
-        <label style={{width:'20px'}} className='' htmlFor={`star-${ratingsAverage}-${rating}`}>
+        {/* <label style={{width:'20px'}} className='d-none' htmlFor={`star-${ratingsAverage}-${rating}`}>
           <div
           className='star-stroke w-100 h-100 '
            style={{backgroundColor:parseInt(ratingsAverage) >= rating?
@@ -44,7 +46,8 @@ const handleRatings = (rating) => {
             }}
              />
           </div>
-        </label>
+        </label> */}
+        <IoStarSharp fontSize={'1.3rem'} color={ratingsAverage >= rating?'var( --star-colour)':'var(--btn-bg-color)'} />
       </Fragment>
     );
   }); 

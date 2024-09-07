@@ -16,6 +16,10 @@ import { ToastContainer } from "react-toastify";
 import "react-multi-carousel/lib/styles.css";
 import Card from "../../components/card/Card";
 import { SlSocialInstagram } from "react-icons/sl";
+import { CiHeart } from "react-icons/ci";
+import { MdAddShoppingCart } from "react-icons/md";
+import { RiDownloadCloud2Line } from "react-icons/ri";
+
 import {
   TwitterShareButton,
   WhatsappShareButton,
@@ -73,6 +77,7 @@ const InfoProduct = () => {
     sectionRef.current.scrollIntoView({ behavior: "smooth" });
     setSelectedImage("");
   }, []);
+console.log(createData?.status);
 
   useEffect(() => {
     document
@@ -88,7 +93,11 @@ const InfoProduct = () => {
       dispatch(cartitems(createData?.resnumOfCartItems));
       successNotify("تم إضافة المنتج بنجاح");
     }
-
+    if ( createData?.status ==='success') {
+      // Update the number of items in the shopping cart
+ 
+      successNotify("تم إضافة المنتج بنجاح");
+    }
     if (error) {
       warnNotify("خطأ في التحقق من المنتج");
     }
@@ -104,22 +113,29 @@ const InfoProduct = () => {
     createError?.status,
     resetProductImage,
   ]);
+// add to cart our wish list
+const addproducToCartOurWishlist = useCallback((productId,route) => {
+ 
+    
+  // تحقق من أن المستخدم مسجل الدخول وأن معرف المنتج صالح
+  if (token && typeof(productId) !== "undefined"
+  // && !displed
+) {
+    
+    
+    createOne({
+      url: `${route}`,
+      method: "POST",
+      body: { productId },
+    })
+    // setdispled(true)
+  } else {
+    warnNotify("يجب عليك تسجيل دخول اولا");
+   
+  }
+}, [createOne, token]);
+ 
 
-  // Add to cart handler
-  const addToCart = useCallback(
-    (productId) => {
-      if (token && productId) {
-        createOne({
-          url: "cart",
-          method: "POST",
-          body: { productId },
-        });
-      } else {
-        warnNotify("يجب عليك تسجيل دخول أولاً");
-      }
-    },
-    [createOne, token]
-  );
   // Download PDF handler
   const downloadPdf =useCallback( async () => {
     const baseUrl = import.meta.env.VITE_API;
@@ -132,6 +148,7 @@ const InfoProduct = () => {
           headers: {
             "Content-Type": "application/pdf",
           },
+          credentials: 'include',
         }
       );
 
@@ -396,22 +413,33 @@ const InfoProduct = () => {
                   </Fade>
                 </div>
                 <Fade delay={0} direction="up" triggerOnce={true}>
-                  <div className=" d-flex align-items-center pt-4 justify-content-evenly flex-wrap gap-2">
+                  <div className=" d-flex align-items-center pt-4 justify-content-start flex-wrap gap-2">
                     <button
                       disabled={isLoading || createLoading}
                       type="button"
-                      onClick={() => addToCart(product?.data._id)}
-                      className=" btn btn-primary"
+                      onClick={() => addproducToCartOurWishlist(product?.data._id,'cart')}
+                      className=" btn btn-outline-primary rounded-circle p-1"
                     >
-                      إضافة المنتج إلى السلة
+                      {/* إضافة المنتج إلى السلة */}
+                      <MdAddShoppingCart fontSize={'1.5rem'} className="" />
+                    </button>
+                    <button
+                      disabled={isLoading || createLoading}
+                      type="button"
+                      onClick={() => addproducToCartOurWishlist(product?.data._id,'wishlist')}
+                      className=" btn btn-outline-danger rounded-circle p-1"
+                    >
+                   
+                      <CiHeart fontSize={'1.5rem'} className=""/>
                     </button>
                     <button
                       disabled={isLoading || createLoading}
                       type="button"
                       onClick={downloadPdf}
-                      className={`${showDownloadBtn} btn btn-success`}
+                      className={`${showDownloadBtn} btn btn-outline-success`}
                     >
-                      تحميل معلومات المنتج
+                      <RiDownloadCloud2Line  fontSize={'1.5rem'} className="ms-1"/>
+                      تحميل  المواصفات الفنية للمنتج
                     </button>
                   </div>
                 </Fade>
@@ -456,29 +484,7 @@ const InfoProduct = () => {
       );
     }
     return null;
-  }, [
-    addToCart,
-    createLoading,
-    downloadPdf,
-    handleMouseEnter,
-    imageList,
-    isLoading,
-    isSuccess,
-    product?.data._id,
-    product?.data.brand?.name,
-    product?.data.category?.name,
-    product?.data?.description,
-    product?.data.imageCover,
-    product?.data?.infoProductPdf,
-    product?.data.price,
-    product?.data?.priceAfterDiscount,
-    product?.data?.quantity,
-    product?.data?.ratingsAverage,
-    product?.data.title,
-    product?.imageUrl,
-    selectedImage,
-    shareUrl,
-  ]);
+  }, [addproducToCartOurWishlist, createLoading, downloadPdf, handleMouseEnter, imageList, isLoading, isSuccess, product?.data?._id, product?.data?.brand?.name, product?.data.category?.name, product?.data?.description, product?.data?.imageCover, product?.data?.infoProductPdf, product?.data?.price, product?.data?.priceAfterDiscount, product?.data?.quantity, product?.data?.ratingsAverage, product?.data?.title, product?.imageUrl, selectedImage, shareUrl]);
 
   // Related Products Carousel
   const responsive = useMemo(() => {

@@ -1,0 +1,11 @@
+
+
+
+
+.collapseHeader.collapsed .MinusIcon, 
+.collapseHeader:not(.collapsed) .plusIcon {
+    display: none !important;
+}
+.collapseHeader:not(.collapsed) .MinusIcon {
+    display: block !important;
+}

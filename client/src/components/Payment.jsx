@@ -535,10 +535,10 @@ console.log(productsDetails);
               className="text-white"
               href={iban}
               id="Download"
-              download
+              download={'download'}
             >
-              {" "}
-              تنزيل شهادة ايبان{" "}
+             
+              تنزيل شهادة ايبان
             </a>
           </button>
           <span

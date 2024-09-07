@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 
 import { useGetDataQuery } from "../../redux/features/api/apiSlice";
 import { errorNotify } from "../../utils/Toast";
+import { SkeletonCarousel } from "../../utils/skeleton";
 
 
 
@@ -35,7 +36,7 @@ const Carousel = () => {
 
   // Loading and error handling
   if (isLoading) {
-    return 
+    return SkeletonCarousel
   }
 
     return isSuccess && carouseles?.data?.map((preview, index) => (

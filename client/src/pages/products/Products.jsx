@@ -128,11 +128,9 @@ const Products = () => {
       return sortedBrands.map((brand, index) => (
      <Fragment key={index}>
         <option   value={brand._id}>
-          {brand?.name.split("_")[0]}
+          {brand?.name}
         </option>
-          <option  className={`d-${brand?.name.split("_")[1]?'block':'none'}`}key={index} value={brand._id}>
-            {brand?.name.split("_")[1]}
-          </option>
+          
      
      </Fragment>
       ));
@@ -154,6 +152,32 @@ const Products = () => {
     },
     [brands?.data]
   );
+    // view categories select loadingcategories
+    const showCategorie = useMemo(() => {
+      if (loadingcategories ) {
+        return <option value=""> جاري جلب البيانات</option>;
+      }
+      if (isSuccess && categories?.data?.length === 0) {
+        return <option value="">لايوجد بيانات</option>;
+      }
+  
+      if (isSuccess && categories?.data?.length > 0) {
+        const sortedcategories = [...categories.data].sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+  
+        return sortedcategories.map((category, index) => (
+          <Fragment key={index}>
+            
+          <option  value={category._id}>
+            {category?.name}
+          </option>
+          
+       
+       </Fragment>
+        ));
+      }
+    }, [categories?.data, isSuccess, loadingcategories]);
   // // handleCategoryChange
   const handleCategoryChange = useCallback(
     (e) => {
@@ -184,36 +208,9 @@ const Products = () => {
    setsortFilter('')
 
   };
-  // view categories select loadingcategories
-  const showCategorie = useMemo(() => {
-    if (loadingcategories ) {
-      return <option value=""> جاري جلب البيانات</option>;
-    }
-    if (isSuccess && categories?.data?.length === 0) {
-      return <option value="">لايوجد بيانات</option>;
-    }
 
-    if (isSuccess && categories?.data?.length > 0) {
-      const sortedcategories = [...categories.data].sort((a, b) =>
-        a.name.localeCompare(b.name)
-      );
 
-      return sortedcategories.map((category, index) => (
-        <Fragment key={index}>
-          
-        <option  value={category._id}>
-          {category?.name.split("_")[0]}
-        </option>
-          <option  className={`d-${category?.name.split("_")[1]?'block':'none'}`} key={index} value={category._id}>
-            {category?.name.split("_")[1]}
-          </option>
-     
-     </Fragment>
-      ));
-    }
-  }, [categories?.data, isSuccess, loadingcategories]);
-
-  // if sucsses and data is not empty  show the categories
+  // if sucsses and data is not empty  show the categories slide
   const showCategoriesData = useMemo(() => {
     if (isSuccess && categories?.data?.length > 0) {
       return categories?.data?.map((category, index) => (
@@ -341,7 +338,7 @@ const Products = () => {
  
       
       {/* categories */}
-      {successcategories && (
+  
         <div className="">
           <p
             style={{ backgroundColor: "var(--bgColor)" }}
@@ -367,9 +364,9 @@ const Products = () => {
             {showCategoriesData || SkeletonCard}
           </Carousel>
         </div>
-      )}
+     
       {/* brands */}
-      {successbrands && (
+
         <div className="">
           <p
             style={{ backgroundColor: "var(--bgColor)" }}
@@ -395,7 +392,7 @@ const Products = () => {
             {showBrandsSlide || SkeletonCard}
           </Carousel>
         </div>
-      )}
+      
 
       {/* products */}
       <div className=" my-3">
@@ -479,7 +476,6 @@ const Products = () => {
             </div>
 
             {/* reset data button */}
-            {/* <div className="col-sm-4 d-flex align-items-end justify-center my-2"> */}
             <button
               onClick={resetFilter}
               type="button"
@@ -487,11 +483,11 @@ const Products = () => {
             >
                اعادة تعيين
             </button>
-            {/* </div> */}
+          
           </div>
 
           {/* products data */}
-          <div className="row w-100 justify-content-center gap-2">
+          <div className="row w-100 justify-content-center row-gap-4 gap-2">
             {showData}
           </div>
         </div>

@@ -5,6 +5,7 @@ import { Fade } from 'react-awesome-reveal';
 import PropTypes from "prop-types";
 
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const ApplayCoupon = ({productsDetails,openPaymntCommpount,LoadingDelet,openModalAndClearCart,
 Confirm ,HideDiscount}) => {
@@ -142,6 +143,8 @@ Confirm ,HideDiscount}) => {
               </a>
               او يمكنك استلام طلبيتك من احد فروعنا
             </span>
+            <Link to="/PrivacyPolic" className=" d-block fw-bold my-2">الاحكام والشروط وسياسات الاسترجاع </Link>
+
           </Fade>
 
           {/* delet itims */}

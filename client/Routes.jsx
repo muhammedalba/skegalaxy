@@ -63,6 +63,7 @@ import Error404 from "./src/components/Error404/Error404";
 
 import Favorite from "./src/pages/Favorite/Favorite";
 import About from "./src/pages/About/About";
+import PrivacyPolic from "./src/pages/Policies/Privacy-polic";
 
 
 
@@ -76,9 +77,8 @@ export const routes = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { path: "", element:  
-<HomePage />
- },
+      { path: "", element: <HomePage /> },
+
       // { path: "category/:CategoryId", element: <ProductsCategory /> },
 
       { path: "verifyresetcode", element: <Verifyresetcode /> },
@@ -98,6 +98,7 @@ export const routes = createBrowserRouter([
 
       { path: "ProfileAccount", element: <ProfileAccount /> },
       { path: "About", element: <About /> },
+      { path: "PrivacyPolic", element: <PrivacyPolic /> },
 
     ],
   },

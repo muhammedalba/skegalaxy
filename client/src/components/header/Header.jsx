@@ -1,5 +1,4 @@
-
-import  { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { searchItem } from "../../redux/features/Slice/SerchSlice";
@@ -19,6 +18,8 @@ import { CiLogin } from "react-icons/ci";
 import { FaRegUser } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
+import { TfiHeadphoneAlt } from "react-icons/tfi";
+
 import { Fade } from "react-awesome-reveal";
 import { BsWhatsapp } from "react-icons/bs";
 import { Results } from "../../redux/features/Slice/QuantityResultSlice";
@@ -29,26 +30,21 @@ import { IoStorefrontOutline } from "react-icons/io5";
 import { MdOutlineWifiProtectedSetup } from "react-icons/md";
 import { FaUsersRectangle } from "react-icons/fa6";
 
-
-
-
 const Header = () => {
-  const [Autapi, { isSuccess }] =  useAutapiMutation();
-
-
+  const [Autapi, { isSuccess }] = useAutapiMutation();
 
   const cookies = useMemo(() => new Cookies(), []);
-  
+
   const imgeUrl = cookies.get("imageUrl");
   const image = cookies.get("image");
   const role = cookies.get("role");
 
   const cartitims = useSelector((state) => state.cart);
   // console.log(cartitims);
-  
+
   const [scroll, setscroll] = useState(false);
   const [trans, settrans] = useState(false);
- 
+
   const dispatch = useDispatch();
 
   const handleScroll = useCallback(() => {
@@ -77,39 +73,32 @@ const Header = () => {
 
   // handel serche
   const handelserche = (e) => {
-
     // console.log(e.target.value);
     dispatch(currentPage(1));
     dispatch(searchItem(e.target.value));
-
-      
   };
 
   const Scrolto = () => {
     window.scrollTo(0, 0);
   };
 
-  useEffect(() =>{
-
-    if(isSuccess) { 
-      
+  useEffect(() => {
+    if (isSuccess) {
       cookies.remove();
-       cookies.remove("firstname");
-       cookies.remove("image");
-       cookies.remove("imageUrl");
-       cookies.remove("role");
-       cookies.remove("token");
-       cookies.remove("refreshToken");
-       window.location.pathname='/'
-     
-     }
-  },[cookies, isSuccess])
+      cookies.remove("firstname");
+      cookies.remove("image");
+      cookies.remove("imageUrl");
+      cookies.remove("role");
+      cookies.remove("token");
+      cookies.remove("refreshToken");
+      window.location.pathname = "/";
+    }
+  }, [cookies, isSuccess]);
   // handel Logout
   const Logout = () => {
-  
     Autapi({
-      url:'logout',
-     body:{},
+      url: "logout",
+      body: {},
       method: "post",
     });
     cookies.remove();
@@ -119,16 +108,14 @@ const Header = () => {
     cookies.remove("role");
     cookies.remove("token");
     cookies.remove("refreshToken");
-    
- 
   };
- // reset navigation to 10 items per page and update navigation property
+  // reset navigation to 10 items per page and update navigation property
 
- const resetNavegation = () => {
-  dispatch(Results(15));
-  dispatch(currentPage(1));
-  dispatch(searchItem(''));
-};
+  const resetNavegation = () => {
+    dispatch(Results(15));
+    dispatch(currentPage(1));
+    dispatch(searchItem(""));
+  };
   // Auth links
   const AuthLinks = [
     {
@@ -158,7 +145,14 @@ const Header = () => {
       <li key={index}>
         <Link
           to={`${link.path}`}
-          className={role && link.path === "/login"|| role&&link.path === "/signup"||!role&&link.path === "/ProfileAccount"||!role&&link.path === "/"?"d-none ":'dropdown-item d-flex align-items-center gap-2'}
+          className={
+            (role && link.path === "/login") ||
+            (role && link.path === "/signup") ||
+            (!role && link.path === "/ProfileAccount") ||
+            (!role && link.path === "/")
+              ? "d-none "
+              : "dropdown-item d-flex align-items-center gap-2"
+          }
           onClick={link.path === "/" && Logout}
         >
           {link.icon}
@@ -173,11 +167,17 @@ const Header = () => {
     {
       title: " من نحن",
       path: "/About",
-      icon: <FaUsersRectangle  fontSize={"1.7rem"} color="var( --text-color)" />,
-    }, {
+      icon: <FaUsersRectangle fontSize={"1.7rem"} color="var( --text-color)" />,
+    },
+    {
       title: " طلباتي",
-      path: "/orders",
-      icon: <MdOutlineWifiProtectedSetup fontSize={"1.7rem"} color="var( --text-color)" />,
+      path: role === "admin" ? "/dashboard/orders" : "/orders",
+      icon: (
+        <MdOutlineWifiProtectedSetup
+          fontSize={"1.7rem"}
+          color="var( --text-color)"
+        />
+      ),
     },
     {
       title: " المفضلة",
@@ -192,9 +192,11 @@ const Header = () => {
     {
       title: "الصفحة الرئيسية",
       path: "/",
-      icon: <IoStorefrontOutline fontSize={"1.7rem"} color="var( --text-color)" />,
+      icon: (
+        <IoStorefrontOutline fontSize={"1.7rem"} color="var( --text-color)" />
+      ),
     },
-   
+
     {
       title: "لوحه التحكم",
       path: "/dashboard",
@@ -204,19 +206,20 @@ const Header = () => {
     },
   ];
 
-  // get property 
+  // get property
   // const bgColor = document.styleSheets[0].cssRules[0].style.getPropertyValue("--bg-color");
-
 
   // navLink show
   const nav_link_show = nav_Links.map((link, index) => {
     return (
       <li
-      onClick={resetNavegation}
+        onClick={resetNavegation}
         key={index}
         className={
           (link.path === "/dashboard" && role === "user") ||
-          (link.path === "/orders" && !role ) ||
+          (link.path === "/Cart" && role === "admin") ||
+          (link.path === "/Favorite" && role === "admin") ||
+          (link.path === "/orders" && !role) ||
           (role === undefined && link.path === "/dashboard")
             ? "d-none"
             : "nav-item d-flex align-items-center  "
@@ -224,19 +227,20 @@ const Header = () => {
       >
         <NavLink
           to={link.path}
-          className="nav-link p-2 d-flex  align-items-center "
+          className="nav-link px-2 d-flex  align-items-center position-relative"
         >
           <span className="px-1 d-none d-lg-block">{link.title}</span>
-          
-          {<span className=" position-relative">
-             {link.icon}
-            {link.path === '/Cart' && 
-            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger ">
-               {cartitims> 0 && cartitims}
-        
-            </span>}
-             
-          </span>}
+
+          {
+            <span className=" position-relative">
+              {link.icon}
+              {link.path === "/Cart" && (
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger ">
+                  {cartitims > 0 && cartitims}
+                </span>
+              )}
+            </span>
+          }
         </NavLink>
       </li>
     );
@@ -261,28 +265,46 @@ const Header = () => {
         >
           <div className=" d-flex w-100 px-2 py-2  justify-content-between container-fluid">
             {/* logo start */}
-            <div className="logo  d-flex align-items-center">
-              <Fade delay={0} direction="down" triggerOnce={true} >
-                  <Link to={'/'}>    
-                   <img
-                       loading="lazy"
-                       decoding="async"
-                         width={50}
-                         height={50}
-              
-                  className="logo  rounded-circle  d-sm-block  "
-                  src={logo}
-                  alt="logo"
-                /> </Link>
+            <div  className="  d-flex align-items-center">
+              <Fade delay={0} direction="down" triggerOnce={true}>
+                <Link 
+                  to={role ? "ProfileAccount" : "login"}
+                  style={{ border: " 0.2rem solid var(--bgColor)" }}  
+                  className="rounded-circle d-block  d-sm-none h-100 w-100" >
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    width={50}
+                    height={50}
+                    className="logo  rounded-circle    "
+             
+                    src={
+                      !image || image === "undefined"
+                        ? avatar
+                        : `${imgeUrl}/${image}`
+                    }
+                    alt="avatar"
+                  />{" "}
+                </Link>
+                <Link to={"/"}>
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    width={50}
+                    height={50}
+                    className="logo  rounded-circle d-none d-sm-block  "
+                    src={logo}
+                    alt="logo"
+                  />{" "}
+                </Link>
                 <div
-                  style={{ color: "var(--text-color)", whiteSpace: "nowrap", }}
+                  style={{ color: "var(--text-color)", whiteSpace: "nowrap" }}
                   className="  mb-0 d-none d-sm-block px-1 "
                 >
                   <Fade triggerOnce={true} cascade>
-                       sky Galaxy
+                    sky Galaxy
                   </Fade>
                 </div>
-                  
               </Fade>
             </div>
             {/* logo end */}
@@ -293,14 +315,17 @@ const Header = () => {
                   {nav_link_show}
                 </Fade>
 
-                <Link className="rounded-circle d-none d-sm-block" style={{border:' 0.2rem solid var(--bgColor)'}} to={role ? "ProfileAccount" : "login"}>
-                {/* 
+                <Link
+                  className="rounded-circle d-none d-sm-block"
+                  style={{ border: " 0.2rem solid var(--bgColor)" }}
+                  to={role ? "ProfileAccount" : "login"}
+                >
+                  {/* 
             className="logo rounded-circle m-auto d-block " */}
-                  <img 
-                   loading="lazy"
-                   decoding="async"
-                     width={50}
-                 
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    width={50}
                     className="logo d-none d-sm-block rounded-circle dropdown-toggle border-1"
                     src={
                       !image || image === "undefined"
@@ -317,17 +342,33 @@ const Header = () => {
 
         {/* seareh input && dropdown start */}
         <div className="serch px-3 justify-content-between  position-relative my-3 w-100 d-flex gap-2 align-items-center">
-          <Fade className="border-0" delay={0} direction="left" triggerOnce={true} cascade>
-            <a href="tel:+966598909991"
-             style={{cursor: "pointer"}}
+          <Fade
+            className="border-0"
+            delay={0}
+            direction="left"
+            triggerOnce={true}
+            cascade
+          >
+            <a
+              href="tel:+966598909991"
+              style={{ cursor: "pointer" }}
               className="d-none d-sm-flex align-items-center gap-1"
             >
-              <BsFillTelephoneFill  className="fs-5" />
-              <Fade className="border-0" direction="up" triggerOnce={true} cascade>
+              <TfiHeadphoneAlt className="fs-5" color="var( --spancolor)" />
+              <Fade
+                className="border-0 "
+                direction="up"
+                triggerOnce={true}
+                cascade
+              >
                 : +966598909991
               </Fade>
             </a>
+           
           </Fade>
+           <a href="tel:+966598909991">
+           <TfiHeadphoneAlt className="fs-5 d-sm-none" color="var( --spancolor)" />
+           </a>
           <div
             style={{ border: "1px solid var(--text-color)" }}
             className="h-100  d-flex align-items-center "
@@ -348,17 +389,16 @@ const Header = () => {
           {/* dropdown */}
 
           <span
-            style={{cursor: "pointer"}}
+            style={{ cursor: "pointer" }}
             className=" d-none d-sm-block dropdown-toggle  "
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {/* <Fade className="border-0" delay={0} direction="right" triggerOnce={true} cascade> */}
-              تسجيل الدخول 
-            {/* </Fade> */}
+            {/* <Fade className="border-0" delay={0} direction="right" triggerOnce={true} cascade>  */}
+           {!role?" تسجيل الدخول":"تسجيل خروج"}
+          {/* </Fade>  */}
           </span>
           <FaUser
-           
             className="d-block d-sm-none dropdown-toggle "
             data-bs-toggle="dropdown"
             aria-expanded="false"
@@ -384,19 +424,21 @@ const Header = () => {
         <IoChevronUpOutline />
       </span>
       {/* go to top end */}
-            {/* go to whatsapp start */}
-          
-        
-       
-      
-      
-   <a   style={{
-          transform: scroll ? "translateX(0)" : "translateX(-1500px)",
-        }}id="whatsapp"href="https://wa.me/+966598909991" className="text-white ">
-                        <BsWhatsapp fontSize={"3rem"}   />
-                    
-          </a>
-      
+      {/* go to whatsapp start */}
+
+      <a
+        style={{
+          transform: scroll
+            ? "translateX(0) rotate(0deg)"
+            : "translateX(-1500px)",
+        }}
+        id="whatsapp"
+        href="https://wa.me/+966598909991"
+        className="text-white "
+      >
+        <BsWhatsapp fontSize={"3rem"} />
+      </a>
+
       {/* go to top end */}
     </>
   );

@@ -96,19 +96,23 @@ useEffect(() => {
 // download order PDF
 const DownloadPdf = async( ) => {
   const baseUrl=import.meta.env.VITE_API
+  console.log(Token);
+  
    if(Token){
     try {
       const response = await fetch(`${baseUrl}/orders/${orderId}/?download=pdf`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${Token}`,
-          'Content-Type': 'application/pdf',
+          "Content-Type": "application/pdf",
         },
-      });
+         credentials: 'include',
+      }
+    );
 
       // تحقق من حالة الاستجابة
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        // throw new Error(`HTTP error! Status: ${response.status}`);
+        console.log(response)
       }
 
       // تحقق من نوع المحتوى

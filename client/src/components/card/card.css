@@ -63,8 +63,9 @@
     transition: 0.5s;
 }
 &:hover{  
-  box-shadow: -2px 16px 24px -3px #cacaca;
- 
+
+  box-shadow: 0 0 20px 0 #0000004f;;
+  transform: translateY(-10px);
 }
 }
 
@@ -187,14 +188,4 @@
   -o-transform: scale(1.08);
  
   transform: scale(1.08);
-}
-
-@media screen and (max-width:340px ){
-    .card-product {
-        
-        height: 415px;
-        margin-bottom: 20px;
-    }
-   
-    
 }

@@ -1,4 +1,3 @@
-
 const arry = [1, 2, 3, 4, 5, 6, 7];
 
 export const SkeletonCard = arry.map((index) => {
@@ -19,6 +18,9 @@ export const SkeletonCard = arry.map((index) => {
     </div>
   );
 });
+export const SkeletonCarousel = (
+  <div className="carousel-inner skeleton-loading h-100 w-100"> </div>
+);
 
 export const SkeletonTeble = arry.map((index) => {
   return (
@@ -35,7 +37,6 @@ export const SkeletonTeble = arry.map((index) => {
       <td className="d-none d-sm-table-cell">
         <span className="skeleton-loading"></span>
       </td>
-     
 
       <td className="d-none d-md-table-cell ">
         <span className="skeleton-loading "></span>
@@ -56,105 +57,64 @@ export const SkeletonTeble = arry.map((index) => {
 export const SkeletonProduct = arry.map((index) => {
   return (
     <div key={index} className="card-product ">
-    
       <div className="imgBox pt-1 skeleton-loading h-100 "></div>
- 
     </div>
   );
 });
 export const SkeletonInfoProduct = (
   <div className="row mt-5 pt-5">
     <div className="col-lg-4 col-md-6 d-xxl-flex ">
-
-      <div
-        style={{ height: "350px", width: "250px" }}
-        className=" m-auto  "
-      >
-        <span
-          
-          className="d-sm-block m-auto m-xxl-0 w-100 skeleton-loading h-100"
-  
-        ></span>
+      <div style={{ height: "350px", width: "250px" }} className=" m-auto  ">
+        <span className="d-sm-block m-auto m-xxl-0 w-100 skeleton-loading h-100"></span>
       </div>
-      
+
       <ul
         className="list-group mt-2 w-100 skeleton-loading d-xxl-none
              "
-      >
-     
-      </ul>
+      ></ul>
     </div>
 
     <div className="col-lg-5 col-md-6  ">
-      <div className="card-body text-end skeleton-loading h-100 w-75 m-auto">
-  
-      </div>
-
-  
+      <div className="card-body text-end skeleton-loading h-100 w-75 m-auto"></div>
     </div>
   </div>
 );
 export const SkeletonCustomerAndAdress = (
   <div className="row m-0 w-100 ">
-                <span  className="p-3   "> </span>
-                <div className=" p-2  col-12 col-sm-6 ">
-                  <span className="skeleton-loading "> 
-                  </span>
-                </div>
-                <div className="  p-2  col-12 col-sm-6"> 
-                
-                  <span className="skeleton-loading ">  </span>
-                </div>
-                <div className=" p-2  col-12 " >
-                 
-                  
-                  <span className="skeleton-loading  ">   </span>
-                </div>
-                <div className=" col-12 col-sm-6" >
-               
-                  <span className=" skeleton-loading ">  </span>
-                </div>
-                     {/*address data start  */}
-                <div className="py-2  col-12 col-sm-6 ">
-
-                <span className="skeleton-loading "> </span>
-  
-
-
-                </div>
-                <div className=" py-2 text-primary   col-12 col-sm-6"> 
-                
-                  <span className="skeleton-loading "> </span>
-                </div>
-                <div className=" py-2  col-12 col-sm-6" >
-                
-                  
-                  <span className="skeleton-loading "> </span>
-                </div>
-                <div className=" py-2 t  col-12 col-sm-6" >
-                
-                  
-                  <span className="skeleton-loading ">  </span>
-                </div>
-                <div className=" py-2   col-12 col-sm-6">
-               
-                  
-                  <span className="skeleton-loading ">   </span>
-                </div>
-                <div className=" py-2   col-12 col-sm-6" >
-               
-                  
-                  <span className="skeleton-loading ">  </span>
-                </div>
-                <div className=" py-2  col-12 col-sm-6" >
-                  
-                  
-                  <span className="skeleton-loading ">  </span>
-                </div>
-                
-                
-                
-              
-
-              </div>
+    <span className="p-3   "> </span>
+    <div className=" p-2  col-12 col-sm-6 ">
+      <span className="skeleton-loading "></span>
+    </div>
+    <div className="  p-2  col-12 col-sm-6">
+      <span className="skeleton-loading "> </span>
+    </div>
+    <div className=" p-2  col-12 ">
+      <span className="skeleton-loading  "> </span>
+    </div>
+    <div className=" col-12 col-sm-6">
+      <span className=" skeleton-loading "> </span>
+    </div>
+    {/*address data start  */}
+    <div className="py-2  col-12 col-sm-6 ">
+      <span className="skeleton-loading "> </span>
+    </div>
+    <div className=" py-2 text-primary   col-12 col-sm-6">
+      <span className="skeleton-loading "> </span>
+    </div>
+    <div className=" py-2  col-12 col-sm-6">
+      <span className="skeleton-loading "> </span>
+    </div>
+    <div className=" py-2 t  col-12 col-sm-6">
+      <span className="skeleton-loading "> </span>
+    </div>
+    <div className=" py-2   col-12 col-sm-6">
+      <span className="skeleton-loading "> </span>
+    </div>
+    <div className=" py-2   col-12 col-sm-6">
+      <span className="skeleton-loading "> </span>
+    </div>
+    <div className=" py-2  col-12 col-sm-6">
+      <span className="skeleton-loading "> </span>
+    </div>
+  </div>
 );

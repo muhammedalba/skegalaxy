@@ -69,20 +69,21 @@ const Card = ({ product, imgePath,reverse }) => {
 
 
 useEffect(() => {
-  if(successCreeate){
+  if(crerateData?.status==='success'){
     successNotify('تم اضافه المنتج بنجاح ')
-  
+    setdispled(false); 
   }
-},[successCreeate])
+},[crerateData])
 
 
 
   useEffect(()=>{
 
-    if( crerateData?.status ===201  ){
+    if( crerateData?.status === 201  ){
       // Update the number of items in the shopping cart
          dispatch(cartitems(crerateData?.resnumOfCartItems)) 
         successNotify('تم اضافه المنتج بنجاح ')
+        setdispled(false); 
      
  }
  
@@ -110,10 +111,10 @@ if(createError || successCreeate){
  
     
     // تحقق من أن المستخدم مسجل الدخول وأن معرف المنتج صالح
-    if (token && typeof(productId) !== "undefined"&& !displed) {
+    if (token && typeof(productId) !== "undefined") {
       
       
-      createOne({
+      !displed &&   createOne({
         url: `${route}`,
         method: "POST",
         body: { productId },
@@ -136,7 +137,7 @@ if(createError || successCreeate){
 
    
       <IoShareSocial style={{ top: "4rem" }} className="cart-icon mx-2" onClick={showIcons} />
-      <CiHeart onClick={() => addproducToCartOurWishlist(product?._id,'wishlist')}  style={{ top: "1rem",left:'auto'}} className="cart-icon-Heart mx-2 start-0 " />
+      <CiHeart  onClick={() => addproducToCartOurWishlist(product?._id,'wishlist')}  style={{ top: "1rem",left:'auto'}} className="cart-icon-Heart mx-2 start-0 " />
       <Link to={`/products/${product?._id}`}>
       <PiEyeThin style={{ top: "1rem" }} className="cart-icon mx-2 " />
     
