@@ -7,17 +7,16 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API,
     credentials: 'include',
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers) => {
       const cookies= new Cookies()
-      // الحصول على الـ token من التخزين المحلي أو من الـ state
       const token = cookies.get('token') 
   
-      // إذا كان الـ token موجودًا، أضفه إلى الهيدر
+
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
   
-      // إضافة المزيد من الهيدرز إذا لزم الأمر
+
    
   
       return headers;

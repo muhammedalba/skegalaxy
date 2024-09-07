@@ -13,12 +13,14 @@ import { Fade } from "react-awesome-reveal";
 import { errorNotify, successNotify, warnNotify } from "../../utils/Toast";
 
 const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
+
   const [Autapi, { data: user, error: eror, isLoading, isSuccess }] =
     useAutapiMutation();
 
+
   const navigate = useNavigate();
   const focus = useRef(null);
-  console.log(user);
+console.log(user);
 
   // state
   let [Error, setError] = useState("");
@@ -74,6 +76,7 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
   }, [eror, name]);
   //  if success
 
+  
   useEffect(() => {
     // const notify = () =>
     if (isSuccess && user.token) {
@@ -85,17 +88,17 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
       cookies.set("image", user?.data.image);
       cookies.set("imageUrl", user?.imageUrl);
       //
-      successNotify(`تمت ${title} بنجاح`);
+     successNotify(`تمت ${title} بنجاح`);
 
       //1- If the user resets the password, go to login page
       //2-If the user is an administrator, go to the control panel
-      // const path = ["admin", "manager"].includes(user.data.role)
-      //   ? "/"
-      //   : "/";
+      const path = ["admin", "manager"].includes(user.data.role)
+        ? "/"
+        : "/";
 
-      // name === "resetPassword"
-      //   && navigate("/login", { replace: true })
-      // :window.location.pathname=path
+      name === "resetPassword"
+        ? navigate("/login", { replace: true })
+        :window.location.pathname=path
     }
   }, [isSuccess, user, name, navigate, title]);
 
@@ -127,21 +130,23 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  //
+  // 
   const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
+  const file = event.target.files[0];
+  if (file) {
       setImage(file);
-      const reader = new FileReader();
+    const reader = new FileReader();
 
-      // عرض المعاينة عند انتهاء القراءة
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
 
-      reader.readAsDataURL(file);
-    }
-  };
+    // عرض المعاينة عند انتهاء القراءة
+    reader.onloadend = () => {
+      setPreview(reader.result);
+  
+    };
+
+    reader.readAsDataURL(file);
+  }
+};
   // showInputs
   const showInputs = InputData.map(({ id, type, placeholder, icon, label }) => (
     <div className="col-md-12 py-2" key={id}>
@@ -181,89 +186,77 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
       />
 
       <form onSubmit={handleSubmit} className="m-auto p-3">
-        <Fade direction="up" triggerOnce={true} cascade>
-          <div className="w-100 py-2">
-            <img
-              className="logo m-auto d-none d-sm-block"
-              src={preview ? preview : logo}
-              alt="avatar"
-            />
-          </div>
-          <h2 className="w-75 text-center m-auto py-2 border-bottom">
-            {title}
-          </h2>
-          {showInputs}
+      <Fade  direction='up' triggerOnce={true} cascade>
 
-          {/* imge input and get to login st  */}
-          {name === "signup" && (
-            <>
-              <div className="col-md-12 py-2">
-                <label
-                  className="p-1 fs-5 d-flex align-items-center gap-1"
-                  htmlFor="image"
-                >
-                  <FaImage color="var(--spancolor)" fontSize="1rem" /> صورة
-                  الشخصية (اختياري)
-                </label>
-                <input
-                  disabled={isLoading ? true : false}
-                  className="form-control"
-                  id="image"
-                  name="image"
-                  type="file"
-                  onChange={handleImageChange}
-                />
-              </div>
-              <div className="w-100 py-2">
-                <span className="p-2 w-100 d-block">
-                  هل لديك حساب بالفعل؟
-                  <Link className="text-primary" to="/login">
-                    {" "}
-                    تسجيل دخول
-                  </Link>
-                </span>
-              </div>
-            </>
-          )}
+        <div className="w-100 py-2">
+          <img
+            className="logo m-auto d-none d-sm-block"
+            src={ preview ?  preview :logo}
+            alt="avatar"
+          />
+        </div>
+        <h2 className="w-75 text-center m-auto py-2 border-bottom">{title}</h2>
+        {showInputs}
 
-          {/*get to login end  */}
-
-          {/* Forgot your password && get to signup start*/}
-          {name === "login" && (
+        {/* imge input and get to login st  */}
+        {name === "signup" && (
+          <>
+            <div className="col-md-12 py-2">
+              <label
+                className="p-1 fs-5 d-flex align-items-center gap-1"
+                htmlFor="image"
+              >
+                <FaImage color="var(--spancolor)" fontSize="1rem" /> صورة
+                الشخصية (اختياري)
+              </label>
+              <input
+                disabled={isLoading ? true : false}
+                className="form-control"
+                id="image"
+                name="image"
+                type="file"
+                onChange={handleImageChange}
+              />
+            </div>
             <div className="w-100 py-2">
-              <span className="p-2 w-100 d-block" htmlFor="password">
-                انشاء حساب جديد:
-                <Link className="text-primary " to={"/signup"}>
-                  {" "}
-                  انشاء حساب
-                </Link>
-              </span>
-              <span className="p-2" htmlFor="password">
-                هل نسيت كلمة السر؟
-                <Link className="text-primary" to={"/forgotPassword"}>
-                  {" "}
-                  اضغط هنا
-                </Link>
+              <span className="p-2 w-100 d-block">
+                هل لديك حساب بالفعل؟<Link className="text-primary"  to="/login"> تسجيل دخول</Link>
               </span>
             </div>
-          )}
-          {/* Forgot your password && get to signup end */}
-          {Error && (
-            <span className="w-100 text-center d-block text-danger pt-3">
-              {Error}
+          </>
+        )}
+
+        {/*get to login end  */}
+
+        {/* Forgot your password && get to signup start*/}
+        {name === "login" && (
+          <div className="w-100 py-2">
+            <span className="p-2 w-100 d-block" htmlFor="password">
+              انشاء حساب جديد:<Link className="text-primary " to={"/signup"}> انشاء حساب</Link>
             </span>
-          )}
-        </Fade>
-        <Fade duration={1500} direction="up" triggerOnce={true} cascade>
-          <button
-            disabled={isLoading ? true : false}
-            className="btn btncolor text-white my-4 d-flex align-items-center"
-            type="submit"
-          >
-            {isLoading && <span className="spinner-border"></span>}
-            {!isLoading && <span className="">ارسال</span>}
-          </button>
-        </Fade>
+            <span className="p-2" htmlFor="password">
+              هل نسيت كلمة السر؟<Link className="text-primary" to={"/forgotPassword"}> اضغط هنا</Link>
+            </span>
+          </div>
+        )}
+        {/* Forgot your password && get to signup end */}
+        {Error && (
+          <span className="w-100 text-center d-block text-danger pt-3">
+            {Error}
+          </span>
+        )}
+</Fade>
+<Fade duration={1500} direction='up' triggerOnce={true} cascade>
+        <button
+          disabled={isLoading ? true : false}
+          className="btn btncolor text-white my-4 d-flex align-items-center"
+          type="submit"
+        >
+          {isLoading && <span className="spinner-border"></span>}
+          {!isLoading && <span className="">ارسال</span>}
+        </button>
+</Fade>
+          
       </form>
     </div>
   );
