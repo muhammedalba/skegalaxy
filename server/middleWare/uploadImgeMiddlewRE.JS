@@ -48,7 +48,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       
       await sharp(buffer)
         .resize(width, height, { fit: 'inside', withoutEnlargement: true })
-        .toFormat('WebP')
+        .toFormat('webp')
         .webp({ quality: quality })
         .toFile(filePath);
     } catch (error) {
@@ -112,9 +112,9 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       await processAndSaveImage(
         req.files.DeliveryReceiptImage[0].buffer,
         `uploads/${path}/${filename}`,
-        450,
-      300,
-        90
+        550,
+      400,
+        100
       );
       req.body.DeliveryReceiptImage = filename; // Save image into our db 
     }
