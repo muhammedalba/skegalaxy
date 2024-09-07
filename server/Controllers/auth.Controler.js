@@ -97,7 +97,7 @@ res.cookie("refreshToken", refreshToken, {
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
   // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
 });
-
+res.setHeader('Authorization', `Bearer ${token}`);
 
   res.status(200).json({status:'success', data: sanitizeUser(user),refreshToken ,token,imageUrl });
 });
@@ -244,7 +244,8 @@ exports.protect = asyncHandler(async (req, res, next) => {
         // Update cookie and authorization header
         res.cookie("token", newAccessToken, {
           httpOnly: false,
-          secure: process.env.NODE_ENV === 'production',
+          // secure: process.env.NODE_ENV === 'production',
+          secure: true,
           sameSite: 'strict', 
         });
         res.setHeader('Authorization', `Bearer ${newAccessToken}`);
