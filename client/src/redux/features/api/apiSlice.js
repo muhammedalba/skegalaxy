@@ -1,12 +1,27 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import Cookies from 'universal-cookie';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API,
     credentials: 'include',
-
+    prepareHeaders: (headers, { getState }) => {
+      const cookies= new Cookies()
+      // الحصول على الـ token من التخزين المحلي أو من الـ state
+      const token = cookies.get('token') || getState().auth.token;
+  
+      // إذا كان الـ token موجودًا، أضفه إلى الهيدر
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+  
+      // إضافة المزيد من الهيدرز إذا لزم الأمر
+      headers.set('Content-Type', 'application/json');
+  
+      return headers;
+    }
   }),
   tagTypes: ['data'],
   endpoints: (builder) => ({
