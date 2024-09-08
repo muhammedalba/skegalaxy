@@ -43,8 +43,8 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 // compression all responses
 app.use(compression());
-// app.use("/uploads", express.static(path.join(__dirname, "uploads"), {maxAge: '1d'}));dev
-app.use("/uploads", express.static(path.join("/mnt/data/uploads"), {maxAge: '1d'})); //prod
+// app.use("/uploads", express.static(path.join(__dirname, "uploads"), {maxAge: '1d'})); //dev
+app.use("/uploads", express.static(path.join(process.env.UPLOADS_DIRECTORY), {maxAge: '1d'})); //prod
 // webhook-checkout
 app.post(
   "/webhook-checkout",

@@ -42,6 +42,7 @@ exports.uploadImage = (arrayOfFislds) => multerOptions().fields(arrayOfFislds);
 exports.resizeImge = asyncHandler(async (req, res, next) => {
   // Extract the path once for better readability
   const path = req.baseUrl.split("/")[2];
+  const uploadsDir =  process.env.UPLOADS_DIRECTORY;
   // Function to process and save image
   async function processAndSaveImage(buffer, filePath, width, height,quality) {
     try {
@@ -57,9 +58,11 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
     }
   }
   if (req.files) {
+
+  if (!fs.existsSync(`${uploadsDir}/${path}`)) {
+    fs.mkdirSync(`${uploadsDir}/${path}`, { recursive: true });
+   }
   //  ceck the folder in acess
-
-
 // const uploadsDir = '/mnt/data/uploads';
 // const userDir = path.join(uploadsDir, 'users');
 
@@ -71,11 +74,8 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
  
     if (req.files.imageCover) {
       const filename = `${path}-imageCover-${Date.now()}-${uuidv4()}.WebP`;
-      const uploadsDir = '/mnt/data/uploads';
       const filePath = paths.join(uploadsDir, `${path}/${filename}`);
-      if (!fs.existsSync(`${uploadsDir}/${path}`)) {
-          fs.mkdirSync(`${uploadsDir}/${path}`, { recursive: true });
-         }
+      
       await processAndSaveImage(
         req.files.imageCover[0].buffer,
         filePath,
@@ -89,8 +89,9 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
    // Handling PDF file
    if (req.files.infoProductPdf) {
     const filename = `${path}-infoProductPdf-${uuidv4()}.pdf`;
-    const filePath = `uploads/${path}/${filename}`;
-
+   
+    const filePath = paths.join(uploadsDir, `${path}/${filename}`);
+    
     // Save the PDF file directly
     fs.writeFileSync(filePath, req.files.infoProductPdf[0].buffer);
 
@@ -98,11 +99,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
   }
   if (req.files.orderPdf) {
     const filename = `${path}-orderPdf-${uuidv4()}.pdf`;
-    const filePath = `uploads/${path}/${filename}`;
-    // If there is no folder, create it.
-    if (!fs.existsSync(`uploads/${path}`)) {
-      fs.mkdirSync(`uploads/${path}`, { recursive: true });
-     }
+    const filePath = paths.join(uploadsDir, `${path}/${filename}`);
     // Save the PDF file directly
     fs.writeFileSync(filePath, req.files.orderPdf[0].buffer);
 
@@ -143,34 +140,33 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       req.body.DeliveryReceiptImage = filename; // Save image into our db 
     }
     if (req.files.carouselImage) {
-       // If there is no folder, create it.
-    if (!fs.existsSync(`uploads/${path}`)) {
-      fs.mkdirSync(`uploads/${path}`, { recursive: true });
-     }
+
+
       const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
+      const filePath = paths.join(uploadsDir, `${path}/${filename}`);
+
       await processAndSaveImage(
         req.files.carouselImage[0].buffer,
-        `uploads/${path}/${filename}`,
+        filePath,
         1024 ,
         500,
         100
         
       );
-      req.body.carouselImage = filename; // Save image into our db 
+      req.body.carouselImage = filename; // Save image into our db  
     }
     // Resize and save multiple images
     if (req.files.images) {
-       // If there is no folder, create it.
-    if (!fs.existsSync(`uploads/${path}`)) {
-      fs.mkdirSync(`uploads/${path}`, { recursive: true });
-     }
+  
+
       req.body.images = [];
       await Promise.all(
         req.files.images.map(async (image, index) => {
           const filename = `${path}-image-${index + 1}-${Date.now()}-${uuidv4()}.WebP`;
+          const filePath = paths.join(uploadsDir, `${path}/${filename}`);
           await processAndSaveImage(
             image.buffer,
-            `uploads/${path}/${filename}`,
+            filePath,
             250,
             150,
             80
