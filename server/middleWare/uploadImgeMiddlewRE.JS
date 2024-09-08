@@ -187,9 +187,13 @@ exports.updatemageFromFolder = asyncHandler(async (id, model, req) => {
   //  console.log(`${process.env.BASE_URL}`);
   //  console.log( findImgeInDB.image);
     const pathImge = req.baseUrl.split("/").slice(2).join("/");
+
+
     const imageInDB = await model.findById(id);
     const deleteFileIfExists = (filePath) => {
       const fullPath = `uploads/${filePath}`;
+      console.log(fullPath);
+      
       if (fs.existsSync(fullPath)) {
         try {
           fs.unlinkSync(fullPath);
@@ -220,6 +224,9 @@ exports.updatemageFromFolder = asyncHandler(async (id, model, req) => {
       if (req.body.carouselImage) {
         deleteFileIfExists(`${pathImge}/${imageInDB.carouselImage}`);
       }
+      if (req.body.DeliveryReceiptImage) {
+        deleteFileIfExists(`${pathImge}/${imageInDB.DeliveryReceiptImage}`);
+      }
     }
   
     return true;
@@ -237,7 +244,7 @@ exports.deletImageFromFolder = asyncHandler(async (id, model, req, type) => {
    
   // Helper function to delete a file if it exists
   const deleteFileIfExists = (filePath) => {
-    const fullPath =  `uploads/${filePath}`;
+    const fullPath =  `${process.env.UPLOADS_DIRECTORY}/${filePath}`;
     if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
   };
 
@@ -292,6 +299,9 @@ exports.deletImageFromFolder = asyncHandler(async (id, model, req, type) => {
     }
     if (imageInDB.carouselImage) {
       deleteFileIfExists(`${pathImge}/${imageInDB.carouselImage}`);
+    }
+    if (imageInDB.DeliveryReceiptImage) {
+      deleteFileIfExists(`${pathImge}/${imageInDB.DeliveryReceiptImage}`);
     }
   }
 
