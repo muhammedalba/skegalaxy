@@ -61,6 +61,10 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
  
     if (req.files.imageCover) {
       const filename = `${path}-imageCover-${Date.now()}-${uuidv4()}.WebP`;
+      const uploadsDir = '/mnt/data/uploads';
+// استخدام uploadsDir كمسار أساسي
+    const filePath = path.join(uploadsDir, `${path}/${filename}`);
+
       await processAndSaveImage(
         req.files.imageCover[0].buffer,
         `uploads/${path}/${filename}`,
