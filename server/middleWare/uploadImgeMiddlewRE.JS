@@ -73,8 +73,8 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       const filename = `${path}-imageCover-${Date.now()}-${uuidv4()}.WebP`;
       const uploadsDir = '/mnt/data/uploads';
       const filePath = paths.join(uploadsDir, `${path}/${filename}`);
-      if (!fs.existsSync(`uploads/${path}`)) {
-          fs.mkdirSync(`uploads/${path}`, { recursive: true });
+      if (!fs.existsSync(`${uploadsDir}/${path}`)) {
+          fs.mkdirSync(`${uploadsDir}/${path}`, { recursive: true });
          }
       await processAndSaveImage(
         req.files.imageCover[0].buffer,
