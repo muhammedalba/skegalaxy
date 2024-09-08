@@ -284,7 +284,7 @@ const Products = () => {
               width={150}
               height={150}
               src={brand.image ? `${brands?.imageUrl}/${brand?.image}` : logo}
-              className=" d-sm-block m-1"
+              className=" d-sm-block m-auto"
               alt="brand"
             />
             <span
