@@ -47,7 +47,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
     try {
       
       await sharp(buffer)
-        .resize(width, height, { fit: 'cover', withoutEnlargement: true })
+        .resize(width, height, { fit: 'inside', withoutEnlargement: true })
         .toFormat('webp')
         .webp({ quality: quality })
         .toFile(filePath);
@@ -62,12 +62,11 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
     if (req.files.imageCover) {
       const filename = `${path}-imageCover-${Date.now()}-${uuidv4()}.WebP`;
       const uploadsDir = '/mnt/data/uploads';
-// استخدام uploadsDir كمسار أساسي
-    const filePath = path.join(uploadsDir, `${path}/${filename}`);
+      const filePath = path.join(uploadsDir, `${path}/${filename}`);
 
       await processAndSaveImage(
         req.files.imageCover[0].buffer,
-        `uploads/${path}/${filename}`,
+        filePath,
         225,
         225,
         
@@ -104,7 +103,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
         req.files.image[0].buffer,
         `uploads/${path}/${filename}`,
         250,
-        250,
+        150,
         90
       );
       req.body.image = filename; // Save image into our db 
