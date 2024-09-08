@@ -107,16 +107,13 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
   }
     // Resize and save single image
     if (req.files.image) {
-     
-       // If there is no folder, create it.
-    if (!fs.existsSync(`uploads/${path}`)) {
-      fs.mkdirSync(`uploads/${path}`, { recursive: true });
-     }
+  
       const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
-      
+      const filePath = paths.join(uploadsDir, `${path}/${filename}`);
+
       await processAndSaveImage(
         req.files.image[0].buffer,
-        `uploads/${path}/${filename}`,
+        filePath,
         250,
         150,
         90
@@ -124,15 +121,13 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       req.body.image = filename; // Save image into our db 
     }
     if (req.files.DeliveryReceiptImage) {
-      // If there is no folder, create it.
-    if (!fs.existsSync(`uploads/${path}`)) {
-      fs.mkdirSync(`uploads/${path}`, { recursive: true });
-     }
-      
+ 
       const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
+      const filePath = paths.join(uploadsDir, `${path}/${filename}`);
+
       await processAndSaveImage(
         req.files.DeliveryReceiptImage[0].buffer,
-        `uploads/${path}/${filename}`,
+        filePath,
         550,
       400,
         100
@@ -191,9 +186,8 @@ exports.updatemageFromFolder = asyncHandler(async (id, model, req) => {
 
     const imageInDB = await model.findById(id);
     const deleteFileIfExists = (filePath) => {
-      const fullPath = `uploads/${filePath}`;
-      console.log(fullPath);
-      
+      const fullPath = `${process.env.UPLOADS_DIRECTORY}/${filePath}`;
+  
       if (fs.existsSync(fullPath)) {
         try {
           fs.unlinkSync(fullPath);
@@ -287,6 +281,7 @@ exports.deletImageFromFolder = asyncHandler(async (id, model, req, type) => {
     }
     if (imageInDB.imageCover) {
       deleteFileIfExists(`${pathImge}/${imageInDB.imageCover}`);
+
     }
     if (imageInDB.images && imageInDB.images.length > 0) {
       imageInDB.images.forEach((img) => deleteFileIfExists(`${pathImge}/${img}`));
