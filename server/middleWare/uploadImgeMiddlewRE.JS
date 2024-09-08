@@ -47,7 +47,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
     try {
       
       await sharp(buffer)
-        .resize(width, height, { fit: 'inside', withoutEnlargement: true })
+        .resize(width, height, { fit: 'cover', withoutEnlargement: true })
         .toFormat('webp')
         .webp({ quality: quality })
         .toFile(filePath);
@@ -100,7 +100,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
         req.files.image[0].buffer,
         `uploads/${path}/${filename}`,
         250,
-        150,
+        250,
         90
       );
       req.body.image = filename; // Save image into our db 
