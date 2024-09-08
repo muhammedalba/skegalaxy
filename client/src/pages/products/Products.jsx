@@ -213,7 +213,9 @@ const Products = () => {
   // if sucsses and data is not empty  show the categories slide
   const showCategoriesData = useMemo(() => {
     if (isSuccess && categories?.data?.length > 0) {
-      return categories?.data?.map((category, index) => (
+
+      const categories_slide=[...categories.data];
+      return categories_slide?.map((category, index) => (
         <button
           style={{ minWidth: "315px  ",height: "270px"}}
           onClick={() =>
@@ -331,6 +333,17 @@ const Products = () => {
   };
   // slide settings
   const responsivecategory = {
+    superXXLargeDesktop: {
+      breakpoint: { max: 3000, min: 2200 },
+      items: 6,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+    
+    superXLargeDesktop: {
+      breakpoint: { max: 2200, min: 1600 },
+      items: 5,
+      slidesToSlide: 1, // optional, default to 1.
+    },
     superLargeDesktop: {
       breakpoint: { max: 1600, min: 1200 },
       items: 4,
@@ -375,13 +388,13 @@ const Products = () => {
           </p>
           <Carousel
             responsive={responsivecategory}
-            // autoPlay={true}
-            // infinite={false}
-            // rewind={true}
-            // rewindWithAnimation={true}
+            autoPlay={true}
+            infinite={false}
+            rewind={true}
+            rewindWithAnimation={true}
             transitionDuration={1000}
-            // customTransition={"transform 3000ms ease-in-out"}
-            // showDots={false}
+            customTransition={"transform 3000ms ease-in-out"}
+            showDots={false}
             arrows={true}
             focusOnSelect={false}
             ssr={true}
