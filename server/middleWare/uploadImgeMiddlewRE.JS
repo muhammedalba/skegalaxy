@@ -5,7 +5,7 @@
 const multer = require("multer");
 
 const fs = require("fs");
-// const paths = require('path');
+const paths = require('path');
 const sharp = require("sharp");
 const { v4: uuidv4 } = require("uuid");
 
@@ -57,19 +57,30 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
     }
   }
   if (req.files) {
-   
+  //  ceck the folder in acess
+
+
+// const uploadsDir = '/mnt/data/uploads';
+// const userDir = path.join(uploadsDir, 'users');
+
+// // تأكد من وجود المجلد
+// if (!fs.existsSync(userDir)) {
+//   fs.mkdirSync(userDir, { recursive: true });
+// }
+
  
     if (req.files.imageCover) {
       const filename = `${path}-imageCover-${Date.now()}-${uuidv4()}.WebP`;
       const uploadsDir = '/mnt/data/uploads';
-      const filePath = path.join(uploadsDir, `${path}/${filename}`);
-
+      const filePath = paths.join(uploadsDir, `${path}/${filename}`);
+      if (!fs.existsSync(`uploads/${path}`)) {
+          fs.mkdirSync(`uploads/${path}`, { recursive: true });
+         }
       await processAndSaveImage(
         req.files.imageCover[0].buffer,
         filePath,
         225,
         225,
-        
        90
         
       );
@@ -88,7 +99,10 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
   if (req.files.orderPdf) {
     const filename = `${path}-orderPdf-${uuidv4()}.pdf`;
     const filePath = `uploads/${path}/${filename}`;
-
+    // If there is no folder, create it.
+    if (!fs.existsSync(`uploads/${path}`)) {
+      fs.mkdirSync(`uploads/${path}`, { recursive: true });
+     }
     // Save the PDF file directly
     fs.writeFileSync(filePath, req.files.orderPdf[0].buffer);
 
@@ -97,8 +111,12 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
     // Resize and save single image
     if (req.files.image) {
      
-      
+       // If there is no folder, create it.
+    if (!fs.existsSync(`uploads/${path}`)) {
+      fs.mkdirSync(`uploads/${path}`, { recursive: true });
+     }
       const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
+      
       await processAndSaveImage(
         req.files.image[0].buffer,
         `uploads/${path}/${filename}`,
@@ -109,7 +127,10 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       req.body.image = filename; // Save image into our db 
     }
     if (req.files.DeliveryReceiptImage) {
-     
+      // If there is no folder, create it.
+    if (!fs.existsSync(`uploads/${path}`)) {
+      fs.mkdirSync(`uploads/${path}`, { recursive: true });
+     }
       
       const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
       await processAndSaveImage(
@@ -122,6 +143,10 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       req.body.DeliveryReceiptImage = filename; // Save image into our db 
     }
     if (req.files.carouselImage) {
+       // If there is no folder, create it.
+    if (!fs.existsSync(`uploads/${path}`)) {
+      fs.mkdirSync(`uploads/${path}`, { recursive: true });
+     }
       const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
       await processAndSaveImage(
         req.files.carouselImage[0].buffer,
@@ -135,6 +160,10 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
     }
     // Resize and save multiple images
     if (req.files.images) {
+       // If there is no folder, create it.
+    if (!fs.existsSync(`uploads/${path}`)) {
+      fs.mkdirSync(`uploads/${path}`, { recursive: true });
+     }
       req.body.images = [];
       await Promise.all(
         req.files.images.map(async (image, index) => {
