@@ -1,23 +1,28 @@
 import "./card.css";
-import React, { Suspense, useCallback, useEffect, useState } from "react";
-
-
-
-const Rating = React.lazy(() => import("../Rating/Rating"));
-import { PiEyeThin } from "react-icons/pi";
-import { Fade } from "react-awesome-reveal";
-
-import PropTypes from "prop-types";
-import { useCreateOneMutation } from "../../redux/features/api/apiSlice";
-import { CiHeart } from "react-icons/ci";
-
-import { successNotify, warnNotify } from "../../utils/Toast";
+import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
 import { cartitems } from "../../redux/features/Slice/CartSlice";
 import { Link } from "react-router-dom";
-import { IoShareSocial } from "react-icons/io5";
-import { SlSocialInstagram } from "react-icons/sl";
+
+
+import { Fade } from "react-awesome-reveal";
+import { useCreateOneMutation } from "../../redux/features/api/apiSlice";
+import PropTypes from "prop-types";
+
+const Rating = React.lazy(() => import("../Rating/Rating"));
+const CiHeart = lazy(() => import("react-icons/ci").then(module => ({ default: module.CiHeart })));
+const PiEyeThin = lazy(() => import("react-icons/pi").then(module => ({ default: module.PiEyeThin })));
+const IoShareSocial = lazy(() => import("react-icons/io5").then(module => ({ default: module.IoShareSocial })));
+const SlSocialInstagram = lazy(() => import( "react-icons/sl").then(module => ({ default: module.SlSocialInstagram })));
+// import { PiEyeThin } from "react-icons/pi";
+// import { IoShareSocial } from "react-icons/io5";
+// import { SlSocialInstagram } from "react-icons/sl";
+
+
+import { successNotify, warnNotify } from "../../utils/Toast";
+
+
 import { 
 
   TwitterShareButton, 
@@ -130,16 +135,26 @@ if(createError || successCreeate){
  const showIcons=()=>{
   setDisplay(!display)
  }
-
+ const scrollToTop = useCallback(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}, [])
 
   return (
     <div className="card-product m-auto ">
 
    
-      <IoShareSocial style={{ top: "4rem" }} className="cart-icon mx-2" onClick={showIcons} />
-      <CiHeart  onClick={() => addproducToCartOurWishlist(product?._id,'wishlist')}  style={{ top: "1rem",left:'auto'}} className="cart-icon-Heart mx-2 start-0 " />
-      <Link to={`/products/${product?._id}`}>
-      <PiEyeThin style={{ top: "1rem" }} className="cart-icon mx-2 " />
+    
+          <Suspense>
+             <IoShareSocial style={{ top: "4rem" }} className="cart-icon mx-2" onClick={showIcons} />
+          </Suspense>
+          <Suspense>
+             <CiHeart  onClick={() => addproducToCartOurWishlist(product?._id,'wishlist')}  style={{ top: "1rem",left:'auto'}} className="cart-icon-Heart mx-2 start-0 " />
+          </Suspense>
+      <Link onClick={scrollToTop} to={`/products/${product?._id}`}>
+           <Suspense>
+               <PiEyeThin style={{ top: "1rem" }} className="cart-icon mx-2 " />
+           </Suspense>
+   
     
      
       <div style={{    transform:display?'translateX(0)':' translateX(158%)'}}
@@ -165,8 +180,11 @@ if(createError || successCreeate){
             navigator.clipboard.writeText(`${shareUrl}/${product.id}`);
             successNotify('تم نسخ الرابط! يمكنك الآن لصقه في Instagram');
           }}style={{backgroundColor:'#df0073',padding:'0.4rem'}} >
-
-            <SlSocialInstagram  color="white" fontSize={"1.23rem"}/>
+            
+         
+            <Suspense>
+              <SlSocialInstagram  color="white" fontSize={"1.23rem"}/>          
+            </Suspense>
         </button>
         
                         
@@ -194,15 +212,25 @@ if(createError || successCreeate){
           cascade
         >
           <Suspense >
-          <Rating ratingsAverage={product?.ratingsAverage || 3} />
+              <Rating ratingsAverage={product?.ratingsAverage || 3} />
 
           </Suspense>
-          <h3 className="my-1"> {product?.title?.slice(0, 25)} </h3>
+          <h3 style={{minHeight:'4rem',}}  className="my-1">
+            <span className="d-block w-100">
+
+            {product?.title?.split("_")[0]} 
+            </span>
+            <span className="d-block w-100">
+
+            {product?.title?.split("_")[1]} 
+            </span>
+            </h3>
+          {/* <h3 className="my-1"> {</h3> */}
          
           {/* price */}
           <div className="d-flex mb-1 w-100 justify-content-evenly align-items-center flex-wrap">
             <h2
-              className="price p-0 m-0"
+              className="price w-100 p-0 m-0"
               style={{
                 textDecoration: product?.priceAfterDiscount
                   ? "line-through"

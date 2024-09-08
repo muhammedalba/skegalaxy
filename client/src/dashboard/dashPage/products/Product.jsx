@@ -285,7 +285,7 @@ console.log(updateError);
   // handleChange
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-    console.log(formData);
+  
     
   
   };
@@ -498,7 +498,7 @@ console.log(updateError);
                   step={0.01}
                   disabled={isLoading || loading ? true : false}
                   min={0}
-                  max={2000}
+                  max={5000}
                   className="form-control"
                   id={"price"}
                   name={"price"}
@@ -520,7 +520,7 @@ console.log(updateError);
                   step={0.01}
                   disabled={isLoading || loading ? true : false}
                   min={0}
-                  max={2000}
+                  max={5000}
                   className="form-control"
                   id={"priceAfterDiscount"}
                   name={"priceAfterDiscount"}
@@ -546,7 +546,7 @@ console.log(updateError);
                 <input
                   disabled={isLoading || loading ? true : false}
                   min={0}
-                  max={1000}
+                  max={5000}
                   className="form-control"
                   id={"quantity"}
                   name={"quantity"}

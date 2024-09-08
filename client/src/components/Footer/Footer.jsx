@@ -1,24 +1,70 @@
 import "./Foter.css";
-import { SiFacebook } from "react-icons/si";
-import { FaTelegramPlane } from "react-icons/fa";
-import { BsWhatsapp } from "react-icons/bs";
 import { Fade } from "react-awesome-reveal";
-
-import { FaInstagram } from "react-icons/fa";
-
-
-import { FcAutomotive } from "react-icons/fc";
-import { FcSynchronize } from "react-icons/fc";
-import { FcUnlock } from "react-icons/fc";
-import logo from "../../imges/footerImge.webp";
-
-import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
-import skyDitels from "../../imges/skyDitels.pdf";
-import { TfiHeadphoneAlt } from "react-icons/tfi";
+import { lazy, Suspense, useCallback } from "react";
 
+import logo from "../../imges/footerImge.webp";
+import skyDitels from "../../imges/skyDitels.pdf";
+
+// icons
+
+const SiFacebook = lazy(() =>
+  import("react-icons/si").then((module) => ({ default: module.SiFacebook }))
+);
+const FaTelegramPlane = lazy(() =>
+  import("react-icons/fa").then((module) => ({
+    default: module.FaTelegramPlane,
+  }))
+);
+const BsWhatsapp = lazy(() =>
+  import("react-icons/bs").then((module) => ({ default: module.BsWhatsapp }))
+);
+const BsFillTelephoneFill = lazy(() => import( "react-icons/bs").then(module => ({ default: module.BsFillTelephoneFill })));
+const FcAutomotive = lazy(() =>
+  import("react-icons/fc").then((module) => ({ default: module.FcAutomotive }))
+);
+const FcSynchronize = lazy(() =>
+  import("react-icons/fc").then((module) => ({ default: module.FcSynchronize }))
+);
+const FcUnlock = lazy(() =>
+  import("react-icons/fc").then((module) => ({ default: module.FcUnlock }))
+);
+const MdOutlineMail = lazy(() =>
+  import("react-icons/md").then((module) => ({ default: module.MdOutlineMail }))
+);
+const TfiHeadphoneAlt = lazy(() =>
+  import("react-icons/tfi").then((module) => ({
+    default: module.TfiHeadphoneAlt,
+  }))
+);
+const RiDownloadCloud2Line = lazy(() =>
+  import("react-icons/ri").then((module) => ({
+    default: module.RiDownloadCloud2Line,
+  }))
+);
+const FaInstagram = lazy(() =>
+  import("react-icons/fa").then((module) => ({ default: module.FaInstagram }))
+);
+
+// import { SiFacebook } from "react-icons/si";
+// import { FaTelegramPlane } from "react-icons/fa";
+// import { BsWhatsapp } from "react-icons/bs";
+// import { FaInstagram } from "react-icons/fa";
+// import { BsFillTelephoneFill } from "react-icons/bs";
+
+// import { FcAutomotive } from "react-icons/fc";
+// import { FcSynchronize } from "react-icons/fc";
+// import { FcUnlock } from "react-icons/fc";
+
+// import { MdOutlineMail } from "react-icons/md";
+// import { TfiHeadphoneAlt } from "react-icons/tfi";
+
+// import { RiDownloadCloud2Line } from "react-icons/ri";
 
 const Footer = () => {
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     // <animate__bounceInRight>
     <footer className="footer  mt-4">
@@ -26,7 +72,9 @@ const Footer = () => {
       <div className="row services m-auto w-100 py-3 px-3 fs-4 text-center">
         <div className="col-sm-6 col-md-3 px-2 ">
           <div className="d-flex align-items-center gap-2 justify-content-md-center">
-            <FcAutomotive fontSize={"3rem"} className="" />
+            <Suspense>
+              <FcAutomotive fontSize={"3rem"} className="" />
+            </Suspense>
 
             <p className="m-0 fw-bolder d-flex flex-column">
               توصيل سريع
@@ -38,7 +86,9 @@ const Footer = () => {
         </div>
         <div className="col-sm-6 col-md-3 px-2">
           <div className="d-flex align-items-center gap-2 justify-content-md-center ">
-            <TfiHeadphoneAlt fontSize={"3rem"} />
+            <Suspense>
+              <TfiHeadphoneAlt fontSize={"3rem"} />
+            </Suspense>
 
             <p className="m-0 fw-bolder d-flex flex-column">
               دعم متواصل
@@ -48,7 +98,9 @@ const Footer = () => {
         </div>
         <div className="col-sm-6 col-md-3 px-2">
           <div className="d-flex align-items-center gap-2 pt-3 pt-md-0 justify-content-md-center">
-            <FcUnlock fontSize={"3rem"} />
+            <Suspense>
+              <FcUnlock fontSize={"3rem"} />
+            </Suspense>
 
             <p className="m-0 fw-bolder d-flex flex-column">
               دفع آمن
@@ -58,8 +110,9 @@ const Footer = () => {
         </div>
         <div className="col-sm-6 col-md-3 px-2">
           <div className="d-flex align-items-center pt-3 pt-md-0 3 gap-2 justify-content-md-center">
-            <FcSynchronize fontSize={"3rem"} />
-
+            <Suspense>
+              <FcSynchronize fontSize={"3rem"} />
+            </Suspense>
             <p className="m-0 fw-bolder d-flex flex-column">
               استرداد الأموال
               <span className="d-none d-md-block">لديك 14 يوما للعودة </span>
@@ -80,6 +133,7 @@ const Footer = () => {
                   loading="lazy"
                   decoding="async"
                   width={100}
+                  height={100}
                   src={logo}
                   alt="logo"
                 />
@@ -93,7 +147,9 @@ const Footer = () => {
                                   </a>
                                   </div> */}
               <div className="d-flex align-items-center justify-content-center gap-1">
-                <MdOutlineMail fontSize={"1rem"} />
+                <Suspense>
+                  <MdOutlineMail fontSize={"1rem"} />
+                </Suspense>
                 <a href="mailto:info@skygalaxyco.com"> info@skygalaxyco.com</a>
               </div>
               <div className="d-flex align-items-center flex-wrap justify-content-center column-gap-2">
@@ -116,12 +172,15 @@ const Footer = () => {
               </div>
 
               <a
-                className="btn btn-primary my-1"
+                className="btn btn-outline-primary my-1"
                 href={skyDitels}
                 id="Download"
                 download={"skyDitels"}
               >
-                <i className=" text-white"> تنزيل معلومات الشركه</i>
+                <Suspense>
+                  <RiDownloadCloud2Line fontSize={"1.5rem"} className="mx-1 " />
+                </Suspense>
+                <i className=" "> تحميل اوراق الشركه </i>
               </a>
 
               <span
@@ -129,35 +188,49 @@ const Footer = () => {
                 className=" fs-5 mt-2 fw-bold d-block"
               >
                 {" "}
-                تواصل معانا{" "}
+                تواصل معنا{" "}
               </span>
-            
+
               <div className="d-flex justify-content-center align-items-center pt-1 ">
-              <a className="fs-5 mx-1"   href="tel:+966598909991">
-               
-               <TfiHeadphoneAlt
-                 fontSize={"1.7rem"} 
-                 color="var( --spancolor)"
-               />
-             </a>
-                <a href="#" className="text-white mx-1">
-                  <SiFacebook fontSize={"2rem"} color="#0866ff" />
+                <a className="fs-5 mx-1" href="tel:+966598909991">
+                  <Suspense>
+                    <BsFillTelephoneFill
+                      fontSize={"1.7rem"}
+                      color="var( --spancolor)"
+                    />
+                  </Suspense>
                 </a>
                 <a href="#" className="text-white mx-1">
-                  <FaTelegramPlane fontSize={"2rem"} color="#28a8e9" />
+                  <Suspense>
+                    <SiFacebook fontSize={"2rem"} color="#0866ff" />
+                  </Suspense>
+                </a>
+                <a href="#" className="text-white mx-1">
+                  <Suspense>
+                    <FaTelegramPlane fontSize={"2rem"} color="#28a8e9" />
+                  </Suspense>
                 </a>
                 <a
                   href="https://wa.me/+966598909991"
                   className="text-white mx-1"
                 >
-                  <BsWhatsapp fontSize={"2rem"} color="#33bd45 " />
+                  <Suspense>
+                    <BsWhatsapp fontSize={"2rem"} color="#33bd45 " />
+                  </Suspense>
                 </a>
                 <a href="#" className="text-white mx-1 ">
-                  <FaInstagram fontSize={"2rem"} color="#df0073" />
+                  <Suspense>
+                    <FaInstagram fontSize={"2rem"} color="#df0073" />
+                  </Suspense>
                 </a>
               </div>
-             <Link to="/PrivacyPolic" className=" d-block fw-bold my-2">الاحكام والشروط وسياسات الاسترجاع </Link>
-
+              <Link
+                onClick={scrollToTop}
+                to="/PrivacyPolic"
+                className=" d-block fw-bold my-2"
+              >
+                الاحكام والشروط وسياسات الاسترجاع
+              </Link>
             </Fade>
           </div>
           <div className=" col-12 col-sm-8 mb-0  my-3">
@@ -250,36 +323,6 @@ const Footer = () => {
               </div>
             </Fade>
           </div>
-
-          {/* about*/}
-          {/* <div
-            style={{ borderColor: " var(--btn-bg-color)!important " }}
-            className="col-12 border-top pt-3  mt-2 "
-          >
-            <Fade direction="up" triggerOnce={true} cascade>
-              <h5
-                style={{ color: " var(--btn-bg-color) " }}
-                className="text-center"
-              >
-                عن sky Galaxy{" "}
-              </h5>
-              <ul
-                style={{ listStyle: "none" }}
-                className="d-flex justify-content-center flex-wrap gap-2"
-              >
-                <li className="px-2 ">
-                  <Link to="/About" className="link-underline-primary">
-                    من نحن{" "}
-                  </Link>
-                </li>
-                <li className="px-2">
-                  <Link to="/PrivacyPolic" className="footer-link text-white">
-                    الاحكام والشروط وسياسات الاسترجاع{" "}
-                  </Link>
-                </li>
-              </ul>
-            </Fade>
-          </div> */}
         </div>
       </div>
 

@@ -96,10 +96,10 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
       errors.title = "يرجى إدخال اسم منتج اقل من 70 احرف.";
     }
    if (formData.description.length > 2000) {
-    errors.title = "يرجى إدخال اسم منتج اقل من 2000 احرف.";
+    errors.title = "يرجى إدخال وصف منتج اقل من 2000 احرف.";
   }
-  if (formData.description.length > 2000) {
-    errors.title = "يرجى إدخال اسم منتج اكثر من 15 احرف.";
+  if (formData.description.length < 15) {
+    errors.title = "يرجى إدخال ,وصف منتج اكثر من 15 احرف.";
   }
     // Check Price
     if (formData.price === ''|| formData.price === 0) {

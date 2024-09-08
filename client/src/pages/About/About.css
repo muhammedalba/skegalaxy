@@ -43,10 +43,11 @@
     background-position: center;
     background-size: cover;
     width: 300px !important;
-    height: 300px !important;
+    /* height: 300px !important; */
 }
 
 .swiper-slide img {
     display: block;
     width: 100% !important;
+    height: 300px !important;
 }

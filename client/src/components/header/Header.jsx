@@ -1,34 +1,48 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState , lazy, Suspense } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { searchItem } from "../../redux/features/Slice/SerchSlice";
 import Cookies from "universal-cookie";
 import "./header.css";
-
+import { Fade } from "react-awesome-reveal";
+import { Results } from "../../redux/features/Slice/QuantityResultSlice";
+import { currentPage } from "../../redux/features/Slice/NavigationSlice";
+import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 // img
 import logo from "../../imges/logo1..webp";
 import avatar from "../../imges/avatar.webp";
 // icons
-import { CiSearch } from "react-icons/ci";
-import { IoChevronUpOutline } from "react-icons/io5";
-import { IoMdHome } from "react-icons/io";
-import { AiOutlineDashboard } from "react-icons/ai";
-import { BsCart2 } from "react-icons/bs";
-import { CiLogin } from "react-icons/ci";
-import { FaRegUser } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
-import { BsFillTelephoneFill } from "react-icons/bs";
-import { TfiHeadphoneAlt } from "react-icons/tfi";
+const CiSearch = lazy(() => import("react-icons/ci").then(module => ({ default: module.CiSearch })));
+const IoChevronUpOutline = lazy(() => import("react-icons/io5").then(module => ({ default: module.IoChevronUpOutline })));
+const IoStorefrontOutline = lazy(() => import("react-icons/io5").then(module => ({ default: module.IoStorefrontOutline })));
+const AiOutlineDashboard = lazy(() => import("react-icons/ai").then(module => ({ default: module.AiOutlineDashboard })));
+const BsCart2 = lazy(() => import("react-icons/bs").then(module => ({ default: module.BsCart2 })));
+const CiLogin = lazy(() => import("react-icons/ci").then(module => ({ default: module.CiLogin })));
+const FaRegUser = lazy(() => import("react-icons/fa").then(module => ({ default: module.FaRegUser })));
+const FaUser = lazy(() => import("react-icons/fa").then(module => ({ default: module.FaUser })));
+const TfiHeadphoneAlt = lazy(() => import("react-icons/tfi").then(module => ({ default: module.TfiHeadphoneAlt })));
+const CiHeart = lazy(() => import("react-icons/ci").then(module => ({ default: module.CiHeart })));
+const MdOutlineWifiProtectedSetup = lazy(() => import("react-icons/md").then(module => ({ default: module.MdOutlineWifiProtectedSetup })));
+const FaUsersRectangle = lazy(() => import("react-icons/fa6").then(module => ({ default: module.FaUsersRectangle })));
+const BsWhatsapp = lazy(() => import("react-icons/bs").then(module => ({ default: module.BsWhatsapp })));
+const IoMdHome = lazy(() => import("react-icons/io").then(module => ({ default: module.IoMdHome })));
 
-import { Fade } from "react-awesome-reveal";
-import { BsWhatsapp } from "react-icons/bs";
-import { Results } from "../../redux/features/Slice/QuantityResultSlice";
-import { currentPage } from "../../redux/features/Slice/NavigationSlice";
-import { CiHeart } from "react-icons/ci";
-import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
-import { IoStorefrontOutline } from "react-icons/io5";
-import { MdOutlineWifiProtectedSetup } from "react-icons/md";
-import { FaUsersRectangle } from "react-icons/fa6";
+// import { IoChevronUpOutline } from "react-icons/io5";
+// import { IoMdHome } from "react-icons/io";
+// import { AiOutlineDashboard } from "react-icons/ai";
+// import { BsCart2 } from "react-icons/bs";
+// import { CiLogin } from "react-icons/ci";
+// import { FaRegUser } from "react-icons/fa";
+// import { FaUser } from "react-icons/fa";
+// import { TfiHeadphoneAlt } from "react-icons/tfi";
+// import { CiHeart } from "react-icons/ci";
+// import { IoStorefrontOutline } from "react-icons/io5";
+// import { MdOutlineWifiProtectedSetup } from "react-icons/md";
+// import { FaUsersRectangle } from "react-icons/fa6";
+// import { BsWhatsapp } from "react-icons/bs";
+
+
+
 
 const Header = () => {
   const [Autapi, { isSuccess }] = useAutapiMutation();
@@ -121,22 +135,34 @@ const Header = () => {
     {
       title: " حسابي الشخصي",
       path: "/ProfileAccount",
-      icon: <IoMdHome fontSize={"1.2rem"} color="var(--text-color)" />,
+      icon:<Suspense>
+               <IoMdHome fontSize={"1.2rem"} color="var(--text-color)" />,
+           </Suspense>
+      
+      
     },
     {
       title: "انشاء حساب",
       path: "/signup",
-      icon: <FaRegUser fontSize={"1rem"} color="var(--text-color)" />,
+      icon: 
+      <Suspense>
+               <FaRegUser fontSize={"1.2rem"} color="var(--text-color)" />
+           </Suspense>,
     },
     {
       title: "تسجيل دخول",
       path: "/login",
-      icon: <CiLogin fontSize={"1.7rem"} color="var(--text-color)" />,
+      icon: 
+      <Suspense>
+               <CiLogin fontSize={"1.2rem"} color="var(--text-color)" />
+           </Suspense>,
     },
     {
       title: "تسجيل خروج",
       path: "/",
-      icon: <CiLogin fontSize={"1.7rem"} color="var(--text-color)" />,
+      icon:  <Suspense>
+      <CiLogin fontSize={"1.2rem"} color="var(--text-color)" />
+  </Suspense>,
     },
   ];
   // Auth links show
@@ -167,42 +193,55 @@ const Header = () => {
     {
       title: " من نحن",
       path: "/About",
-      icon: <FaUsersRectangle fontSize={"1.7rem"} color="var( --text-color)" />,
+      icon: 
+      <Suspense>
+      <FaUsersRectangle fontSize={"1.2rem"} color="var(--text-color)" />
+  </Suspense>,
     },
     {
       title: " طلباتي",
       path: role === "admin" ? "/dashboard/orders" : "/orders",
       icon: (
-        <MdOutlineWifiProtectedSetup
-          fontSize={"1.7rem"}
-          color="var( --text-color)"
-        />
+      
+        <Suspense>
+        <MdOutlineWifiProtectedSetup fontSize={"1.2rem"} color="var(--text-color)" />
+    </Suspense>
       ),
     },
     {
       title: " المفضلة",
       path: "/Favorite",
-      icon: <CiHeart fontSize={"1.7rem"} color="var( --text-color)" />,
+      icon:
+      <Suspense>
+      <CiHeart fontSize={"1.2rem"} color="var(--text-color)" />
+  </Suspense>
     },
     {
       title: "سلة مشترياتي",
       path: "/Cart",
-      icon: <BsCart2 fontSize={"1.7rem"} color="var( --text-color)" />,
+      icon:  <Suspense>
+      <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
+  </Suspense>
+    
     },
     {
       title: "الصفحة الرئيسية",
       path: "/",
-      icon: (
-        <IoStorefrontOutline fontSize={"1.7rem"} color="var( --text-color)" />
-      ),
+      icon: <Suspense>
+          <IoStorefrontOutline fontSize={"1.2rem"} color="var(--text-color)" />
+       </Suspense>,
+         
+      
     },
 
     {
       title: "لوحه التحكم",
       path: "/dashboard",
       icon: (
-        <AiOutlineDashboard fontSize={"1.7rem"} color="var( --text-color)" />
-      ),
+        <Suspense>
+        <AiOutlineDashboard fontSize={"1.2rem"} color="var(--text-color)" />
+     </Suspense>
+      )
     },
   ];
 
@@ -354,7 +393,10 @@ const Header = () => {
               style={{ cursor: "pointer" }}
               className="d-none d-sm-flex align-items-center gap-1"
             >
+              
+              <Suspense>
               <TfiHeadphoneAlt className="fs-5" color="var( --spancolor)" />
+           </Suspense>
               <Fade
                 className="border-0 "
                 direction="up"
@@ -367,7 +409,9 @@ const Header = () => {
            
           </Fade>
            <a href="tel:+966598909991">
-           <TfiHeadphoneAlt className="fs-5 d-sm-none" color="var( --spancolor)" />
+           
+           <Suspense>
+           <TfiHeadphoneAlt className="fs-5 d-sm-none" color="var( --spancolor)" />           </Suspense>
            </a>
           <div
             style={{ border: "1px solid var(--text-color)" }}
@@ -380,7 +424,9 @@ const Header = () => {
               onChange={handelserche}
             />
             <label>
+            <Suspense >
               <CiSearch />
+            </Suspense>
             </label>
           </div>
 
@@ -398,6 +444,7 @@ const Header = () => {
            {!role?" تسجيل الدخول":"تسجيل خروج"}
           {/* </Fade>  */}
           </span>
+          <Suspense >
           <FaUser
             className="d-block d-sm-none dropdown-toggle "
             data-bs-toggle="dropdown"
@@ -405,6 +452,8 @@ const Header = () => {
             color="var(--spanColo)"
             fontSize={"1.5rem"}
           />
+            </Suspense>
+        
 
           <ul className=" dropdown-menu">{AuthLinksShow}</ul>
         </div>
@@ -420,8 +469,13 @@ const Header = () => {
         onClick={Scrolto}
         id="span"
       >
-        <IoChevronUpOutline />
-        <IoChevronUpOutline />
+            <Suspense >
+            <IoChevronUpOutline />
+            </Suspense>
+            <Suspense >
+            <IoChevronUpOutline />
+            </Suspense>
+       
       </span>
       {/* go to top end */}
       {/* go to whatsapp start */}
@@ -436,7 +490,10 @@ const Header = () => {
         href="https://wa.me/+966598909991"
         className="text-white "
       >
+       
+        <Suspense >
         <BsWhatsapp fontSize={"3rem"} />
+            </Suspense>
       </a>
 
       {/* go to top end */}

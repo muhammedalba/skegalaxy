@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import React, { memo, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import "./cart.css";
 import { useDispatch } from "react-redux";
 import {
@@ -37,7 +37,7 @@ const MemoizedApplayCoupon = React.lazy(() => import("../../components/applayCou
 
 
 
-const Cart = () => {
+const Cart =() => {
   const dispatch = useDispatch();
 
   // API Queries and Mutations

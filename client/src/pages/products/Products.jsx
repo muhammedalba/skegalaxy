@@ -275,7 +275,7 @@ const Products = () => {
           <div
             style={{ height: "16.5rem" }}
             inert="true"
-            className=" border  d-flex flex-column
+            className=" border pt-1  d-flex flex-column
             align-items-center justify-content-between  m-auto pointer overflow-hidden"
           >
             <img

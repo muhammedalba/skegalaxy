@@ -40,7 +40,7 @@ const InfoProduct = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const cookies = new Cookies();
   const token = cookies.get("token");
-  const sectionRef = useRef(null);
+ 
 
   // Fetch product data
   const {
@@ -74,10 +74,13 @@ const InfoProduct = () => {
 
   // Reset product image
   const resetProductImage = useCallback(() => {
-    sectionRef.current.scrollIntoView({ behavior: "smooth" });
     setSelectedImage("");
   }, []);
 console.log(createData?.status);
+
+const scrollToTop = useCallback(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}, [])
 
   useEffect(() => {
     document
@@ -85,9 +88,9 @@ console.log(createData?.status);
         ".react-multi-carousel-track .react-multi-carousel-item--active"
       )
       .forEach((element) => {
-        element.addEventListener("click", () => resetProductImage(sectionRef));
+        element.addEventListener("click", () => scrollToTop);
       });
-
+    
     if (createData?.status === 201) {
       // Update the number of items in the shopping cart
       dispatch(cartitems(createData?.resnumOfCartItems));
@@ -105,14 +108,8 @@ console.log(createData?.status);
     if (createError?.status === 401) {
       warnNotify("يجب عليك تسجيل دخول ");
     }
-  }, [
-    createData?.resnumOfCartItems,
-    createData?.status,
-    dispatch,
-    error,
-    createError?.status,
-    resetProductImage,
-  ]);
+    return   
+  }, [createData?.resnumOfCartItems, createData?.status, dispatch, error, createError?.status, resetProductImage, scrollToTop]);
 // add to cart our wish list
 const addproducToCartOurWishlist = useCallback((productId,route) => {
  
@@ -215,7 +212,7 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
       const description = product?.data?.description?.split("_") || [];
 
       return (
-        <section ref={sectionRef} className="container my-5 pt-5 px-3">
+        <section  className="container my-5 pt-5 px-3">
           <div className="row ">
             {/*product  imges */}
             <div className="col-lg-4 col-md-6 d-xl-flex gap-2">
@@ -299,7 +296,11 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                       style={{ backgroundColor: "var(--bgColor)" }}
                       className="card-title py-2 mb-3  text-center text-danger border border-end-0 border-start-0"
                     >
-                      {product?.data.title}
+                     <span className="text-secondary ps-2">
+                        {product?.data?.title.split("_")[0]}
+                        <br />
+                        {product?.data?.title.split("_")[1]}
+                      </span>
                     </h1>
                     <div
                       className={
@@ -492,12 +493,12 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
       superLargeDesktop: {
         // الشاشات الكبيرة جداً مثل 1440px فما فوق
         breakpoint: { max: 4000, min: 1440 },
-        items: 5,
+        items: 4,
       },
       desktop: {
         // الشاشات المكتبية
         breakpoint: { max: 1440, min: 1024 },
-        items: 4,
+        items: 3,
       },
       tablet: {
         // الشاشات اللوحية
@@ -529,7 +530,8 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
           responsive={responsive}
           showDots={true}
           ssr={true}
-          arrows={true}     rtl={true}
+          arrows={true}    
+           rtl={true}
           focusOnSelect={false}
           // centerMode={true}
           lazyLoad={true}

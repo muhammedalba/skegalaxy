@@ -375,7 +375,7 @@ const CreatProduct = () => {
                   <input
                     disabled={isLoading ? true : false}
                     min={0}
-                    max={2000}
+                    max={5000}
                     className="form-control"
                     id={"price"}
                     name={"price"}
@@ -398,7 +398,7 @@ const CreatProduct = () => {
                     step={0.01}
                     disabled={isLoading ? true : false}
                     min={0}
-                    max={2000}
+                    max={5000}
                     className="form-control"
                     id={"priceAfterDiscount"}
                     name={"priceAfterDiscount"}
@@ -424,7 +424,7 @@ const CreatProduct = () => {
                   <input
                     disabled={isLoading ? true : false}
                     min={0}
-                    max={1000}
+                    max={5000}
                     className="form-control"
                     id={"quantity"}
                     name={"quantity"}

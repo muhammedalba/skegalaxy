@@ -51,7 +51,7 @@ const Carousel = () => {
             width={1024} 
           className=" h-100  w-100 "
           src={`${carouseles?.imageUrl}/${preview?.carouselImage}`}
-          alt={`Preview${index}`}
+          alt={`Preview ${index}`}
           loading="eager" 
         />
       </div>
