@@ -215,17 +215,19 @@ const Products = () => {
     if (isSuccess && categories?.data?.length > 0) {
       return categories?.data?.map((category, index) => (
         <button
-          style={{ minWidth: "75%" }}
+          style={{ minWidth: "315px  ",height: "270px"}}
           onClick={() =>
             scrollToSection(section1Ref, `&category=${category._id}`)
           }
-          className=" btn d-block m-auto w-100 caroselcategory "
+          className=" btn d-block m-auto caroselcategory "
           key={index}
         >
           <div
-            style={{ height: "250px" }}
+            // style={{ height: "275px" }}
+            // style={{  width: "305px !important",
+            //   height: "275px  !important"}}
             inert="true"
-            className=" border  d-flex flex-column
+            className=" border w-100 h-100  d-flex flex-column
             align-items-center justify-content-between  m-auto pointer overflow-hidden"
           >
             <img
@@ -238,16 +240,16 @@ const Products = () => {
                   ? `${categories?.imageUrl}/${category?.image}`
                   : logo
               }
-              className=" d-sm-block m-1"
-              alt="brand" style={{objectFit: 'contain'}}
+              className=" w-100  h-75 d-sm-block p-1"
+              alt="brand" style={{objectFit: 'fill'}}
             />
 
             <span
               style={{
-                height: "4.8rem",
+                // height: "4.8rem",
                 backgroundColor: "var(--bgColor)!important",
               }}
-              className="fs-5 border  p-2 w-100  text-center d-flex flex-column"
+              className="fs-5 border h-25 pb-2 w-100  text-center d-flex flex-column"
             >
               <span>{category?.name.split("_")[0]}</span>
               <span>{category?.name.split("_")[1]}</span>
@@ -274,6 +276,7 @@ const Products = () => {
         >
           <div
             style={{ height: "16.5rem" }}
+           
             inert="true"
             className=" border pt-1  d-flex flex-column
             align-items-center justify-content-between  m-auto pointer overflow-hidden"
@@ -284,8 +287,10 @@ const Products = () => {
               width={150}
               height={150}
               src={brand.image ? `${brands?.imageUrl}/${brand?.image}` : logo}
-              className=" d-sm-block m-auto"
+              className=" d-block "
               alt="brand"
+              style={{objectFit:"fill"}}
+              
             />
             <span
               style={{
@@ -302,8 +307,6 @@ const Products = () => {
       ));
     }
   }, [brands?.data, brands?.imageUrl, isLoading, scrollToSection]);
-
-  // slide settings
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -322,6 +325,29 @@ const Products = () => {
     },
     mobile: {
       breakpoint: { max: 420, min: 0 },
+      items: 1,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+  };
+  // slide settings
+  const responsivecategory = {
+    superLargeDesktop: {
+      breakpoint: { max: 1600, min: 1200 },
+      items: 4,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+    desktop: {
+      breakpoint: { max: 1200, min: 960 },
+      items: 3,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+    tablet: {
+      breakpoint: { max: 960, min: 615 },
+      items: 2,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+    mobile: {
+      breakpoint: { max: 615, min: 0 },
       items: 1,
       slidesToSlide: 1, // optional, default to 1.
     },
@@ -348,13 +374,13 @@ const Products = () => {
             الاقسام
           </p>
           <Carousel
-            responsive={responsive}
-            autoPlay={true}
-            infinite={false}
-            rewind={true}
-            rewindWithAnimation={true}
+            responsive={responsivecategory}
+            // autoPlay={true}
+            // infinite={false}
+            // rewind={true}
+            // rewindWithAnimation={true}
             transitionDuration={1000}
-            customTransition={"transform 3000ms ease-in-out"}
+            // customTransition={"transform 3000ms ease-in-out"}
             // showDots={false}
             arrows={true}
             focusOnSelect={false}

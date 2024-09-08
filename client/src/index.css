@@ -87,9 +87,13 @@ a {
 table th {
   background-color: var(--bgColor);
 }
-
-
+/* 
+.react-multi-carousel-item {
+  width: 305px !important;
+  height: 275px  !important;
+} */
 /* Skeleton Keyframes */
+
 
 
 
