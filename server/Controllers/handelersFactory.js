@@ -114,8 +114,8 @@ exports.getOne = (model, populationOpt) =>
       
       if(req.baseUrl.includes('products')){
           //Specify the path to the file   
-      const pdfFilePath = path.join( process.env.UPLOADS_DIRECTORY, 'products', document.infoProductPdf);  
-      // const pdfFilePath = path.join(__dirname, '..', process.env.UPLOADS_DIRECTORY, 'products', document.infoProductPdf);  
+      const pdfFilePath = path.join( process.env.UPLOADS_DIRECTORY, 'products', document.infoProductPdf);  //prod
+      // const pdfFilePath = path.join(__dirname, '..', process.env.UPLOADS_DIRECTORY, 'products', document.infoProductPdf);  dev
       // إرسال ملف PDF للمستخدم
       res.download(pdfFilePath, `${document.infoProductPdf}`, (err) => {
         if (err) {
