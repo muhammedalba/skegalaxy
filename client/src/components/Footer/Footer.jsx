@@ -175,7 +175,7 @@ const Footer = () => {
                 className="btn btn-outline-primary my-1"
                 href={skyDitels}
                 id="Download"
-                download={"skyDitels"}
+                download={"skyDitels.pdf"}
               >
                 <Suspense>
                   <RiDownloadCloud2Line fontSize={"1.5rem"} className="mx-1 " />

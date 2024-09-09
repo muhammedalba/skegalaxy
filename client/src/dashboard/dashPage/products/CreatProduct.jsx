@@ -141,7 +141,7 @@ const CreatProduct = () => {
     const imgeFile = file.type.split("/")[0];
     const pdfFile = file.type.split("/")[1];
 
-    if (imgeFile === type) {
+    if (imgeFile === type ||'webp' === type) {
       setimageCover(file);
       const previewUrl = URL.createObjectURL(file);
 

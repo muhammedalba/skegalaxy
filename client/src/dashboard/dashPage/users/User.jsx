@@ -272,7 +272,7 @@ const User = () => {
             <option value="admin">admin</option>
             <option value="manger">manger</option>
           </select>
-          <select
+          {/* <select
             id="active"
             onChange={handleChange}
             className="form-select my-3 py-2"
@@ -286,7 +286,7 @@ const User = () => {
             <option disabled={!formData.active} value="false">
               غير نشط
             </option>
-          </select>
+          </select> */}
           {error && (
             <span className="w-100 text-center d-block text-danger pt-3">
               {error.status === 400 ? "لايوجد مستخدم" : "خطأ في الخادم"}
