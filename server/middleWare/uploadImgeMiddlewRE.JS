@@ -201,7 +201,7 @@ exports.updatemageFromFolder = asyncHandler(async (id, model, req) => {
 
   
     if (imageInDB) {
-      if (req.body.image && imageInDB.image !== '1.png') {
+      if (req.body.image && imageInDB.image !== 'avatar.webp') {
         deleteFileIfExists(`${pathImge}/${imageInDB.image}`);
       }
       if (req.body.imageCover) {
@@ -277,7 +277,7 @@ exports.deletImageFromFolder = asyncHandler(async (id, model, req, type) => {
 
   if (imageInDB) {
    
-    if (imageInDB.image && imageInDB.image !== '1.png') {
+    if (imageInDB.image && imageInDB.image !== 'avatar.webp') {
       deleteFileIfExists(`${pathImge}/${imageInDB.image}`);
     }
     if (imageInDB.imageCover) {
