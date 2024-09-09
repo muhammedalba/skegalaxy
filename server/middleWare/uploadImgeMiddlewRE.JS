@@ -108,8 +108,8 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
     // Resize and save single image
     if (req.files.image) {
   
-      const filename = `avatar.WebP`;
-      // const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
+    
+      const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
       const filePath = paths.join(uploadsDir, `${path}/${filename}`);
 
       await processAndSaveImage(
