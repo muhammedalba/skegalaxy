@@ -4,8 +4,8 @@ import './text_slide.css'
 const TextSlide = () => {
     return (
         <>
-    <div style={{backgroundColor:'var(--bgColor)'}} className="text-container text-nowrap pt-3 w-100 g-1   d-flex overflow-hidden text-align-center  position-relative">
-        <div  className="text-slide d-flex text-align-center   p-2  fs-3">
+    <div  className="text-container text-nowrap pt-3 w-100 g-1   d-flex overflow-hidden text-align-center  position-relative">
+        <div  className="text-slide d-flex text-align-center   p-2  fs-4">
           <p className="m-0">
         شركة مجرة السماء للتجارة 
           </p>
@@ -16,7 +16,7 @@ const TextSlide = () => {
           <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
 
         </div> 
-        <div  className="text-slide d-flex text-align-center  p-2  fs-3">
+        <div  className="text-slide d-flex text-align-center  p-2  fs-4">
           <p className="m-0">
         شركة مجرة السماء للتجارة 
           </p>
@@ -27,7 +27,7 @@ const TextSlide = () => {
           <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
 
         </div>
-       <div  className="text-slide d-flex text-align-center  p-2  fs-3">
+       <div  className="text-slide d-flex text-align-center  p-2  fs-4">
           <p className="m-0">
         شركة مجرة السماء للتجارة 
           </p>
@@ -40,7 +40,7 @@ const TextSlide = () => {
         </div>
 
     </div>
-    <div className="text-container d-flex text-align-center pt-2  overflow-hidden text-nowrap position-relative">
+    {/* <div className="text-container d-flex text-align-center pt-2  overflow-hidden text-nowrap position-relative">
         <div  className="text-slide-revese d-flex text-align-center  pb-2 pt-md-3  fs-3">
         <p className="m-0">
         Galaxy Sky Trading Company
@@ -81,7 +81,7 @@ const TextSlide = () => {
           <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
 
         </div>
-    </div>
+    </div> */}
    </> );
 }
 

@@ -32,20 +32,24 @@ const CreateCarousel = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
       };
 
-       // handle Image Change
-      const handleImageChange = (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                  setcarouselImage(file);
-                const reader = new FileReader();
-                // عرض المعاينة عند انتهاء القراءة
-                reader.onloadend = () => {
-                    setPreview(reader.result);
-                };
-                reader.readAsDataURL(file);
-                }
-        };
-
+       // handle Image Change  
+        const handleImageChange = (event) => {
+          const file = event.target.files[0];
+          const imgeFile = file.type.split("/")[0];
+          if (file) {
+            if (imgeFile === 'image'||imgeFile === 'webp') {
+              setcarouselImage(file);
+          const reader = new FileReader();
+          // عرض المعاينة عند انتهاء القراءة
+          reader.onloadend = () => {
+              setPreview(reader.result);
+          };
+          reader.readAsDataURL(file);    
+        } else {
+          return  warnNotify(`صيغه الملف غير صحيحه ${file.type}`);
+         
+          }
+      }}
     
       const handleSubmit = async (e) => {
         e.preventDefault();

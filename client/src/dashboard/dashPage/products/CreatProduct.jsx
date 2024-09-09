@@ -136,7 +136,7 @@ const CreatProduct = () => {
 
   const handleImageChange = (event, type) => {
     const file = event.target.files[0];
-    console.log(file,'file');
+    
     
     const imgeFile = file.type.split("/")[0];
     const pdfFile = file.type.split("/")[1];

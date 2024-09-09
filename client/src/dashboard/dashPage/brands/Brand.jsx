@@ -10,7 +10,7 @@ import { useUpdateOneMutation, useGetOneQuery } from '../../../redux/features/ap
 import { FaImage, FaUser } from 'react-icons/fa';
 
 import { ToastContainer} from 'react-toastify';
-import { errorNotify, infoNotify, successNotify } from '../../../utils/Toast';
+import { errorNotify, infoNotify, successNotify, warnNotify } from '../../../utils/Toast';
 import { Fade } from 'react-awesome-reveal';
 
 
@@ -102,19 +102,24 @@ const handleChange=(e)=>{
 
 
 //  handle Image Change
- const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        setImage(file);
-      const reader = new FileReader();
-      // عرض المعاينة عند انتهاء القراءة
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    const imgeFile = file.type.split("/")[0];
+    if (file) {
+      if (imgeFile === 'image'||imgeFile === 'webp') {
+        setImage(file);
+    const reader = new FileReader();
+    // عرض المعاينة عند انتهاء القراءة
+    reader.onloadend = () => {
+        setPreview(reader.result);
+    };
+    reader.readAsDataURL(file);    
+  } else {
+    return  warnNotify(`صيغه الملف غير صحيحه ${file.type}`);
+   
+    }
+}}
 
 
     return (

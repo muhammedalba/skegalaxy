@@ -26,6 +26,10 @@ const MdOutlineWifiProtectedSetup = lazy(() => import("react-icons/md").then(mod
 const FaUsersRectangle = lazy(() => import("react-icons/fa6").then(module => ({ default: module.FaUsersRectangle })));
 const BsWhatsapp = lazy(() => import("react-icons/bs").then(module => ({ default: module.BsWhatsapp })));
 const IoMdHome = lazy(() => import("react-icons/io").then(module => ({ default: module.IoMdHome })));
+const PiWhatsappLogo = lazy(() => import("react-icons/pi").then(module => ({ default: module.PiWhatsappLogo })));
+const MdWhatsapp = lazy(() => import("react-icons/md").then(module => ({ default: module.MdWhatsapp })));
+
+
 
 // import { IoChevronUpOutline } from "react-icons/io5";
 // import { IoMdHome } from "react-icons/io";
@@ -86,14 +90,14 @@ const Header = () => {
   }, [handleScroll]);
 
   // handel serche
-  const handelserche = (e) => {
-    // console.log(e.target.value);
+
+  const handelserche = useCallback((e) => {
+    window.scrollTo({ top: 1100, behavior: 'smooth' });
     dispatch(currentPage(1));
     dispatch(searchItem(e.target.value));
-  };
-
+  }, [dispatch])
   const Scrolto = () => {
-    window.scrollTo(0, 0);
+    window.scrollTo({top:0,  behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -415,7 +419,7 @@ const Header = () => {
            </a>
           <div
             style={{ border: "1px solid var(--text-color)" }}
-            className="h-100  d-flex align-items-center "
+            className="h-100  m-auto d-flex align-items-center "
           >
             <input
               type="search"
@@ -488,12 +492,12 @@ const Header = () => {
         }}
         id="whatsapp"
         href="https://wa.me/+966598909991"
-        className="text-white "
+        className="text-white p-1 rounded-circle"
       >
        
         <Suspense >
-        <BsWhatsapp fontSize={"3rem"} />
-            </Suspense>
+          <MdWhatsapp fontSize={"2.8rem"} className="" />
+        </Suspense>
       </a>
 
       {/* go to top end */}

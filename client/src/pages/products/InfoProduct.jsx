@@ -260,8 +260,42 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                   />
 
                   <Rating ratingsAverage={product?.data?.ratingsAverage || 3} />
+                  <div className="d-none d-xl-flex align-items-center justify-content-center gap-3 pt-5 mt-5 mt-xl-2 pt-xl-2 ">
+                  {/* زر المشاركة على Twitter */}
+                  <TwitterShareButton url={shareUrl} title={title}>
+                    <TwitterIcon size={35} round={true} />
+                  </TwitterShareButton>
+
+                  {/* زر المشاركة على WhatsApp */}
+                  <WhatsappShareButton url={shareUrl} title={title}>
+                    <WhatsappIcon size={35} round={true} />
+                  </WhatsappShareButton>
+
+                  {/* زر المشاركة على Telegram */}
+                  <TelegramShareButton url={shareUrl} title={title}>
+                    <TelegramIcon size={35} round={true} />
+                  </TelegramShareButton>
+
+                  {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
+                  <span
+                    style={{ backgroundColor: "#df0073", padding: "0.4rem" }}
+                    className="border rounded-circle border-1 pointer"
+                  >
+                    <SlSocialInstagram
+                      color="white"
+                      fontSize={"1.23rem"}
+                      onClick={() => {
+                        navigator.clipboard.writeText(shareUrl);
+                        successNotify(
+                          "تم نسخ الرابط! يمكنك الآن لصقه في Instagram"
+                        );
+                      }}
+                    />
+                  </span>
+                  </div>
                 </div>
               </Fade>
+              
               {/* alt emges */}
               <ul
                 className="list-group mt-2 w-100 d-flex align-items-center d-xl-none
@@ -285,8 +319,43 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                   </li>
                   {isSuccess && imageList}
                 </Fade>
+                <div className="d-flex d-xl-none align-items-center justify-content-center gap-3 pt-1 w-100 ">
+                  {/* زر المشاركة على Twitter */}
+                  <TwitterShareButton url={shareUrl} title={title}>
+                    <TwitterIcon size={35} round={true} />
+                  </TwitterShareButton>
+
+                  {/* زر المشاركة على WhatsApp */}
+                  <WhatsappShareButton url={shareUrl} title={title}>
+                    <WhatsappIcon size={35} round={true} />
+                  </WhatsappShareButton>
+
+                  {/* زر المشاركة على Telegram */}
+                  <TelegramShareButton url={shareUrl} title={title}>
+                    <TelegramIcon size={35} round={true} />
+                  </TelegramShareButton>
+
+                  {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
+                  <span
+                    style={{ backgroundColor: "#df0073", padding: "0.4rem" }}
+                    className="border rounded-circle border-1 pointer"
+                  >
+                    <SlSocialInstagram
+                      color="white"
+                      fontSize={"1.23rem"}
+                      onClick={() => {
+                        navigator.clipboard.writeText(shareUrl);
+                        successNotify(
+                          "تم نسخ الرابط! يمكنك الآن لصقه في Instagram"
+                        );
+                      }}
+                    />
+                  </span>
+                  </div>
               </ul>
-            </div>
+            </div> 
+            
+
             {/* info Product */}
             <div className="col-lg-7 col-md-6  mx-auto ">
               <div className="w-100">
@@ -301,7 +370,9 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                         <br />
                         {product?.data?.title.split("_")[1]}
                       </span>
+                      
                     </h1>
+
                     <div
                       className={
                         product?.data.brand?.name
@@ -419,19 +490,20 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                       disabled={isLoading || createLoading}
                       type="button"
                       onClick={() => addproducToCartOurWishlist(product?.data._id,'cart')}
-                      className=" btn btn-outline-primary rounded-circle p-1"
+                      className=" btn btn-outline-primary  p-1"
                     >
-                      {/* إضافة المنتج إلى السلة */}
-                      <MdAddShoppingCart fontSize={'1.5rem'} className="" />
+                      <MdAddShoppingCart fontSize={'1.5rem'} className="mx-1" />
+                     إضافة المنتج إلى السلة 
                     </button>
                     <button
                       disabled={isLoading || createLoading}
                       type="button"
                       onClick={() => addproducToCartOurWishlist(product?.data._id,'wishlist')}
-                      className=" btn btn-outline-danger rounded-circle p-1"
+                      className=" btn btn-outline-danger  p-1"
                     >
-                   
-                      <CiHeart fontSize={'1.5rem'} className=""/>
+                      <CiHeart fontSize={'1.5rem'} className="mx-1"/>
+                                        إضافة المنتج إلى المفضلة 
+
                     </button>
                     <button
                       disabled={isLoading || createLoading}
@@ -439,45 +511,13 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                       onClick={downloadPdf}
                       className={`${showDownloadBtn} btn btn-outline-success`}
                     >
-                      <RiDownloadCloud2Line  fontSize={'1.5rem'} className="ms-1"/>
+                      <RiDownloadCloud2Line  fontSize={'1.5rem'} className="mx-1"/>
                       تحميل  المواصفات الفنية للمنتج
                     </button>
                   </div>
                 </Fade>
                 {/* share to social media */}
-                <div className="d-flex align-items-center justify-content-center gap-2 py-3">
-                  {/* زر المشاركة على Twitter */}
-                  <TwitterShareButton url={shareUrl} title={title}>
-                    <TwitterIcon size={35} round={true} />
-                  </TwitterShareButton>
-
-                  {/* زر المشاركة على WhatsApp */}
-                  <WhatsappShareButton url={shareUrl} title={title}>
-                    <WhatsappIcon size={35} round={true} />
-                  </WhatsappShareButton>
-
-                  {/* زر المشاركة على Telegram */}
-                  <TelegramShareButton url={shareUrl} title={title}>
-                    <TelegramIcon size={35} round={true} />
-                  </TelegramShareButton>
-
-                  {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
-                  <span
-                    style={{ backgroundColor: "#df0073", padding: "0.4rem" }}
-                    className="border rounded-circle border-1 pointer"
-                  >
-                    <SlSocialInstagram
-                      color="white"
-                      fontSize={"1.23rem"}
-                      onClick={() => {
-                        navigator.clipboard.writeText(shareUrl);
-                        successNotify(
-                          "تم نسخ الرابط! يمكنك الآن لصقه في Instagram"
-                        );
-                      }}
-                    />
-                  </span>
-                </div>
+            
               </div>
             </div>
           </div>
@@ -526,7 +566,11 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
           />
         ));
       return (
-        <Carousel
+        <div className="col-12">
+          <h2 style={{color:'var(  --btn-bg-color)'}} className="text-center  fw-bold fs-4">
+          منتجات قد تعجبك          
+          </h2>
+          <hr className="my-4" />       <Carousel
           responsive={responsive}
           showDots={true}
           ssr={true}
@@ -538,6 +582,8 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
         >
           {filteredProducts}
         </Carousel>
+        </div>
+
       );
     }
 

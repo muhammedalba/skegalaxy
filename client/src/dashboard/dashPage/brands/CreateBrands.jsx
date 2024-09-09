@@ -30,18 +30,23 @@ const CreateBrands = () => {
       };
 
        // handle Image Change
-      const handleImageChange = (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                    setImage(file);
-                const reader = new FileReader();
-                // عرض المعاينة عند انتهاء القراءة
-                reader.onloadend = () => {
-                    setPreview(reader.result);
-                };
-                reader.readAsDataURL(file);
-                }
+       const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        const imgeFile = file.type.split("/")[0];
+        if (file) {
+          if (imgeFile === 'image'||imgeFile === 'webp') {
+            setImage(file);
+        const reader = new FileReader();
+        // عرض المعاينة عند انتهاء القراءة
+        reader.onloadend = () => {
+            setPreview(reader.result);
         };
+        reader.readAsDataURL(file);    
+      } else {
+        return  warnNotify(`صيغه الملف غير صحيحه ${file.type}`);
+       
+        }
+    }}
 
     
       const handleSubmit = async (e) => {

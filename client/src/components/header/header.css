@@ -156,15 +156,17 @@ header span {
 /* span setyle */
 #whatsapp {
   left: 5%;
+  padding:  4px;
   color: var(--minColor);
-
+  background-color: #33bd45;
   svg {
-    background-color: #33bd45;
+  
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
     border-radius: 50%;
+    fill: rgb(255, 255, 255);
   }
 
 }
@@ -210,6 +212,7 @@ header span {
 #span svg:last-child {
   -webkit-animation: top 1s infinite 0.3s;
   animation: top 1s infinite;
+
 }
 
 @keyframes top {

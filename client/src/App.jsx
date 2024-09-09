@@ -8,16 +8,18 @@ import Header from "./components/header/Header";
 
 
 import Footer from "./components/Footer/Footer";
+import { useDispatch } from "react-redux";
+import { searchItem } from "./redux/features/Slice/SerchSlice";
 
 
 
 
 
 function App() {
-
+const Dispatch= useDispatch()
   return (  
   
-  <div className="App position-relative"> 
+  <div onClick={()=>Dispatch(searchItem(''))} className="App position-relative"> 
     <Header/>
 
     <div style={{minHeight:'calc(100vh - 8rem)',paddingTop:'5rem'}} className="  h-100 ">

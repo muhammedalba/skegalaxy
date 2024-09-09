@@ -57,7 +57,7 @@ Confirm ,HideDiscount}) => {
         className={
           productsDetails?.resnumOfCartItems > 0
             ? "col-12 col-sm-7 mx-auto col-lg-3  totale z-2"
-            : "col-12 col-sm-6 mx-auto col-lg-3 totale"
+            : "col-12 col-sm-6 mx-auto col-lg-3 totale z-2"
         }
       >
         {/* coupon start*/}
@@ -138,7 +138,7 @@ Confirm ,HideDiscount}) => {
             <span className="text-primary text-center d-block">
               اجور التوصيل تختلف حسب المكان والكمية تواصل معنا لمعرفة تكلفة
               التوصيل
-              <a className="d-block " href="tel:+966598909991">
+              <a className="d-block "    href="https://wa.me/+966598909991">
                 ( 966598909991+)
               </a>
               او يمكنك استلام طلبيتك من احد فروعنا

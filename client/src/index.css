@@ -11,8 +11,9 @@
 :root {
   --spancolor: #0f7d9f;
   --btn-bg-color: #0f7d9f;
-  --minColor: #fff;
+  --minColor: white;
   --bgColor: #b8dce7;
+  /* --bgColor: #eff1f3; */
   --text-color: #2f3645;
   --text-white: white;
   /* stars */
@@ -29,7 +30,7 @@ body {
   font-display:swap ;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  background-color: var(--minColor);
+  background-color: var(--minColor) !important;
   color: var(--text-color);
 }
 ::-webkit-scrollbar-thumb {

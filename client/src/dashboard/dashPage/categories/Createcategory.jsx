@@ -35,16 +35,21 @@ const Createcategory = () => {
        // handle Image Change
       const handleImageChange = (event) => {
                 const file = event.target.files[0];
+                const imgeFile = file.type.split("/")[0];
                 if (file) {
+                  if (imgeFile === 'image'||imgeFile === 'webp') {
                     setImage(file);
                 const reader = new FileReader();
                 // عرض المعاينة عند انتهاء القراءة
                 reader.onloadend = () => {
                     setPreview(reader.result);
                 };
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(file);    
+              } else {
+                return  warnNotify(`صيغه الملف غير صحيحه ${file.type}`);
+               
                 }
-        };
+        }}
 
     
       const handleSubmit = async (e) => {
@@ -116,7 +121,7 @@ const Createcategory = () => {
           <Fade delay={0} direction='up' triggerOnce={true}   >
 
             <div className="w-100 py-2">
-              <img className="logo m-auto d-none d-sm-block rounded-circle" src={Preview ?Preview: logo} alt="avatar" />
+              <img className="logo m-auto d-none d-sm-block " src={Preview ?Preview: logo} alt="avatar" />
             </div>
             <h2 className="w-75 text-center m-auto py-2 border-bottom">
               اضافه قسم

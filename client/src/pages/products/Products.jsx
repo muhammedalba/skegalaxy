@@ -370,13 +370,12 @@ const Products = () => {
       {/*animation */}
    
 
-<TextSlide/>
 
 
   
  
       
-      {/* categories */}
+      {/* categories slide*/}
   
         <div className="">
           <p
@@ -404,7 +403,7 @@ const Products = () => {
           </Carousel>
         </div>
      
-      {/* brands */}
+      {/* brands slide*/}
 
         <div className="">
           <p
@@ -433,6 +432,7 @@ const Products = () => {
         </div>
       
 
+        <TextSlide/>
       {/* products */}
       <div className=" my-3">
         <p

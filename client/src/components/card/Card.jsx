@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { cartitems } from "../../redux/features/Slice/CartSlice";
 import { Link } from "react-router-dom";
 
-
+import { MdAddShoppingCart } from "react-icons/md";
 import { Fade } from "react-awesome-reveal";
 import { useCreateOneMutation } from "../../redux/features/api/apiSlice";
 import PropTypes from "prop-types";
@@ -140,7 +140,7 @@ if(createError || successCreeate){
 }, [])
 
   return (
-    <div className="card-product m-auto ">
+    <div className="card-product mt-3 m-auto ">
 
    
     
@@ -265,6 +265,8 @@ if(createError || successCreeate){
             onClick={() => addproducToCartOurWishlist(product?._id,'cart')}
             className="buy border-0"
           >
+            <MdAddShoppingCart fontSize={'1.5rem'} className="mx-1" />
+
        {    createLoding? <span className=" spinner-border"></span>:' اضافه الى السلة'}
              
           </button>
