@@ -280,14 +280,14 @@ exports.deletImageFromFolder = asyncHandler(async (id, model, req, type) => {
     if (imageInDB.image && imageInDB.image !== 'avatar.webp') {
       deleteFileIfExists(`${pathImge}/${imageInDB.image}`);
     }
-    if (imageInDB.imageCover) {
+    if (imageInDB.imageCover &&type!=='deleteimges') {
       deleteFileIfExists(`${pathImge}/${imageInDB.imageCover}`);
 
     }
     if (imageInDB.images && imageInDB.images.length > 0) {
       imageInDB.images.forEach((img) => deleteFileIfExists(`${pathImge}/${img}`));
     }
-    if (imageInDB.infoProductPdf) {
+    if (imageInDB.infoProductPdf && type!=='deleteimges') {
       deleteFileIfExists(`${pathImge}/${imageInDB.infoProductPdf}`);
     }
     if (imageInDB.orderPdf) {

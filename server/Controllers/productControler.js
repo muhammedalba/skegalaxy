@@ -1,8 +1,12 @@
+const asyncHandler = require("express-async-handler");
 const { uploadImage } = require("../middleWare/uploadImgeMiddlewRE.JS");
 const productModule = require("../models/productModule");
-
 const factory = require("./handelersFactory");
+const ApiError = require("../utils/apiError");
 
+const {
+  deletImageFromFolder,
+} = require("../middleWare/uploadImgeMiddlewRE.JS");
 
 // nested route
 // Get /api/category/:categoryId/subcategory 
@@ -48,12 +52,48 @@ const updateProduct = factory.updateOne(productModule);
 // delet Product
 //route  delet  http://localhost:4000/api/Products/:id
 const deletProduct = factory.deleteOne(productModule);
+
+// delet iamges from Product
+const DeletImagesFromProduct = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+ 
+  
+  try {
+    const product = await productModule.findById(id);
+    
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    await deletImageFromFolder(id, productModule, req, 'deleteimges'); // قم بتمرير قائمة الصور للحذف
+
+    const updatedProduct = await productModule.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          images: [], 
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({ message: 'All images deleted successfully', updatedProduct });
+
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
+
 module.exports = {
   getProduct,
   getProductById,
   createProduct,
   updateProduct,
   deletProduct,
+  DeletImagesFromProduct,
   uploadProductImge,
   createFilteropject
 };

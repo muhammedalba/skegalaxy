@@ -8,6 +8,7 @@ const {
   getProductById,
   updateProduct,
   deletProduct,
+  DeletImagesFromProduct,
   uploadProductImge,
   
 } = require("../Controllers/productControler");
@@ -35,4 +36,8 @@ router
   .get(getProductByIdValidator, getProductById)
   .put(protect, allowedTo(role.ADMIN),uploadProductImge,updateProductValidator,resizeImge, updateProduct)
   .delete(protect, allowedTo(role.ADMIN), deletProductValidator, deletProduct);
+  router
+  .route("/:id/deleteimges")
+  
+  .delete(protect, allowedTo(role.ADMIN), deletProductValidator, DeletImagesFromProduct);
 module.exports = router;
