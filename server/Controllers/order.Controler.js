@@ -1,3 +1,4 @@
+const path = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const stripe = require("stripe")("sk_test_51PRvCc04PQXKD0Rqli1MC6Xi9yikoS0JqHzCGEU3AY8FYqEWMVSLk0GwR3B4kIxo57PSPy3MpOc4kbz1Ovv9fHYB00Q8hSlODB");
 
@@ -11,7 +12,6 @@ const cartModel = require("../models/cartModel");
 const orderModul = require("../models/orderModel");
 const productModel = require("../models/productModule");
 const UserModel = require("../models/users.module");
-
 
 // upload single image && DeliveryReceiptImage  and orderPdf 
 exports.uploadorderImge=uploadImage([{name:'image',maxCount:1},{name:'orderPdf',maxCount:1},{name:'DeliveryReceiptImage',maxCount:1}])
@@ -260,14 +260,37 @@ exports.updateOrderSendInvoice = asyncHandler(async (req, res, next) => {
   }
   // chek If this order has an invoice
  
-  // if(order.orderPdf){
-      // update imge from uploads folder
       await updatemageFromFolder(req.params.id, orderModul, req);
-  // }
   order.orderPdf = req.body.orderPdf;
  
 
+
   const updateOrder = await order.save();
+  try {
+    await sendEmail({
+
+  
+      message:   `<h2>  ${order.user.firstname}:مرحبا </h2>
+      <p>تم استلام طلبك بنجاح وانشاء الفاتورة الخاصة بك من قبل  شركه <span>sky Galaxy </span> </p>
+      <p>شكرا لكم لاختياركم لنا سنقوم بارسال طلبيتكم باقرب  وقت </p>
+      <p>   يمكنك تحميل الفاتورة من الرابط في الافل</p>
+                <p>sky Galaxy  شكرا لاختياركم </p>
+
+    `,
+      email:order.user.email,
+      subject: "   تم استلام طلبك بنجاح ",
+      attachments: [
+        {
+          filename:"ملف الفاتورة",  // اسم الملف المرفق
+          path: path.join(process.env.UPLOADS_DIRECTORY, "orders",req.body.orderPdf), // مسار الملف
+        }
+      ]
+    });
+  } catch (err) {
+
+
+    return next(new ApiError(`error sending email (${err})`, 500));
+  }
 
   res.status(200).json({ data: updateOrder });
 });
@@ -289,6 +312,31 @@ exports.updateOrderDeliveryReceiptImage = asyncHandler(async (req, res, next) =>
  
 
   const updateOrder = await order.save();
+  try {
+    await sendEmail({
+      message: 
+       `<h2>تم استلام طلبك ${order.user.firstname}:مرحبا </h2>
+      <p>تم استلام طلبك بنجاح وانشاء الفاتورة الخاصة بك من قبل  شركه <span>sky Galaxy </span> </p>
+      <p>شكرا لكم لاختياركم لنا سنقوم بارسال طلبيتكم باقرب  وقت </p>
+      <p>وهذه صورة المنتج:</p>
+      <img src="cid:productImage@ecommerce" alt="Product Image" />
+          <p>sky Galaxy  شكرا لاختياركم </p>
+    `,
+      email:order.user.email,
+      subject: "   تم استلام طلبك بنجاح ",
+      attachments: [
+        {
+          filename: "وصل الاستلام",  // اسم الملف المرفق
+          path: path.join(process.env.UPLOADS_DIRECTORY, "orders", req.body.DeliveryReceiptImage),
+          cid: 'productImage@ecommerce' 
+        }
+      ]
+    });
+  } catch (err) {
+
+
+    return next(new ApiError(`error sending email (${err})`, 500));
+  }
 
   res.status(200).json({ data: updateOrder });
 });

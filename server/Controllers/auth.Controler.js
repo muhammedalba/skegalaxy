@@ -107,14 +107,14 @@ exports.logout = asyncHandler(async (req, res, next) => {
 
   //  remove token
   
-  res.cookie("token", '', {
+  res.clearCookie("token", '', {
     httpOnly: false,// javascript only
     secure: false,//HTTPS
     sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
    
 });
 
-res.cookie("refreshToken", '', {
+res.clearCookie("refreshToken", '', {
   httpOnly: false,
   secure: false,
   sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
