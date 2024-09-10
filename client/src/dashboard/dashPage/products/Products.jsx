@@ -132,7 +132,8 @@ const handleDelete =useCallback((id) => {
 
   if(id){
     deletOne(`/products/${id}`);
-    setShowModal(false); // إغلاق الـ modal بعد الحذف
+    //  close modal   
+    setShowModal(false); 
 
   }
 }

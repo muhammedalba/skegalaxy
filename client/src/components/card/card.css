@@ -11,7 +11,7 @@
   background: var(--bgColor);
   border-radius: 20px;
   overflow: hidden;
-  border: 2px solid var(--bgColor);
+  border: 1px solid var(--bgColor);
   -webkit-transition: 0.5s;
   -moz-transition: 0.5s;
   -ms-transition: 0.5s;
@@ -116,6 +116,7 @@
   z-index: 1;
 
   img{
+  
     -webkit-transition: transform 0.5s;
     -moz-transition: transform 0.5s;
     -ms-transition: transform 0.5s;
@@ -160,19 +161,21 @@
 
 .card-product .contentBox .buy {
   position: relative;
-margin: auto;
+  margin: auto;
   opacity: 1;
   padding: 10px 30px;
   width:80% ;
   color: var(--text-white);
   text-decoration: none;
   background: var(--btn-bg-color);
-  border-radius: 30px;
+  border-radius: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-
   cursor: pointer !important;
-  
+  -webkit-border-radius: 0.7rem;
+  -moz-border-radius: 0.7rem;
+  -ms-border-radius: 0.7rem;
+  -o-border-radius: 0.7rem;
 }
 
 

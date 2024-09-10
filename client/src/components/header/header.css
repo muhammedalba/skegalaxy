@@ -201,7 +201,7 @@ header span {
 
 
   cursor: pointer;
-  border: 3px solid var(--btn-bg-color);
+  /* border: 3px solid var(--btn-bg-color); */
 }
 
 #span svg:first-child {

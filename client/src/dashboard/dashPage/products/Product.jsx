@@ -1,12 +1,22 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useUpdateOneMutation,
   useGetDataQuery,
   useGetOneQuery,
+  useDeletOneMutation,
 
   
 } from "../../../redux/features/api/apiSlice";
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Zoom, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-flip';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import './product.css'
+
 import { FaImage } from "react-icons/fa";
 import { IoIosPricetag } from "react-icons/io";
 import { MdOutlineTitle } from "react-icons/md";
@@ -22,6 +32,8 @@ import Rating from "../../../components/Rating/Rating";
 import { errorNotify, infoNotify, successNotify, warnNotify } from "../../../utils/Toast";
 import { convertDateTime } from "../../../utils/convertDateTime";
 import { validateCreateProduct } from "../../../utils/validateFormData";
+import DeleteModal from "../../../components/deletModal/DeleteModal";
+
 
 const Product = () => {
   // Bring the user number Id
@@ -49,7 +61,10 @@ const Product = () => {
       isSuccess:SuccessSub,
     } = useGetDataQuery(`brands`);
     // console.log(Brands,'Brands');
-
+    const [
+      deletOne,
+      { error: errorDelet, isLoading: LoadingDelet, isSuccess: SuccessDelet },
+    ] = useDeletOneMutation();
 
 
   // update data (rtk redux) review
@@ -98,8 +113,9 @@ console.log(updateError);
   const [preview, setPreview] = useState(null);
   const [previews, setPreviews] = useState([]);
   const [ErrorMsge, setErrorMsge] = useState("");
-
+  const [showModal, setShowModal] = useState(false);
   const navegate = useNavigate();
+
 
 
 
@@ -154,7 +170,22 @@ console.log(updateError);
     if(error?.status ===401){
       warnNotify('انتهت صلاحيه الجلسة الرجاء تسجيل دخول مجددا')
     }
-  },[error?.status])
+    if(errorDelet){
+      errorNotify(`حدث خطأ ما: ${errorDelet?.message}`);
+      setErrorMsge(`حدث خطأ ما: ${errorDelet?.message}`);
+    }
+  },[error?.status, errorDelet])
+
+
+  // success delet
+  useEffect(()=>{
+if(SuccessDelet){
+  successNotify(`تمالحذف بنجاح`);
+
+  // navegate(`/dashboard/products`);
+}
+
+  },[SuccessDelet, navegate])
   useEffect(() => {
     updateError && console.log(updateError?.data.error?.code);
     if (updateError?.data.error?.code === "LIMIT_UNEXPECTED_FILE") {
@@ -293,7 +324,27 @@ console.log(updateError);
   // handle rating change
   const handleRatings = () => {};
 
+//remove imges from  product   // 
+
+// handel open modale and seve item id in selectedProductId
+const openModal = useCallback(() => {
   
+
+  setShowModal(true); // فتح الـ modal
+
+},[])
+const removeImages =useCallback((id) => {
+
+  if(id){
+    deletOne(`/products/${id}/deleteimges`);
+    //  close modal   
+    setShowModal(false); 
+
+  }
+}
+,[deletOne]);
+
+
 
   // view categories
   const showCategorie =
@@ -324,46 +375,68 @@ console.log(updateError);
   );
 
   // view imagesShow
+  // const imagesShow =
+  //   previews.length > 0
+  //     ? previews.map((preview, index) => {
+  //         return (
+  //           <div
+  //             key={index}
+  //             className={
+  //               index === 3
+  //                 ? "carousel-item active h-100 w-100 rounded"
+  //                 : " rounded carousel-item active h-100 w-100"
+  //             }
+  //             data-bs-interval={`${index}000`}
+  //           >
+  //             <img
+  //               src={preview}
+  //               className="d-block h-100 rounded  w-100"
+  //               alt={`Preview`}
+  //             />
+  //           </div>
+  //         );
+  //       })
+  //     : ProductData.images.map((preview, index) => {
+  //         return (
+  //           <div
+  //             key={index}
+  //             className={
+  //               index === 3
+  //                 ? "carousel-item active h-100 w-100 rounded"
+  //                 : " rounded carousel-item active h-100 w-100"
+  //             }
+  //             data-bs-interval={`${index}000`}
+  //           >
+  //             <img
+  //               src={`${product?.imageUrl}/${preview}`}
+  //               className="d-block h-100 rounded  w-100"
+  //               alt={`Preview`}
+  //             />
+  //           </div>
+  //         );
+  //       });
   const imagesShow =
-    previews.length > 0
-      ? previews.map((preview, index) => {
-          return (
-            <div
-              key={index}
-              className={
-                index === 3
-                  ? "carousel-item active h-100 w-100 rounded"
-                  : " rounded carousel-item active h-100 w-100"
-              }
-              data-bs-interval={`${index}000`}
-            >
-              <img
-                src={preview}
-                className="d-block h-100 rounded  w-100"
-                alt={`Preview`}
-              />
+  previews.length > 0
+    ? previews.map((preview, index) => {
+        return (
+          <SwiperSlide key={index} className="">
+            <div className="swiper-zoom-container"> 
+            <img className="w-100 h-100" src={preview} alt="img" />
+
             </div>
-          );
-        })
-      : ProductData.images.map((preview, index) => {
-          return (
-            <div
-              key={index}
-              className={
-                index === 3
-                  ? "carousel-item active h-100 w-100 rounded"
-                  : " rounded carousel-item active h-100 w-100"
-              }
-              data-bs-interval={`${index}000`}
-            >
-              <img
-                src={`${product?.imageUrl}/${preview}`}
-                className="d-block h-100 rounded  w-100"
-                alt={`Preview`}
-              />
+          </SwiperSlide>
+        );
+      })
+    : ProductData.images.map((preview, index) => {
+        return (
+          <SwiperSlide key={index}>
+                <div className="swiper-zoom-container"> 
+            <img className="w-100 h-100"    src={`${product?.imageUrl}/${preview}`} alt="img" />
             </div>
-          );
-        });
+            </SwiperSlide>
+        
+        );
+      });
 
   return (
     <>
@@ -380,7 +453,7 @@ console.log(updateError);
           theme="colored"
         />
 
-        <form onSubmit={handleSubmit} className="m-auto p-3">
+        <form id="product" onSubmit={handleSubmit} className="m-auto p-3">
           {/* imge preview */}
           <div className="w-100 py-2">
             <img
@@ -688,42 +761,61 @@ console.log(updateError);
           </div>
           {/* Carousel start */}
       
-          <span className="fs-5 text-center d-block my-2">
+      
+          
+        {imagesShow.length > 0 &&  
+            // <div
+            //   style={{ width: "100%", height: "150px" }}
+            //   id="carouselExampleInterval"
+            //   className="carousel slide m-auto mt-5"
+            //   data-bs-ride="carousel"
+            // >
+            //   <div className="carousel-inner h-100 w-100">{imagesShow}</div>
+            //   <button
+            //     className="carousel-control-prev h-100"
+            //     type="button"
+            //     data-bs-target="#carouselExampleInterval"
+            //     data-bs-slide="prev"
+            //   >
+            //     <span
+            //       className="carousel-control-prev-icon "
+            //       aria-hidden="true"
+            //     />
+            //     <span className="visually-hidden">Previous</span>
+            //   </button>
+            //   <button
+            //     className="carousel-control-next h-100 "
+            //     type="button"
+            //     data-bs-target="#carouselExampleInterval"
+            //     data-bs-slide="next"
+            //   >
+            //     <span
+            //       className="carousel-control-next-icon"
+            //       aria-hidden="true"
+            //     />
+            //     <span className="visually-hidden">Next</span>
+            //   </button>
+            // </div>}
+            <>
+            <span className="fs-5 text-center d-block my-2">
             ( {imagesShow.length} ) عدد الصور
           </span>
-          
-        {imagesShow.length > 0 &&      <div
-              style={{ width: "100%", height: "150px" }}
-              id="carouselExampleInterval"
-              className="carousel slide m-auto mt-5"
-              data-bs-ride="carousel"
-            >
-              <div className="carousel-inner h-100 w-100">{imagesShow}</div>
-              <button
-                className="carousel-control-prev h-100"
-                type="button"
-                data-bs-target="#carouselExampleInterval"
-                data-bs-slide="prev"
-              >
-                <span
-                  className="carousel-control-prev-icon "
-                  aria-hidden="true"
-                />
-                <span className="visually-hidden">Previous</span>
-              </button>
-              <button
-                className="carousel-control-next h-100 "
-                type="button"
-                data-bs-target="#carouselExampleInterval"
-                data-bs-slide="next"
-              >
-                <span
-                  className="carousel-control-next-icon"
-                  aria-hidden="true"
-                />
-                <span className="visually-hidden">Next</span>
-              </button>
-            </div>}
+          <Swiper
+        style={{
+          '--swiper-navigation-color': 'var(--bgColor)',
+          '--swiper-pagination-color': 'var(--bgColor)',
+        }}
+        zoom={true}
+        navigation={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Zoom, Navigation, Pagination]}
+        className="mySwiper"
+      >
+           {imagesShow}
+          </Swiper>
+          </>}
           
           {/* Carousel end */}
 
@@ -734,18 +826,30 @@ console.log(updateError);
             </span>
           )}
 
-          <button
+         <div className="d-flex align-items-center justify-content-between">
+         <button
             disabled={isLoading || loading ? true : false}
             className="btn btn-primary my-4 d-flex align-items-center"
             type="submit"
           >
-            {isLoading || loading ? (
+            {isLoading||LoadingDelet || loading ? (
               <span className="spinner-border"></span>
             ) : (
               <span className="">تعديل</span>
             )}
           </button>
+          <button disabled={LoadingDelet || isLoading}  onClick={openModal} className={`${ProductData.images?.length > 0 ? "btn btn-danger" :"d-none"}`} type="button">
+            حذف الصور
+          </button>
+         </div>
         </form>
+          {/*Modal */}
+  <DeleteModal
+        show={showModal}
+        onClose={useCallback(() =>{ setShowModal(false)},[])}
+        onDelete={removeImages}
+        itemId={productId}
+      />
       </div>
     </>
   );

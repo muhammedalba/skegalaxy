@@ -1,0 +1,12 @@
+#product{
+    .swiper  {
+        background-color: white !important;
+        max-width: 500px !important;
+        height: 300px !important; 
+      
+     
+    } 
+    .swiper-zoom-container{
+        height: 100%;
+    }
+}

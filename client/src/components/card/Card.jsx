@@ -237,11 +237,11 @@ if(createError || successCreeate){
                   : "none",
               }}
             >
-              ({product?.price?.toFixed(2)})SAR
+              ({product?.price?.toFixed(2)})ر.س
             </h2>
             {product?.priceAfterDiscount && (
               <h2 className="price text-success p-0 m-0">
-                ({product?.priceAfterDiscount.toFixed(2)})SAR
+                ({product?.priceAfterDiscount.toFixed(2)})ر.س
               </h2>
             )}
 
@@ -250,7 +250,7 @@ if(createError || successCreeate){
           {/* {  product?.quantity.toFixed(0) > 0 ?<span className="text-dark fs-5">الكميه: ({ product?.quantity.toFixed(0)})</span>:
             <span className="text-dark fs-5">الكميه:متوفر عند الطلب</span>
           } */}
-               <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  justify-content-center ${reverse?'flex-row-reverse':''} `}>
+               {/* <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  justify-content-center ${reverse?'flex-row-reverse':''} `}>
                   <span className={`card-title ps-1 d-${ product?.quantity === 0?'none':''}`}>الكمية  </span>
                   <span className="text-secondary d-flex align-items-center ">
                       { product?.quantity> 0 ?`( ${product?.quantity.toFixed(0)} )`:''}
@@ -258,7 +258,7 @@ if(createError || successCreeate){
                   </span>                      
                     <span className={`text-danger  fs-6 ${showQuantity} `}>   كميه محدودة   </span>
                     <span className={`text-danger  fs-6 ${showQuantityMsg} `}>     يتوفر عند الطلب</span>
-                </div>
+                </div> */}
           <button
             disabled={createLoding?true:false}
           style={{ whiteSpace: 'nowrap'}}

@@ -30,7 +30,7 @@ body {
   font-display:swap ;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  background-color: var(--minColor) !important;
+  background-color:#f7f7f7 !important;
   color: var(--text-color);
 }
 ::-webkit-scrollbar-thumb {

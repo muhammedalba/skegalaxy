@@ -212,7 +212,7 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
       const description = product?.data?.description?.split("_") || [];
 
       return (
-        <section  className="container my-5 pt-5 px-3">
+        <section  className="container  my-5 pt-5 px-3">
           <div className="row ">
             {/*product  imges */}
             <div className="col-lg-4 col-md-6 d-xl-flex gap-2">
@@ -263,27 +263,27 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                   <div className="d-none d-xl-flex align-items-center justify-content-center gap-3 pt-5 mt-5 mt-xl-2 pt-xl-2 ">
                   {/* زر المشاركة على Twitter */}
                   <TwitterShareButton url={shareUrl} title={title}>
-                    <TwitterIcon size={35} round={true} />
+                    <TwitterIcon size={28} round={true} />
                   </TwitterShareButton>
 
                   {/* زر المشاركة على WhatsApp */}
                   <WhatsappShareButton url={shareUrl} title={title}>
-                    <WhatsappIcon size={35} round={true} />
+                    <WhatsappIcon size={28} round={true} />
                   </WhatsappShareButton>
 
                   {/* زر المشاركة على Telegram */}
                   <TelegramShareButton url={shareUrl} title={title}>
-                    <TelegramIcon size={35} round={true} />
+                    <TelegramIcon size={28} round={true} />
                   </TelegramShareButton>
 
                   {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
                   <span
-                    style={{ backgroundColor: "#df0073", padding: "0.4rem" }}
+                    // style={{ backgroundColor: "#df0073", padding: "0.4rem" }}
                     className="border rounded-circle border-1 pointer"
                   >
                     <SlSocialInstagram
-                      color="white"
-                      fontSize={"1.23rem"}
+                      color="#df0073"
+                      fontSize={"1.5rem"}
                       onClick={() => {
                         navigator.clipboard.writeText(shareUrl);
                         successNotify(
@@ -322,27 +322,27 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                 <div className="d-flex d-xl-none align-items-center justify-content-center gap-3 pt-1 w-100 ">
                   {/* زر المشاركة على Twitter */}
                   <TwitterShareButton url={shareUrl} title={title}>
-                    <TwitterIcon size={35} round={true} />
+                    <TwitterIcon size={28} round={true} />
                   </TwitterShareButton>
 
                   {/* زر المشاركة على WhatsApp */}
                   <WhatsappShareButton url={shareUrl} title={title}>
-                    <WhatsappIcon size={35} round={true} />
+                    <WhatsappIcon size={28} round={true} />
                   </WhatsappShareButton>
 
                   {/* زر المشاركة على Telegram */}
                   <TelegramShareButton url={shareUrl} title={title}>
-                    <TelegramIcon size={35} round={true} />
+                    <TelegramIcon size={28} round={true} />
                   </TelegramShareButton>
 
                   {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
                   <span
-                    style={{ backgroundColor: "#df0073", padding: "0.4rem" }}
+                    // style={{ backgroundColor: "#df0073", padding: "0.3rem" }}
                     className="border rounded-circle border-1 pointer"
                   >
                     <SlSocialInstagram
-                      color="white"
-                      fontSize={"1.23rem"}
+                      color="#df0073"
+                      fontSize={"1.5rem"}
                       onClick={() => {
                         navigator.clipboard.writeText(shareUrl);
                         successNotify(
@@ -365,7 +365,7 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                       style={{ backgroundColor: "var(--bgColor)" }}
                       className="card-title py-2 mb-3  text-center text-danger border border-end-0 border-start-0"
                     >
-                     <span className="text-secondary ps-2">
+                     <span className="text-secondary ps-2 fs-4">
                         {product?.data?.title.split("_")[0]}
                         <br />
                         {product?.data?.title.split("_")[1]}
