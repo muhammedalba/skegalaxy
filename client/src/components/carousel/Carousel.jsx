@@ -68,7 +68,7 @@ const Carousel = () => {
   }, [isLoading, isSuccess, carouseles?.data, carouseles?.imageUrl]);
 
   return (
-    <div className="w-100 pt-3 carouseles">
+    <div className="w-100  carouseles">
       {/* Toast Container */}
       <ToastContainer
         position="top-right"
@@ -90,7 +90,7 @@ const Carousel = () => {
           <div
             
             id="carouselExampleFade"
-            className="carousel slide carousel-fade m-auto mt-4 w-100  h-100"
+            className="carousel slide carousel-fade m-auto mt-2 w-100  h-100"
             data-bs-ride="carousel"
           >
             <div className="carousel-inner h-100 w-100">

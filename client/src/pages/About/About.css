@@ -30,7 +30,10 @@
 
 
 
-.About{
+#about{
+    .swiper.swiper-coverflow.swiper-3d.swiper-initialized.swiper-horizontal   {
+        height: 300px !important;
+    }
 .swiper {
     width: 100%;
     padding-top: 50px;
@@ -40,7 +43,7 @@
     background-position: center;
     background-size: cover;
     width: 300px !important;
-    /* height: 300px !important; */
+    height: 300px !important;
 
 
 }

@@ -34,7 +34,7 @@ const About = () => {
     </SwiperSlide>
   })
   return (
-    <div className="container pt-5 mt-3 overflow-hidden">
+    <div id="about" className="container pt-5 mt-3 overflow-hidden">
       <h1 className="text-center pt-4 text-primary"> من نحن !</h1>
       {/* Video Section */}
       {/* <div className="video-container overflow-hidden w-100  ">

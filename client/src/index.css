@@ -30,7 +30,7 @@ body {
   font-display:swap ;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  background-color:#f7f7f7 !important;
+  background-color:white !important;
   color: var(--text-color);
 }
 ::-webkit-scrollbar-thumb {
@@ -84,6 +84,7 @@ a {
 }
 .react-multiple-carousel__arrow {
   background-color: var(--bgColor) !important;
+  z-index: 2 !important;
 }
 table th {
   background-color: var(--bgColor);

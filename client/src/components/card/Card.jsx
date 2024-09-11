@@ -203,7 +203,7 @@ if(createError || successCreeate){
       </div> 
       
       </Link>
-      <div className="contentBox z-3">
+      <div className="contentBox z-2">
         <Fade
           className="w-100 text-center"
           duration={500} delay={0}
