@@ -4,13 +4,13 @@ import { ToastContainer } from "react-toastify";
 import { useGetDataQuery } from "../../redux/features/api/apiSlice";
 import { errorNotify } from "../../utils/Toast";
 import { SkeletonCarousel } from "../../utils/skeleton";
-
+import './carousel.css'
 
 
 
 const Carousel = () => {
   // Get categories from the database
-  const { data: carouseles, error, isLoading, isSuccess } = useGetDataQuery('carousel?fields=carouselImage');
+  const { data: carouseles, error, isLoading, isSuccess } = useGetDataQuery('carousel?fields=carouselImage,carouselImageMd');
 
 
   useEffect(() => {
@@ -42,18 +42,27 @@ const Carousel = () => {
     return isSuccess && carouseles?.data?.map((preview, index) => (
       <div
         key={index}
-        className={`carousel-item ${index === 0 ? "active" : ""} h-100 w-100 pb-5 pb-sm-1`}
-        data-bs-interval={`${index * 100}`}
+        className={`carousel-item ${index === 0 ? "active" : ""} h-100 w-100  `}
+        data-bs-interval={`${index * 1500}`}
       >
         <img
              
               decoding="async"
             width={1024} 
-          className=" h-100  w-100 "
-          src={`${carouseles?.imageUrl}/${preview?.carouselImage}`}
+          className="d-sm-none h-100  w-100 "
+          src={`${carouseles?.imageUrl}/${preview?.carouselImageMd}`}
           alt={`Preview ${index}`}
           loading="eager" 
         />
+         <img
+             
+             decoding="async"
+           width={1024} 
+         className="d-none d-sm-block h-100  w-100 "
+         src={`${carouseles?.imageUrl}/${preview?.carouselImageMd}`}
+         alt={`Preview ${index}`}
+         loading="eager" 
+       />
       </div>
     ));
   }, [isLoading, isSuccess, carouseles?.data, carouseles?.imageUrl]);
@@ -73,38 +82,31 @@ const Carousel = () => {
         theme="colored"
       />
 
-      <div className="my-2 w-100"
+      <div id ="carousel" className="my-2 w-100 "
       style={{  height: "45vh" }}
       >
         {/* Carousel */}
       
           <div
             
-            id="carouselExampleInterval"
-            className="carousel slide m-auto mt-4 w-100  h-100"
+            id="carouselExampleFade"
+            className="carousel slide carousel-fade m-auto mt-4 w-100  h-100"
             data-bs-ride="carousel"
           >
             <div className="carousel-inner h-100 w-100">
               {imagesShow}
             </div>
-            <button
-              className="carousel-control-prev h-100"
-              type="button"
-              data-bs-target="#carouselExampleInterval"
-              data-bs-slide="prev"
-            >
-              <span className="carousel-control-prev-icon" aria-hidden="true" />
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button
-              className="carousel-control-next h-100"
-              type="button"
-              data-bs-target="#carouselExampleInterval"
-              data-bs-slide="next"
-            >
-              <span className="carousel-control-next-icon" aria-hidden="true" />
-              <span className="visually-hidden">Next</span>
-            </button>
+  <div>
+  <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+    <span className="carousel-control-prev-icon" aria-hidden="true" />
+    <span className="visually-hidden">Previous</span>
+  </button>
+  <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+    <span className="carousel-control-next-icon" aria-hidden="true" />
+    <span className="visually-hidden">Next</span>
+  </button>
+</div>
+
           </div>
        
       </div>

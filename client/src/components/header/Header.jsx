@@ -9,7 +9,7 @@ import { Results } from "../../redux/features/Slice/QuantityResultSlice";
 import { currentPage } from "../../redux/features/Slice/NavigationSlice";
 import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 // img
-import logo from "../../imges/logo1..webp";
+import logo from "../../imges/logo.webp";
 import avatar from "../../imges/avatar.webp";
 // icons
 const CiSearch = lazy(() => import("react-icons/ci").then(module => ({ default: module.CiSearch })));
@@ -199,8 +199,8 @@ const Header = () => {
       path: "/About",
       icon: 
       <Suspense>
-      <FaUsersRectangle fontSize={"1.2rem"} color="var(--text-color)" />
-  </Suspense>,
+       <FaUsersRectangle fontSize={"1.2rem"} color="var(--text-color)" />
+      </Suspense>,
     },
     {
       title: " طلباتي",
@@ -208,8 +208,8 @@ const Header = () => {
       icon: (
       
         <Suspense>
-        <MdOutlineWifiProtectedSetup fontSize={"1.2rem"} color="var(--text-color)" />
-    </Suspense>
+         <MdOutlineWifiProtectedSetup fontSize={"1.2rem"} color="var(--text-color)" />
+         </Suspense>
       ),
     },
     {
@@ -226,6 +226,38 @@ const Header = () => {
       icon:  <Suspense>
       <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
   </Suspense>
+    
+    },
+    {
+      title: "تواصل معنا",
+      path: "/ؤشفثلخقثه",
+      icon:  <Suspense>
+          <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
+      </Suspense>
+    
+    },{
+      title: "سياية الخصوصيه",
+      path: "/ؤشفثلخقثه",
+      icon:  <Suspense>
+          <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
+      </Suspense>
+    
+    },
+
+    {
+      title: "شركاء النجاح",
+      path: "/ؤشفثلخقثه",
+      icon:  <Suspense>
+          <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
+      </Suspense>
+    
+    },
+    {
+      title: "الاقسام",
+      path: "/ؤشفثلخقثه",
+      icon:  <Suspense>
+          <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
+      </Suspense>
     
     },
     {
@@ -270,7 +302,7 @@ const Header = () => {
       >
         <NavLink
           to={link.path}
-          className="nav-link px-2 d-flex  align-items-center position-relative"
+          className="nav-link px-1 d-flex  align-items-center position-relative"
         >
           <span className="px-1 d-none d-lg-block">{link.title}</span>
 
