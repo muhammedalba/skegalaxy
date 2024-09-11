@@ -6,7 +6,9 @@ const carouselSchema = new mongoose.Schema({
   carouselImage: 
     {type: String,
     required: true,},
-
+    carouselImageMd: 
+    {type: String,
+    required: true,},
     name: {
         type: String,
         required: [true, " carousel name is required"],

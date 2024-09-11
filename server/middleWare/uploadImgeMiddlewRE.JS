@@ -62,14 +62,6 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
   if (!fs.existsSync(`${uploadsDir}/${path}`)) {
     fs.mkdirSync(`${uploadsDir}/${path}`, { recursive: true });
    }
-  //  ceck the folder in acess
-// const uploadsDir = '/mnt/data/uploads';
-// const userDir = path.join(uploadsDir, 'users');
-
-// // تأكد من وجود المجلد
-// if (!fs.existsSync(userDir)) {
-//   fs.mkdirSync(userDir, { recursive: true });
-// }
 
  
     if (req.files.imageCover) {
@@ -115,8 +107,8 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       await processAndSaveImage(
         req.files.image[0].buffer,
         filePath,
-        250,
-        150,
+        600,
+        600,
         90
       );
       req.body.image = filename; // Save image into our db 
@@ -140,16 +132,29 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
 
       const filename = `${path}-${Date.now()}-${uuidv4()}.WebP`;
       const filePath = paths.join(uploadsDir, `${path}/${filename}`);
+      // md 
+      const filMDename = `${path}-Md-${Date.now()}-${uuidv4()}.WebP`;
+      const fileMDPath = paths.join(uploadsDir, `${path}/${filMDename}`);
 
       await processAndSaveImage(
         req.files.carouselImage[0].buffer,
         filePath,
-        1024 ,
-        500,
+        400 ,
+        300,
+        100
+        
+      );
+      
+      await processAndSaveImage(
+        req.files.carouselImage[0].buffer,
+        fileMDPath,
+        1500 ,
+        950,
         100
         
       );
       req.body.carouselImage = filename; // Save image into our db  
+      req.body.carouselImageMd = filMDename; // Save image into our db  
     }
     // Resize and save multiple images
     if (req.files.images) {
@@ -163,8 +168,8 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
           await processAndSaveImage(
             image.buffer,
             filePath,
-            250,
-            150,
+            450,
+            300,
             80
           );
           req.body.images.push(filename); // Save image into our db
@@ -218,6 +223,7 @@ exports.updatemageFromFolder = asyncHandler(async (id, model, req) => {
       }
       if (req.body.carouselImage) {
         deleteFileIfExists(`${pathImge}/${imageInDB.carouselImage}`);
+        deleteFileIfExists(`${pathImge}/${imageInDB.carouselImageMd}`);
       }
       if (req.body.DeliveryReceiptImage) {
         deleteFileIfExists(`${pathImge}/${imageInDB.DeliveryReceiptImage}`);
@@ -293,8 +299,9 @@ exports.deletImageFromFolder = asyncHandler(async (id, model, req, type) => {
     if (imageInDB.orderPdf) {
       deleteFileIfExists(`${pathImge}/${imageInDB.orderPdf}`);
     }
-    if (imageInDB.carouselImage) {
+    if (imageInDB.carouselImage||imageInDB.carouselImageMd) {
       deleteFileIfExists(`${pathImge}/${imageInDB.carouselImage}`);
+      deleteFileIfExists(`${pathImge}/${imageInDB.carouselImageMd}`);
     }
     if (imageInDB.DeliveryReceiptImage) {
       deleteFileIfExists(`${pathImge}/${imageInDB.DeliveryReceiptImage}`);
