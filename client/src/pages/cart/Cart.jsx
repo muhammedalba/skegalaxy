@@ -28,6 +28,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { IoAddOutline } from "react-icons/io5";
 import { RiSubtractLine } from "react-icons/ri";
 import { BsCheck2 } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const MemoizedPayment = React.lazy(() => import("../../components/Payment"));
 const MemoizedApplayCoupon = React.lazy(() => import("../../components/applayCoupon/ApplayCoupon"));
@@ -263,7 +264,7 @@ const openModalAndClearCart = useCallback(() => {
               />
             </Fade>
           </td>
-          <td className="d-none d-sm-table-cell text-end">
+          <td className=" d-sm-table-cell text-end">
             <Fade delay={0} direction="up" triggerOnce={true}>
               <div className="d-flex flex-column w-100 h-100">
                 {product.product ? (
@@ -288,14 +289,66 @@ const openModalAndClearCart = useCallback(() => {
                   ({product?.product?.priceAfterDiscount} )
                   <i className="text-success"> SAR</i>
                 </span>
-                <span className=" text-success">
+                <span className=" text-success d-none d-d-md-block">
                   <i className="text-dark"> الكمية المتوفرة :</i>(
                   {product?.product?.quantity>0 ?product?.product?.quantity:"متوفر عند الطلب"})
                 </span>
               </div>
             </Fade>
+            <div className="w-100 d-flex d-sm-none align-items-center gap-1 justify-content-between border rounded p-2">
+                <IoAddOutline
+                  cursor={"pointer"}
+                  fontSize={"25px"}
+                  color="blue"
+                  onClick={() => handleQuantityChange(index, 1)}
+                />
+                <input
+                  min={1}
+                  max={2000}
+                  style={{ width: "5rem" }}
+                  onChange={(e) =>
+                    handleQuantityChange(index, e.target.value, true)
+                  }
+                  type="number"
+                  className="form-control  border-1  text-center bg-transparent"
+                  id="quantity"
+                  placeholder={productsDetails.cartItems[index].quantity}
+                  value={productsDetails.cartItems[index].quantity}
+                  name="quantity"
+                />
+
+                <RiSubtractLine
+                  cursor={"pointer"}
+                  fontSize={"25px"}
+                  color="red"
+                  onClick={() => handleQuantityChange(index, -1)}
+                />
+                {
+                  <button
+                    type="button"
+                    disabled={
+                      LoadingDelet  || LoadingUpdate
+                        ? true
+                        : false
+                    }
+                    className={
+                      Confirm ? "btn  m-0 border-0 p-0 text-success" : "d-none"
+                    }
+                    onClick={() =>
+                      handelQuantity(
+                        product?._id,
+                        productsDetails?.cartItems[index].quantity,
+                        product?.product?._id
+                      )
+                    }
+                  >
+                    تاكيد
+                    <BsCheck2 fontSize={"25px"} />
+                  </button>
+                }
+            </div>
           </td>
-          <td className="d-table-cell">
+          <td className=" d-none d-sm-table-cell ">
             <Fade delay={0} direction="up" triggerOnce={true}>
               <div className="w-100 d-flex align-items-center gap-1 justify-content-between">
                 <IoAddOutline
@@ -362,6 +415,10 @@ const openModalAndClearCart = useCallback(() => {
             scope="row"
           >
             السلة فارغه
+            <br />
+            <Link to={'/'} className="btn btn- btn btn-outline-primary w-75  p-1-primary mt-2" >
+            العودة للمتجر
+            </Link>
           </td>
         </tr>
       );
@@ -408,7 +465,7 @@ const openModalAndClearCart = useCallback(() => {
 
           {/* data table  start*/}
           <table className="table table-striped pt-5 mt-3 text-center">
-            <thead>
+            <thead className={isSuccess && productsDetails?.resnumOfCartItems > 0?"d-block":'d-none'}>
               <tr>
                 <th className=" d-table-cell" scope="col">
                   حذف
@@ -419,8 +476,8 @@ const openModalAndClearCart = useCallback(() => {
                 <th className="d-none d-sm-table-cell" scope="col">
                   الاسم المنتج
                 </th>
-                <th className=" d-table-cell" scope="col">
-                  العدد
+                <th className=" d-none d-sm-table-cell" scope="col">
+                  الكمية
                 </th>
               </tr>
             </thead>

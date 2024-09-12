@@ -11,6 +11,7 @@ import './carousel.css'
 const Carousel = () => {
   // Get categories from the database
   const { data: carouseles, error, isLoading, isSuccess } = useGetDataQuery('carousel?fields=carouselImage,carouselImageMd');
+console.log(carouseles?.data);
 
 
   useEffect(() => {

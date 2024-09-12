@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import logo from "../../../imges/logo.webp";
 import avatar from "../../../imges/avatar.webp";
+
 // icons
 
 import { CiSearch } from "react-icons/ci";
@@ -202,16 +203,16 @@ const TopBar = () => {
           </Fade>
           <div
             style={{ border: "1px solid var(--text-color)" }}
-            className="h-100  d-flex align-items-center "
+            className="h-100  d-flex align-items-center input-box "
           >
             <input
               type="search"
               className="h-100 px-2 w-100 text-end"
-              placeholder="...بحث"
+              placeholder="...اكتب ما تبحث عنه"
               onChange={handelserche}
             />
             <label >
-              <CiSearch  />
+              <CiSearch fontSize={'1.5rem'} />
             </label>
           </div>
 

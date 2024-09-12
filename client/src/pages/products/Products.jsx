@@ -537,7 +537,7 @@ useEffect(() => {
           </div>
 
           {/* products data */}
-          <div className="row w-100 justify-content-center row-gap-4 gap-2">
+          <div className="row  justify-content-center row-gap-4 gap-2">
             {showData}
           </div>
         </div>

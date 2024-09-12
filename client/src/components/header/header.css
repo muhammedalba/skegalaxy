@@ -33,15 +33,43 @@ header {
     -ms-border-radius: 20px;
     border-radius: 20px;
   }
-  
+  .sub-menu{
+    list-style: none;
+    right: 0;
+    top: 25px;
+    background-color: #ffffff;
+    padding: 10px;
+    z-index: 1003 !important;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #888888;
+    width: max-content;
+    li{
+      font-size: 15px !important;
+
+      list-style: none;
+      transition: 0.5s;
+      background-color: var(--bg-color);
+      z-index: 999;
+      
+      padding: 0.5rem 5px;
+      /* border-bottom: 1px solid #e5e7eb; */
+      cursor: pointer;
+      &:hover{
+        background-color: var(--bgColor);
+        color: var(--btn-bg-color) !important;
+      }
+    }
+  }
 }
-.mobelLink li a:not(.active):after,
+.mobelLink li:not(.active):after,
+.mobelLink li #categories .card:after,
 header .nav-link:not(.active):after {
   position: absolute;
   content: '';
   width: 0;
   height: 1px;
-  background-color: var(--btn-bg-color);
+  background-color: var(--bgColor);
   bottom: 0;
   right: 0;
   transition: 0.5s;
@@ -54,20 +82,22 @@ header .nav-link:not(.active):after {
   object-fit: contain;
   aspect-ratio: '1',
 }
-.mobelLink ul li:hover  a::after,
+.mobelLink  #categories .card:hover:after,
+.mobelLink ul li:hover::after,
 nav ul .nav-link:hover::after {
   width: 100% !important;
   left: 0;
   
 }
 
+nav ul li:hover ,
 nav ul li:hover svg,
-nav ul li:hover a {
+nav ul li:hover  a{
   color: var(--text-color) !important;
   transition: 0.5s !important;
 
 }
-
+nav li,
 nav a {
   transition: 0.5s !important;
   color: var(--btn-bg-color) !important;
@@ -79,14 +109,14 @@ nav a {
   border: none;
 background-color: #f7f7f7!important ;
   outline: none;
-  font-size: 20px;
+  font-size: 1rem;
   font-weight: 500;
 }
 
 .serch {
   color: var(--text-color);
-  height: 35px;
-
+  height: 2rem;
+z-index: -1;
   label {
     width: 35px;
     height: 35px;
@@ -233,7 +263,7 @@ header #span svg {
 /* mobail sidebar */
 .bars{
 
-  width: 50px;
+  width: 35px;
 
   cursor: pointer;
 
@@ -254,31 +284,31 @@ header #span svg {
 }
 .bars:hover.bars span:nth-child(2){
   width: 80% !important;
+
 }
 
 
   /* mobelLink */
 .mobelLink{
-  padding-bottom: 30px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  flex-direction:row-reverse;
-  position: absolute;
-  top: 50px;
+background-color: #ffffff;
+  overflow: auto;
+min-width: 50% ;
+  position: fixed;
+  top: 55px;
   right: 0;
-  z-index: 1100;
+  z-index: 1003;
+  /* padding-top: 100px; */
   -webkit-transition: 0.5s;
   -moz-transition: 0.5s;
   -ms-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
-  min-height: 100%;
+  min-height: 100vh;
     ul{ 
       font-size: 1rem;
-     background-color: #ffffff;
-     height: 100%;
-   width:50%;
+     
+     height: 100vh;
+   width:100%;
      right: 0;
      font-weight: 400;
   }
@@ -289,31 +319,62 @@ header #span svg {
 .mobelLink li{
   font-size: 15px !important;
   min-height: 40px;
-
-
+  list-style: none;
 
   transition: 0.5s;
   background-color: var(--bg-color);
 
   z-index: 999;
   transform: translateX(-200%);
-  margin:  2px 5px;
-  padding: 5px 15px !important;
+  padding: 2px 5px;
+
   border-bottom: 1px solid #f8f8f8;
   cursor: pointer;
+  #categories{
+    padding-right: 0.4rem;
+    background-color: #f9fafb !important;
+    .card{
+      background-color:transparent !important;;
+      border-bottom: 1px solid #eeee !important;
+      
+      padding: 10px;
+      transition: 0.5s;
+      -webkit-transition: 0.5s;
+      -moz-transition: 0.5s;
+      -ms-transition: 0.5s;
+      -o-transition: 0.5s;
+    }
+  }
+  button{
+    color: #888888;
+    border-bottom: 1px solid #f8f8f8;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+
 }
 .mobelLink a{
+  display: block;
   position: relative;
   padding: 5px 10px;
   position: relative;
     color: #888888 !important;
     width: 100%;
-    text-align: end;
+    text-align: start;
   
           }
 .mobelLink .active{
+  background-color: var(--bgColor) ;
   color: var(--btn-bg-color) !important;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
+
 .mobelLink a:hover{
   color: var(--btn-bg-color) !important;
 }

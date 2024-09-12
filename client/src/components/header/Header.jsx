@@ -46,9 +46,7 @@ const CiLogin = lazy(() =>
 const FaRegUser = lazy(() =>
   import("react-icons/fa").then((module) => ({ default: module.FaRegUser }))
 );
-const FaUser = lazy(() =>
-  import("react-icons/fa").then((module) => ({ default: module.FaUser }))
-);
+
 const TfiHeadphoneAlt = lazy(() =>
   import("react-icons/tfi").then((module) => ({
     default: module.TfiHeadphoneAlt,
@@ -62,22 +60,14 @@ const MdOutlineWifiProtectedSetup = lazy(() =>
     default: module.MdOutlineWifiProtectedSetup,
   }))
 );
-const FaUsersRectangle = lazy(() =>
-  import("react-icons/fa6").then((module) => ({
-    default: module.FaUsersRectangle,
-  }))
-);
+
 const BsWhatsapp = lazy(() =>
   import("react-icons/bs").then((module) => ({ default: module.BsWhatsapp }))
 );
 const IoMdHome = lazy(() =>
   import("react-icons/io").then((module) => ({ default: module.IoMdHome }))
 );
-const PiWhatsappLogo = lazy(() =>
-  import("react-icons/pi").then((module) => ({
-    default: module.PiWhatsappLogo,
-  }))
-);
+
 const MdWhatsapp = lazy(() =>
   import("react-icons/md").then((module) => ({ default: module.MdWhatsapp }))
 );
@@ -96,6 +86,36 @@ const LiaHomeSolid = lazy(() =>
     default: module.LiaHomeSolid,
   }))
 );
+const HiOutlineChevronLeft = lazy(() =>
+  import("react-icons/hi2").then((module) => ({
+    default: module.HiOutlineChevronLeft,
+  }))
+);
+const PiCaretDownThin = lazy(() =>
+  import("react-icons/pi").then((module) => ({
+    default: module.PiCaretDownThin,
+  }))
+);
+const SiFacebook = lazy(() =>
+  import("react-icons/si").then((module) => ({
+    default: module.SiFacebook,
+  }))
+);
+const FaTelegramPlane = lazy(() =>
+  import("react-icons/fa").then((module) => ({
+    default: module.FaTelegramPlane,
+  }))
+);
+const FaInstagram = lazy(() =>
+  import("react-icons/fa").then((module) => ({
+    default: module.FaInstagram,
+  }))
+);
+const BsFillTelephoneFill = lazy(() =>
+  import("react-icons/bs").then((module) => ({
+    default: module.BsFillTelephoneFill,
+  }))
+);
 
 
 
@@ -110,11 +130,10 @@ const Header = () => {
 
   const cartitims = useSelector((state) => state.cart);
   const categoriesitims = useSelector((state) => state.Categories);
-  console.log(categoriesitims,'categoriesitims');
-
   const [scroll, setscroll] = useState(false);
   const [trans, settrans] = useState(false);
   const [open, setopen] = useState(false);
+  const [showSubMinu, setshowSubMinu] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -320,120 +339,28 @@ const Header = () => {
       ),
     },
   ];
-  const nav_Links_Mobeil = [
-    {
-      title: " الاحكام والشروط",
-      path:  "PrivacyPolic",
-      icon: (
-        <Suspense>
-          <MdOutlineWifiProtectedSetup
-            fontSize={"1.2rem"}
-            color="var(--text-color)"
-          />
-        </Suspense>
-      ),
-    },
-    {
-      title: " من نحن",
-      path: "about",
-      icon: (
-        <Suspense>
-          <MdOutlineWifiProtectedSetup
-            fontSize={"1.2rem"}
-            color="var(--text-color)"
-          />
-        </Suspense>
-      ),
-    },
-    {
-      title: " طلباتي",
-      path: role === "admin" ? "/dashboard/orders" : "/orders",
-      icon: (
-        <Suspense>
-          <MdOutlineWifiProtectedSetup
-            fontSize={"1.2rem"}
-            color="var(--text-color)"
-          />
-        </Suspense>
-      ),
-    },
-    {
-      title: " المفضلة",
-      path: "/Favorite",
-      icon: (
-        <Suspense>
-          <CiHeart fontSize={"1.2rem"} color="var(--text-color)" />
-        </Suspense>
-      ),
-    },
-    {
-      title: "سلة مشترياتي",
-      path: "/Cart",
-      icon: (
-        <Suspense>
-          <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
-        </Suspense>
-      ),
-    },
 
-    {
-      title: "شركاء النجاح",
-      path: "/ؤشفثلخقثه",
-      // icon:  <Suspense>
-      //     <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
-      // </Suspense>
-    },
-    {
-      title: "الاقسام",
-      path: "/ؤشفثلخقثه",
-      // icon:  <Suspense>
-      //     <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
-      // </Suspense>
-    },
-    {
-      title: "الصفحة الرئيسية",
-      path: "/",
-      icon: (
-        <Suspense>
-          <IoStorefrontOutline fontSize={"1.2rem"} color="var(--text-color)" />
-        </Suspense>
-      ),
-    },
 
-    {
-      title: "لوحه التحكم",
-      path: "/dashboard",
-      icon: (
-        <Suspense>
-          <AiOutlineDashboard fontSize={"1.2rem"} color="var(--text-color)" />
-        </Suspense>
-      ),
-    },
-  ];
-// mobile nav Items
-const Links_Show_In_Mobil=nav_Links_Mobeil.reverse().map((link,index)=>{
-  return <li onClick={()=>setopen(false)} key={index} style={{ transform:open ? "translateX(0)":"translateX(200%)" }}
-  className={
-    (link.path === "/dashboard" && role === "user") ||
-    (link.path === "/Cart" && role === "admin") ||
-    (link.path === "/Favorite" && role === "admin") ||
-    (link.path === "/orders" && !role) ||
-    (role === undefined && link.path === "/dashboard")
-      ? "d-none"
-      : "nav-item d-flex justify-content-end  w-100 "
-  } >
-  <NavLink to={link.path}>
-    {link.title}
-  </NavLink>  
-
-</li>})
   // get property
   // const bgColor = document.styleSheets[0].cssRules[0].style.getPropertyValue("--bg-color");
-
+  const categories=categoriesitims.map((category)=>{
+    return   <div key={category._id} className="card border-0 px-4 py-2 w-100  ">
+        <span>{category?.name.split("_")[0]}</span>
+        {/* <span>{category?.name.split("_")[1]}</span> */}
+                   
+           </div>
+    });
+    const SubMinuCategories=categoriesitims.map((category)=>{
+      return   <li key={category._id} className="">
+          <span>{category?.name.split("_")[0]}</span>
+          {/* <span>{category?.name.split("_")[1]}</span> */}
+                     
+             </li>
+      });
   // navLink show
   const nav_link_show = nav_Links.map((link, index) => {
     return (
-      <li
+      <li onMouseOver={()=>link.title === 'الاقسام'&& setshowSubMinu(true)} onMouseOut={()=>setshowSubMinu(false)} 
         onClick={resetNavegation}
         key={index}
         className={
@@ -443,10 +370,20 @@ const Links_Show_In_Mobil=nav_Links_Mobeil.reverse().map((link,index)=>{
           (link.path === "/orders" && !role) ||
           (role === undefined && link.path === "/dashboard")
             ? "d-none"
-            : "nav-item d-flex align-items-center   "
+            : "nav-item d-flex align-items-center   position-relative"
         }
       >
-        <NavLink
+       
+
+        {link.title === 'الاقسام'?<>
+              <Suspense>
+              <PiCaretDownThin style={{transform:showSubMinu? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon mx-1" fontSize={"1rem"} />
+            </Suspense>
+            <span className="mx-1 d-none d-lg-block">{link.title}</span>   
+                <ul  className={`${showSubMinu? "position-absolute  sub-menu  text-end":"d-none "}`}>
+                  {SubMinuCategories}
+                </ul></> :
+                 <NavLink
           to={link.path}
           className="nav-link  py-1 px-2 d-flex  align-items-center position-relative"
         >
@@ -462,25 +399,21 @@ const Links_Show_In_Mobil=nav_Links_Mobeil.reverse().map((link,index)=>{
               )}
             </span>
           }
-        </NavLink>
+                </NavLink>
+          
+       }
       </li>
     );
   });
 
   //
-const categories=categoriesitims.map((category)=>{
-return   <div key={category.id} className="card border-0 px-4 py-2 card-body w-100 text-end  border">
-    <span>{category?.name.split("_")[0]}</span>
-    {/* <span>{category?.name.split("_")[1]}</span> */}
-               
-       </div>
-});
+
   return (
     <>
-      <header
+      <header onClick={()=>setshowSubMinu(false)}
         dir="ltr"
         style={{
-          transform: trans ? "translateY(-150%)" : "translateY(0)",
+          transform: trans && !open ? "translateY(-150%)" : "translateY(0)",
         }}
         className=" w-100  fw-semibold"
       >
@@ -494,32 +427,13 @@ return   <div key={category.id} className="card border-0 px-4 py-2 card-body w-1
             {/* logo start */}
             <div className="  d-flex align-items-center">
               <Fade delay={0} direction="down" triggerOnce={true}>
-                {/* <Link 
-                  to={role ? "ProfileAccount" : "login"}
-                  style={{ border: " 0.2rem solid var(--bgColor)" }}  
-                  className="rounded-circle d-block  d-sm-none h-100 w-100" >
-                  <img
-                    loading="lazy"
-                    decoding="async"
-                    width={50}
-                    height={50}
-                    className="logo  rounded-circle    "
-             
-                    src={
-                      !image || image === "undefined"
-                        ? avatar
-                        : `${imgeUrl}/${image}`
-                    }
-                    alt="avatar"
-                  />{" "}
-                </Link> */}
                 <Link to={"/"}>
                   <img
                     loading="lazy"
                     decoding="async"
                     width={50}
                     height={50}
-                    className="logo  rounded-circle d-block  "
+                    className="logo  d-block  "
                     src={logo}
                     alt="logo"
                   />{" "}
@@ -535,10 +449,20 @@ return   <div key={category.id} className="card border-0 px-4 py-2 card-body w-1
               </Fade>
             </div>
             {/* logo end */}
-         
+
             <div className="d-none d-lg-block">
               <ul className="my-0 h-100 d-flex  align-items-center gap-row-2">
                 <li className="nav-item d-flex align-items-center"></li>
+                {/* <li onMouseOver={()=>setshowSubMinu(true)} onMouseOut={()=>setshowSubMinu(false)} className="nav-item d-flex align-items-center justify-content-between position-relative">
+              <Suspense>
+                <PiCaretDownThin style={{transform:showSubMinu? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon mx-2" fontSize={"1rem"} />
+              </Suspense>
+                  الاقسام     
+                  <ul className={`${showSubMinu? "position-absolute  sub-menu  text-end":"d-none "}`}>
+                    {SubMinuCategories}
+                  </ul>
+                </li> */}
+
                 <Fade delay={0} direction="down" triggerOnce={true} cascade>
                   {nav_link_show}
                 </Fade>
@@ -566,94 +490,87 @@ return   <div key={category.id} className="card border-0 px-4 py-2 card-body w-1
               </ul>
             </div>
 
-
             {/* mobeil side bar */}
-               {/* bars button srt && icons */}
-                <div className=" d-flex d-lg-none align-items-center">
-                
-                <NavLink to={'/cart'} className={role==='admin'?"d-none":"p-1 border rounded-circle position-relative"}>
-                  <Suspense>
-                    <PiShoppingCartThin fontSize={"1.4rem"} color="var( --btn-bg-color)" />
-                      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger ">
-                        {cartitims > 0 && cartitims}
-                      </span>
-                  </Suspense>
-                  </NavLink>
-                  <NavLink to={'/Favorite'} className={role==='admin'?"d-none":"p-1 border rounded-circle mx-1"}>
-                    <Suspense>
-                    <CiHeart fontSize={"1.4rem"} color="var( --btn-bg-color)" />
-                  </Suspense>
-                  </NavLink>
-                  <NavLink to={'/'} className="p-1 border rounded-circle mx-1">
-                    <Suspense>
-                    <LiaHomeSolid fontSize={"1.4rem"} color="var( --btn-bg-color)" />
-                  </Suspense>
-                  </NavLink>
-                  <NavLink to={'/dashboard'} className={role !=='admin'?"d-none":"p-1 border rounded-circle mx-1"}>
-                    <Suspense>
-                    <AiOutlineDashboard fontSize={"1.4rem"} color="var( --btn-bg-color)" />
-                  </Suspense>
-                  </NavLink>
-                
-               <div onClick={() => setopen(!open)} className="bars d-flex mx-3  align-items-center;
-                      flex-column   justify-content-center ">
-              <span
-                style={{
-                  transform: open && "translateY(9px) rotate(-45deg)",
-                  backgroundColor: open ? "#f96363":"var(--bgColor)",
-                }}
-              ></span>
-              <span className="w-50 mx-0" 
-                style={{ transform: open ? "scale(0)" : "scale(1)" ,
-                  backgroundColor: open ? "#f96363":"var(--bgColor)",
-                }}
-              ></span>
-              <span
-                style={{
-                  transform: open && "translateY(-9px) rotate(45deg)",
-                  backgroundColor: open ? "#f96363":"var(--bgColor)",
-                }}
-              ></span>
+            {/* bars button srt && icons */}
+            <div className=" d-flex d-lg-none align-items-center">
+              <NavLink
+                to={"/cart"}
+                className={
+                  role === "admin"
+                    ? "d-none"
+                    : "p-1 border rounded-circle position-relative"
+                }
+              >
+                <Suspense>
+                  <PiShoppingCartThin
+                    fontSize={"1.4rem"}
+                    color="var( --btn-bg-color)"
+                  />
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger ">
+                    {cartitims > 0 && cartitims}
+                  </span>
+                </Suspense>
+              </NavLink>
+              <NavLink
+                to={"/Favorite"}
+                className={
+                  role === "admin" ? "d-none" : "p-1 border rounded-circle mx-1"
+                }
+              >
+                <Suspense>
+                  <CiHeart fontSize={"1.4rem"} color="var( --btn-bg-color)" />
+                </Suspense>
+              </NavLink>
+              <NavLink to={"/"} className="p-1 border rounded-circle mx-1">
+                <Suspense>
+                  <LiaHomeSolid
+                    fontSize={"1.4rem"}
+                    color="var( --btn-bg-color)"
+                  />
+                </Suspense>
+              </NavLink>
+              <NavLink
+                to={"/dashboard"}
+                className={
+                  role !== "admin" ? "d-none" : "p-1 border rounded-circle mx-1"
+                }
+              >
+                <Suspense>
+                  <AiOutlineDashboard
+                    fontSize={"1.4rem"}
+                    color="var( --btn-bg-color)"
+                  />
+                </Suspense>
+              </NavLink>
+
+              <div
+                onClick={() => setopen(!open)}
+                className="bars d-flex mx-3  align-items-center;
+                      flex-column   justify-content-center "
+              >
+                <span
+                  style={{
+                    transform: open && "translateY(9px) rotate(-45deg)",
+                    backgroundColor: open ? "#f96363" : "var(--bgColor)",
+                  }}
+                ></span>
+                <span
+                  className="w-50 mx-0"
+                  style={{
+                    transform: open ? "scale(0)" : "scale(1)",
+                    backgroundColor: open ? "#f96363" : "var(--bgColor)",
+                  }}
+                ></span>
+                <span
+                  style={{
+                    transform: open && "translateY(-9px) rotate(45deg)",
+                    backgroundColor: open ? "#f96363" : "var(--bgColor)",
+                  }}
+                ></span>
               </div>
-                </div>
-            
-                {/* bars button end */}
-            <div 
-            style={{
-              // backgroundColor:open?"rgba(0, 0, 0, .5)":"transparent",
-            transform:open ? "translateX(0)":"translateX(200%)"}}
-             className={"d-lg-none w-100 h-100vh  mobelLink"}>
-            <ul className="pt-3 text-nowrap px-0">
-            <li  style={{ transform:open ? "translateX(0)":"translateX(200%)" }}
-  className={"nav-item w-100 "
-  } >
-  
-
-    <button className=" px-3 collapseHeader collapsed card border-0  w-100 d-flex flex-row
-            justify-content-end 
-            align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
-  الاقسام
-  </button> 
-        {/* <button  >
-          شروط الشحن   */}
-                   {/* <VscAdd className="plusIcon" fontSize={'1.7rem'}/>
-                   <FiMinus className="MinusIcon" fontSize={'1.7rem'}/> */}
-        {/* </button>      */}
-
-        <div className="collapse bg-light" id="collapseExample1">
-           
-                      {categories}
-        
-        </div>
-        
-
-</li>
-              {Links_Show_In_Mobil} 
-            </ul>
-            
             </div>
 
-
+            {/* bars button end */}
           </div>
         </nav>
 
@@ -701,12 +618,10 @@ return   <div key={category.id} className="card border-0 px-4 py-2 card-body w-1
             />
             <label>
               <Suspense>
-                <CiSearch fontSize={'1.7rem'} />
+                <CiSearch fontSize={"1.7rem"} />
               </Suspense>
             </label>
           </div>
-
-          {/* {error && <p className="position-absolute w-100"> not fonde </p>} */}
 
           {/* dropdown */}
 
@@ -729,17 +644,20 @@ return   <div key={category.id} className="card border-0 px-4 py-2 card-body w-1
             {!role ? " تسجيل الدخول" : "تسجيل خروج"}
             {/* </Fade>  */}
           </span>
-          <Suspense>
-            <PiUserCircleLight
-              className="d-block  dropdown-toggle "
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              color="var( --btn-bg-color)"
-              fontSize={"1.5rem"}
-            />
-          </Suspense>
+          {/* auth links */}
+          <div>
+            <Suspense>
+              <PiUserCircleLight
+                className="d-block  dropdown-toggle "
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                color="var( --btn-bg-color)"
+                fontSize={"1.7rem"}
+              />
+            </Suspense>
 
-          <ul className=" dropdown-menu">{AuthLinksShow}</ul>
+            <ul className=" dropdown-menu">{AuthLinksShow}</ul>
+          </div>
         </div>
         {/* seareh input end */}
       </header>
@@ -762,10 +680,7 @@ return   <div key={category.id} className="card border-0 px-4 py-2 card-body w-1
       </span>
       {/* go to top end */}
 
-
-
       {/* go to whatsapp start */}
-
       <a
         style={{
           transform: scroll
@@ -783,8 +698,156 @@ return   <div key={category.id} className="card border-0 px-4 py-2 card-body w-1
 
       {/* go to top end */}
       <div
-            style={{backgroundColor:"rgba(0, 0, 0, .5)",display:open ? "block" : "none",zIndex:'4'}} 
-             className="h-100 w-100 position-absolute  ">fgdf</div>
+        style={{
+          backgroundColor: "rgba(0, 0, 0, .5)",
+          display: open ? "block" : "none",
+          zIndex: "4",
+        }}
+        className="h-100 w-100 position-absolute  "
+      ></div>
+      {/* side bar in mobeil */}
+      <div
+        className="d-lg-none w-50  justify-content-end mobelLink"
+        style={{
+          transform: open ? "translateX(0)" : "translateX(200%)",
+        }}
+      >
+        <ul className="pt-3 text-nowrap px-0 w-100">
+          <li
+            onClick={() => setopen(false)}
+            style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
+            className={"nav-item  py-2   w-100 "}
+          >
+            <NavLink to={"/"}>الصفحه الرئيسية</NavLink>
+          </li>
+          <li
+            style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
+            className={"nav-item w-100 "}
+          >
+            <button
+              className=" px-3 collapseHeader collapsed card border-0  w-100 "
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#categories"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+            >
+              الاقسام
+              <Suspense>             
+                <HiOutlineChevronLeft className="plusIcon" fontSize={"1rem"} />
+              </Suspense>
+              <Suspense>
+                <PiCaretDownThin className="MinusIcon " fontSize={"1rem"} />
+              </Suspense>
+            </button>
+            {/* <button  >
+          شروط الشحن   */}
+            {/* <VscAdd className="plusIcon" fontSize={'1.7rem'}/>
+                   <FiMinus className="MinusIcon" fontSize={'1.7rem'}/> */}
+            {/* </button>      */}
+
+            <div className="collapse " id="categories">
+              {categories}
+              {categories}
+              {categories}
+            </div>
+          </li>
+          <li
+            style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
+            className={"nav-item w-100 "}
+          >
+            <button
+              className=" px-3 collapseHeader collapsed card border-0  w-100 "
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExample1"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+            >
+              شركاء النجاح
+              <Suspense>             
+                <HiOutlineChevronLeft className="plusIcon" fontSize={"1rem"} />
+              </Suspense>
+              <Suspense>
+                <PiCaretDownThin className="MinusIcon " fontSize={"1rem"} />
+              </Suspense>
+            </button>
+
+            <div className="collapse " id="collapseExample1">
+              {categories}
+              {categories}
+              {categories}
+            </div>
+          </li>
+          <li
+            onClick={() => setopen(false)}
+            style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
+            className={role === "admin" ? "d-none" : "nav-item  py-2   w-100 "}
+          >
+            <NavLink to={"cart"}>سلة المشتريات</NavLink>
+          </li>
+          <li
+            onClick={() => setopen(false)}
+            style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
+            className={
+              !role || role === undefined ? "d-none" : "nav-item  py-2   w-100 "
+            }
+          >
+            <NavLink to={"/orders"}>طلباتي</NavLink>
+          </li>
+          <li
+            onClick={() => setopen(false)}
+            style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
+            className={"nav-item  py-2   w-100 "}
+          >
+            <NavLink to={"/about"}>من نحن</NavLink>
+          </li>
+          <li
+            onClick={() => setopen(false)}
+            style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
+            className={"nav-item  py-2   w-100 "}
+          >
+            <NavLink to={"/PrivacyPolic"}>الاحكام والشروط</NavLink>
+          </li>
+          <li
+            onClick={() => setopen(false)}
+            style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
+            className={"nav-item  py-2   w-100 "}
+          >
+            <a>معلومات التواصل</a>
+            <div className="d-flex justify-content-center align-items-center pt-2 ">
+              <a className="w-auto " href="tel:+966598909991">
+                <Suspense>
+                  <BsFillTelephoneFill
+                    fontSize={"1rem"}
+                    color="var( --spancolor)"
+                  />
+                </Suspense>
+              </a>
+              <a href="#" className=" w-auto ">
+                <Suspense>
+                  <SiFacebook fontSize={"1rem"} color="#0866ff" />
+                </Suspense>
+              </a>
+              <a href="#" className=" w-auto ">
+                <Suspense>
+                  <FaTelegramPlane fontSize={"1rem"} color="#28a8e9" />
+                </Suspense>
+              </a>
+              <a href="https://wa.me/+966598909991" className=" w-auto ">
+                <Suspense>
+                  <BsWhatsapp fontSize={"1rem"} color="#33bd45 " />
+                </Suspense>
+              </a>
+              <a href="#" className=" w-auto  ">
+                <Suspense>
+                  <FaInstagram fontSize={"1rem"} color="#df0073" />
+                </Suspense>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
     </>
   );
 }; 
