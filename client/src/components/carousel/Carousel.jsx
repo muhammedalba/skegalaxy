@@ -51,7 +51,7 @@ console.log(carouseles?.data);
               decoding="async"
             width={1024} 
           className="d-sm-none h-100  w-100 "
-          src={`${carouseles?.imageUrl}/${preview?.carouselImageMd}`}
+          src={`${carouseles?.imageUrl}/${preview?.carouselImage}`}
           alt={`Preview ${index}`}
           loading="eager" 
         />
