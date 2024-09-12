@@ -7,6 +7,7 @@ import SerchSlice from "../features/Slice/SerchSlice";
 import  CartSlice  from "../features/Slice/CartSlice";
 import QuantityResultSlice from "../features/Slice/QuantityResultSlice";
 import NavigationSlice from "../features/Slice/NavigationSlice";
+import CategoriesSlice from "../features/Slice/CategoriesSlice";
 
 
 
@@ -15,12 +16,13 @@ import NavigationSlice from "../features/Slice/NavigationSlice";
 
 const store = configureStore({
   reducer: {
-    // إضافة المخفضات (reducers) الخاصة بـ RTK Query
+    //   (reducers) الخاصة بـ RTK Query
     [apiSlice.reducerPath]: apiSlice.reducer,
 
     [authSlice.reducerPath]: authSlice.reducer,
 
     serch: SerchSlice,
+    Categories: CategoriesSlice,
     cart: CartSlice,
     QuantityResult: QuantityResultSlice,
     Pagination:NavigationSlice

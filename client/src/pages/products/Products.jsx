@@ -1,6 +1,6 @@
 // import {  ToastContainer } from "react-toastify";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetDataQuery } from "../../redux/features/api/apiSlice";
 import Carousel from "react-multi-carousel";
 import { Fade } from "react-awesome-reveal";
@@ -16,6 +16,7 @@ import Card from "../../components/card/Card";
 import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { errorNotify } from "../../utils/Toast";
 import TextSlide from "../../components/text_slide/Text_slide";
+import { Categories, Categoryitems } from "../../redux/features/Slice/CategoriesSlice";
 
 const Products = () => {
   //
@@ -30,7 +31,7 @@ const Products = () => {
   const [filterDrands, setfilterDrands] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-
+const dispatch=useDispatch();
 
 
   // get products from the database
@@ -60,6 +61,15 @@ const Products = () => {
 
   const section1Ref = useRef(null);
 
+
+useEffect(() => {
+  if( categories?.data?.length>0){
+      // dispatch categories to the slice
+  dispatch(Categoryitems(categories.data))
+}
+
+},[categories?.data, dispatch])
+// dispatch(Categoryitems('categories.data'))
 
   // Go to products and filter
   const scrollToSection =useCallback( (ref, id) => {
@@ -124,7 +134,7 @@ const Products = () => {
       const sortedBrands = [...brands.data].sort((a, b) =>
         a.name.localeCompare(b.name)
       );
-
+      
       return sortedBrands.map((brand, index) => (
      <Fragment key={index}>
         <option   value={brand._id}>
@@ -152,7 +162,7 @@ const Products = () => {
     },
     [brands?.data]
   );
-    // view categories select loadingcategories
+    // view categories select loadingcategories 
     const showCategorie = useMemo(() => {
       if (loadingcategories ) {
         return <option value=""> جاري جلب البيانات</option>;
@@ -165,7 +175,6 @@ const Products = () => {
         const sortedcategories = [...categories.data].sort((a, b) =>
           a.name.localeCompare(b.name)
         );
-  
         return sortedcategories.map((category, index) => (
           <Fragment key={index}>
             
@@ -178,6 +187,7 @@ const Products = () => {
         ));
       }
     }, [categories?.data, isSuccess, loadingcategories]);
+ 
   // // handleCategoryChange
   const handleCategoryChange = useCallback(
     (e) => {
@@ -212,9 +222,10 @@ const Products = () => {
 
   // if sucsses and data is not empty  show the categories slide
   const showCategoriesData = useMemo(() => {
-    if (isSuccess && categories?.data?.length > 0) {
+    if (successcategories && categories?.data?.length > 0) {
 
       const categories_slide=[...categories.data];
+
       return categories_slide?.map((category, index) => (
         <button
           style={{ minWidth: "315px  ",height: "270px"}}
@@ -260,7 +271,7 @@ const Products = () => {
         </button>
       ));
     }
-  }, [categories?.data, categories?.imageUrl, isSuccess, scrollToSection]);
+  }, [categories?.data, categories?.imageUrl, scrollToSection, successcategories]);
 
   // show Brands Slide
   const showBrandsSlide = useMemo(() => {
@@ -268,7 +279,7 @@ const Products = () => {
       return SkeletonProduct;
     }
 
-    if (brands?.data?.length > 0) {
+    if ( successbrands&&brands?.data?.length > 0) {
       return brands?.data.map((brand, index) => (
         <button
           style={{ minWidth: "75%" }}
@@ -308,7 +319,7 @@ const Products = () => {
         </button>
       ));
     }
-  }, [brands?.data, brands?.imageUrl, isLoading, scrollToSection]);
+  }, [brands?.data, brands?.imageUrl, isLoading, scrollToSection, successbrands]);
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 3000, min: 1024 },

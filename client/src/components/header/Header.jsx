@@ -109,7 +109,8 @@ const Header = () => {
   const role = cookies.get("role");
 
   const cartitims = useSelector((state) => state.cart);
-  // console.log(cartitims);
+  const categoriesitims = useSelector((state) => state.Categories);
+  console.log(categoriesitims,'categoriesitims');
 
   const [scroll, setscroll] = useState(false);
   const [trans, settrans] = useState(false);
@@ -467,7 +468,13 @@ const Links_Show_In_Mobil=nav_Links_Mobeil.reverse().map((link,index)=>{
   });
 
   //
-
+const categories=categoriesitims.map((category)=>{
+return   <div key={category.id} className="card border-0 px-4 py-2 card-body w-100 text-end  border">
+    <span>{category?.name.split("_")[0]}</span>
+    {/* <span>{category?.name.split("_")[1]}</span> */}
+               
+       </div>
+});
   return (
     <>
       <header
@@ -617,6 +624,30 @@ const Links_Show_In_Mobil=nav_Links_Mobeil.reverse().map((link,index)=>{
             transform:open ? "translateX(0)":"translateX(200%)"}}
              className={"d-lg-none w-100 h-100vh  mobelLink"}>
             <ul className="pt-3 text-nowrap px-0">
+            <li  style={{ transform:open ? "translateX(0)":"translateX(200%)" }}
+  className={"nav-item w-100 "
+  } >
+  
+
+    <button className=" px-3 collapseHeader collapsed card border-0  w-100 d-flex flex-row
+            justify-content-end 
+            align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
+  الاقسام
+  </button> 
+        {/* <button  >
+          شروط الشحن   */}
+                   {/* <VscAdd className="plusIcon" fontSize={'1.7rem'}/>
+                   <FiMinus className="MinusIcon" fontSize={'1.7rem'}/> */}
+        {/* </button>      */}
+
+        <div className="collapse bg-light" id="collapseExample1">
+           
+                      {categories}
+        
+        </div>
+        
+
+</li>
               {Links_Show_In_Mobil} 
             </ul>
             
