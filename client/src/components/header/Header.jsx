@@ -18,6 +18,7 @@ import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 // img
 import logo from "../../imges/logo.webp";
 import avatar from "../../imges/avatar.webp";
+import { FilterValue } from "../../redux/features/Slice/FilterIdSlice";
 // icons
 const CiSearch = lazy(() =>
   import("react-icons/ci").then((module) => ({ default: module.CiSearch }))
@@ -213,6 +214,7 @@ console.log(brandsitims);
     dispatch(Results(15));
     dispatch(currentPage(1));
     dispatch(searchItem(""));
+    dispatch(FilterValue(""));
   };
   // Auth links
   const AuthLinks = [
@@ -348,29 +350,46 @@ console.log(brandsitims);
 
   // get property
   // const bgColor = document.styleSheets[0].cssRules[0].style.getPropertyValue("--bg-color");
+
+
+
+
+const dispatchValueToStore=(value)=>{
+  
+  dispatch(FilterValue(value));
+  window.scrollTo({ top: 1100, behavior: "smooth" });
+ setshowSubMinu(false) ;
+ setshowSubMinuBrands(false); 
+  
+}
+
+  // in desktop
   const categories=categoriesitims.map((category)=>{
-    return   <div key={category._id} className="card border-0 px-4 py-2 w-100  ">
+    return   <div onClick={()=>dispatchValueToStore(`category=${category._id}`)} key={category._id} className="card border-0 px-4 py-2 w-100  ">
         <span>{category?.name.split("_")[0]}</span>
         {/* <span>{category?.name.split("_")[1]}</span> */}
                    
            </div>
     });
+    // in mobile
     const SubMinuCategories=categoriesitims.map((category)=>{
-      return   <li key={category._id} className="border-bottom">
+      return   <li  onClick={()=>dispatchValueToStore(`category=${category._id}`)} key={category._id} className="border-bottom">
           <span>{category?.name.split("_")[0]}</span>
           {/* <span>{category?.name.split("_")[1]}</span> */}
                      
              </li>
       });
+      // in mobile
       const brands=brandsitims.map((brand)=>{
-        return   <div key={brand._id} className="card border-0 px-4 py-2 w-100  ">
+        return   <div  onClick={()=>dispatchValueToStore(`brand=${brand._id}`)} key={brand._id} className="card border-0 px-4 py-2 w-100  ">
             <span>{brand?.name.split("_")[0]}</span>
             {/* <span>{brand?.name.split("_")[1]}</span> */}
                        
                </div>
         });
+        // in desktop
         const SubMinuBrands=brandsitims.map((brand)=>{
-          return   <li key={brand._id} className="border-bottom">
+          return   <li onClick={()=>dispatchValueToStore(`brand=${brand._id}`)} key={brand._id} className="border-bottom">
               <span>{brand?.name.split("_")[0]}</span>
               {/* <span>{brand?.name.split("_")[1]}</span> */}
                          
@@ -518,7 +537,7 @@ console.log(brandsitims);
               </ul>
             </div>
 
-            {/* mobeil side bar */}
+        
             {/* bars button srt && icons */}
             <div className=" d-flex d-lg-none align-items-center">
               <NavLink
@@ -768,11 +787,7 @@ console.log(brandsitims);
                 <PiCaretDownThin className="MinusIcon " fontSize={"1rem"} />
               </Suspense>
             </button>
-            {/* <button  >
-          شروط الشحن   */}
-            {/* <VscAdd className="plusIcon" fontSize={'1.7rem'}/>
-                   <FiMinus className="MinusIcon" fontSize={'1.7rem'}/> */}
-            {/* </button>      */}
+       
 
             <div className="collapse " id="categories">
               {categories}

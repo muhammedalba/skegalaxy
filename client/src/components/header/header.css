@@ -106,7 +106,9 @@ nav a {
   text-decoration: none;
 
 }
-
+.sub-menu li{
+color: #777777 !important;
+}
 .serch input {
   border: none;
 background-color: #f7f7f7!important ;

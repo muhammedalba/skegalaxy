@@ -230,17 +230,17 @@ if(createError || successCreeate){
           {/* price */}
           <div className="d-flex mb-1 w-100 justify-content-evenly align-items-center flex-wrap">
             <h2
-              className="price w-100 p-0 m-0"
+              className="price w-100 fs-6 p-0 m-0"
               style={{
                 textDecoration: product?.priceAfterDiscount
-                  ? "line-through"
+                  ? "line-through "
                   : "none",
               }}
             >
               ({product?.price?.toFixed(2)})ر.س
             </h2>
             {product?.priceAfterDiscount && (
-              <h2 className="price text-success p-0 m-0">
+              <h2 className="price fs-6 text-success p-0 m-0">
                 ({product?.priceAfterDiscount.toFixed(2)})ر.س
               </h2>
             )}

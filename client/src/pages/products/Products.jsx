@@ -18,6 +18,7 @@ import { errorNotify } from "../../utils/Toast";
 import TextSlide from "../../components/text_slide/Text_slide";
 import { Categories, Categoryitems } from "../../redux/features/Slice/CategoriesSlice";
 import { Branditems } from "../../redux/features/Slice/BrandSlice";
+import { FilterValue } from "../../redux/features/Slice/FilterIdSlice";
 
 const Products = () => {
   //
@@ -25,6 +26,8 @@ const Products = () => {
   const search = useSelector((state) => state.serch);
   const limit = useSelector((state) => state.QuantityResult);
   const Pagination = useSelector((state) => state.Pagination);
+  const FilterById = useSelector((state) => state.FilterValue);
+console.log(FilterById,'FilterById');
 
   // brand our category filter
   const [filterCategorirs, setfilterCategorirs] = useState("");
@@ -42,7 +45,7 @@ const dispatch=useDispatch();
     isLoading,
     isSuccess,
   } = useGetDataQuery(
-    `products?limit=${limit}&page=${Pagination}${filterDrands}${filterCategorirs}${sortFilter}&keywords=${search}&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage`
+    `products?limit=${limit}&page=${Pagination}&${FilterById}${filterDrands}${filterCategorirs}${sortFilter}&keywords=${search}&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage`
   );
   
 
@@ -163,8 +166,10 @@ dispatch(Branditems(brands.data))
         (brand) => brand._id === value
       );
       setSelectedBrand(selectedBrand ? selectedBrand.name : "");
+       // reset felter values
+       dispatch(FilterValue(''));
     },
-    [brands?.data]
+    [brands?.data, dispatch]
   );
     // view categories select loadingcategories 
     const showCategorie = useMemo(() => {
@@ -203,8 +208,11 @@ dispatch(Branditems(brands.data))
         (cate) => cate._id === value
       );
       setSelectedCategory(selectedcategory ? selectedcategory.name : "");
+
+      // reset felter values
+      dispatch(FilterValue(''));
     },
-    [categories?.data]
+    [categories?.data, dispatch]
   );
 
   // hanle sort products
@@ -220,7 +228,7 @@ dispatch(Branditems(brands.data))
     setSelectedBrand("");
     setSelectedCategory("");
    setsortFilter('')
-
+   dispatch(FilterValue(''));
   };
 
 

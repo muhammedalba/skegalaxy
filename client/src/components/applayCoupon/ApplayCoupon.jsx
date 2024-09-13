@@ -56,8 +56,8 @@ Confirm ,HideDiscount}) => {
         <div
         className={
           productsDetails?.resnumOfCartItems > 0
-            ? "col-12 col-sm-7 mx-auto col-lg-3  totale z-2"
-            : "col-12 col-sm-6 mx-auto col-lg-3 totale z-2"
+            ? "col-12 col-sm-7 mx-auto col-lg-3  totale z-2 top-lg-5"
+            : "col-12 col-sm-6 mx-auto col-lg-3 totale z-2 top-lg-5"
         }
       >
         {/* coupon start*/}

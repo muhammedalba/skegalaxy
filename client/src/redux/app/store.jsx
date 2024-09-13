@@ -9,6 +9,7 @@ import QuantityResultSlice from "../features/Slice/QuantityResultSlice";
 import NavigationSlice from "../features/Slice/NavigationSlice";
 import CategoriesSlice from "../features/Slice/CategoriesSlice";
 import BrandSlice from "../features/Slice/BrandSlice";
+import FilterIdSlice from "../features/Slice/FilterIdSlice";
 
 
 
@@ -23,6 +24,7 @@ const store = configureStore({
     [authSlice.reducerPath]: authSlice.reducer,
 
     serch: SerchSlice,
+    FilterValue: FilterIdSlice,
     Categories: CategoriesSlice,
     brands: BrandSlice,
     cart: CartSlice,

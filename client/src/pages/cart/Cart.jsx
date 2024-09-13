@@ -237,7 +237,7 @@ const openModalAndClearCart = useCallback(() => {
       const cartItems = [...productsDetails.cartItems]
       return cartItems.map((product, index) => (
         <tr key={index}>
-          {}
+         
           <td className=" d-table-cell" scope="row">
             <Fade delay={0} direction="up" triggerOnce={true}>
               <button
@@ -262,6 +262,7 @@ const openModalAndClearCart = useCallback(() => {
                 src={`${products?.imageUrl}/${product?.product?.imageCover}`}
                 alt="product"
               />
+        
             </Fade>
           </td>
           <td className=" d-sm-table-cell text-end">
@@ -295,58 +296,7 @@ const openModalAndClearCart = useCallback(() => {
                 </span>
               </div>
             </Fade>
-            <div className="w-100 d-flex d-sm-none align-items-center gap-1 justify-content-between border rounded p-2">
-                <IoAddOutline
-                  cursor={"pointer"}
-                  fontSize={"25px"}
-                  color="blue"
-                  onClick={() => handleQuantityChange(index, 1)}
-                />
-                <input
-                  min={1}
-                  max={2000}
-                  style={{ width: "5rem" }}
-                  onChange={(e) =>
-                    handleQuantityChange(index, e.target.value, true)
-                  }
-                  type="number"
-                  className="form-control  border-1  text-center bg-transparent"
-                  id="quantity"
-                  placeholder={productsDetails.cartItems[index].quantity}
-                  value={productsDetails.cartItems[index].quantity}
-                  name="quantity"
-                />
-
-                <RiSubtractLine
-                  cursor={"pointer"}
-                  fontSize={"25px"}
-                  color="red"
-                  onClick={() => handleQuantityChange(index, -1)}
-                />
-                {
-                  <button
-                    type="button"
-                    disabled={
-                      LoadingDelet  || LoadingUpdate
-                        ? true
-                        : false
-                    }
-                    className={
-                      Confirm ? "btn  m-0 border-0 p-0 text-success" : "d-none"
-                    }
-                    onClick={() =>
-                      handelQuantity(
-                        product?._id,
-                        productsDetails?.cartItems[index].quantity,
-                        product?.product?._id
-                      )
-                    }
-                  >
-                    تاكيد
-                    <BsCheck2 fontSize={"25px"} />
-                  </button>
-                }
-            </div>
+            
           </td>
           <td className=" d-none d-sm-table-cell ">
             <Fade delay={0} direction="up" triggerOnce={true}>
@@ -404,7 +354,63 @@ const openModalAndClearCart = useCallback(() => {
               </div>
             </Fade>
           </td>
+          
         </tr>
+       /*  <tr>
+        <div className="w-100 d-flex d-sm-none align-items-center gap-1 justify-content-between border rounded p-2">
+                <IoAddOutline
+                  cursor={"pointer"}
+                  fontSize={"25px"}
+                  color="blue"
+                  onClick={() => handleQuantityChange(index, 1)}
+                />
+                <input
+                  min={1}
+                  max={2000}
+                  style={{ width: "5rem" }}
+                  onChange={(e) =>
+                    handleQuantityChange(index, e.target.value, true)
+                  }
+                  type="number"
+                  className="form-control  border-1  text-center bg-transparent"
+                  id="quantity"
+                  placeholder={productsDetails.cartItems[index].quantity}
+                  value={productsDetails.cartItems[index].quantity}
+                  name="quantity"
+                />
+
+                <RiSubtractLine
+                  cursor={"pointer"}
+                  fontSize={"25px"}
+                  color="red"
+                  onClick={() => handleQuantityChange(index, -1)}
+                />
+                {
+                  <button
+                    type="button"
+                    disabled={
+                      LoadingDelet  || LoadingUpdate
+                        ? true
+                        : false
+                    }
+                    className={
+                      Confirm ? "btn  m-0 border-0 p-0 text-success" : "d-none"
+                    }
+                    onClick={() =>
+                      handelQuantity(
+                        product?._id,
+                        productsDetails?.cartItems[index].quantity,
+                        product?.product?._id
+                      )
+                    }
+                  >
+                    تاكيد
+                    <BsCheck2 fontSize={"25px"} />
+                  </button>
+                }
+            </div> 
+        </tr> */
+       
       ));
     } else {
       return (
@@ -464,8 +470,8 @@ const openModalAndClearCart = useCallback(() => {
           )}
 
           {/* data table  start*/}
-          <table className="table table-striped pt-5 mt-3 text-center">
-            <thead className={isSuccess && productsDetails?.resnumOfCartItems > 0?"d-block":'d-none'}>
+          <table className={isSuccess && productsDetails?.resnumOfCartItems > 0?"table table-striped pt-5 mt-3 text-center":'d-none'}>
+            <thead >
               <tr>
                 <th className=" d-table-cell" scope="col">
                   حذف
@@ -491,8 +497,8 @@ const openModalAndClearCart = useCallback(() => {
           {/* coupon and checkout start*/}
           <MemoizedApplayCoupon  Confirm={displayDiscount} LoadingDelet={LoadingDelet} openModalAndClearCart={openModalAndClearCart} productsDetails={productsDetails} openPaymntCommpount={openPaymntCommpount} HideDiscount={HideDiscount}
         />
-        <MemoizedPayment  display={display} productsDetails={productsDetails} setdisplay={openPaymntCommpount}/>
       </Suspense>
+      <Suspense > <MemoizedPayment  display={display} productsDetails={productsDetails} setdisplay={openPaymntCommpount}/> </Suspense >
       </div>
 {/* paymnt form */}
 
