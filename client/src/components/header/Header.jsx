@@ -776,8 +776,7 @@ console.log(brandsitims);
 
             <div className="collapse " id="categories">
               {categories}
-              {categories}
-              {categories}
+            
             </div>
           </li>
           <li
