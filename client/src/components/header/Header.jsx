@@ -130,10 +130,15 @@ const Header = () => {
 
   const cartitims = useSelector((state) => state.cart);
   const categoriesitims = useSelector((state) => state.Categories);
+  const brandsitims = useSelector((state) => state.brands);
+console.log(brandsitims);
+
+
   const [scroll, setscroll] = useState(false);
   const [trans, settrans] = useState(false);
   const [open, setopen] = useState(false);
   const [showSubMinu, setshowSubMinu] = useState(false);
+  const [showSubMinuBrands, setshowSubMinuBrands] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -305,20 +310,20 @@ const Header = () => {
       ),
     },
 
-    {
-      title: "شركاء النجاح",
-      path: "/cart",
+    // {
+    //   title: "شركاء النجاح",
+    //   path: "/cart",
       // icon:  <Suspense>
       //     <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
       // </Suspense>
-    },
-    {
-      title: "الاقسام",
-      path: "/cart",
+    // },
+    // {
+    //   title: "الاقسام",
+    //   path: "/cart",
       // icon:  <Suspense>
       //     <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
       // </Suspense>
-    },
+    // },
     {
       title: "الصفحة الرئيسية",
       path: "/",
@@ -351,16 +356,36 @@ const Header = () => {
            </div>
     });
     const SubMinuCategories=categoriesitims.map((category)=>{
-      return   <li key={category._id} className="">
+      return   <li key={category._id} className="border-bottom">
           <span>{category?.name.split("_")[0]}</span>
           {/* <span>{category?.name.split("_")[1]}</span> */}
                      
              </li>
       });
+      const brands=brandsitims.map((brand)=>{
+        return   <div key={brand._id} className="card border-0 px-4 py-2 w-100  ">
+            <span>{brand?.name.split("_")[0]}</span>
+            {/* <span>{brand?.name.split("_")[1]}</span> */}
+                       
+               </div>
+        });
+        const SubMinuBrands=brandsitims.map((brand)=>{
+          return   <li key={brand._id} className="border-bottom">
+              <span>{brand?.name.split("_")[0]}</span>
+              {/* <span>{brand?.name.split("_")[1]}</span> */}
+                         
+                 </li>
+          });
+
+
+
   // navLink show
   const nav_link_show = nav_Links.map((link, index) => {
     return (
-      <li onMouseOver={()=>link.title === 'الاقسام'&& setshowSubMinu(true)} onMouseOut={()=>setshowSubMinu(false)} 
+      <li
+      //  onMouseOver={()=>{link.title === 'الاقسام'&& setshowSubMinu(true),link.title === 'شركاء النجاح'&& setshowSubMinuBrands(true)}} onMouseOut={()=>{setshowSubMinu(false),
+      //   setshowSubMinuBrands(false)
+      //  }} 
         onClick={resetNavegation}
         key={index}
         className={
@@ -375,14 +400,6 @@ const Header = () => {
       >
        
 
-        {link.title === 'الاقسام'?<>
-              <Suspense>
-              <PiCaretDownThin style={{transform:showSubMinu? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon mx-1" fontSize={"1rem"} />
-            </Suspense>
-            <span className="mx-1 d-none d-lg-block">{link.title}</span>   
-                <ul  className={`${showSubMinu? "position-absolute  sub-menu  text-end":"d-none "}`}>
-                  {SubMinuCategories}
-                </ul></> :
                  <NavLink
           to={link.path}
           className="nav-link  py-1 px-2 d-flex  align-items-center position-relative"
@@ -401,7 +418,7 @@ const Header = () => {
           }
                 </NavLink>
           
-       }
+       
       </li>
     );
   });
@@ -453,7 +470,7 @@ const Header = () => {
             <div className="d-none d-lg-block">
               <ul className="my-0 h-100 d-flex  align-items-center gap-row-2">
                 <li className="nav-item d-flex align-items-center"></li>
-                {/* <li onMouseOver={()=>setshowSubMinu(true)} onMouseOut={()=>setshowSubMinu(false)} className="nav-item d-flex align-items-center justify-content-between position-relative">
+                 <li onMouseOver={()=>setshowSubMinu(true)} onMouseOut={()=>setshowSubMinu(false)} className="nav-item d-flex align-items-center justify-content-between position-relative">
               <Suspense>
                 <PiCaretDownThin style={{transform:showSubMinu? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon mx-2" fontSize={"1rem"} />
               </Suspense>
@@ -461,8 +478,19 @@ const Header = () => {
                   <ul className={`${showSubMinu? "position-absolute  sub-menu  text-end":"d-none "}`}>
                     {SubMinuCategories}
                   </ul>
-                </li> */}
+                </li> 
 
+
+
+                <li onMouseOver={()=>setshowSubMinuBrands(true)} onMouseOut={()=>setshowSubMinuBrands(false)} className="nav-item d-flex align-items-center justify-content-between position-relative">
+              <Suspense>
+                <PiCaretDownThin style={{transform:showSubMinuBrands? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon mx-2" fontSize={"1rem"} />
+              </Suspense>
+                  شركاء النجاح     
+                  <ul className={`${showSubMinuBrands? "position-absolute  sub-menu  text-end":"d-none "}`}>
+                    {SubMinuBrands}
+                  </ul>
+                </li> 
                 <Fade delay={0} direction="down" triggerOnce={true} cascade>
                   {nav_link_show}
                 </Fade>
@@ -707,7 +735,7 @@ const Header = () => {
       ></div>
       {/* side bar in mobeil */}
       <div
-        className="d-lg-none w-50  justify-content-end mobelLink"
+        className="d-lg-none  justify-content-end mobelLink"
         style={{
           transform: open ? "translateX(0)" : "translateX(200%)",
         }}
@@ -774,9 +802,8 @@ const Header = () => {
             </button>
 
             <div className="collapse " id="collapseExample1">
-              {categories}
-              {categories}
-              {categories}
+              {brands}
+            
             </div>
           </li>
           <li

@@ -17,6 +17,7 @@ import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { errorNotify } from "../../utils/Toast";
 import TextSlide from "../../components/text_slide/Text_slide";
 import { Categories, Categoryitems } from "../../redux/features/Slice/CategoriesSlice";
+import { Branditems } from "../../redux/features/Slice/BrandSlice";
 
 const Products = () => {
   //
@@ -67,8 +68,11 @@ useEffect(() => {
       // dispatch categories to the slice
   dispatch(Categoryitems(categories.data))
 }
-
-},[categories?.data, dispatch])
+if( brands?.data?.length>0){
+  // dispatch categories to the slice
+dispatch(Branditems(brands.data))
+}
+},[brands?.data, categories?.data, dispatch])
 // dispatch(Categoryitems('categories.data'))
 
   // Go to products and filter

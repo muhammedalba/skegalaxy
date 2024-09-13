@@ -34,6 +34,8 @@ header {
     border-radius: 20px;
   }
   .sub-menu{
+    overflow: auto;
+    max-height: 100vh;
     list-style: none;
     right: 0;
     top: 25px;

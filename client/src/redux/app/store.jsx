@@ -8,6 +8,7 @@ import  CartSlice  from "../features/Slice/CartSlice";
 import QuantityResultSlice from "../features/Slice/QuantityResultSlice";
 import NavigationSlice from "../features/Slice/NavigationSlice";
 import CategoriesSlice from "../features/Slice/CategoriesSlice";
+import BrandSlice from "../features/Slice/BrandSlice";
 
 
 
@@ -23,6 +24,7 @@ const store = configureStore({
 
     serch: SerchSlice,
     Categories: CategoriesSlice,
+    brands: BrandSlice,
     cart: CartSlice,
     QuantityResult: QuantityResultSlice,
     Pagination:NavigationSlice
