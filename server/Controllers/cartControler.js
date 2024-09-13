@@ -57,6 +57,9 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
     if (productIndex > -1 ) {
 // If the required quantity is available
     cart.cartItems[productIndex].quantity += 1;
+    cart.cartItems[productIndex].price = price * cart.cartItems[productIndex].quantity;
+
+
       // if( product.quantity > cart.cartItems[productIndex].quantity){
       
       // }else{
@@ -171,7 +174,8 @@ exports.updateCartItemQuantity = asyncHandler(async (req, res, next) => {
   const {productId, quantity } = req.body;
   // get productbyID
   const product = await productModel.findById(productId);
-  
+  const price =product.priceAfterDiscount?product.priceAfterDiscount:product.price
+
   
   const cart = await cartModel.findOne({ user: req.user._id });
 
@@ -188,6 +192,7 @@ exports.updateCartItemQuantity = asyncHandler(async (req, res, next) => {
 
       cart.cartItems[productIndex].quantity = quantity;
       
+      cart.cartItems[productIndex].price =price * cart.cartItems[productIndex].quantity;
 
    
   } else {
