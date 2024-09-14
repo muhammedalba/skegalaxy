@@ -31,6 +31,16 @@
 
 
 #about{
+    .img1 img{
+        border-radius: 0 50px 0 50px;
+        height: 300px;
+    }
+    .img2  img{
+
+        height: 300px;
+        border-radius:  50px 0 50px 0;
+
+}
     .swiper.swiper-coverflow.swiper-3d.swiper-initialized.swiper-horizontal   {
         height: 300px !important;
     }

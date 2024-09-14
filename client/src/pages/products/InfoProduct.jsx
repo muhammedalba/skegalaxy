@@ -4,7 +4,7 @@ import {
   useGetOneQuery,
 } from "../../redux/features/api/apiSlice";
 import Rating from "../../components/Rating/Rating";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { SkeletonInfoProduct } from "../../utils/skeleton";
 import { Fade } from "react-awesome-reveal";
 import Cookies from "universal-cookie";
@@ -30,6 +30,7 @@ import {
 } from "react-share";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Link } from "react-router-dom";
 
 
 
@@ -361,17 +362,21 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
               <div className="w-100">
                 <div className="card-body text-end p-2">
                   <Fade delay={0} direction="up" triggerOnce={true}>
-                    <h1
-                      style={{ backgroundColor: "var(--bgColor)" }}
-                      className="card-title py-2 mb-3  text-center text-danger border border-end-0 border-start-0"
+                    <h4
+                      style={{ backgroundColor: "rgb(243, 244, 246)" }}
+                      className="card-title p-2 mb-3   border-bottom border-start-0"
                     >
-                     <span className="text-secondary ps-2 fs-4">
-                        {product?.data?.title.split("_")[0]}
-                        <br />
+                     <span className=" ps-2  w-100 d-block">
                         {product?.data?.title.split("_")[1]}
+                       
+                        
                       </span>
-                      
-                    </h1>
+                      <span className=" ps-2 pt-1 w-100 d-block">
+                        
+                       
+                        {product?.data?.title.split("_")[0]}
+                      </span>
+                    </h4>
 
                     <div
                       className={
@@ -443,7 +448,7 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                               : " "
                           }
                         >
-                          ({product?.data.price})
+                          ({product?.data.price.toFixed(2)})
                         </i>
                       </span>
                     </div>
@@ -459,10 +464,10 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                         السعر بعد الخصم :{" "}
                       </span>
 
-                      <span className=" p-1">
-                        ( {product?.data?.priceAfterDiscount})
+                      <spain className="text-secondary p-1">
+                        ({product?.data?.priceAfterDiscount.toFixed(2)})
                         <span className="text-success"> SAR</span>
-                      </span>
+                      </spain>
                     </div>
 
                     <span className="text-danger">
@@ -566,11 +571,27 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
           />
         ));
       return (
-        <div className="col-12">
-          <h2 style={{color:'var(  --btn-bg-color)'}} className="text-center  fw-bold fs-4">
-          منتجات قد تعجبك          
-          </h2>
-          <hr className="my-4" />       <Carousel
+        <div className="container">
+          <div  className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 mt-4 border-bottom bo">
+          <span
+           
+           
+            className=" fs-4   "
+          >
+              منتجات مشابه
+
+          </span>
+         <span style={{
+          height:"1px",
+          backgroundColor: "var(--bgColor) !important" ,
+          flex:'auto'
+         }} className="bg-dark mx-3"></span>
+
+          <Link  to={"/categories"}
+          style={{ color: "var( --btn-bg-color) !important" }}
+          >عرض الكل </Link>
+        </div>  
+           <Carousel
           responsive={responsive}
           showDots={true}
           ssr={true}

@@ -494,7 +494,7 @@ const openModalAndClearCart = useCallback(() => {
       {/* products results && table &&coupon */}
       <div className="row flex-row-reverse ">
         {/* products results && table */}
-        <div className="col-12 col-lg-9 border-end flex">
+        <div  className="col-12 col-lg-9 border-end flex">
           <Fade delay={0} direction="up" triggerOnce={true}>
             <h1 className="text-center m-3 py-3 border-bottom">
               سلة مشترياتي{" "}
@@ -505,7 +505,7 @@ const openModalAndClearCart = useCallback(() => {
 
 
           {/* data table  start*/}
-          <table className={isSuccess && productsDetails?.resnumOfCartItems > 0?"table table-striped pt-5 mt-3 text-center":'d-none'}>
+          <table className="table pt-5 mt-3 text-center">
             <thead >
               <tr>
                 {/* <th className=" d-table-cell" scope="col">
@@ -523,8 +523,8 @@ const openModalAndClearCart = useCallback(() => {
                 
           {isSuccess && productsDetails?.resnumOfCartItems > 0 && (
            
-              <th colSpan={4}
-                            className="fs-6 w-100 p-2">
+              <th style={{backgroundColor:'rgb(243, 244, 246) '}} colSpan={4}
+                            className="fs-6 w-100 p-2 ">
                 عدد المنتجات : ( {productsDetails?.resnumOfCartItems} )
               </th>
             

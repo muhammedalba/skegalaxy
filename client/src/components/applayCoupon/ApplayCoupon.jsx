@@ -53,13 +53,11 @@ Confirm ,HideDiscount}) => {
 
 
     return (
-        <div
-        className={
-          productsDetails?.resnumOfCartItems > 0
-            ? "col-12 col-sm-7 mx-auto col-lg-3  totale z-2 top-lg-5"
-            : "col-12 col-sm-6 mx-auto col-lg-3 totale z-2 top-lg-5"
-        }
-      >
+        <div 
+        className="col-12 col-sm-7 mx-auto col-lg-3  totale z-2 top-lg-5" >
+          
+        
+   
         {/* coupon start*/}
         {/* {isSuccess && productsDetails?.resnumOfCartItems > 0 &&  */}
         <form
@@ -124,14 +122,14 @@ Confirm ,HideDiscount}) => {
 
         
           <Fade delay={0} direction="up" triggerOnce={true}>
-            <span className="  fs-5 py-3 ">
+            <span style={{backgroundColor:'rgb(243, 244, 246) '}} className=" w-100 d-block fs-5 my-2 p-1 px-2 ">
               المجموع : (
               {updateData?.data?.totalPriceAfterDiscount && Confirm
                 ? updateData?.data?.totalPriceAfterDiscount?.toFixed(2)
                 : productsDetails?.totalCartPrice?.toFixed(2)}
               ) <span className="ps-1 text-success">SAR</span>
             </span>
-            <span className="text-danger text-center d-block">
+            <span className="text-danger  text-center d-block">
               {" "}
               التوصيل مجانا داخل مدينة الرياض لاي طلب يتجاوز (6000) الاف ريال
             </span>

@@ -71,8 +71,8 @@ const About = () => {
             <div className="col-md-5">
             <Fade direction="up" triggerOnce cascade>
 
-              <div className="">
-                <img width={400} height={400} src={heroImage} alt="Hero" className="w-100 rounded" />
+              <div className="img1">
+                <img width={400} height={300} src={heroImage} alt="Hero" className="w-100 " />
               
               </div>
               </Fade>
@@ -108,8 +108,8 @@ const About = () => {
             </div> 
              <div className="col-md-5">
              <Fade direction="up" triggerOnce cascade>
-              <div className="">
-                <img width={400} height={400} src={img4} alt="Hero" className="w-100 rounded " />
+              <div className="img2">
+                <img width={400} height={300} src={img4} alt="Hero" className="w-100  " />
               
               </div>
               </Fade>
