@@ -7,8 +7,10 @@ const ApiError = require("../utils/apiError");
 
 const calcTotalCartPrice = (cart) => {
   let totalPrice = 0;
+
   cart.cartItems.forEach((item) => {
-    totalPrice += item.price * item.quantity;
+    // totalPrice += item.price * item.quantity;
+    totalPrice += item.price ;
   });
   cart.totalCartPrice = totalPrice;
   
