@@ -101,7 +101,7 @@ const AllCategories = () => {
                 decoding="async"
                   width={150}
                   height={150}
-                  src={product.image ? `${product?.imageUrl}/${product?.image}` : logo}
+                  src={product.image ? `${categories?.imageUrl}/${product?.image}` : logo}
                   className=" d-block m-auto "
                   alt="product"
                   style={{objectFit:"fill"}}
