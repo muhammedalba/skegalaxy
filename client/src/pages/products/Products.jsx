@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetDataQuery } from "../../redux/features/api/apiSlice";
 import Carousel from "react-multi-carousel";
-import { Fade } from "react-awesome-reveal";
+
 import { SkeletonCard } from "../../utils/skeleton";
 import { Fragment,  } from 'react';
 import { SkeletonProduct } from "../../utils/skeleton";
@@ -16,9 +16,10 @@ import Card from "../../components/card/Card";
 import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { errorNotify } from "../../utils/Toast";
 import TextSlide from "../../components/text_slide/Text_slide";
-import { Categories, Categoryitems } from "../../redux/features/Slice/CategoriesSlice";
+import {Categoryitems } from "../../redux/features/Slice/CategoriesSlice";
 import { Branditems } from "../../redux/features/Slice/BrandSlice";
-import { FilterValue } from "../../redux/features/Slice/FilterIdSlice";
+// import { FilterValue } from "../../redux/features/Slice/FilterIdSlice";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   //
@@ -26,8 +27,8 @@ const Products = () => {
   const search = useSelector((state) => state.serch);
   const limit = useSelector((state) => state.QuantityResult);
   const Pagination = useSelector((state) => state.Pagination);
-  const FilterById = useSelector((state) => state.FilterValue);
-console.log(FilterById,'FilterById');
+
+
 
   // brand our category filter
   const [filterCategorirs, setfilterCategorirs] = useState("");
@@ -45,7 +46,7 @@ const dispatch=useDispatch();
     isLoading,
     isSuccess,
   } = useGetDataQuery(
-    `products?limit=${limit}&page=${Pagination}&${FilterById}${filterDrands}${filterCategorirs}${sortFilter}&keywords=${search}&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage`
+    `products?limit=${limit}&page=${Pagination}${filterDrands}${filterCategorirs}${sortFilter}&keywords=${search}&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage`
   );
   
 
@@ -117,6 +118,7 @@ dispatch(Branditems(brands.data))
    
 
       return sortedproducts?.map((product, index) => (
+        
         <Card key={index} product={product} imgePath={products?.imageUrl} />
       ));
     }
@@ -166,10 +168,9 @@ dispatch(Branditems(brands.data))
         (brand) => brand._id === value
       );
       setSelectedBrand(selectedBrand ? selectedBrand.name : "");
-       // reset felter values
-       dispatch(FilterValue(''));
+
     },
-    [brands?.data, dispatch]
+    [brands?.data]
   );
     // view categories select loadingcategories 
     const showCategorie = useMemo(() => {
@@ -209,11 +210,10 @@ dispatch(Branditems(brands.data))
       );
       setSelectedCategory(selectedcategory ? selectedcategory.name : "");
 
-      // reset felter values
-      dispatch(FilterValue(''));
+
     },
-    [categories?.data, dispatch]
-  );
+    [categories?.data]
+  )
 
   // hanle sort products
   const handleSortProducts = useCallback((e) => {
@@ -228,7 +228,7 @@ dispatch(Branditems(brands.data))
     setSelectedBrand("");
     setSelectedCategory("");
    setsortFilter('')
-   dispatch(FilterValue(''));
+
   };
 
 
@@ -401,13 +401,13 @@ dispatch(Branditems(brands.data))
       {/* categories slide*/}
   
         <div className="">
-          <p
+          <Link to={'/categories'} 
             style={{ backgroundColor: "var(--bgColor)" }}
-            className="p-2 mb-3  fs-3 border border-end-0 border-start-0 text-center"
+            className="p-2 mb-3 w-100 d-block  fs-4 border border-end-0 border-start-0 text-center"
           >
             
             الاقسام
-          </p>
+          </Link>
           <Carousel
             responsive={responsivecategory}
             autoPlay={true}
@@ -429,12 +429,12 @@ dispatch(Branditems(brands.data))
       {/* brands slide*/}
 
         <div className="">
-          <p
+          <Link to={'/brands'}
             style={{ backgroundColor: "var(--bgColor)" }}
-            className="p-2 mb-3  fs-3 border border-end-0 border-start-0 text-center"
+            className="p-2 mb-3 w-100 d-block  fs-4 border border-end-0 border-start-0 text-center"
           >
             شركاء النجاح
-          </p>
+          </Link>
           <Carousel
             responsive={responsive}
             autoPlay={true}
@@ -467,6 +467,8 @@ dispatch(Branditems(brands.data))
         </p>
 
         <div className=" d-flex justify-content-center flex-column border-top pt-2 gap-2">
+
+          {/* filtter start */}
           <div className="w-100 flex-wrap align-items-center overflow-hidden p-1 d-flex">
             {/*gategory  */}
             <div className=" p-2">

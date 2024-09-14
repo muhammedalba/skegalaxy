@@ -1,5 +1,6 @@
-import React, { memo, Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import React, {  Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import "./cart.css";
+import { Fragment  } from 'react';
 import { useDispatch } from "react-redux";
 import {
 
@@ -236,9 +237,10 @@ const openModalAndClearCart = useCallback(() => {
     if (isSuccess && productsDetails?.resnumOfCartItems > 0) {
       const cartItems = [...productsDetails.cartItems]
       return cartItems.map((product, index) => (
-        <tr key={index}>
+        <Fragment key={index} >
+        <tr className="my-1"> 
          
-          <td className=" d-table-cell" scope="row">
+          <td className=" d-table-cell " scope="row">
             <Fade delay={0} direction="up" triggerOnce={true}>
               <button
                 disabled={LoadingDelet || LoadingUpdate}
@@ -258,7 +260,7 @@ const openModalAndClearCart = useCallback(() => {
           <td className="d-sm-table-cell">
             <Fade delay={0} direction="up" triggerOnce={true}>
               <img
-                style={{ width: "100px", height: "80px" }}
+                style={{ width:'auto' ,maxHeight: "80px" }}
                 src={`${products?.imageUrl}/${product?.product?.imageCover}`}
                 alt="product"
               />
@@ -272,7 +274,7 @@ const openModalAndClearCart = useCallback(() => {
                   product.product?.title?.slice(0, 50)
                 ) : (
                   <span className="text-danger">
-                    {" "}
+                    
                     هذا المنتج غير متوفر حاليا
                   </span>
                 )}
@@ -286,20 +288,26 @@ const openModalAndClearCart = useCallback(() => {
                   ({product?.product?.price} )
                   <i className="text-success"> SAR</i>
                 </span>
-                <span className="py-2 text-danger">
+                <span className={`${
+                    product?.product?.priceAfterDiscount
+                      ? "py-2 text-danger"
+                      : "d-none "
+                  }`}>
                   ({product?.product?.priceAfterDiscount} )
                   <i className="text-success"> SAR</i>
                 </span>
                 <span className=" text-success d-none d-d-md-block">
                   <i className="text-dark"> الكمية المتوفرة :</i>(
-                  {product?.product?.quantity>0 ?product?.product?.quantity:"متوفر عند الطلب"})
+                  {product?.product?.quantity> 0 ?product?.product?.quantity:"متوفر عند الطلب"})
                 </span>
               </div>
             </Fade>
             
           </td>
           <td className=" d-none d-sm-table-cell ">
-            <Fade delay={0} direction="up" triggerOnce={true}>
+            <Fade className="h-100" delay={0} direction="up" triggerOnce={true}>
+              <div className="d-flex  h-100   gap-4 flex-column ">
+                
               <div className="w-100 d-flex align-items-center gap-1 justify-content-between">
                 <IoAddOutline
                   cursor={"pointer"}
@@ -352,18 +360,43 @@ const openModalAndClearCart = useCallback(() => {
                   </button>
                 }
               </div>
+              <span className="d-block w-100">
+                 
+
+                 <i className="text-dark">
+                    المجموع :
+                 </i>
+                 <i className="text-danger mx-1">({product.price}) </i>
+                 <i className="text-success ">
+                       ر.س 
+                 </i>
+                  
+              </span>
+              </div>
             </Fade>
           </td>
-          
+
         </tr>
-       /*  <tr>
-        <div className="w-100 d-flex d-sm-none align-items-center gap-1 justify-content-between border rounded p-2">
-                <IoAddOutline
+
+    <tr>
+        <td colSpan={7}
+          scope="row" className=" d-sm-none  ">
+            <div className="d-flex align-items-center  w-100 flex-wrap border-bottom  border-top  justify-content-between">
+              <div  className=" d-flex  align-items-center gap-1  p-2">
+               <div className="d-flex flex-column gap-2 px-2">
+               <IoAddOutline
                   cursor={"pointer"}
-                  fontSize={"25px"}
+                  fontSize={"1rem"}
                   color="blue"
                   onClick={() => handleQuantityChange(index, 1)}
+                /> 
+                 <RiSubtractLine
+                  cursor={"pointer"}
+                  fontSize={"1rem"}
+                  color="red"
+                  onClick={() => handleQuantityChange(index, -1)}
                 />
+               </div>
                 <input
                   min={1}
                   max={2000}
@@ -379,13 +412,8 @@ const openModalAndClearCart = useCallback(() => {
                   name="quantity"
                 />
 
-                <RiSubtractLine
-                  cursor={"pointer"}
-                  fontSize={"25px"}
-                  color="red"
-                  onClick={() => handleQuantityChange(index, -1)}
-                />
-                {
+              
+                
                   <button
                     type="button"
                     disabled={
@@ -394,7 +422,7 @@ const openModalAndClearCart = useCallback(() => {
                         : false
                     }
                     className={
-                      Confirm ? "btn  m-0 border-0 p-0 text-success" : "d-none"
+                      Confirm ? "btn mx-2  m-0 border-0 p-0 text-success" : "d-none"
                     }
                     onClick={() =>
                       handelQuantity(
@@ -404,14 +432,28 @@ const openModalAndClearCart = useCallback(() => {
                       )
                     }
                   >
-                    تاكيد
+                     تاكيد الكميه
                     <BsCheck2 fontSize={"25px"} />
                   </button>
-                }
-            </div> 
-        </tr> */
+                
+              </div> 
+              <span className="d-block">
+                 
+
+            <i className="text-success">
+               المجموع :
+            </i>
+            <i className="text-danger mx-1">({product.price}) </i>
+            <i className="text-success ">
+                  ر.س 
+            </i>
+             
+              </span>
+            </div>
+        </td>
+       </tr> 
        
-      ));
+    </Fragment>  ));
     } else {
       return (
         <tr>
@@ -461,30 +503,32 @@ const openModalAndClearCart = useCallback(() => {
 
           {/* products results */}
 
-          {isSuccess && productsDetails?.resnumOfCartItems > 0 && (
-            <Fade delay={0} direction="up" triggerOnce={true}>
-              <span className="fs-5 p-2">
-                عدد المنتجات : ( {productsDetails?.resnumOfCartItems} )
-              </span>
-            </Fade>
-          )}
 
           {/* data table  start*/}
           <table className={isSuccess && productsDetails?.resnumOfCartItems > 0?"table table-striped pt-5 mt-3 text-center":'d-none'}>
             <thead >
               <tr>
-                <th className=" d-table-cell" scope="col">
+                {/* <th className=" d-table-cell" scope="col">
                   حذف
                 </th>
                 <th className="d-table-cell" scope="col">
                   صورة المنتج
                 </th>
-                <th className="d-none d-sm-table-cell" scope="col">
+                <th className=" d-table-cell" scope="col">
                   الاسم المنتج
                 </th>
                 <th className=" d-none d-sm-table-cell" scope="col">
                   الكمية
-                </th>
+                </th> */}
+                
+          {isSuccess && productsDetails?.resnumOfCartItems > 0 && (
+           
+              <th colSpan={4}
+                            className="fs-6 w-100 p-2">
+                عدد المنتجات : ( {productsDetails?.resnumOfCartItems} )
+              </th>
+            
+          )}
               </tr>
             </thead>
             <tbody className="">{showData}</tbody>

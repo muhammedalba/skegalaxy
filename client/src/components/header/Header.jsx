@@ -1,4 +1,4 @@
-import React, {
+import  {
   useCallback,
   useEffect,
   useMemo,
@@ -18,7 +18,7 @@ import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 // img
 import logo from "../../imges/logo.webp";
 import avatar from "../../imges/avatar.webp";
-import { FilterValue } from "../../redux/features/Slice/FilterIdSlice";
+
 // icons
 const CiSearch = lazy(() =>
   import("react-icons/ci").then((module) => ({ default: module.CiSearch }))
@@ -214,7 +214,7 @@ console.log(brandsitims);
     dispatch(Results(15));
     dispatch(currentPage(1));
     dispatch(searchItem(""));
-    dispatch(FilterValue(""));
+
   };
   // Auth links
   const AuthLinks = [
@@ -354,43 +354,43 @@ console.log(brandsitims);
 
 
 
-const dispatchValueToStore=(value)=>{
+const closeMenu= useCallback(()=>{
   
-  dispatch(FilterValue(value));
-  window.scrollTo({ top: 1100, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: "smooth" });
  setshowSubMinu(false) ;
  setshowSubMinuBrands(false); 
+ setopen(false); 
   
-}
+},[]);
 
   // in desktop
   const categories=categoriesitims.map((category)=>{
-    return   <div onClick={()=>dispatchValueToStore(`category=${category._id}`)} key={category._id} className="card border-0 px-4 py-2 w-100  ">
+    return   <Link  to={`/category/${category._id}`} onClick={closeMenu} key={category._id} className="card border-0 px-4 py-2 w-100  ">
         <span>{category?.name.split("_")[0]}</span>
         {/* <span>{category?.name.split("_")[1]}</span> */}
                    
-           </div>
+           </Link>
     });
     // in mobile
     const SubMinuCategories=categoriesitims.map((category)=>{
-      return   <li  onClick={()=>dispatchValueToStore(`category=${category._id}`)} key={category._id} className="border-bottom">
-          <span>{category?.name.split("_")[0]}</span>
+      return   <li  key={category._id} className="border-bottom">
+          <Link  to={`/category/${category._id}`} onClick={closeMenu}>{category?.name.split("_")[0]}</Link>
           {/* <span>{category?.name.split("_")[1]}</span> */}
                      
              </li>
       });
       // in mobile
       const brands=brandsitims.map((brand)=>{
-        return   <div  onClick={()=>dispatchValueToStore(`brand=${brand._id}`)} key={brand._id} className="card border-0 px-4 py-2 w-100  ">
-            <span>{brand?.name.split("_")[0]}</span>
-            {/* <span>{brand?.name.split("_")[1]}</span> */}
+        return   <Link  to={`/brand/${brand._id}`}  key={brand._id} onClick={closeMenu} className="card border-0 px-4 py-2 w-100  ">
+                    <span  >{brand?.name.split("_")[0]}</span>
+                     {/* <span>{brand?.name.split("_")[1]}</span> */}
                        
-               </div>
+               </Link>
         });
         // in desktop
         const SubMinuBrands=brandsitims.map((brand)=>{
-          return   <li onClick={()=>dispatchValueToStore(`brand=${brand._id}`)} key={brand._id} className="border-bottom">
-              <span>{brand?.name.split("_")[0]}</span>
+          return   <li  key={brand._id} className="border-bottom">
+              <Link  to={`/brand/${brand._id}`} onClick={closeMenu} >{brand?.name.split("_")[0]}</Link>
               {/* <span>{brand?.name.split("_")[1]}</span> */}
                          
                  </li>
@@ -489,11 +489,14 @@ const dispatchValueToStore=(value)=>{
             <div className="d-none d-lg-block">
               <ul className="my-0 h-100 d-flex  align-items-center gap-row-2">
                 <li className="nav-item d-flex align-items-center"></li>
-                 <li onMouseOver={()=>setshowSubMinu(true)} onMouseOut={()=>setshowSubMinu(false)} className="nav-item d-flex align-items-center justify-content-between position-relative">
+                 <li onMouseOver={()=>setshowSubMinu(true)} onMouseOut={()=>setshowSubMinu(false)} className="nav-item d-flex align-items-center justify-content-between position-relative ">
               <Suspense>
-                <PiCaretDownThin style={{transform:showSubMinu? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon mx-2" fontSize={"1rem"} />
+                <PiCaretDownThin style={{transform:showSubMinu? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon " fontSize={"1rem"} />
               </Suspense>
+                <Link className="mx-1" to={'/categories'}>
                   الاقسام     
+                
+                </Link>
                   <ul className={`${showSubMinu? "position-absolute  sub-menu  text-end":"d-none "}`}>
                     {SubMinuCategories}
                   </ul>
@@ -501,11 +504,14 @@ const dispatchValueToStore=(value)=>{
 
 
 
-                <li onMouseOver={()=>setshowSubMinuBrands(true)} onMouseOut={()=>setshowSubMinuBrands(false)} className="nav-item d-flex align-items-center justify-content-between position-relative">
+                <li onMouseOver={()=>setshowSubMinuBrands(true)} onMouseOut={()=>setshowSubMinuBrands(false)} className="nav-item px-1 d-flex align-items-center justify-content-between position-relative">
               <Suspense>
-                <PiCaretDownThin style={{transform:showSubMinuBrands? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon mx-2" fontSize={"1rem"} />
+                <PiCaretDownThin style={{transform:showSubMinuBrands? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon " fontSize={"1rem"} />
               </Suspense>
+              <Link className="mx-1" to={'/brands'}>
                   شركاء النجاح     
+              
+              </Link>
                   <ul className={`${showSubMinuBrands? "position-absolute  sub-menu  text-end":"d-none "}`}>
                     {SubMinuBrands}
                   </ul>
