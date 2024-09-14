@@ -97,12 +97,15 @@ const handleChange=(e)=>{
 
 //  handle Image Change
  const handleImageChange = (event) => {
+ 
+  
     const file = event.target.files[0];
     const imgeFile = file.type.split("/")[0];
-
+ console.log(file);
+ console.log(imgeFile);
 
     if (file) {
-      if (imgeFile === 'image'||imgeFile === 'webp') {
+      if (imgeFile === 'image' || imgeFile === 'webp') {
         setImage(file);
       const reader = new FileReader();
       // عرض المعاينة عند انتهاء القراءة

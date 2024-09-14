@@ -69,7 +69,7 @@ console.log(carouseles?.data);
   }, [isLoading, isSuccess, carouseles?.data, carouseles?.imageUrl]);
 
   return (
-    <div className="w-100  carouseles">
+    <div className="container-fluid carouseles">
       {/* Toast Container */}
       <ToastContainer
         position="top-right"

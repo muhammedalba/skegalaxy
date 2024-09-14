@@ -90,7 +90,7 @@ const AllCategories = () => {
                   <Fade direction="up" triggerOnce={true} cascade>
 
               <div
-                style={{ height: "16.5rem" }}
+                style={{ height: "17.2rem" }}
                
                 inert="true"
                 className=" border pt-1  d-flex flex-column
@@ -99,10 +99,10 @@ const AllCategories = () => {
                 <img
                 loading="lazy"
                 decoding="async"
-                  width={150}
-                  height={150}
+                  width={200}
+                  height={200}
                   src={product.image ? `${categories?.imageUrl}/${product?.image}` : logo}
-                  className=" d-block m-auto "
+                  className=" d-block w-100 m-auto p-1"
                   alt="product"
                   style={{objectFit:"fill"}}
                   
@@ -128,7 +128,7 @@ const AllCategories = () => {
               لا يوجد بيانات
             </div>
           );
-        }, [isLoading, isSuccess, categories?.data]);
+        }, [isLoading, isSuccess, categories?.data, categories?.imageUrl]);
     
       return (
         <div className="w-100 pt-4 ">

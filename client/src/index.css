@@ -82,6 +82,12 @@ a {
 .react-multi-carousel-track {
   margin: auto;
 }
+.Carousel .react-multi-carousel-list ul{
+background-color: rgb(243, 244, 246) ;
+li{
+  height: 310px !important;
+}
+}  
 .react-multiple-carousel__arrow {
   background-color: var(--bgColor) !important;
   z-index: 2 !important;

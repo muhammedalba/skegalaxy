@@ -717,7 +717,7 @@ const closeMenu= useCallback(()=>{
 
       {/* go to top start */}
       <span
-        className=" "
+        className=" border border-2"
         style={{
           transform: scroll ? "translateY(0)" : "translateY(-1500px)",
         }}
@@ -733,7 +733,7 @@ const closeMenu= useCallback(()=>{
       </span>
       {/* go to top end */}
 
-      {/* go to whatsapp start */}
+      {/* go  whatsapp start */}
       <a
         style={{
           transform: scroll
@@ -749,7 +749,7 @@ const closeMenu= useCallback(()=>{
         </Suspense>
       </a>
 
-      {/* go to top end */}
+      {/* go  whatsapp end */}
       <div
         style={{
           backgroundColor: "rgba(0, 0, 0, .5)",

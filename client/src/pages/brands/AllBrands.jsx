@@ -164,10 +164,10 @@ const AllBrands = () => {
                 <img
                 loading="lazy"
                 decoding="async"
-                  width={150}
-                  height={150}
+                  width={200}
+                  height={175}
                   src={product.image ? `${brands?.imageUrl}/${product?.image}` : logo}
-                  className=" d-block m-auto "
+                  className=" d-block m-auto w-100 p-1"
                   alt="product"
                   style={{objectFit:"fill"}}
                   

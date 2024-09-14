@@ -63,7 +63,7 @@ console.log(BrandId,'BrandId');
       const sortedproducts = [...products.data];
 
       return sortedproducts?.map((product, index) => (
-        <Fade  key={index}direction="up" triggerOnce={true}>
+        <Fade  key={index}direction="up" triggerOnce={true}  className="m-auto">
         <Card product={product} imgePath={products?.imageUrl} />
         </Fade>
       ));
