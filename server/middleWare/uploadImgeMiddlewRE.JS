@@ -107,7 +107,7 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       await processAndSaveImage(
         req.files.image[0].buffer,
         filePath,
-        600,
+        800,
         600,
         90
       );
