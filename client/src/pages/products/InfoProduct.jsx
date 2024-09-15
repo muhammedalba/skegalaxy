@@ -464,10 +464,10 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                         السعر بعد الخصم :{" "}
                       </span>
 
-                      <spain className="text-secondary p-1">
-                        ({product?.data?.priceAfterDiscount.toFixed(2)})
+                      <span className="text-secondary p-1">
+                        ({product?.data?.priceAfterDiscount?.toFixed(2)})
                         <span className="text-success"> SAR</span>
-                      </spain>
+                      </span>
                     </div>
 
                     <span className="text-danger">
@@ -571,7 +571,7 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
           />
         ));
       return (
-        <div className="container">
+        <div className={filteredProducts?"container d-block":'d-none'}>
           <div  className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 mt-4 border-bottom bo">
           <span
            

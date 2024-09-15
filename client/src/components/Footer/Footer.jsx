@@ -69,7 +69,7 @@ const Footer = () => {
     // <animate__bounceInRight>
     <footer className="footer  mt-4">
       {/* services */}
-      <div className="row services m-auto w-100 py-3 px-3 fs-4 text-center">
+      <div className="row services m-auto  py-3 px-3 fs-4 text-center">
         <div className="col-sm-6 col-md-3 px-2 ">
           <div className="d-flex align-items-center gap-2 justify-content-md-center">
             <Suspense>

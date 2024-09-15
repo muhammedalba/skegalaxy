@@ -276,24 +276,25 @@ const Products = () => {
     if (successbrands && brands?.data?.length > 0) {
       return brands?.data.map((brand, index) => (
         <button
-          style={{ minWidth: "75%" ,backgroundColor:'rgb(243 244 246)'}}
+        style={{ width: "250px  "}}
+          // style={{ minWidth: "75%" ,backgroundColor:'rgb(243 244 246)'}}
           onClick={() => scrollToSection(section1Ref, `&brand=${brand._id}`)}
-          className=" btn d-block m-auto w-100 caroselBrand"
+          className=" btn d-block m-auto  caroselBrand"
           key={index}
         >
           <div
-            style={{ height: "16.5rem",backgroundColor:'white' }}
+            style={{ height: "17rem",backgroundColor:'white' }}
             inert="true"
-            className=" border pt-1  d-flex flex-column
+            className=" w-100 border pt-1  d-flex flex-column
             align-items-center justify-content-between  m-auto pointer overflow-hidden"
           >
             <img
               loading="lazy"
               decoding="async"
-              width={200}
-              height={150}
+              width={216}
+              height={216}
               src={brand.image ? `${brands?.imageUrl}/${brand?.image}` : logo}
-              className=" d-block w-100 p-2 m-auto"
+              className=" d-block  p-2 m-auto"
               alt="brand"
               style={{ objectFit: "fill" }}
             />
@@ -319,8 +320,18 @@ const Products = () => {
     successbrands,
   ]);
   const responsive = {
+    xxLargeDesktop: {
+      breakpoint: { max: 1600, min: 1450 },
+      items: 5,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+    xLargeDesktop: {
+      breakpoint: { max: 1450, min: 1200 },
+      items: 5,
+      slidesToSlide: 1, // optional, default to 1.
+    },
     superLargeDesktop: {
-      breakpoint: { max: 3000, min: 1024 },
+      breakpoint: { max: 1200, min: 1024 },
       items: 4,
       slidesToSlide: 1, // optional, default to 1.
     },
@@ -330,12 +341,12 @@ const Products = () => {
       slidesToSlide: 1, // optional, default to 1.
     },
     tablet: {
-      breakpoint: { max: 700, min: 420 },
+      breakpoint: { max: 700, min: 490 },
       items: 2,
       slidesToSlide: 1, // optional, default to 1.
     },
     mobile: {
-      breakpoint: { max: 420, min: 0 },
+      breakpoint: { max: 490, min: 0 },
       items: 1,
       slidesToSlide: 1, // optional, default to 1.
     },
@@ -381,7 +392,7 @@ const Products = () => {
       {/* categories slide*/}
 
       <div className="mt-4 Carousel">
-        <div  className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 border-bottom bo">
+        <div  className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 border-bottom ">
           <span
            
            
@@ -422,7 +433,7 @@ const Products = () => {
       {/* brands slide*/}
 
       <div className="">
-      <div  className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 mt-4 border-bottom bo">
+      <div  className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 mt-4 border-bottom ">
           <span
            
            
@@ -470,9 +481,9 @@ const Products = () => {
           المنتجات
         </p>
 
-        <div className=" row  border-top pt-2 gap-1">
+        <div className=" row  border-top pt-2 ">
           {/* filtter start */}
-          <div style={{top:'6.1rem',zIndex:'5'}} className="col-12 col-sm-3 flex-wrap flex-column bg-white  h-25 overflow-hidden p-1 d-flex position-sticky  end-0">
+          <div style={{top:'6.1rem',zIndex:'5'}} className="col-12 col-sm-3  col-lg-2 flex-wrap flex-column bg-white  h-25 overflow-hidden p-1 d-flex position-sticky  end-0">
             <p className="fs-5 px-3 m-0 ">  فلترة : </p>
             {/*gategory  */}
             <div className=" p-2">
@@ -563,8 +574,12 @@ const Products = () => {
           </div>
 
           {/* products data */}
-          <div className=" row col-12 col-sm-9  justify-content-center row-gap-4 gap-2 d ">
+          <div className="  col-12 col-sm-9 col-lg-10  justify-content-center row-gap-4 gap-2 ">
+            <div className="row">
+
             {showData}
+
+            </div>
           </div>
         </div>
       </div>

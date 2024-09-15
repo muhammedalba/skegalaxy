@@ -38,7 +38,7 @@ import {
 
 } from 'react-share';
 
-const Card = ({ product, imgePath,reverse }) => {
+const Card = ({ product, imgePath }) => {
 
 
   
