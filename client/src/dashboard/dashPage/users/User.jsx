@@ -19,6 +19,8 @@ const User = () => {
   const { isLoading, isSuccess, data, error } = useGetOneQuery(
     `users/${userId}`
   );
+  console.log(data);
+  
   // update data (rtk redux)
   const [
     updateOne,
