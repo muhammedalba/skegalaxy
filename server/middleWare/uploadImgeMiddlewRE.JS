@@ -71,8 +71,8 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       await processAndSaveImage(
         req.files.imageCover[0].buffer,
         filePath,
-        225,
-        225,
+        400,
+        400,
        90
         
       );
@@ -168,8 +168,8 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
           await processAndSaveImage(
             image.buffer,
             filePath,
-            450,
-            300,
+            400,
+            400,
             80
           );
           req.body.images.push(filename); // Save image into our db
