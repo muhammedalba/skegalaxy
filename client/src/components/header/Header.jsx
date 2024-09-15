@@ -119,6 +119,22 @@ const BsFillTelephoneFill = lazy(() =>
 );
 
 
+// <a  id="btnSerch" class="btn"
+     
+// href=https://api.whatsapp.com/send?phone=9647816435470&text=المنتج%20%3A%20${e.title}%20قسم%20مستحضرات%20التجميل
+// target="_blank">buy now</a>
+
+{/* <script>
+window.onscroll = function(){
+    myFunctiono()
+};
+function myFunctiono() {
+    var winscroll = document.body.scrollTop || document.documentElement.scrollTop;
+    var heigth = document.documentElement.scrollHeight - document.documentElement.clientHeight ;
+    var scrolled = (winscroll / heigth) * 100 ;
+    document.getElementById("mybar").style.width = scrolled +"%" 
+};
+</script> */}
 
 const Header = () => {
   const [Autapi, { isSuccess }] = useAutapiMutation();
@@ -132,7 +148,8 @@ const Header = () => {
   const cartitims = useSelector((state) => state.cart);
   const categoriesitims = useSelector((state) => state.Categories);
   const brandsitims = useSelector((state) => state.brands);
-console.log(brandsitims);
+  const search = useSelector((state) => state.serch);
+
 
 
   const [scroll, setscroll] = useState(false);
@@ -174,8 +191,9 @@ console.log(brandsitims);
       window.scrollTo({ top: 1100, behavior: "smooth" });
       dispatch(currentPage(1));
       dispatch(searchItem(e.target.value));
+      console.log(search,'search');
     },
-    [dispatch]
+    [dispatch, search]
   );
   const Scrolto = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -668,6 +686,7 @@ const closeMenu= useCallback(()=>{
               className="h-100 px-2 w-100 text-end"
               placeholder="...بحث"
               onChange={handelserche}
+              value={search}
             />
             <label>
               <Suspense>
@@ -736,8 +755,9 @@ const closeMenu= useCallback(()=>{
       {/* go  whatsapp start */}
       <a
         style={{
+          animation:scroll?'shake  1s    infinite linear':'' ,
           transform: scroll
-            ? "translateX(0) rotate(0deg)"
+            ? "translateX(0)"
             : "translateX(-1500px)",
         }}
         id="whatsapp"

@@ -123,7 +123,7 @@ const Footer = () => {
 
       {/* Social Media Icons && */}
       <div className="w-100">
-        <div className="row p-3 w-100 bp-0 ">
+        <div className="row p-3  bp-0 ">
           {/*  communication */}
           <div className="col-12 col-sm-4 text-center pt-3">
             <Fade direction="up" triggerOnce={true} cascade>
@@ -331,9 +331,9 @@ const Footer = () => {
         style={{ borderColor: " var(--btn-bg-color)!important " }}
         className="text-center border border-2  border-end-0 border-start-0 p-2"
       >
-        <Fade direction="up" duration={500} delay={0} triggerOnce={true}>
+        <Fade direction="up"  triggerOnce={true}>
           <a href="https://wa.me/+905346833726">
-            صمم بواسطه محمد. جميع الحقوق محفوظة <i>.2024 &copy; </i>
+            صمم بواسطه codeprops. جميع الحقوق محفوظة <i>.2024 &copy; </i>
           </a>
         </Fade>
       </div>

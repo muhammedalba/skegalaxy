@@ -470,10 +470,10 @@ const Products = () => {
           المنتجات
         </p>
 
-        <div className=" row  border-top pt-2 gap-2">
+        <div className=" row  border-top pt-2 gap-1">
           {/* filtter start */}
-          <div style={{top:'8rem'}} className="col-3 flex-wrap flex-column  h-25 overflow-hidden p-1 d-flex position-sticky  end-0">
-            <p className="fs-5 px-3 m-0 ">  تصفيه : </p>
+          <div style={{top:'6.1rem',zIndex:'5'}} className="col-12 col-sm-3 flex-wrap flex-column bg-white  h-25 overflow-hidden p-1 d-flex position-sticky  end-0">
+            <p className="fs-5 px-3 m-0 ">  فلترة : </p>
             {/*gategory  */}
             <div className=" p-2">
               <select
@@ -563,7 +563,7 @@ const Products = () => {
           </div>
 
           {/* products data */}
-          <div className="row col-9  justify-content-center row-gap-4 gap-2 border-end ">
+          <div className=" row col-12 col-sm-9  justify-content-center row-gap-4 gap-2 d ">
             {showData}
           </div>
         </div>

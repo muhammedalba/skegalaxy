@@ -180,18 +180,29 @@ header span {
   padding:  4px;
   color: var(--minColor);
   background-color: #33bd45;
-  svg {
+
+  ssvg
+{
   
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
+  
     border-radius: 50%;
     fill: rgb(255, 255, 255);
   }
-
+  transform: translateX(-400%);
+  -webkit-transform: translateX(-400%);
+  -moz-transform: translateX(-400%);
+  -ms-transform: translateX(-400%);
+  -o-transform: translateX(-400%);
 }
-
+@keyframes shake {
+  /* 0% { transform: translate(0px)  ; -webkit-transform: translate(0px)  ; -moz-transform: translate(0px)  ; -ms-transform: translate(0px)  ; -o-transform: translate(0px)  ; } */
+  0% { transform: translate(1px,1px)  rotate(0deg)  ;}
+  10% {transform: translate(1px,-2px) rotate(-1deg)  ;}
+  20% {transform: translate(-3px,-0px)rotate(0deg)  ;}
+  30% {transform: translate(3px,2px)  rotate(-1deg)  ;}
+  40% {transform: translate(1px,-1px) rotate(0deg)  ;}
+  50% {transform: translate(1px,1px)  rotate(-1deg)  ;} 
+}
 #whatsapp,
 #span {
   width: 50px;
