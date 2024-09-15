@@ -139,8 +139,8 @@ exports.resizeImge = asyncHandler(async (req, res, next) => {
       await processAndSaveImage(
         req.files.carouselImage[0].buffer,
         filePath,
-        400 ,
-        300,
+        800 ,
+        600,
         100
         
       );
