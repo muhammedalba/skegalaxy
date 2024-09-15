@@ -276,14 +276,14 @@ const Products = () => {
     if (successbrands && brands?.data?.length > 0) {
       return brands?.data.map((brand, index) => (
         <button
-        style={{ width: "250px  "}}
+        style={{ width: "275px  "}}
           // style={{ minWidth: "75%" ,backgroundColor:'rgb(243 244 246)'}}
           onClick={() => scrollToSection(section1Ref, `&brand=${brand._id}`)}
           className=" btn d-block m-auto  caroselBrand"
           key={index}
         >
           <div
-            style={{ height: "17rem",backgroundColor:'white' }}
+            style={{ height: "18rem",backgroundColor:'white' }}
             inert="true"
             className=" w-100 border pt-1  d-flex flex-column
             align-items-center justify-content-between  m-auto pointer overflow-hidden"
@@ -300,10 +300,10 @@ const Products = () => {
             />
             <span
               style={{
-                height: "4.2rem",
+                height: "5rem",
                 backgroundColor: "var(--bgColor)!important",
               }}
-              className="fs-5 border  p-2  w-100 text-center  d-flex flex-column"
+              className="fs-5 border  p-2  w-100 text-center justify-content-center  d-flex flex-column"
             >
               <span>{brand?.name.split("_")[0]}</span>
               <span>{brand?.name.split("_")[1]}</span>
@@ -321,8 +321,8 @@ const Products = () => {
   ]);
   const responsive = {
     xxLargeDesktop: {
-      breakpoint: { max: 1600, min: 1450 },
-      items: 5,
+      breakpoint: { max: 2200, min: 1450 },
+      items: 6,
       slidesToSlide: 1, // optional, default to 1.
     },
     xLargeDesktop: {
