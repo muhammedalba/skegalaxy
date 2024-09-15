@@ -19,7 +19,7 @@ const User = () => {
   const { isLoading, isSuccess, data, error } = useGetOneQuery(
     `users/${userId}`
   );
-  console.log(data);
+
   
   // update data (rtk redux)
   const [
@@ -31,7 +31,7 @@ const User = () => {
       data: updatedUser,
     },
   ] = useUpdateOneMutation();
-  error&& console.log(error, "error");
+
   // states
   const [formData, setFormData] = useState({
     firstname: "",

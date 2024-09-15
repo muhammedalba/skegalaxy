@@ -1,4 +1,4 @@
-import { toast, Zoom } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
 
 
 
@@ -13,21 +13,21 @@ import { toast, Zoom } from "react-toastify";
       draggable: true,
       progress: 0,
       theme: "colored",
-      transition: Zoom,
+      transition: Bounce,
  
     });}
 
     export const successNotify=  (success) =>{
         toast.success(success, {
-          position: "top-center",
+          position: "top-right",
           autoClose: 2000,
-          hideProgressBar: true,
+          hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
-          progress: 0,
+          // progress: undefined,
           theme: "colored",
-          transition: Zoom,
+          transition: Bounce,
      
     });}
     
@@ -41,7 +41,7 @@ import { toast, Zoom } from "react-toastify";
         draggable: true,
         progress: 0,
         theme: "colored",
-        transition: Zoom,
+        transition: Bounce,
     
     });}
     export const warnNotify=  (warn) =>{
@@ -54,7 +54,7 @@ import { toast, Zoom } from "react-toastify";
         draggable: true,
         progress: 0,
         theme: "colored",
-        transition: Zoom,
+        transition: Bounce,
     
     });}
    
