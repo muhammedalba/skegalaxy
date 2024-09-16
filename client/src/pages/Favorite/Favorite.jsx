@@ -68,13 +68,7 @@ const Favorite = () => {
 
 
   
-  const [productsDetails] = useState({
-    id: "",
-    resnumOfCartItems: 0,
-    totalCartPrice: 0,
-    cartItems: [],
-    imageUrl: "",
-  });
+ 
 
 
   const token = cookies.get("token");

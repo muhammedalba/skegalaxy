@@ -444,7 +444,7 @@ const sendDeliveryReceiptImage =useCallback( (e) => {
                 <div className="col-md-12 py-3 fs-5 py-2 border col-12  text-primary">
                 
                   <label
-                    className="p-1 fs-5 d-flex align-items-center gap-1"
+                    className="p-1 fs-5 d-flex flex-wrap align-items-center gap-1"
                     htmlFor="orderPdf"
                   >
                    ارسال فاتوره(pdf) :{ order?.data?.orderPdf?<span className="text-success"> ( تم الارسال )     </span>:'' }
@@ -453,22 +453,22 @@ const sendDeliveryReceiptImage =useCallback( (e) => {
                   تحميل الفاتورة      
                </button>
 
-            </label>
-            <input
-              accept=".pdf"
+                   </label>
+                    <input
+                       accept=".pdf"
               required
               disabled={isLoading ? true : false}
               className="form-control"
               id="orderPdf"
               name="orderPdf"
               type="file"
-              onChange={(e)=>handleImageChange(e,'pdf')}           
-               />
+                        onChange={(e)=>handleImageChange(e,'pdf')}           
+                      />
                </div>
                   {/* send imge  */}
                 <div className="col-md-12 py-3 fs-5 py-2 border col-12  text-primary">
                   <label
-                    className="p-1 fs-5 d-flex align-items-center gap-1"
+                    className="p-1 fs-5 d-flex align-items-center flex-wrap gap-1"
                     htmlFor="DeliveryReceiptImage"
                   >
                    ارسال صورة وصل التسليم:{ order?.data?.DeliveryReceiptImage?<span className="text-success"> ( تم الارسال )     </span>:'' }

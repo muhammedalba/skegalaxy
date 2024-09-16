@@ -72,12 +72,7 @@ const SideBar = () => {
       path: "products",
       icon: <FaProductHunt />,
     },
-    // {
-    //   title: "طلبات التحويل ",
-    //   path: "transfers",
-    //   icon:<TbTransfer/> ,
-    // },
-
+   
     {
       title: "اكواد الخصم ",
       path: "coupons",
@@ -126,10 +121,10 @@ const SideBar = () => {
   return (
     <div
       style={{ width: open ? "175px" : "60px" }}
-      className="sidebar overflow-hidden pt-5 px-2 
+      className="sidebar  pt-5 px-2 
           "
     >
-      <ul style={{ position: "fixed" }} className="p-0 ">
+      <ul style={{ top: "150px" }} className="p-0 position-sticky ">
         {display && (
           <div className="py-2">
             <FaBarsStaggered
