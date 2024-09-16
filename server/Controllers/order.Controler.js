@@ -318,7 +318,7 @@ exports.updateOrderDeliveryReceiptImage = asyncHandler(async (req, res, next) =>
        `<h2>تم استلام طلبك ${order.user.firstname}:مرحبا </h2>
       <p>تم استلام طلبك بنجاح وانشاء الفاتورة الخاصة بك من قبل  شركه <span>sky Galaxy </span> </p>
       <p>شكرا لكم لاختياركم لنا سنقوم بارسال طلبيتكم باقرب  وقت </p>
-      <p>وهذه صورة المنتج:</p>
+      <p>وهذه صورة وصل الاستلام":</p>
       <img src="cid:productImage@ecommerce" alt="Product Image" />
           <p>sky Galaxy  شكرا لاختياركم </p>
     `,

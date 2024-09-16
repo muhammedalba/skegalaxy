@@ -20,6 +20,7 @@ const brandSchema = new mongoose.Schema(
 );
 
 // const setImageURL = (doc) => {
+// console.log(doc);
 
 //   if (doc.image) {
 //     const imageUrl = `${process.env.BASE_URL}/uploads/brands/${doc.image}`;
@@ -27,8 +28,18 @@ const brandSchema = new mongoose.Schema(
 //   }
 // };
 
-// //update , findOne and findAll
+// update , findOne and findAll
 // brandSchema.post("init", (doc) => {
+//   // setImageURL(doc);
+
+// });
+
+
+// brandSchema.pre("find",  (doc)=> {
+//   setImageURL(doc);
+// });
+
+// brandSchema.post("findOne",  (doc)=> {
 //   setImageURL(doc);
 // });
 // //  creat
