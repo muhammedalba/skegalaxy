@@ -51,7 +51,7 @@ const About = () => {
                   coverflowEffect={{
                     rotate: 50,
                     stretch: 0,
-                    depth: 75,
+                    depth: 100,
                     modifier: 3,
                     slideShadows: true,
                   }}
