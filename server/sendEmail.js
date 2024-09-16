@@ -5,7 +5,7 @@ exports.sendEmail = async(options) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOSt,
     port:  process.env.EMAIL_PORt, // if secur flase port=587,if true port=465
-    secure: process.env.EMAIL_PORt === 465 ,
+    secure: true ,
     auth: {
       user: process.env.EMAIL_USER,
       pass:  process.env.EMAIL_PASS,
