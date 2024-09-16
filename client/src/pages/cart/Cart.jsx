@@ -258,13 +258,17 @@ const openModalAndClearCart = useCallback(() => {
               </button>
             </Fade>
           </td>
-          <td className="d-sm-table-cell">
+          <td className="d-sm-table-cell">  
             <Fade delay={0} direction="up" triggerOnce={true}>
-              <img
+            <Link to={`/products/${product.product.id}`}>
+             <img
                 style={{ width:'auto' ,maxHeight: "80px" }}
                 src={`${products?.imageUrl}/${product?.product?.imageCover}`}
                 alt="product"
               />
+            </Link>
+          
+             
         
             </Fade>
           </td>

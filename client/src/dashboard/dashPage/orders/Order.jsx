@@ -43,7 +43,8 @@ import Cookies from "universal-cookie";
 
       const user = order?.data?.user
       const shippingAddress = order?.data?.shippingAddress
-console.log(order);
+console.log(updateError);
+console.log(createError);
 
 useEffect(() => {
   if(error?.status ===401){

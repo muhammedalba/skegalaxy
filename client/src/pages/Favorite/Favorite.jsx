@@ -250,14 +250,14 @@ const Favorite = () => {
           <td>
                {/* add to cart */}
                <button
-            disabled={LoadingCreatet || isLoading}
-          style={{ whiteSpace: 'nowrap'}}
-            onClick={() => addproducToCartOurWishlist(product?._id,'cart')}
-            className="btn btn-primary  border-0"
-          >
-       {    isLoading? <span className=" spinner-border"></span>:' اضافه الى السلة'}
+                  disabled={LoadingCreatet || isLoading}
+                  style={{ whiteSpace: 'nowrap'}}
+                  onClick={() => addproducToCartOurWishlist(product?._id,'cart')}
+                  className="btn btn-primary  border-0">
+          
+                {isLoading? <span className=" spinner-border"></span>:' اضافه الى السلة'}
              
-                </button>
+               </button>
           </td>
         </tr>
       ));
@@ -282,7 +282,7 @@ const Favorite = () => {
 
 
   return (
-    <div className="container-fluid pt-5  ">
+    <div className="container pt-5  ">
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -307,10 +307,10 @@ const Favorite = () => {
 
           {/* products results */}
 
-          {isSuccess && productsDetails?.resnumOfCartItems > 0 && (
+          {isSuccess && products?.result > 0&& (
             <Fade delay={0} direction="up" triggerOnce={true}>
-              <span className="fs-5 p-2">
-                عدد المنتجات : ( {productsDetails?.resnumOfCartItems} )
+              <span className="fs-5 p-2 border-bottom  d-block w-100">
+                عدد المنتجات : ( {products?.result} )
               </span>
             </Fade>
           )}
@@ -318,7 +318,7 @@ const Favorite = () => {
 
           {/* data table  start*/}
           <table className="table table-striped pt-5 mt-3 text-center">
-            <thead>
+         {products?.result > 0&&  <thead>
               <tr>
                 <th className=" d-table-cell" scope="col">
                   حذف
@@ -333,7 +333,7 @@ const Favorite = () => {
                  اضافه الى السلة
                 </th>
               </tr>
-            </thead>
+            </thead>}
             <tbody className="">{showData}</tbody>
           </table>
           {/* data table  end*/}

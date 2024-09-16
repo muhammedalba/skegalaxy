@@ -1,26 +1,29 @@
+
+import { Fade } from "react-awesome-reveal";
+// Import Swiper React components
+import { EffectCoverflow, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "./About.css";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
 
 import logo from "../../imges/logob.webp";
-import img1 from "../../imges/about/about-1.jpg";
-import img2 from "../../imges/about/about-2.jpg";
+import img2 from "../../imges/about/about-1.jpg";
+import img1 from "../../imges/about/about-2.jpg";
 import img3 from "../../imges/about/about-3.jpg";
 import img4 from "../../imges/about/about-4.jpg";
 import img5 from "../../imges/about/about-5.jpg";
 
 
 
-import { Fade } from "react-awesome-reveal";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
 
 
 
-// Import Swiper React components
-import { EffectCoverflow, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+
+
+
 
 const About = () => {
   const images=[
@@ -40,26 +43,16 @@ const About = () => {
   return (
     <div id="about" className="container pt-5 mt-3 overflow-hidden">
       <h1 className="text-center pt-4 text-primary"> من نحن !</h1>
-      {/* Video Section */}
-      {/* <div className="video-container overflow-hidden w-100  ">
-        <video
-          style={{  objectFfit: "cover" ,width: 'inherit'}}
-          controls
-        >
-          <source src={video} type="video/mp4" />
-          متصفحك لا يدعم تشغيل الفيديو.
-        </video>
-      </div> */}
       <Swiper
                   effect={"coverflow"}
                   grabCursor={true}
-                  centeredSlides={true}
+                  centeredSlides={false}
                   slidesPerView={"auto"}
                   coverflowEffect={{
                     rotate: 50,
                     stretch: 0,
-                    depth: 100,
-                    modifier: 1,
+                    depth: 75,
+                    modifier: 3,
                     slideShadows: true,
                   }}
                   pagination={true}
@@ -130,12 +123,12 @@ const About = () => {
           <div className="text-center border-bottom">
             <h2 className="fs-3">التواصل</h2>
             <p className="fs-4">
-             هل تريد مساعده ؟ <span className="fs-3 text-danger">تواصل معنا لا تتردد</span>
+             هل تريد مساعده ؟ <span className="fs-5 text-danger">تواصل معنا لا تتردد</span>
             </p>
           </div>
          </Fade> 
           <div className="item pt-5">
-            <div className="one-sec row row-gap-3 flex-wrap">
+            <div className=" row row-gap-3 flex-wrap">
               <div className="demo1  col-12 col-md-6">
               <Fade direction="up" triggerOnce className="w-100 h-100">
 
