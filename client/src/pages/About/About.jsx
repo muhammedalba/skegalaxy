@@ -1,12 +1,13 @@
 import "./About.css";
-// import video from "../../imges/Profile/about-video.mp4";
-import heroImage from "../../imges/Profile/prof.jpg";
-import img1 from "../../imges/Profile/prof.jpg";
-import img2 from "../../imges/Profile/IMG-20240809-WA0018.jpg";
-import img3 from "../../imges/Profile/IMG-20240809-WA0042.jpg";
-import img4 from "../../imges/Profile/IMG-20240809-WA0048.jpg";
-import img5 from "../../imges/Profile/IMG-20240809-WA0070.jpg";
-import img6 from "../../imges/Profile/IMG-20240809-WA0085.jpg";
+
+import logo from "../../imges/logob.webp";
+import img1 from "../../imges/about/about-1.jpg";
+import img2 from "../../imges/about/about-2.jpg";
+import img3 from "../../imges/about/about-3.jpg";
+import img4 from "../../imges/about/about-4.jpg";
+import img5 from "../../imges/about/about-5.jpg";
+
+
 
 import { Fade } from "react-awesome-reveal";
 
@@ -14,6 +15,9 @@ import { Fade } from "react-awesome-reveal";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+
+
+
 // Import Swiper React components
 import { EffectCoverflow, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,7 +29,7 @@ const About = () => {
     {id: "3",value:img3},
     {id: "4",value:img4},
     {id: "5",value:img5},
-    {id: "6",value:img6},
+   
   ]
   const carosel=images.map(i =>{
     return <SwiperSlide key={i.id} onClick={()=>console.log(1)
@@ -72,7 +76,7 @@ const About = () => {
             <Fade direction="up" triggerOnce cascade>
 
               <div className="img1">
-                <img width={400} height={300} src={heroImage} alt="Hero" className="w-100 " />
+                <img width={400} height={300} src={logo} alt="Hero" className="w-100 " />
               
               </div>
               </Fade>
@@ -109,7 +113,7 @@ const About = () => {
              <div className="col-md-5">
              <Fade direction="up" triggerOnce cascade>
               <div className="img2">
-                <img width={400} height={300} src={img4} alt="Hero" className="w-100  " />
+                <img width={400} height={300} src={logo} alt="Hero" className="w-100  " />
               
               </div>
               </Fade>
