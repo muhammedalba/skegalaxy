@@ -211,6 +211,13 @@ const Products = () => {
 
   // if sucsses and data is not empty  show the categories slide
   const showCategoriesData = useMemo(() => {
+    if (loadingcategories) {
+      return (
+  
+          SkeletonCard
+       
+      );
+    }
     if (successcategories && categories?.data?.length > 0) {
       const categories_slide = [...categories.data];
 
@@ -260,21 +267,17 @@ const Products = () => {
         </button>
       ));
     }
-  }, [
-    categories?.data,
-    categories?.imageUrl,
-    scrollToSection,
-    successcategories,
-  ]);
+  }, [categories?.data, categories?.imageUrl, loadingcategories, scrollToSection, successcategories]);
 
   // show Brands Slide
   const showBrandsSlide = useMemo(() => {
     if (isLoading) {
-      return SkeletonProduct;
+      return SkeletonCard;
     }
 
     if (successbrands && brands?.data?.length > 0) {
-      return brands?.data.map((brand, index) => (
+      const brands_slide = [...brands.data];
+      return  brands_slide.map((brand, index) => (
         <button
         style={{ width: "275px  "}}
           // style={{ minWidth: "75%" ,backgroundColor:'rgb(243 244 246)'}}

@@ -31,6 +31,7 @@ import { RiSubtractLine } from "react-icons/ri";
 import { BsCheck2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
+
 const MemoizedPayment = React.lazy(() => import("../../components/Payment"));
 const MemoizedApplayCoupon = React.lazy(() => import("../../components/applayCoupon/ApplayCoupon"));
 

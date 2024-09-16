@@ -1,4 +1,4 @@
-import   React, { useEffect, useState } from 'react';
+import   React, { lazy, useEffect, useState } from 'react';
 import { infoNotify, successNotify, warnNotify } from '../../utils/Toast';
 import { useUpdateOneMutation } from '../../redux/features/api/apiSlice';
 import { Fade } from 'react-awesome-reveal';
@@ -6,6 +6,10 @@ import PropTypes from "prop-types";
 
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+const BsWhatsapp = lazy(() =>
+  import("react-icons/bs").then((module) => ({ default: module.BsWhatsapp }))
+);
 
 const ApplayCoupon = ({productsDetails,openPaymntCommpount,LoadingDelet,openModalAndClearCart,
 Confirm ,HideDiscount}) => {
@@ -137,7 +141,7 @@ Confirm ,HideDiscount}) => {
               اجور التوصيل تختلف حسب المكان والكمية تواصل معنا لمعرفة تكلفة
               التوصيل
               <a className="d-block "    href="https://wa.me/+966598909991">
-                ( 966598909991+)
+                ( 966598909991+) <BsWhatsapp fontSize={'1.3rem'} color="#33bd45 " />
               </a>
               او يمكنك استلام طلبيتك من احد فروعنا
             </span>
