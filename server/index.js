@@ -19,7 +19,6 @@ const globalError = require("./middleWare/ErroeMidleWare");
 const dbconnection = require("./db/database");
 
 const { MountRoutes } = require("./routers/mountRoutes");
-const { webhookCheckout } = require("./Controllers/order.Controler");
 
 const app = express();
 dotenv.config({ path: ".env" });
@@ -45,22 +44,12 @@ app.options('*', cors(corsOptions));
 app.use(compression());
 // app.use("/uploads", express.static(path.join(__dirname, "uploads"), {maxAge: '1d'})); //dev
 app.use("/uploads", express.static(path.join(process.env.UPLOADS_DIRECTORY), {maxAge: '1d'})); //prod
-// webhook-checkout
-app.post(
-  "/webhook-checkout",
-  express.raw({ type: "application/json" }),
-  webhookCheckout
-);
+
+
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
-// app.use(express.json({
-//   verify: (req, res, buf) => {
-//     if (req.originalUrl.startsWith('/stripe/webhook')) {
-//       req.rawBody = buf.toString();
-//     }
-//   },
-//    }));
+
 // To apply data sanitizotion:
 app.use(mongoSanitize());
 // Limit each IP to 100 requests per `window` (here, per 15 minutes).

@@ -19,14 +19,11 @@ const {
   deletProductValidator,
 } = require("../utils/validators/productValidator");
 const { resizeImge } = require("../middleWare/uploadImgeMiddlewRE.JS");
-const reviewRouter = require("./reviewRouter");
+
 const { createFilteropject } = require("../Controllers/productControler");
 
 const router = express.Router({mergeParams:true}); 
-// const router = express.Router();
-// nested router
-router.use("/:ProductId/reviews",reviewRouter)
- 
+
 router
   .route("/")
   .post(protect, allowedTo(role.ADMIN),uploadProductImge,createProductValidator,resizeImge, createProduct)

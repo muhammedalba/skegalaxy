@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const { uploadImage } = require("../middleWare/uploadImgeMiddlewRE.JS");
 const productModule = require("../models/productModule");
 const factory = require("./handelersFactory");
-const ApiError = require("../utils/apiError");
+
 
 const {
   deletImageFromFolder,
@@ -12,11 +12,7 @@ const {
 // Get /api/category/:categoryId/subcategory 
 const createFilteropject = (req, res, next) => {
   let filteropject = {};
-  if (req.params.subcategoryId) {
-    filteropject = { supCategories: req.params.subcategoryId };
 
-    req.filteropject = filteropject;
-  }
   if (req.params.categoryid) {
     filteropject = { category: req.params.categoryid };
 
@@ -44,7 +40,7 @@ const createProduct = factory.createOne(productModule);
 // get Product By Id
 //route  get http://localhost:4000/api/Products/:id
 // .populate({ path: "category", select: "name -_id" });
-const getProductById = factory.getOne(productModule,"reviews");
+const getProductById = factory.getOne(productModule);
 
 // update  Product
 //route  patch http://localhost:4000/api/Products/:id

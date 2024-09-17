@@ -2,7 +2,7 @@ const express = require("express");
 const { protect } = require("../Controllers/auth.Controler");
 const allowedTo = require("../utils/allowedTo");
 const role = require("../utils/userRoles");
-const subcategoryRouter = require("./subcategoryRouter");
+
 
 const {
   createCategory,
@@ -24,7 +24,7 @@ const productRouter =require("./productRouter")
 
 
 const router = express.Router();
-router.use("/:categoryid/subcategory",subcategoryRouter)
+
 router.use("/:categoryid/products",productRouter)
 router
   .route("/")

@@ -4,7 +4,6 @@ const factory = require("./handelersFactory");
 const UserModel = require("../models/users.module");
 const ApiError = require("../utils/apiError");
 const { uploadImage } = require("../middleWare/uploadImgeMiddlewRE.JS");
-const { createToken } = require("../utils/createToken");
 const {
   updatemageFromFolder,
 } = require("../middleWare/uploadImgeMiddlewRE.JS");
@@ -81,7 +80,7 @@ const updateLoggedUserPassword = asyncHandler(async (req, res) => {
     },
     { new: true }
   );
-  res.cookie("token", '', {
+  res.clearCookie("token", {
     httpOnly: false,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict', 

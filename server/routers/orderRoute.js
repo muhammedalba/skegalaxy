@@ -7,7 +7,6 @@ const {
   uploadorderImge,
   updateOrderSendInvoice,
   getAllOrders,
-  checkoutSession,
   findSpecificOrder,
   createcashOrder,
   filterOrderForLoggedUser,
@@ -28,7 +27,6 @@ router.get(
 );
 router.get("/:id", findSpecificOrder);
 router.delete("/:id", protect,allowedTo(role.ADMIN),deletOrder);
-router.post("/checkout-session/:cartId",protect,allowedTo(role.ADMIN, role.MANGER, role.USER), checkoutSession);
 router.put("/:id/pay", allowedTo(role.ADMIN, role.MANGER), updateOrderToPaid);
 router.put( "/:id/deliver",allowedTo(role.ADMIN, role.MANGER),updateOrderTodelivered);
 router.post( "/:id/Delivery-receipt-image",allowedTo(role.ADMIN, role.MANGER),uploadorderImge,resizeImge,updateOrderDeliveryReceiptImage);

@@ -52,12 +52,7 @@ const productSchema = new mongoose.Schema(
       ref: "Category",
       required: [true, "product must be parent category"],
     },
-    supCategories: [
-      {
-        type:mongoose.Schema.ObjectId,
-        ref: "SubCategory",
-      },
-    ],
+   
     brand: {
       type: mongoose.Schema.ObjectId,
       ref: "Brand",
@@ -135,10 +130,10 @@ productSchema.pre(/^find/, function(next){
 //   setImageURL(doc);
 // });
 // 2- Create a link between reviews with the product
-productSchema.virtual("reviews",{
-  ref: "Review",
-  localField: "_id",
-  foreignField: "Product",
-  justOne: false,
-})
+// productSchema.virtual("reviews",{
+//   ref: "Review",
+//   localField: "_id",
+//   foreignField: "Product",
+//   justOne: false,
+// })
 module.exports = mongoose.model("Product", productSchema);

@@ -164,59 +164,6 @@ const handleAuthenticatedUser = async (user, req, next) => {
   }
 };
 
-// check token
-// exports.protect = asyncHandler(async (req, res, next) => {
-
-//   const {refreshToken} = req.cookies;
-//   const {token} = req.cookies;
-// // chek token
-//   // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-//   //   token = req.headers.authorization.split(' ')[1];
-//   // }
-//   if (!token) {
-//     return next(new ApiErorr('You are not logged in. Please log in to access this route', 401));
-//   }
-// // Check token validity
-//   jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, user) => {
-
-//     if (err) {
-//       //if Token Expired Error
-//       if (err.name === 'TokenExpiredError') {
-
-//         if (!refreshToken) {
-//           return next(new ApiErorr('Refresh token is missing', 403));
-//         }
-//         // Check refreshToken validity
-//         jwt.verify(refreshToken, process.env.JWT_SECRET_KEY, async (refError, refUser) => {
-
-//           if (refError) return next(new ApiErorr('Invalid refresh token', 403));
-//           // Create a new Token
-//           const newAccessToken = createToken(refUser);
-
-//          console.log('new token :',newAccessToken);
-//         //  Token update
-//           res.cookie("token", newAccessToken, {
-//             httpOnly: false,// javascript only
-//             secure: false,//HTTPS
-//             sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-
-//         });
-//         res.setHeader('Authorization', `Bearer ${newAccessToken}`);
-//           await handleAuthenticatedUser(refUser, req, next);
-//         });
-//       } // If the token is invalid
-//       else {
-
-//         return next(new ApiErorr('Invalid access token', 403));
-//       }
-//     }
-//     // If the token is valid
-//     else {
-//       await handleAuthenticatedUser(user, req, next);
-//     }
-//   });
-// });
-
 exports.protect = asyncHandler(async (req, res, next) => {
   // let token;
   const { refreshToken } = req.cookies;
