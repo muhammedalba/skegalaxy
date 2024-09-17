@@ -271,7 +271,7 @@ exports.updateOrderSendInvoice = asyncHandler(async (req, res, next) => {
 
   
       message:   `<h2>  ${order.user.firstname}:مرحبا </h2>
-      <p>تم استلام طلبك بنجاح وانشاء الفاتورة الخاصة بك من قبل  شركة   <span>  ممجرة السماء للتجارة </span> </p>
+        <p>تم استلام طلبك بنجاح وتم إنشاء الفاتورة الخاصة بك من قبل شركة مجرة السماء للتجارة.</p>
       <p>شكرا لكم لاختياركم لنا سنقوم بارسال طلبيتكم باقرب  وقت </p>
       <p>   يمكنك تحميل الفاتورة من الرابط في الافسل</p>
                 <p>sky Galaxy  شكرا لاختياركم </p>
@@ -281,7 +281,7 @@ exports.updateOrderSendInvoice = asyncHandler(async (req, res, next) => {
       subject: "   تم استلام طلبك بنجاح ",
       attachments: [
         {
-          filename:"ملف الفاتورة",  // اسم الملف المرفق
+          filename: "ملف الفاتورة.pdf",
           path: path.join(process.env.UPLOADS_DIRECTORY, "orders",req.body.orderPdf), // مسار الملف
         }
       ]
