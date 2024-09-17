@@ -20,6 +20,7 @@ import { Categoryitems } from "../../redux/features/Slice/CategoriesSlice";
 import { Branditems } from "../../redux/features/Slice/BrandSlice";
 // import { FilterValue } from "../../redux/features/Slice/FilterIdSlice";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const Products = () => {
   //
@@ -212,18 +213,14 @@ const Products = () => {
   // if sucsses and data is not empty  show the categories slide
   const showCategoriesData = useMemo(() => {
     if (loadingcategories) {
-      return (
-  
-          SkeletonCard
-       
-      );
+      return SkeletonCard;
     }
     if (successcategories && categories?.data?.length > 0) {
       const categories_slide = [...categories.data];
 
       return categories_slide?.map((category, index) => (
         <button
-          style={{ widthr: "300px  "}}
+          style={{ widthr: "300px  " }}
           onClick={() =>
             scrollToSection(section1Ref, `&category=${category._id}`)
           }
@@ -231,7 +228,7 @@ const Products = () => {
           key={index}
         >
           <div
-            style={{backgroundColor:'white'}}
+            style={{ backgroundColor: "white" }}
             // style={{  width: "305px !important",
             //   height: "275px  !important"}}
             inert="true"
@@ -250,7 +247,7 @@ const Products = () => {
               }
               className=" w-100 m-auto  d-block p-1"
               alt="brand"
-              style={{ objectFit: "fill", }}
+              style={{ objectFit: "fill" }}
             />
 
             <span
@@ -267,7 +264,13 @@ const Products = () => {
         </button>
       ));
     }
-  }, [categories?.data, categories?.imageUrl, loadingcategories, scrollToSection, successcategories]);
+  }, [
+    categories?.data,
+    categories?.imageUrl,
+    loadingcategories,
+    scrollToSection,
+    successcategories,
+  ]);
 
   // show Brands Slide
   const showBrandsSlide = useMemo(() => {
@@ -277,16 +280,16 @@ const Products = () => {
 
     if (successbrands && brands?.data?.length > 0) {
       const brands_slide = [...brands.data];
-      return  brands_slide.map((brand, index) => (
+      return brands_slide.map((brand, index) => (
         <button
-        style={{ width: "275px  "}}
+          style={{ width: "275px  " }}
           // style={{ minWidth: "75%" ,backgroundColor:'rgb(243 244 246)'}}
           onClick={() => scrollToSection(section1Ref, `&brand=${brand._id}`)}
           className=" btn d-block m-auto  caroselBrand"
           key={index}
         >
           <div
-            style={{ height: "18rem",backgroundColor:'white' }}
+            style={{ height: "18rem", backgroundColor: "white" }}
             inert="true"
             className=" w-100 border pt-1  d-flex flex-column
             align-items-center justify-content-between  m-auto pointer overflow-hidden"
@@ -389,30 +392,37 @@ const Products = () => {
     },
   };
   return (
+    <>
+    <Helmet>
+        <meta name="description"
+            content="Sky Galaxy || مجرة السماء للتجارة يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان) " />
+        <meta name="keywords" content="   العوازل المائية , العوازل الحرارية , مواد حقن وإصلاح الخرسانة , فوم بوليرثان" />
+        <title>Sky Galaxy | أفضل المواد للبناء والعزل وإصلاح الخرسانات | مجرة السماء للتجارة الالكترونيه </title> </Helmet>
+
+        
     <div className="container-fluid ">
       {/*animation */}
 
       {/* categories slide*/}
 
       <div className="mt-4 Carousel">
-        <div  className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 border-bottom ">
+        <div className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 border-bottom ">
+          <span className=" fs-4   ">اقسامنا</span>
           <span
-           
-           
-            className=" fs-4   "
+            style={{
+              height: "1px",
+              backgroundColor: "var(--bgColor) !important",
+              flex: "auto",
+            }}
+            className="bg-dark mx-3"
+          ></span>
+
+          <Link
+            to={"/categories"}
+            style={{ color: "var( --btn-bg-color) !important" }}
           >
-            اقسامنا
-
-          </span>
-         <span style={{
-          height:"1px",
-          backgroundColor: "var(--bgColor) !important" ,
-          flex:'auto'
-         }} className="bg-dark mx-3"></span>
-
-          <Link  to={"/categories"}
-          style={{ color: "var( --btn-bg-color) !important" }}
-          >عرض الكل </Link>
+            عرض الكل{" "}
+          </Link>
         </div>
 
         <Carousel
@@ -436,24 +446,23 @@ const Products = () => {
       {/* brands slide*/}
 
       <div className="">
-      <div  className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 mt-4 border-bottom ">
+        <div className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 mt-4 border-bottom ">
+          <span className=" fs-4   ">شركاء النجاح</span>
           <span
-           
-           
-            className=" fs-4   "
+            style={{
+              height: "1px",
+              backgroundColor: "var(--bgColor) !important",
+              flex: "auto",
+            }}
+            className="bg-dark mx-3"
+          ></span>
+
+          <Link
+            to={"/brands"}
+            style={{ color: "var( --btn-bg-color) !important" }}
           >
-            شركاء النجاح
-
-          </span>
-         <span style={{
-          height:"1px",
-          backgroundColor: "var(--bgColor) !important" ,
-          flex:'auto'
-         }} className="bg-dark mx-3"></span>
-
-          <Link  to={"/brands"}
-          style={{ color: "var( --btn-bg-color) !important" }}
-          >عرض الكل </Link>
+            عرض الكل{" "}
+          </Link>
         </div>
         <Carousel
           responsive={responsive}
@@ -486,8 +495,11 @@ const Products = () => {
 
         <div className=" row  border-top pt-2 ">
           {/* filtter start */}
-          <div style={{top:'6.1rem',zIndex:'5'}} className="col-12 col-sm-3  col-lg-2 flex-wrap flex-column bg-white  h-25 overflow-hidden p-1 d-flex position-sticky  end-0">
-            <p className="fs-5 px-3 m-0 ">  فلترة : </p>
+          <div
+            style={{ top: "6.1rem", zIndex: "5" }}
+            className="col-12 col-sm-3  col-lg-2 flex-wrap flex-column bg-white  h-25 overflow-hidden p-1 d-flex position-sticky  end-0"
+          >
+            <p className="fs-5 px-3 m-0 "> فلترة : </p>
             {/*gategory  */}
             <div className=" p-2">
               <select
@@ -572,17 +584,11 @@ const Products = () => {
             >
               اعادة تعيين
             </button>
-
-
           </div>
 
           {/* products data */}
           <div className="  col-12 col-sm-9 col-lg-10  justify-content-center row-gap-4 gap-2 ">
-            <div className="row">
-
-            {showData}
-
-            </div>
+            <div className="row">{showData}</div>
           </div>
         </div>
       </div>
@@ -594,7 +600,8 @@ const Products = () => {
         status={products?.poginationResult || {}}
       />
     </div>
-  );
+   
+</>  );
 };
 
 export default Products;

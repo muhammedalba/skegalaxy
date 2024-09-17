@@ -28,31 +28,12 @@
     -webkit-animation: marquee 24s linear infinite;
     animation: marquee 24s linear infinite;
   }
-  .text-slide-revese{
-    -webkit-animation: marquee-revese 24s linear infinite;
-    animation: marquee-revese 24s linear infinite;
-  }
+
   }
 
 
 
 
-@keyframes marquee-revese {
-    from {
-        -webkit-transform: translateX(100%); 
-        -moz-transform: translateX(100%); 
-        -ms-transform: translateX(100%); 
-        -o-transform: translateX(100%);
-        transform: translateX(100%); 
-  }
-    to {
-      -webkit-transform: translateX(0%);
-      -moz-transform: translateX(0%);
-      -ms-transform: translateX(0%);
-      -o-transform: translateX(0%);
-      transform: translateX(0%);
-  }
-  }
    @keyframes marquee {
     from {
       -webkit-transform: translateX(0%);

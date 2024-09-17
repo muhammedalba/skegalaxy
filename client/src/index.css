@@ -3,8 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
-  text-transform: capitalize;
+  
 }
 
 /* CSS Variables */
@@ -13,7 +12,7 @@
   --btn-bg-color: #0f7d9f;
   --minColor: white;
   --bgColor: #b8dce7;
-  /* --bgColor: #eff1f3; */
+
   --text-color: #2f3645;
   --text-white: white;
   /* stars */
@@ -21,9 +20,7 @@
   --secondary-colour: hsl(233 80% 70%);
   --star-colour: hsl(38 90% 55%);
 }
-.react-icons{
-  color: red !important;
-}
+
 /* Global Styles */
 body {
   font-family: 'Amiri', serif !important;
@@ -32,6 +29,7 @@ body {
   overflow-x: hidden;
   background-color:white !important;
   color: var(--text-color);
+  text-transform: capitalize;
 }
 ::-webkit-scrollbar-thumb {
   background-color: var(--bgColor);
@@ -62,20 +60,10 @@ a {
 .btncolor {
   background-color: var(--btn-bg-color) !important;
   color: var(--minColor)!important;
-  
 }
-.skeleton-loading {
-  opacity: .7;
-  border-radius: 5px;
-  width: 100%;
-  height: 35px;
-  display: block;
-  animation: skeleton 1s infinite linear alternate;
-  background: linear-gradient(0.25turn, transparent, #dfdada, transparent),
-              linear-gradient(#eee, #eee);
-  background-repeat: no-repeat;
-  background-position: -315px 0, 0 0, 0px 190px, 50px 195px;
-}
+
+
+
 .MinPage, .card-body {
   color: var(--text-color);
 }
@@ -92,22 +80,21 @@ li{
   background-color: var(--bgColor) !important;
   z-index: 2 !important;
 }
-table th {
-  background-color: var(--bgColor);
-}
-/* 
-.react-multi-carousel-item {
-  width: 305px !important;
-  height: 275px  !important;
-} */
+
+
 /* Skeleton Keyframes */
-
-
-
-
-
-
-
+.skeleton-loading {
+  opacity: .7;
+  border-radius: 5px;
+  width: 100%;
+  height: 35px;
+  display: block;
+  animation: skeleton 1s infinite linear alternate;
+  background: linear-gradient(0.25turn, transparent, #dfdada, transparent),
+              linear-gradient(#eee, #eee);
+  background-repeat: no-repeat;
+  background-position: -315px 0, 0 0, 0px 190px, 50px 195px;
+}
 
 @keyframes skeleton {
   to {
@@ -115,34 +102,4 @@ table th {
   }
 }
 
-/* marquee-revese */
-@keyframes marquee-revese {
-  from { transform: translateX(100%); -webkit-transform: translateX(100%); -moz-transform: translateX(100%); -ms-transform: translateX(100%); -o-transform: translateX(100%);
-}
-  to {
-    -webkit-transform: translateX(0%);
-    -moz-transform: translateX(0%);
-    -ms-transform: translateX(0%);
-    -o-transform: translateX(0%);
-    transform: translateX(0%);
-}
-}
- @keyframes marquee {
-  from {
-    -webkit-transform: translateX(0%);
-    -moz-transform: translateX(0%);
-    -ms-transform: translateX(0%);
-    -o-transform: translateX(0%);
-    transform: translateX(0%);
-}
-  to {
-    -webkit-transform: translateX(100%);
-    -moz-transform: translateX(100%);
-    -ms-transform: translateX(100%);
-    -o-transform: translateX(100%);
-    transform: translateX(100%);
-}
-}
-.form-control{
-text-transform: none !important;;
-}
+

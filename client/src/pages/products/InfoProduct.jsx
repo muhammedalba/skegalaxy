@@ -4,7 +4,13 @@ import {
   useGetOneQuery,
 } from "../../redux/features/api/apiSlice";
 import Rating from "../../components/Rating/Rating";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { SkeletonInfoProduct } from "../../utils/skeleton";
 import { Fade } from "react-awesome-reveal";
 import Cookies from "universal-cookie";
@@ -14,25 +20,25 @@ import { errorNotify, successNotify, warnNotify } from "../../utils/Toast";
 import { ToastContainer } from "react-toastify";
 
 import "react-multi-carousel/lib/styles.css";
-import Card from "../../components/card/Card";
+
 import { SlSocialInstagram } from "react-icons/sl";
 import { CiHeart } from "react-icons/ci";
 import { MdAddShoppingCart } from "react-icons/md";
 import { RiDownloadCloud2Line } from "react-icons/ri";
 
-import {
-  TwitterShareButton,
-  WhatsappShareButton,
-  TelegramShareButton,
-  TwitterIcon,
-  WhatsappIcon,
-  TelegramIcon,
-} from "react-share";
-import Carousel from "react-multi-carousel";
+
 import "react-multi-carousel/lib/styles.css";
-import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
-
+const RelatedProducts = React.lazy(() =>
+  import("../../components/relatedProducts/RelatedProducts")
+);
+const TwitterShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.TwitterShareButton })));
+const WhatsappShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.WhatsappShareButton })));
+const TelegramShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.TelegramShareButton })));
+const TwitterIcon = React.lazy(() => import("react-share").then(module => ({ default: module.TwitterIcon })));
+const WhatsappIcon = React.lazy(() => import("react-share").then(module => ({ default: module.WhatsappIcon })));
+const TelegramIcon = React.lazy(() => import("react-share").then(module => ({ default: module.TelegramIcon })));
 
 
 const InfoProduct = () => {
@@ -41,7 +47,6 @@ const InfoProduct = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const cookies = new Cookies();
   const token = cookies.get("token");
- 
 
   // Fetch product data
   const {
@@ -49,12 +54,8 @@ const InfoProduct = () => {
     error,
     isLoading,
     isSuccess,
-  } = useGetOneQuery(`products/${productId}?&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage,description`);
-
-  // Fetch category data for related products
-  const { isSuccess: categorySuccess, data: categoryData } = useGetOneQuery(
-    `products?category=${product?.data?.category?._id}`,
-    { skip: !product?.data?.category?._id }
+  } = useGetOneQuery(
+    `products/${productId}?&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage,description`
   );
 
   // Create one mutation (add to cart)
@@ -69,17 +70,17 @@ const InfoProduct = () => {
   }, []);
 
   //   sare
-  const shareUrl = window.location.href;    
-  const title = "شركه مجرة السماء للتجارة ";   
+  const shareUrl = window.location.href;
+  const title = "شركه مجرة السماء للتجارة ";
 
   // Reset product image
   const resetProductImage = useCallback(() => {
     setSelectedImage("");
   }, []);
 
-const scrollToTop = useCallback(() => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}, [])
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   useEffect(() => {
     document
@@ -89,15 +90,15 @@ const scrollToTop = useCallback(() => {
       .forEach((element) => {
         element.addEventListener("click", () => scrollToTop);
       });
-    
+
     if (createData?.status === 201) {
       // Update the number of items in the shopping cart
       dispatch(cartitems(createData?.resnumOfCartItems));
       successNotify("تم إضافة المنتج بنجاح");
     }
-    if ( createData?.status ==='success') {
+    if (createData?.status === "success") {
       // Update the number of items in the shopping cart
- 
+
       successNotify("تم إضافة المنتج بنجاح");
     }
     if (error) {
@@ -107,33 +108,40 @@ const scrollToTop = useCallback(() => {
     if (createError?.status === 401) {
       warnNotify("يجب عليك تسجيل دخول ");
     }
-    return   
-  }, [createData?.resnumOfCartItems, createData?.status, dispatch, error, createError?.status, resetProductImage, scrollToTop]);
-// add to cart our wish list
-const addproducToCartOurWishlist = useCallback((productId,route) => {
- 
-    
-  // تحقق من أن المستخدم مسجل الدخول وأن معرف المنتج صالح
-  if (token && typeof(productId) !== "undefined"
-  // && !displed
-) {
-    
-    
-    createOne({
-      url: `${route}`,
-      method: "POST",
-      body: { productId },
-    })
-    // setdispled(true)
-  } else {
-    warnNotify("يجب عليك تسجيل دخول اولا");
-   
-  }
-}, [createOne, token]);
- 
+    return;
+  }, [
+    createData?.resnumOfCartItems,
+    createData?.status,
+    dispatch,
+    error,
+    createError?.status,
+    resetProductImage,
+    scrollToTop,
+  ]);
+  // add to cart our wish list
+  const addproducToCartOurWishlist = useCallback(
+    (productId, route) => {
+      // تحقق من أن المستخدم مسجل الدخول وأن معرف المنتج صالح
+      if (
+        token &&
+        typeof productId !== "undefined"
+        // && !displed
+      ) {
+        createOne({
+          url: `${route}`,
+          method: "POST",
+          body: { productId },
+        });
+        // setdispled(true)
+      } else {
+        warnNotify("يجب عليك تسجيل دخول اولا");
+      }
+    },
+    [createOne, token]
+  );
 
   // Download PDF handler
-  const downloadPdf =useCallback( async () => {
+  const downloadPdf = useCallback(async () => {
     const baseUrl = import.meta.env.VITE_API;
 
     try {
@@ -144,7 +152,7 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
           headers: {
             "Content-Type": "application/pdf",
           },
-          credentials: 'include',
+          credentials: "include",
         }
       );
 
@@ -173,7 +181,7 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
       console.error("Error fetching PDF:", error);
       errorNotify("حثة مشكلة اثناء تنزيل الملف");
     }
-  },[productId]);
+  }, [productId]);
 
   // Generate product image list
   const imageList = useMemo(() => {
@@ -211,7 +219,7 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
       const description = product?.data?.description?.split("_") || [];
 
       return (
-        <section  className="container  my-5 pt-5 px-3">
+        <section className="container  my-5 pt-5 px-3">
           <div className="row ">
             {/*product  imges */}
             <div className="col-lg-4 col-md-6 d-xl-flex gap-2">
@@ -225,9 +233,9 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                     style={{ height: "4.5rem" }}
                   >
                     <img
-                       loading="lazy"
-                       decoding="async"
-                     width={250} 
+                      loading="lazy"
+                      decoding="async"
+                      width={250}
                       className="d-block h-100 rounded w-100 "
                       src={`${product?.imageUrl}/${product?.data?.imageCover}`}
                       alt="productImge"
@@ -260,41 +268,46 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
 
                   <Rating ratingsAverage={product?.data?.ratingsAverage || 3} />
                   <div className="d-none d-xl-flex align-items-center justify-content-center gap-3 pt-5 mt-5 mt-xl-2 pt-xl-2 ">
-                  {/* زر المشاركة على Twitter */}
-                  <TwitterShareButton url={shareUrl} title={title}>
-                    <TwitterIcon size={28} round={true} />
-                  </TwitterShareButton>
+                    {/* زر المشاركة على Twitter */}
 
-                  {/* زر المشاركة على WhatsApp */}
-                  <WhatsappShareButton url={shareUrl} title={title}>
-                    <WhatsappIcon size={28} round={true} />
-                  </WhatsappShareButton>
+                    <Suspense>
+                      <TwitterShareButton url={shareUrl} title={title}>
+                        <TwitterIcon size={28} round={true} />
+                      </TwitterShareButton>
+                  
+                    {/* زر المشاركة على WhatsApp */}
+                   
+                      <WhatsappShareButton url={shareUrl} title={title}>
+                        <WhatsappIcon size={28} round={true} />
+                      </WhatsappShareButton>
+                   
+                    {/* زر المشاركة على Telegram */}
+                 
+                      <TelegramShareButton url={shareUrl} title={title}>
+                        <TelegramIcon size={28} round={true} />
+                      </TelegramShareButton>
+                    </Suspense>
 
-                  {/* زر المشاركة على Telegram */}
-                  <TelegramShareButton url={shareUrl} title={title}>
-                    <TelegramIcon size={28} round={true} />
-                  </TelegramShareButton>
-
-                  {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
-                  <span
-                    // style={{ backgroundColor: "#df0073", padding: "0.4rem" }}
-                    className="border rounded-circle border-1 pointer"
-                  >
-                    <SlSocialInstagram
-                      color="#df0073"
-                      fontSize={"1.5rem"}
-                      onClick={() => {
-                        navigator.clipboard.writeText(shareUrl);
-                        successNotify(
-                          "تم نسخ الرابط! يمكنك الآن لصقه في Instagram"
-                        );
-                      }}
-                    />
-                  </span>
+                    {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
+                    <span
+                      // style={{ backgroundColor: "#df0073", padding: "0.4rem" }}
+                      className="border rounded-circle border-1 pointer"
+                    >
+                      <SlSocialInstagram
+                        color="#df0073"
+                        fontSize={"1.5rem"}
+                        onClick={() => {
+                          navigator.clipboard.writeText(shareUrl);
+                          successNotify(
+                            "تم نسخ الرابط! يمكنك الآن لصقه في Instagram"
+                          );
+                        }}
+                      />
+                    </span>
                   </div>
                 </div>
               </Fade>
-              
+
               {/* alt emges */}
               <ul
                 className="list-group mt-2 w-100 d-flex align-items-center d-xl-none
@@ -320,19 +333,24 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                 </Fade>
                 <div className="d-flex d-xl-none align-items-center justify-content-center gap-3 pt-1 w-100 ">
                   {/* زر المشاركة على Twitter */}
-                  <TwitterShareButton url={shareUrl} title={title}>
-                    <TwitterIcon size={28} round={true} />
-                  </TwitterShareButton>
+                  <Suspense>
+                    <TwitterShareButton url={shareUrl} title={title}>
+                      <TwitterIcon size={28} round={true} />
+                    </TwitterShareButton>
+                  
 
                   {/* زر المشاركة على WhatsApp */}
-                  <WhatsappShareButton url={shareUrl} title={title}>
-                    <WhatsappIcon size={28} round={true} />
-                  </WhatsappShareButton>
-
+                
+                    <WhatsappShareButton url={shareUrl} title={title}>
+                      <WhatsappIcon size={28} round={true} />
+                    </WhatsappShareButton>
+               
                   {/* زر المشاركة على Telegram */}
-                  <TelegramShareButton url={shareUrl} title={title}>
-                    <TelegramIcon size={28} round={true} />
-                  </TelegramShareButton>
+               
+                    <TelegramShareButton url={shareUrl} title={title}>
+                      <TelegramIcon size={28} round={true} />
+                    </TelegramShareButton>
+                  </Suspense>
 
                   {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
                   <span
@@ -350,10 +368,9 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                       }}
                     />
                   </span>
-                  </div>
+                </div>
               </ul>
-            </div> 
-            
+            </div>
 
             {/* info Product */}
             <div className="col-lg-7 col-md-6  mx-auto ">
@@ -364,14 +381,10 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                       style={{ backgroundColor: "rgb(243, 244, 246)" }}
                       className="card-title p-2 mb-3   border-bottom border-start-0"
                     >
-                     <span className=" ps-2  w-100 d-block">
+                      <span className=" ps-2  w-100 d-block">
                         {product?.data?.title.split("_")[1]}
-                       
-                        
                       </span>
                       <span className=" ps-2 pt-1 w-100 d-block">
-                        
-                       
                         {product?.data?.title.split("_")[0]}
                       </span>
                     </h4>
@@ -435,7 +448,10 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                       </span>
                     </div>
                     <div className="fw-bold fs-4 pt-2 d-flex align-items-center">
-                      <span className="card-title fs-5 px-1"> سعر المنتج   :  </span>
+                      <span className="card-title fs-5 px-1">
+                        {" "}
+                        سعر المنتج :{" "}
+                      </span>
 
                       <span className="text-secondary PX-1">
                         <span className="text-success PX-1"> SAR </span>
@@ -492,21 +508,27 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                     <button
                       disabled={isLoading || createLoading}
                       type="button"
-                      onClick={() => addproducToCartOurWishlist(product?.data._id,'cart')}
+                      onClick={() =>
+                        addproducToCartOurWishlist(product?.data._id, "cart")
+                      }
                       className=" btn btn-outline-primary  p-1"
                     >
-                      <MdAddShoppingCart fontSize={'1.5rem'} className="mx-1" />
-                     إضافة المنتج إلى السلة 
+                      <MdAddShoppingCart fontSize={"1.5rem"} className="mx-1" />
+                      إضافة المنتج إلى السلة
                     </button>
                     <button
                       disabled={isLoading || createLoading}
                       type="button"
-                      onClick={() => addproducToCartOurWishlist(product?.data._id,'wishlist')}
+                      onClick={() =>
+                        addproducToCartOurWishlist(
+                          product?.data._id,
+                          "wishlist"
+                        )
+                      }
                       className=" btn btn-outline-danger  p-1"
                     >
-                      <CiHeart fontSize={'1.5rem'} className="mx-1"/>
-                                        إضافة المنتج إلى المفضلة 
-
+                      <CiHeart fontSize={"1.5rem"} className="mx-1" />
+                      إضافة المنتج إلى المفضلة
                     </button>
                     <button
                       disabled={isLoading || createLoading}
@@ -514,13 +536,15 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
                       onClick={downloadPdf}
                       className={`${showDownloadBtn} btn btn-outline-success`}
                     >
-                      <RiDownloadCloud2Line  fontSize={'1.5rem'} className="mx-1"/>
-                      تحميل  المواصفات الفنية للمنتج
+                      <RiDownloadCloud2Line
+                        fontSize={"1.5rem"}
+                        className="mx-1"
+                      />
+                      تحميل المواصفات الفنية للمنتج
                     </button>
                   </div>
                 </Fade>
                 {/* share to social media */}
-            
               </div>
             </div>
           </div>
@@ -528,96 +552,57 @@ const addproducToCartOurWishlist = useCallback((productId,route) => {
       );
     }
     return null;
-  }, [addproducToCartOurWishlist, createLoading, downloadPdf, handleMouseEnter, imageList, isLoading, isSuccess, product?.data?._id, product?.data?.brand?.name, product?.data.category?.name, product?.data?.description, product?.data?.imageCover, product?.data?.infoProductPdf, product?.data?.price, product?.data?.priceAfterDiscount, product?.data?.quantity, product?.data?.ratingsAverage, product?.data?.title, product?.imageUrl, selectedImage, shareUrl]);
+  }, [
+    addproducToCartOurWishlist,
+    createLoading,
+    downloadPdf,
+    handleMouseEnter,
+    imageList,
+    isLoading,
+    isSuccess,
+    product?.data?._id,
+    product?.data?.brand?.name,
+    product?.data.category?.name,
+    product?.data?.description,
+    product?.data?.imageCover,
+    product?.data?.infoProductPdf,
+    product?.data?.price,
+    product?.data?.priceAfterDiscount,
+    product?.data?.quantity,
+    product?.data?.ratingsAverage,
+    product?.data?.title,
+    product?.imageUrl,
+    selectedImage,
+    shareUrl,
+  ]);
 
-  // Related Products Carousel
-  const responsive = useMemo(() => {
-    return {
-      superLargeDesktop: {
-        // الشاشات الكبيرة جداً مثل 1440px فما فوق
-        breakpoint: { max: 4000, min: 1440 },
-        items: 4,
-      },
-      desktop: {
-        // الشاشات المكتبية
-        breakpoint: { max: 1440, min: 1024 },
-        items: 3,
-      },
-      tablet: {
-        // الشاشات اللوحية
-        breakpoint: { max: 1024, min: 768 },
-        items: 2,
-      },
-      mobile: {
-        // الشاشات الهواتف
-        breakpoint: { max: 768, min: 0 },
-        items: 1,
-      },
-    };
-  }, []);
-  // Related Products Carousel
-  const relatedProducts = useMemo(() => {
-    if (categorySuccess && categoryData.data.length > 0) {
-      const filteredProducts = categoryData?.data
-        ?.filter((p) => p._id !== product?.data?._id)
-        ?.map((prod) => (
-          <Card
-            key={prod._id}
-            product={prod}
-          
-            imgePath={categoryData?.imageUrl}
-          />
-        ));
-      return (
-        <div className={filteredProducts?"container d-block":'d-none'}>
-          <div  className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 mt-4 border-bottom bo">
-          <span
-           
-           
-            className=" fs-4   "
-          >
-              منتجات مشابه
-
-          </span>
-         <span style={{
-          height:"1px",
-          backgroundColor: "var(--bgColor) !important" ,
-          flex:'auto'
-         }} className="bg-dark mx-3"></span>
-
-          <Link  to={"/categories"}
-          style={{ color: "var( --btn-bg-color) !important" }}
-          >عرض الكل </Link>
-        </div>  
-           <Carousel
-          responsive={responsive}
-          showDots={true}
-          ssr={true}
-          arrows={true}    
-           rtl={true}
-          focusOnSelect={false}
-          // centerMode={true}
-          lazyLoad={true}
-        >
-          {filteredProducts}
-        </Carousel>
-        </div>
-
-      );
-    }
-
-    return null;
-  }, [categorySuccess, categoryData?.data, categoryData?.imageUrl, responsive, product?.data?._id]);
-
-  //
   if (isLoading) return SkeletonInfoProduct;
 
   return (
-    <div>
-      {productDetails}
-      {relatedProducts}
-      <ToastContainer />
-    </div>
+    <>
+      <Helmet>
+        <meta
+          name="description"
+          content="Sky Galaxy || مجرة السماء للتجارة يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان) "
+        />
+        <meta
+          name="keywords"
+          content="   العوازل المائية , العوازل الحرارية , مواد حقن وإصلاح الخرسانة , فوم بوليرثان"
+        />
+        <title>
+          Sky Galaxy | أفضل المواد للبناء والعزل وإصلاح الخرسانات | مجرة السماء
+          للتجارة الالكترونيه{" "}
+        </title>
+      </Helmet>
+      <div>
+        {productDetails}
+
+        <Suspense>
+          <RelatedProducts product={product} />
+        </Suspense>
+        <ToastContainer />
+      </div>
+    </>
   );
 };
 

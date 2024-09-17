@@ -11,6 +11,7 @@ import Card from "../../components/card/Card";
 import { SkeletonProduct } from "../../utils/skeleton";
 import { Fade } from "react-awesome-reveal";
 import { errorNotify } from "../../utils/Toast";
+import { Helmet } from "react-helmet-async";
 
 const ProductsBrands = () => {
   // Get the lookup value from the store
@@ -31,15 +32,13 @@ const ProductsBrands = () => {
     `products?brand=${BrandId}${sortFilter}&keywords=${search}&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage`
   );
 
-
   //handel error our  success message
 
   useEffect(() => {
-    if(error){
-      errorNotify('حدثت مشكلة في الخادم')
+    if (error) {
+      errorNotify("حدثت مشكلة في الخادم");
     }
-    
-      }, [error]);
+  }, [error]);
   // hanle sort products
   const handleSortProducts = useCallback((e) => {
     const selectedValue = e.target.value;
@@ -61,8 +60,8 @@ const ProductsBrands = () => {
       const sortedproducts = [...products.data];
 
       return sortedproducts?.map((product, index) => (
-        <Fade  key={index}direction="up" triggerOnce={true}  className="m-auto">
-        <Card product={product} imgePath={products?.imageUrl} />
+        <Fade key={index} direction="up" triggerOnce={true} className="m-auto">
+          <Card product={product} imgePath={products?.imageUrl} />
         </Fade>
       ));
     }
@@ -74,7 +73,12 @@ const ProductsBrands = () => {
     );
   }, [isLoading, isSuccess, products?.data, products?.imageUrl]);
 
-  return (
+  return (<>
+    <Helmet>
+        <meta name="description"
+            content="Sky Galaxy || مجرة السماء للتجارة يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان) " />
+        <meta name="keywords" content="   العوازل المائية , العوازل الحرارية , مواد حقن وإصلاح الخرسانة , فوم بوليرثان" />
+        <title>Sky Galaxy | أفضل المواد للبناء والعزل وإصلاح الخرسانات | مجرة السماء للتجارة الالكترونيه </title> </Helmet>
     <div className="w-100 pt-5 position-relative ">
       {/* tosat compunenet */}
       <ToastContainer
@@ -90,54 +94,60 @@ const ProductsBrands = () => {
       />
       <div className="container pt-4">
         <Fade direction="up" triggerOnce={true}>
-        <p
-          style={{ backgroundColor: "var(--bgColor)" }}
-          className="p-2 mb-3 w-100 d-block  fs-4 border border-end-0 border-start-0 text-center"
-        >
-          المنتجات الخاصة بالفئة المطلوبة
-        </p></Fade>
+          <p
+            style={{ backgroundColor: "var(--bgColor)" }}
+            className="p-2 mb-3 w-100 d-block  fs-4 border border-end-0 border-start-0 text-center"
+          >
+            المنتجات الخاصة بالفئة المطلوبة
+          </p>
+        </Fade>
         <div className="w-100 flex-wrap align-items-center overflow-hidden p-1 d-flex">
           {/* sortFilter */}
           <Fade direction="up" triggerOnce={true} cascade>
-          <div className=" p-2">
-            <select
-              className="form-select py-2"
-              disabled={isLoading}
-              id="sortFilter"
-              name="sortFilter"
-              aria-label="Default select example"
-              onChange={handleSortProducts}
-              value={sortFilter}
-            >
-              <option disabled value="">
-                تصفيه
-              </option>
-              <option value={"&sort=-updatedAt"}>جديدنا</option>
-              <option value={"&sort=-sold"}>ترتيب حسب الاكثر مبيعا</option>
-              <option value={"&sort=-ratingsAverage"}>
-                ترتيب حسب الاعلى تقييما
-              </option>
-              <option value="&sort=price">
-                {" "}
-                ترتيب حسب السعر من الأقل للاعلى
-              </option>
-              <option value="&sort=-price">
-                ترتيب حسب السعر من الأعلى للاقل{" "}
-              </option>
-              <option value={"&sort=-title"}>ترتيب حسب الاسم من a الى z</option>
-              <option value={"&sort=title"}>ترتيب حسب الاسم من z الى a</option>
-            </select>
-          </div>
-</Fade>
+            <div className=" p-2">
+              <select
+                className="form-select py-2"
+                disabled={isLoading}
+                id="sortFilter"
+                name="sortFilter"
+                aria-label="Default select example"
+                onChange={handleSortProducts}
+                value={sortFilter}
+              >
+                <option disabled value="">
+                  تصفيه
+                </option>
+                <option value={"&sort=-updatedAt"}>جديدنا</option>
+                <option value={"&sort=-sold"}>ترتيب حسب الاكثر مبيعا</option>
+                <option value={"&sort=-ratingsAverage"}>
+                  ترتيب حسب الاعلى تقييما
+                </option>
+                <option value="&sort=price">
+                  {" "}
+                  ترتيب حسب السعر من الأقل للاعلى
+                </option>
+                <option value="&sort=-price">
+                  ترتيب حسب السعر من الأعلى للاقل{" "}
+                </option>
+                <option value={"&sort=-title"}>
+                  ترتيب حسب الاسم من a الى z
+                </option>
+                <option value={"&sort=title"}>
+                  ترتيب حسب الاسم من z الى a
+                </option>
+              </select>
+            </div>
+          </Fade>
           {/* reset data button */}
           <Fade direction="up" triggerOnce={true}>
-          <button
-            onClick={resetFilter}
-            type="button"
-            className="btn btn-outline-danger h-50 mx-2"
-          >
-            اعادة تعيين
-          </button></Fade>
+            <button
+              onClick={resetFilter}
+              type="button"
+              className="btn btn-outline-danger h-50 mx-2"
+            >
+              اعادة تعيين
+            </button>
+          </Fade>
         </div>
         <div className="w-100 d-flex row-gap-3 mt-3  gap-2 flex-wrap align-items-center justify-content-between">
           {/*product card */}
@@ -145,6 +155,7 @@ const ProductsBrands = () => {
         </div>
       </div>
     </div>
+   </>
   );
 };
 

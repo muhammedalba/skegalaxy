@@ -16,6 +16,7 @@ import { SkeletonProduct } from "../../utils/skeleton";
 import { Link } from "react-router-dom";
 import { errorNotify } from "../../utils/Toast";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet-async";
 
 const AllBrands = () => {
 
@@ -65,70 +66,6 @@ const AllBrands = () => {
 
   },[]);
    
-
-
-
-     
-    
-      // if sucsses and data is not empty  show the brands 
-    
-        // const showData = useMemo(() => {
-        //   if (isSuccess && brands?.data?.length === 0 && search.length > 0) {
-        //     return (
-        //       <tr>
-        //         <td
-        //           className="text-center p-3 fs-5 text-primary"
-        //           colSpan={7}
-        //           scope="row"
-        //         >
-        //           <Fade delay={0} direction="up" triggerOnce={true}>
-        //             العنصر المراد البحث عنه غير موجود
-        //           </Fade>
-        //         </td>
-        //       </tr>
-        //     );
-        //   }
-      
-        //   if (isSuccess && brands?.data?.length > 0) {
-        //     const filterBrands = [...brands.data]?.sort((a, b) =>
-        //       sorted ? b.name.localeCompare(a.name) : a.name.localeCompare(b.name)
-        //     );
-      
-        //     return filterBrands.map((brand, index) => {
-        //       return (
-        //         <tr key={index}>
-        //           <td className="d-none d-sm-table-cell" scope="row">
-        //             <Fade delay={0} direction="up" triggerOnce={true}>
-        //               {index + 1}
-        //             </Fade>
-        //           </td>
-        //           <td>
-        //             <Fade delay={0} direction="up" triggerOnce={true} cascade>
-        //               <span className="">{brand.name.split("_")[0]}</span>
-        //               <span>{brand.name.split("_")[1]}</span>
-        //             </Fade>
-        //           </td>
-      
-        //           <td className="d-none d-md-table-cell">
-        //             <Fade delay={0} direction="up" triggerOnce={true}>
-        //               {brand.image ? (
-        //                 <img
-        //                   style={{ width: "5rem", height: "5rem" }}
-        //                   src={`${brands.imageUrl}/${brand.image}`}
-        //                   alt="avatar"
-        //                 />
-        //               ) : (
-        //                 "لا يوجد صورة"
-        //               )}
-        //             </Fade>
-        //           </td>
-                 
-                  
-        //         </tr>
-        //       );
-        //     });
-        //   }
-        // }, [brands?.data, brands?.imageUrl, isSuccess, search.length, sorted]);
 
 
         const showData = useMemo(() => {
@@ -198,6 +135,12 @@ const AllBrands = () => {
         }, [isLoading, isSuccess, brands?.data, brands?.imageUrl]);
     
       return (
+<>
+        <Helmet>
+        <meta name="description"
+            content="Sky Galaxy || مجرة السماء للتجارة يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان) " />
+        <meta name="keywords" content="   العوازل المائية , العوازل الحرارية , مواد حقن وإصلاح الخرسانة , فوم بوليرثان" />
+        <title>Sky Galaxy | أفضل المواد للبناء والعزل وإصلاح الخرسانات | مجرة السماء للتجارة الالكترونيه </title></Helmet>
         <div className="w-100 pt-4 ">
           {/* tosat compunenet */}
           <ToastContainer/>
@@ -277,7 +220,8 @@ const AllBrands = () => {
            
           />
         </div>
-      );
+        
+      </>);
     };
   
     

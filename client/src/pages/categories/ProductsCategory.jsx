@@ -11,6 +11,7 @@ import Card from "../../components/card/Card";
 import { SkeletonProduct } from "../../utils/skeleton";
 import { Fade } from "react-awesome-reveal";
 import { errorNotify } from "../../utils/Toast";
+import { Helmet } from "react-helmet-async";
 
 const ProductsCategory = () => {
   // Get the lookup value from the store
@@ -74,6 +75,12 @@ if(error){
   }, [isLoading, isSuccess, products?.data, products?.imageUrl]);
 
   return (
+    <>
+    <Helmet>
+        <meta name="description"
+            content="Sky Galaxy || مجرة السماء للتجارة يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان) " />
+        <meta name="keywords" content="   العوازل المائية , العوازل الحرارية , مواد حقن وإصلاح الخرسانة , فوم بوليرثان" />
+        <title>Sky Galaxy | أفضل المواد للبناء والعزل وإصلاح الخرسانات | مجرة السماء للتجارة الالكترونيه </title></Helmet>
     <div className="w-100 pt-5 position-relative ">
       {/* tosat compunenet */}
       <ToastContainer
@@ -147,6 +154,7 @@ if(error){
         </div>
       </div>
     </div>
+    </>
   );
 };
 

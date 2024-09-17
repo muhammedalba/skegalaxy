@@ -1,3 +1,6 @@
 .MinPage {
 white-space: normal !important;
 }
+table th {
+    background-color: var(--bgColor) !important;
+  }

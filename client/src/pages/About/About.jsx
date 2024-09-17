@@ -15,6 +15,7 @@ import img1 from "../../imges/about/about-2.jpg";
 import img3 from "../../imges/about/about-3.jpg";
 import img4 from "../../imges/about/about-4.jpg";
 import img5 from "../../imges/about/about-5.jpg";
+import { Helmet } from "react-helmet-async";
 
 
 
@@ -40,6 +41,13 @@ const About = () => {
     </SwiperSlide>
   })
   return (
+<>
+    <Helmet>
+    <meta name="description"
+        content="Sky Galaxy || مجرة السماء للتجارة يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان) " />
+    <meta name="keywords" content="   العوازل المائية , العوازل الحرارية , مواد حقن وإصلاح الخرسانة , فوم بوليرثان" />
+    <title>Sky Galaxy | أفضل المواد للبناء والعزل وإصلاح الخرسانات | مجرة السماء للتجارة الالكترونيه </title> 
+     </Helmet>
     <div id="about" className="container pt-5 mt-3 overflow-hidden">
       <h1 className="text-center pt-4 text-primary"> من نحن !</h1>
       <Swiper
@@ -175,6 +183,7 @@ const About = () => {
       </section>
       
     </div>
+  </>
   );
 };
 
