@@ -4,10 +4,7 @@
 .AllCategories img,
 .AllBrands img,
 .caroselBrand img{
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    -ms-transition: 0.5s;
-    -o-transition: 0.5s;
+
     transition: 0.5s;
     display: block;
 }
@@ -17,10 +14,7 @@
 .caroselcategory:hover img 
 {
 
-   -webkit-transform: scale(1.08);
-   -moz-transform: scale(1.08);
-   -ms-transform: scale(1.08);
-   -o-transform: scale(1.08);
+
    transform: scale(1.08);
    
 }

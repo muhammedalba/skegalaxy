@@ -73,7 +73,7 @@ const Products = () => {
       dispatch(Branditems(brands.data));
     }
   }, [brands?.data, categories?.data, dispatch]);
-  // dispatch(Categoryitems('categories.data'))
+ 
 
   // Go to products and filter
   const scrollToSection = useCallback(
@@ -391,6 +391,8 @@ const Products = () => {
       slidesToSlide: 1, // optional, default to 1.
     },
   };
+
+  
   return (
     <>
     <Helmet>

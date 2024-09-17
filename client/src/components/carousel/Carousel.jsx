@@ -4,15 +4,16 @@ import { ToastContainer } from "react-toastify";
 import { useGetDataQuery } from "../../redux/features/api/apiSlice";
 import { errorNotify } from "../../utils/Toast";
 import { SkeletonCarousel } from "../../utils/skeleton";
-import './carousel.css'
-
-
+import "./carousel.css";
 
 const Carousel = () => {
   // Get categories from the database
-  const { data: carouseles, error, isLoading, isSuccess } = useGetDataQuery('carousel?fields=carouselImage,carouselImageMd');
-
-
+  const {
+    data: carouseles,
+    error,
+    isLoading,
+    isSuccess,
+  } = useGetDataQuery("carousel?fields=carouselImage,carouselImageMd");
 
   useEffect(() => {
     if (error) {
@@ -23,49 +24,52 @@ const Carousel = () => {
   // Preload images to improve performance
   useEffect(() => {
     if (isSuccess && carouseles?.data) {
-      carouseles.data.forEach(preview => {
+      carouseles.data.forEach((preview) => {
         const img = new Image();
         img.src = `${carouseles?.imageUrl}/${preview?.carouselImage}`;
       });
     }
   }, [isSuccess, carouseles]);
 
-
-
   // Memoize the carousel images to avoid unnecessary re-renders
   const imagesShow = useMemo(() => {
+    // Loading and error handling
+    if (isLoading) {
+      return SkeletonCarousel;
+    }
 
-  // Loading and error handling
-  if (isLoading) {
-    return SkeletonCarousel
-  }
-
-    return isSuccess && carouseles?.data?.map((preview, index) => (
-      <div
-        key={index}
-        className={`carousel-item ${index === 0 ? "active" : ""} h-100 w-100  `}
-        data-bs-interval={`${index * 1500}`}
-      >
-        <img
-             
-              decoding="async"
-            width={1024} 
-          className="d-sm-none h-100  w-100 "
-          src={`${carouseles?.imageUrl}/${preview?.carouselImage}`}
-          alt={`Preview ${index}`}
-          loading="eager" 
-        />
-         <img
-             
-             decoding="async"
-           width={1024} 
-         className="d-none d-sm-block h-100  w-100 "
-         src={`${carouseles?.imageUrl}/${preview?.carouselImageMd}`}
-         alt={`Preview ${index}`}
-         loading="eager" 
-       />
-      </div>
-    ));
+    return (
+      isSuccess &&
+      carouseles?.data?.map((preview, index) => (
+        <div
+          key={index}
+          className={`carousel-item ${
+            index === 0 ? "active" : ""
+          } h-100 w-100  `}
+          data-bs-interval={`${index * 1500}`}
+        >
+          <img
+            style={{ objectFit: "fill" }}
+            decoding="async"
+            width={700}
+            height={200}
+            className="d-sm-none h-100 w-100 "
+            src={`${carouseles?.imageUrl}/${preview?.carouselImage}`}
+            alt={`Preview ${index}`}
+            loading="eager"
+          />
+          <img
+            style={{ objectFit: "fill" }}
+            decoding="async"
+            width={1024}
+            className="d-none d-sm-block h-100  w-100 "
+            src={`${carouseles?.imageUrl}/${preview?.carouselImageMd}`}
+            alt={`Preview ${index}`}
+            loading="eager"
+          />
+        </div>
+      ))
+    );
   }, [isLoading, isSuccess, carouseles?.data, carouseles?.imageUrl]);
 
   return (
@@ -83,33 +87,36 @@ const Carousel = () => {
         theme="colored"
       />
 
-      <div id ="carousel" className="my-2 w-100 "
-      style={{  height: "45vh" }}
-      >
+      <div id="carousel" className="my-2 w-100 " style={{ height: "45vh" }}>
         {/* Carousel */}
-      
-          <div
-            
-            id="carouselExampleFade"
-            className="carousel slide carousel-fade m-auto mt-2 w-100  h-100"
-            data-bs-ride="carousel"
-          >
-            <div className="carousel-inner h-100 w-100">
-              {imagesShow}
-            </div>
-  <div>
-  <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-    <span className="carousel-control-prev-icon" aria-hidden="true" />
-    <span className="visually-hidden">Previous</span>
-  </button>
-  <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-    <span className="carousel-control-next-icon" aria-hidden="true" />
-    <span className="visually-hidden">Next</span>
-  </button>
-</div>
 
+        <div
+          id="carouselExampleFade"
+          className="carousel slide carousel-fade m-auto mt-2 w-100  h-100"
+          data-bs-ride="carousel"
+        >
+          <div className="carousel-inner h-100 w-100">{imagesShow}</div>
+          <div>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleFade"
+              data-bs-slide="prev"
+            >
+              <span className="carousel-control-prev-icon" aria-hidden="true" />
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleFade"
+              data-bs-slide="next"
+            >
+              <span className="carousel-control-next-icon" aria-hidden="true" />
+              <span className="visually-hidden">Next</span>
+            </button>
           </div>
-       
+        </div>
       </div>
     </div>
   );

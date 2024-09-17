@@ -18,6 +18,8 @@ import { convertDateTime } from '../../../utils/convertDateTime';
     
       //get data (rtk redux) 
       const {isLoading,isSuccess,data, error}=useGetOneQuery(`coupons/${couponId}`);
+    console.log(data);
+  
     
     // update data (rtk redux)
       const [ updateOne,{error:updateEror,isLoading:updateLoading,isSuccess:updateSuccess,}]=useUpdateOneMutation();
@@ -50,7 +52,7 @@ import { convertDateTime } from '../../../utils/convertDateTime';
         name:data.data?.name,
         discount:data.data?.discount,
         expires:data.data?.expires,
-        createdAt:data.data?.createdAt,
+        createdAt:data.data?.createdAt        ,
     })
       }
       if(updateSuccess){
@@ -76,20 +78,20 @@ import { convertDateTime } from '../../../utils/convertDateTime';
     const handleSubmit=(e)=>{
        e.preventDefault();  
        
-       if(convertDateTime(Date.now()) >= convertDateTime(formData?.expires)){
+       if(convertDateTime(Date.now()),true >= convertDateTime(formData?.expires,true)){
          errorNotify('المدى الخاصة بهذا الكوبون  غير صالحه');
          return;
        }
 
      
-  if(  convertDateTime(Date.now()) <= convertDateTime(formData?.expires) &&
+  if(  convertDateTime(Date.now(),true) <= convertDateTime(formData?.expires,true) &&
        formData.name !==''&&
        formData.discount !== "" &&
        formData.discount !== "" &&
        formData.expires !==""&&
        formData.createdAt !==""){
             
-        if( formData.discount > 0 && formData.discount <100 ){
+        // if( formData.discount > 0 && formData.discount < 100 ){
    //  send form data to server
            updateOne({
              url:`/coupons/${couponId}` ,
@@ -97,10 +99,10 @@ import { convertDateTime } from '../../../utils/convertDateTime';
              method: 'put',
            });
 
-        }else{
-          warnNotify('يجب ان تكون الخصم من 0 والى 100');
-          return;
-        }
+        // }else{
+        //   warnNotify('يجب ان تكون الخصم من 0 والى 100');
+        //   return;
+        // }
              
         
        
@@ -121,12 +123,12 @@ import { convertDateTime } from '../../../utils/convertDateTime';
  
       setFormData({...formData,[e.target.id]:e.target.value}||{});
     
+      console.log(formData.expires);
       
      }
     
     
   
-    
     
     
         return (
@@ -228,7 +230,7 @@ import { convertDateTime } from '../../../utils/convertDateTime';
                     name={'expires'}
                     type={'date'}
                     placeholder={"  تاريخ الانتهاء  "}
-                    value={formData?.expires && convertDateTime(formData?.expires)||''}
+                    value={formData.expires && convertDateTime(formData?.expires,true)||''}
                     onChange={handleChange}
                     
                 
@@ -254,7 +256,7 @@ import { convertDateTime } from '../../../utils/convertDateTime';
                         name={'createdAt'}
                         type={'date'}
                         placeholder={"  تاريخ النشاء  "}
-                        value={formData?.expires && convertDateTime(formData?.createdAt) || ''}
+                        value={formData?.createdAt && convertDateTime(formData?.createdAt,true) || ''}
                       
                          />
                 

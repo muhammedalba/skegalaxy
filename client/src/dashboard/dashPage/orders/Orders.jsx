@@ -42,6 +42,7 @@ import DeleteModal from "../../../components/deletModal/DeleteModal";
         isLoading,
         isSuccess,
       } = useGetDataQuery(`orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}&keywords=${search}&fields=VerificationCode,isDelivered,isPaid,paymentMethodType,totalOrderPrice`);
+
   
 
 

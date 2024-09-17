@@ -139,9 +139,10 @@ Confirm ,HideDiscount}) => {
             <span className="text-primary text-center d-block">
               اجور التوصيل تختلف حسب المكان والكمية تواصل معنا لمعرفة تكلفة
               التوصيل
-              <a className="d-block "    href="https://wa.me/+966598909991">
+              <a className="d-block "    href="https://wa.me/+966598909991" target="_blank">
                 ( 966598909991+) <BsWhatsapp fontSize={'1.3rem'} color="#33bd45 " />
               </a>
+              
               او يمكنك استلام طلبيتك من احد فروعنا
             </span>
             <Link to="/PrivacyPolic" className=" d-block fw-bold my-2">الاحكام والشروط وسياسات الاسترجاع </Link>

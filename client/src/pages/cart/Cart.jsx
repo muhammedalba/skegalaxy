@@ -49,6 +49,7 @@ const Cart =() => {
   const [ deletOne,{ error: errorDelete, isLoading: LoadingDelet, isSuccess: successDelete },] = useDeletOneMutation();
   
   const [updateOne,{ error: errorUpdate,isLoading: LoadingUpdate,isSuccess: successUpdate},] = useUpdateOneMutation();
+console.log(products);
 
 
 
@@ -511,20 +512,8 @@ const openModalAndClearCart = useCallback(() => {
           <table className="table pt-5 mt-3 text-center">
             <thead >
               <tr>
-                {/* <th className=" d-table-cell" scope="col">
-                  حذف
-                </th>
-                <th className="d-table-cell" scope="col">
-                  صورة المنتج
-                </th>
-                <th className=" d-table-cell" scope="col">
-                  الاسم المنتج
-                </th>
-                <th className=" d-none d-sm-table-cell" scope="col">
-                  الكمية
-                </th> */}
                 
-          {isSuccess && productsDetails?.resnumOfCartItems > 0 && (
+            {isSuccess && productsDetails?.resnumOfCartItems > 0 && (
            
               <th style={{backgroundColor:'rgb(243, 244, 246) '}} colSpan={4}
                             className="fs-6 w-100 p-2 ">
@@ -542,7 +531,7 @@ const openModalAndClearCart = useCallback(() => {
       
         <Suspense >
           {/* coupon and checkout start*/}
-          <MemoizedApplayCoupon  Confirm={displayDiscount} LoadingDelet={LoadingDelet} openModalAndClearCart={openModalAndClearCart} productsDetails={productsDetails} openPaymntCommpount={openPaymntCommpount} HideDiscount={HideDiscount}
+          <MemoizedApplayCoupon cartid={products?.data?._id}  Confirm={displayDiscount} LoadingDelet={LoadingDelet} openModalAndClearCart={openModalAndClearCart} productsDetails={productsDetails} openPaymntCommpount={openPaymntCommpount} HideDiscount={HideDiscount}
         />
       </Suspense>
       <Suspense > <MemoizedPayment  display={display} productsDetails={productsDetails} setdisplay={openPaymntCommpount}/> </Suspense >

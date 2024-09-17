@@ -53,7 +53,7 @@ import Cookies from "universal-cookie";
       const openImge = (imageUrl) => {
        
         
-        window.open(imageUrl, '_blank'); // تفتح الصورة في نافذة جديدة
+        window.open(imageUrl, '_blank'); 
       }; 
     
 
@@ -70,12 +70,10 @@ import Cookies from "universal-cookie";
             credentials: 'include',
           });
   
-          // تحقق من حالة الاستجابة
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
   
-          // تحقق من نوع المحتوى
           const contentType = response.headers.get('content-type');
           if (contentType && contentType.includes('pdf')) {
             // أنشئ رابط لتحميل الـ PDF
@@ -83,7 +81,7 @@ import Cookies from "universal-cookie";
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'document.pdf'); // اسم الملف الذي سيتم تنزيله
+            link.setAttribute('download', 'document.pdf'); 
             document.body.appendChild(link);
             link.click();
             link.remove();

@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
+  font-display:swap ;
 }
 
 /* CSS Variables */
@@ -24,7 +24,7 @@
 /* Global Styles */
 body {
   font-family: 'Amiri', serif !important;
-  font-display:swap ;
+
   scroll-behavior: smooth;
   overflow-x: hidden;
   background-color:white !important;
