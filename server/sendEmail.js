@@ -18,7 +18,7 @@ exports.sendEmail = async(options) => {
     to: options.email,
     subject: options.subject,
     html : options.message,
-    text : options.message,
+    
     attachments: options.attachments,
   };
   // 3- send email
