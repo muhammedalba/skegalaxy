@@ -1,22 +1,18 @@
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-const { promisify } = require('util');
+const { promisify } = require("util");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const UserModel = require("../models/users.module");
 
 const { uploadImage } = require("../middleWare/uploadImgeMiddlewRE.JS");
-const { sendEmail } = require("../sendEmail");
+const { sendEmail } = require("../utils/sendEmail");
 const ApiErorr = require("../utils/apiError");
 const { createToken, createRefreshToken } = require("../utils/createToken");
 const { sanitizeUser } = require("../utils/sanitizeData");
 
 // upload  images
-exports.signupUploadUserImge = uploadImage([
-  { name: "image", maxCount: 1 },
-]);
-
-
+exports.signupUploadUserImge = uploadImage([{ name: "image", maxCount: 1 }]);
 
 // post http://localhost:4000/api/users/auth/signup
 
@@ -31,32 +27,39 @@ exports.signupUploadUserImge = uploadImage([
 // public
 
 exports.signup = asyncHandler(async (req, res) => {
-
-  // Get the image link from url 
+  // Get the image link from url
   const baseUrlSegments = req.baseUrl.split("/").slice(2, -1);
   const baseUrlPath = baseUrlSegments.join("/");
-  const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
+  const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${baseUrlPath}`;
   // creat user
   const user = await UserModel.create(req.body);
 
   // generate token
 
   const token = createToken(user);
-  const refreshToken  = createRefreshToken(user);
+  const refreshToken = createRefreshToken(user);
   res.cookie("token", token, {
-    httpOnly: false,// javascript only
-    secure: false,//HTTPS
-    sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+    httpOnly: false, // javascript only
+    secure: false, //HTTPS
+    sameSite: "strict", // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
     // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
-});
-res.cookie("refreshToken", refreshToken, {
-  httpOnly: true,
-  secure: false,
-  sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-  // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
-});
+  });
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "strict", // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+    // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
+  });
 
-  res.status(201).json({status:'success', data: sanitizeUser(user),refreshToken,token ,imageUrl});
+  res
+    .status(201)
+    .json({
+      status: "success",
+      data: sanitizeUser(user),
+      refreshToken,
+      token,
+      imageUrl,
+    });
 });
 
 // post http://localhost:4000/api/users/auth/signup
@@ -64,14 +67,14 @@ res.cookie("refreshToken", refreshToken, {
 //need to body{
 //   email
 //   password
-// } 
+// }
 
 // public
 exports.login = asyncHandler(async (req, res, next) => {
-  // Get the image link from url 
-const baseUrlSegments = req.baseUrl.split("/").slice(2, -1);
-const baseUrlPath = baseUrlSegments.join("/");
-const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
+  // Get the image link from url
+  const baseUrlSegments = req.baseUrl.split("/").slice(2, -1);
+  const baseUrlPath = baseUrlSegments.join("/");
+  const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${baseUrlPath}`;
 
   const user = await UserModel.findOne({ email: req.body.email });
   let passwordUser;
@@ -84,81 +87,89 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
 
   // generate token
   const token = createToken(user);
-  const refreshToken  = createRefreshToken(user);
+  const refreshToken = createRefreshToken(user);
   res.cookie("token", token, {
-    httpOnly: false,// javascript only
-    secure: false,//HTTPS
-    sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+    httpOnly: false, // javascript only
+    secure: false, //HTTPS
+    sameSite: "strict", // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
     // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
-});
-res.cookie("refreshToken", refreshToken, {
-  httpOnly: true,
-  secure: false,
-  sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-  // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
-});
-res.setHeader('Authorization', `Bearer ${token}`);
+  });
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "strict", // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+    // maxAge: 3 * 24 * 60 * 60 * 1000, // 30 days
+  });
+  res.setHeader("Authorization", `Bearer ${token}`);
 
-  res.status(200).json({status:'success', data: sanitizeUser(user),refreshToken ,token,imageUrl });
+  res
+    .status(200)
+    .json({
+      status: "success",
+      data: sanitizeUser(user),
+      refreshToken,
+      token,
+      imageUrl,
+    });
 });
 // public
 exports.logout = asyncHandler(async (req, res, next) => {
-
-
   //  remove token
-  
-  res.clearCookie("token", '', {
-    httpOnly: false,// javascript only
-    secure: false,//HTTPS
-    sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-   
+
+  res.clearCookie("token", "", {
+    httpOnly: false, // javascript only
+    secure: false, //HTTPS
+    sameSite: "strict", // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+  });
+
+  res.clearCookie("refreshToken", "", {
+    httpOnly: false,
+    secure: false,
+    sameSite: "strict", // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+  });
+
+  res.status(200).json({ status: "success", data: "Logged out successfully" });
 });
-
-res.clearCookie("refreshToken", '', {
-  httpOnly: false,
-  secure: false,
-  sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-
-});
-
-
-  res.status(200).json({status:'success', data: 'Logged out successfully' });
-});
-
 
 // Check the user if the password is updated and his identity
 const handleAuthenticatedUser = async (user, req, next) => {
-
   try {
-
-    const currentUser = await UserModel.findById(user.userId).lean()
+    const currentUser = await UserModel.findById(user.userId).lean();
     if (!currentUser) {
-      return next(new ApiErorr('The user belonging to this token no longer exists', 401));
+      return next(
+        new ApiErorr("The user belonging to this token no longer exists", 401)
+      );
     }
 
     if (currentUser.passwordChangeAt) {
-      const passwordChangeTimestamp = parseInt(currentUser.passwordChangeAt.getTime() / 1000, 10);
+      const passwordChangeTimestamp = parseInt(
+        currentUser.passwordChangeAt.getTime() / 1000,
+        10
+      );
       if (passwordChangeTimestamp > user.iat) {
-        return next(new ApiErorr('User recently changed his password. Please log in again...', 401));
+        return next(
+          new ApiErorr(
+            "User recently changed his password. Please log in again...",
+            401
+          )
+        );
       }
     }
 
     req.user = currentUser;
     next();
   } catch (error) {
-    console.error('Error in handleAuthenticatedUser:', error);
-    return next(new ApiErorr('Internal server error', 500));
+    console.error("Error in handleAuthenticatedUser:", error);
+    return next(new ApiErorr("Internal server error", 500));
   }
 };
 
-
 // check token
 // exports.protect = asyncHandler(async (req, res, next) => {
-  
- 
+
 //   const {refreshToken} = req.cookies;
 //   const {token} = req.cookies;
-// // chek token 
+// // chek token
 //   // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
 //   //   token = req.headers.authorization.split(' ')[1];
 //   // }
@@ -171,7 +182,7 @@ const handleAuthenticatedUser = async (user, req, next) => {
 //     if (err) {
 //       //if Token Expired Error
 //       if (err.name === 'TokenExpiredError') {
-        
+
 //         if (!refreshToken) {
 //           return next(new ApiErorr('Refresh token is missing', 403));
 //         }
@@ -181,25 +192,24 @@ const handleAuthenticatedUser = async (user, req, next) => {
 //           if (refError) return next(new ApiErorr('Invalid refresh token', 403));
 //           // Create a new Token
 //           const newAccessToken = createToken(refUser);
-          
-         
+
 //          console.log('new token :',newAccessToken);
 //         //  Token update
 //           res.cookie("token", newAccessToken, {
 //             httpOnly: false,// javascript only
 //             secure: false,//HTTPS
 //             sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-        
-//         }); 
+
+//         });
 //         res.setHeader('Authorization', `Bearer ${newAccessToken}`);
 //           await handleAuthenticatedUser(refUser, req, next);
 //         });
 //       } // If the token is invalid
 //       else {
-        
+
 //         return next(new ApiErorr('Invalid access token', 403));
 //       }
-//     } 
+//     }
 //     // If the token is valid
 //     else {
 //       await handleAuthenticatedUser(user, req, next);
@@ -209,54 +219,63 @@ const handleAuthenticatedUser = async (user, req, next) => {
 
 exports.protect = asyncHandler(async (req, res, next) => {
   // let token;
- const {refreshToken} = req.cookies;
- const {token} = req.cookies;
+  const { refreshToken } = req.cookies;
+  const { token } = req.cookies;
   // Check for token in headers
   // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
   //   token = req.headers.authorization.split(' ')[1];
   // }
 
   if (!token) {
-    return next(new ApiErorr('You are not logged in. Please log in to access this route', 401));
+    return next(
+      new ApiErorr(
+        "You are not logged in. Please log in to access this route",
+        401
+      )
+    );
   }
 
   try {
     // Verify access token
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
+    const decoded = await promisify(jwt.verify)(
+      token,
+      process.env.JWT_SECRET_KEY
+    );
 
-    
     await handleAuthenticatedUser(decoded, req, next);
   } catch (err) {
     // Token expired
-    if (err.name === 'TokenExpiredError') {
-     
+    if (err.name === "TokenExpiredError") {
       if (!refreshToken) {
-        return next(new ApiErorr('Refresh token is missing', 403));
+        return next(new ApiErorr("Refresh token is missing", 403));
       }
 
       try {
         // Verify refresh token
-        const decodedRefreshToken = await promisify(jwt.verify)(refreshToken, process.env.JWT_SECRET_KEY);
-        
+        const decodedRefreshToken = await promisify(jwt.verify)(
+          refreshToken,
+          process.env.JWT_SECRET_KEY
+        );
+
         // Generate new access token
         const newAccessToken = createToken(decodedRefreshToken);
-        
+
         // Update cookie and authorization header
         res.cookie("token", newAccessToken, {
           httpOnly: false,
           // secure: process.env.NODE_ENV === 'production',
           secure: false,
-          sameSite: 'strict', 
+          sameSite: "strict",
         });
-        res.setHeader('Authorization', `Bearer ${newAccessToken}`);
-        
+        res.setHeader("Authorization", `Bearer ${newAccessToken}`);
+
         await handleAuthenticatedUser(decodedRefreshToken, req, next);
       } catch (refreshError) {
-        return next(new ApiErorr('Invalid refresh token', 403));
+        return next(new ApiErorr("Invalid refresh token", 403));
       }
     } else {
       // Invalid access token
-      return next(new ApiErorr('Invalid access token', 403));
+      return next(new ApiErorr("Invalid access token", 403));
     }
   }
 });
@@ -286,7 +305,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   user.passwordResetExpires = Date.now() + 10 * 60 * 1000;
   user.passwordResetVerified = false;
   // eslint-disable-next-line no-self-assign
-  user.image=user.image;
+  user.image = user.image;
   await user.save();
 
   // 3- send email
@@ -329,21 +348,20 @@ exports.verifyResetCode = asyncHandler(async (req, res, next) => {
     return next(
       new ApiErorr(`reset code invalid or expired ${req.body.resetCode}  `, 404)
     );
-
   }
-      // 2- reset code is invalid
+  // 2- reset code is invalid
 
-      user.passwordResetVerified = true;
-  
-      await user.save();
-      res.status(200).json({ success: true, message: "reset code verified" });
+  user.passwordResetVerified = true;
+
+  await user.save();
+  res.status(200).json({ success: true, message: "reset code verified" });
 });
 // reset password
 // post http://localhost:4000/api/auth/resetPassword
 exports.resetPassword = asyncHandler(async (req, res, next) => {
   const baseUrlSegments = req.baseUrl.split("/").slice(2, -1);
-const baseUrlPath = baseUrlSegments.join("/");
-const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
+  const baseUrlPath = baseUrlSegments.join("/");
+  const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${baseUrlPath}`;
   // 1- get user based on email
   const user = await UserModel.findOne({ email: req.body.email });
   if (!user) {
@@ -368,19 +386,18 @@ const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${baseUrlPath}`;
   // 4-  if everything is ok ,generate token
   const token = createToken(user);
 
-  const refreshToken  = createRefreshToken(user);
+  const refreshToken = createRefreshToken(user);
   res.cookie("token", token, {
-    httpOnly: false,// javascript only
-    secure: false,//HTTPS
-    sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+    httpOnly: false, // javascript only
+    secure: false, //HTTPS
+    sameSite: "strict", // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  });
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "strict", // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  });
+  res.status(200).json({ status: "success", data: user, token, imageUrl });
 });
-res.cookie("refreshToken", refreshToken, {
-  httpOnly: true,
-  secure: false,
-  sameSite: 'strict', // Enforce secure cookies & // Prevent CSRF attacks by setting sameSite
-  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-});
-  res.status(200).json({status:'success', data: user, token,imageUrl });
-});
-
