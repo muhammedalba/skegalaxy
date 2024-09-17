@@ -23,7 +23,6 @@ import PropTypes from "prop-types";
 
 const Payment = ({ display ,productsDetails,setdisplay}) => {
 
-console.log(productsDetails);
 
     const [ CreateOne,{error: errorCreate,isLoading: LoadingCreate,isSuccess: successCreate,data: dataCreate,},] = useCreateOneMutation();
     const focus = useRef(null);
@@ -48,8 +47,7 @@ console.log(productsDetails);
 
 
 
-      console.log(errorCreate);
-    //   console.log(productsDetails);
+ 
     useEffect(() => {
         if (display) {
           focus.current.focus();
@@ -160,7 +158,7 @@ console.log(productsDetails);
       productsDetails?.resnumOfCartItems > 0 &&
       Object.keys(formErrors.errors).length === 0
     ) {
-      const cartId = productsDetails.id;
+      // const cartId = productsDetails.id;
       // create order
     //   CreateOne({
     //     url: `/orders/checkout-session/${cartId}`,

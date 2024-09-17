@@ -36,9 +36,7 @@ const Users = () => {
   const cookies= new Cookies()
   const role = cookies.get("role");
 
-  const show=role.toLowerCase() === "admin"?'block':'none' 
-   
-  console.log(show);
+
   
   // states
   const [sorted, setsorted] = useState(false);
@@ -46,7 +44,7 @@ const Users = () => {
   const [showModal, setShowModal] = useState(false);
   // get users from the database 
   const {data:users, error,isLoading,isSuccess,} = useGetDataQuery(`users?limit=${QuantityResult}&page=${Pagination}&keywords=${search}&fields=firstname,email,image,role`);
-    console.log(error);
+   
   // delete users from the database
   const [
     deletOne,
@@ -57,7 +55,7 @@ const Users = () => {
 
   
 
-console.log(users);
+
 
 
 
@@ -146,9 +144,11 @@ const handleDelete =useCallback((id) => {
                <td>
                <Fade delay={0} direction='up' triggerOnce={true}>
   
-                 <Link to={user._id} className={`btn btn-outline-success d-${role.toLowerCase() === "manger" &&user. role.toLowerCase()=='admin'?'none':'' }`}>
+                 <Link to={user._id} 
+                 className={`btn btn-outline-success d-${role.toLowerCase() === "manger" && user.role.toLowerCase()=='admin' ||  role.toLowerCase()=='manger' && user.role.toLowerCase()=='manger' ?'none':'' }`}>
                      <CiEdit   />  
-                 </Link></Fade>
+                 </Link>
+                 </Fade>
                </td>
                <td>              
                  <Fade delay={0} direction='up' triggerOnce={true} >
@@ -156,7 +156,7 @@ const handleDelete =useCallback((id) => {
            
                    <button
                      disabled={LoadingDelet ? true : false}
-                     className={`btn btn-outline-danger d-${role.toLowerCase() === "manger" &&user. role.toLowerCase()=='admin'?'none':'block' } `}
+                     className={`btn btn-outline-danger d-${role.toLowerCase() === "manger" && user.role.toLowerCase()=='admin' ||  role.toLowerCase()=='manger' && user.role.toLowerCase()=='manger' ?'none':'' }`}
                     onClick={() => openModal(user._id)}
                   >
                          <RiDeleteBin6Line/>
@@ -219,7 +219,7 @@ const handleDelete =useCallback((id) => {
             <th scope="col">الحذف</th>
           </tr>
         </thead>
-        <tbody className="">{isLoading ? SkeletonTeble : showData}</tbody>
+        <tbody className="">{showData}</tbody>
       </table>
         {/*Modal */}
   <DeleteModal

@@ -31,7 +31,7 @@ import DeleteModal from "../../../components/deletModal/DeleteModal";
       const search = useSelector((state) => state.serch);
       const limit = useSelector((state) => state.QuantityResult);
       const Pagination = useSelector((state) => state.Pagination);
-    console.log(Pagination,'Pagination');
+
     
     
       // const [Pagination, setPagination] = useState(1);
@@ -43,7 +43,7 @@ import DeleteModal from "../../../components/deletModal/DeleteModal";
         isLoading,
         isSuccess,
       } = useGetDataQuery(`coupons?limit=${limit}&page=${Pagination}&keywords=${search}`);
-      console.log(error);
+    
       // delete coupons from the database
       const [
         deletOne,
@@ -218,7 +218,6 @@ const handleDelete =useCallback((id) => {
       </tr>
     );
   }, [isLoading, isSuccess, coupons?.data, LoadingDelet, openModal]);
-  console.log(coupons);
   
       return (
         <div className="w-100 pt-5 ">

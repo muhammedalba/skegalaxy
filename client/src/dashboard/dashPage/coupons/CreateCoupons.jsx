@@ -18,14 +18,13 @@ const CreateCoupons = () => {
     createOne,
     { error, isLoding, isSuccess },
   ] = useCreateOneMutation();
-console.log(error?.data);
 
-  //    console.log(data,' ');
+
   const [formData, setFormData] = useState({
     name: "",
     discount: "",
     expires: "",
-    // createdAt: "",
+  
   });
   useEffect(() => {
     if(error?.status ===401){

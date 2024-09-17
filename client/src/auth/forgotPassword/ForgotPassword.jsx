@@ -11,10 +11,10 @@ import { Fade } from "react-awesome-reveal";
 import { errorNotify, successNotify } from "../../utils/Toast";
 
 const ForgotPassword = () => {
-  const [Autapi, { data, error: eror, isLoading, isSuccess }] =
+  const [Autapi, {  error: eror, isLoading, isSuccess }] =
     useAutapiMutation();
-  console.log(eror);
-  console.log(data);
+
+
   const focus = useRef(null);
   const navigate = useNavigate();
   const [error, setError] = useState("");

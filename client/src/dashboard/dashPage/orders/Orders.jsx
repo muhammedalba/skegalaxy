@@ -42,8 +42,7 @@ import DeleteModal from "../../../components/deletModal/DeleteModal";
         isLoading,
         isSuccess,
       } = useGetDataQuery(`orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}&keywords=${search}&fields=VerificationCode,isDelivered,isPaid,paymentMethodType,totalOrderPrice`);
-     console.log(orders);
-     console.log(error);
+  
 
 
       const[updateOne, {
@@ -63,8 +62,7 @@ import DeleteModal from "../../../components/deletModal/DeleteModal";
       
       }] = useDeletOneMutation();
     
-      isSuccess&&  console.log(orders, "order");
-    console.log(deletError);
+  
     
       // states
       const [sorted, setsorted] = useState(false);

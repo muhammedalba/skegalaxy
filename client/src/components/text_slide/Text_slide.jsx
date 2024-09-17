@@ -40,48 +40,6 @@ const TextSlide = () => {
         </div>
 
     </div>
-    {/* <div className="text-container d-flex text-align-center pt-2  overflow-hidden text-nowrap position-relative">
-        <div  className="text-slide-revese d-flex text-align-center  pb-2 pt-md-3  fs-3">
-        <p className="m-0">
-        Galaxy Sky Trading Company
-          </p>
-        <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
-      
-
-          <p className="m-0">
-
-          We have all types of insulators (water - thermal - concrete injection and repair materials - polyurethane foam) </p>
-          <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
-
-        </div>
-      
-        <div  className="text-slide-revese d-flex text-align-center  pb-2 pt-md-3  fs-3">
-        <p className="m-0">
-        Galaxy Sky Trading Company
-          </p>
-        <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
-      
-
-          <p className="m-0">
-
-          We have all types of insulators (water - thermal - concrete injection and repair materials - polyurethane foam)</p>
-          <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
-
-        </div>
-        <div  className="text-slide-revese d-flex text-align-center  pb-2 pt-md-3  fs-3">
-        <p className="m-0">
-        Galaxy Sky Trading Company
-          </p>
-        <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
-      
-
-          <p className="m-0">
-
-          We have all types of insulators (water - thermal - concrete injection and repair materials - polyurethane foam)</p>
-          <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
-
-        </div>
-    </div> */}
    </> );
 }
 

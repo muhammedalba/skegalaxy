@@ -20,7 +20,7 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
 
   const navigate = useNavigate();
   const focus = useRef(null);
-console.log(user);
+
 
   // state
   let [Error, setError] = useState("");
@@ -199,8 +199,8 @@ console.log(user);
         {showInputs}
 
         {/* imge input and get to login st  */}
-        {name === "signup" && (
-          <>
+        {name === "signup" && 
+          <div>
             <div className="col-md-12 py-2">
               <label
                 className="p-1 fs-5 d-flex align-items-center gap-1"
@@ -223,8 +223,8 @@ console.log(user);
                 هل لديك حساب بالفعل؟<Link className="text-primary"  to="/login"> تسجيل دخول</Link>
               </span>
             </div>
-          </>
-        )}
+          </div>
+        }
 
         {/*get to login end  */}
 

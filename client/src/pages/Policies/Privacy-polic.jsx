@@ -8,11 +8,7 @@ const PrivacyPolic = () => {
     return (
     <div className="mt-5 pt-5 container">
     
-        {/* <div className=''>
-                <h4 className=''>قيود الوصول </h4>  
-                <p className=''>المعلومات الواردة في هذا الموقع (sky Galaxy) ليست للاستخدام داخل أي بلد أو ولاية قضائية أو من قبل أي شخص حيث يشكل هذا الاستخدام انتهاكا للقانون. إذا كان هذا ينطبق عليك ، فأنت غير مصرح لك بالوصول إلى أو استخدام أي من المعلومات الموجودة على هذا الموقع.
-                </p>  
-        </div> */}
+      
         <div className="w-100">
         <button className=" p-3 collapseHeader collapsed card border w-100 d-flex flex-row
             justify-content-between

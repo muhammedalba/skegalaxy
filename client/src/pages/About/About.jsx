@@ -35,8 +35,7 @@ const About = () => {
    
   ]
   const carosel=images.map(i =>{
-    return <SwiperSlide key={i.id} onClick={()=>console.log(1)
-    } className="">
+    return <SwiperSlide key={i.id}  className="">
       <img className="w-100 h-100" src={i.value} alt="img" />
     </SwiperSlide>
   })

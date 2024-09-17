@@ -191,9 +191,8 @@ const Header = () => {
       window.scrollTo({ top: 1100, behavior: "smooth" });
       dispatch(currentPage(1));
       dispatch(searchItem(e.target.value));
-      console.log(search,'search');
     },
-    [dispatch, search]
+    [dispatch]
   );
   const Scrolto = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -218,13 +217,7 @@ const Header = () => {
       body: {},
       method: "post",
     });
-    cookies.remove();
-    cookies.remove("firstname");
-    cookies.remove("image");
-    cookies.remove("imageUrl");
-    cookies.remove("role");
-    cookies.remove("token");
-    cookies.remove("refreshToken");
+ 
   };
   // reset navigation to 10 items per page and update navigation property
 

@@ -31,8 +31,6 @@ const ProductsCategory = () => {
     `products?category=${CategoryId}${sortFilter}&keywords=${search}&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage`
   );
 
-  console.log(products, "products");
-
   //handel error our  success message
 
   useEffect(() => {

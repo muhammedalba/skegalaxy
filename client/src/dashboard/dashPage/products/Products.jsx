@@ -47,7 +47,6 @@ const Products = () => {
     `products?limit=${limit}&page=${Pagination}&${filterDrands}&${filter}&keywords=${search}&fields=price,title,imageCover,priceAfterDiscount`
   );
 
-console.log(products);
 
   // get brands from the database
   const {

@@ -36,7 +36,6 @@ const TopBar = () => {
   const navigate= useNavigate()
  // handel serche
  const handelserche = (e) => {
-  // console.log(e.target.value);
 
     dispatch(Results(15));
     dispatch(currentPage(1));

@@ -15,7 +15,6 @@ const ApplayCoupon = ({productsDetails,openPaymntCommpount,LoadingDelet,openModa
 Confirm ,HideDiscount}) => {
     const [updateOne,{ error: errorUpdate,isLoading: LoadingUpdate,isSuccess: successUpdate,data: updateData,},] = useUpdateOneMutation();
     const cartitems = useSelector((state) => state.cart);
-    console.log(cartitems,'cartitems');
     
   const [coupon, setCoupon] = useState("");
  
@@ -40,7 +39,7 @@ Confirm ,HideDiscount}) => {
   const handelcoupon = (e) => {
     e.preventDefault();
     if (coupon !== undefined && coupon !== "" && coupon.length >= 3) {
-      // console.log(coupon,'NEWSsm1');
+      
       updateOne({
         url: `/cart/applayCoupon`,
         method: "PUT",

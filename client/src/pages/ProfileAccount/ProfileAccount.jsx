@@ -31,8 +31,7 @@ const User = () => {
   // update data (rtk redux)
   const [updateOne, { error: updateError, isLoading: updateLoading, isSuccess: updateSuccess, data: updatedUser }] = useUpdateOneMutation();
   // states
-  console.log(data);
-  console.log(updateError);
+
   
 
 

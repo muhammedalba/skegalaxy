@@ -51,7 +51,7 @@ import Cookies from "universal-cookie";
 
    
       const openImge = (imageUrl) => {
-        console.log(imageUrl);
+       
         
         window.open(imageUrl, '_blank'); // تفتح الصورة في نافذة جديدة
       }; 
@@ -91,7 +91,7 @@ import Cookies from "universal-cookie";
           } else {
             console.error('Error: Response is not a PDF file');
           }
-          console.log(response);
+          
           
         } catch (error) {
           console.error('Error fetching PDF:', error);
@@ -315,7 +315,7 @@ import Cookies from "universal-cookie";
                 </div>
 
               </div>}
-            </Fade>{console.log(order?.data)}
+            </Fade>
             
             <button  className= {order?.data?.orderPdf?'m-2 btn btn-success fs-5 text-white':'d-none' }
             type="button" onClick={DownloadPdf}   >

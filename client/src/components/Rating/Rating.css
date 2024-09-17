@@ -1,20 +1,6 @@
-.stars{
-    width: 150px;
-    transform: rotateY(180deg);
-  
-  }
-  
-  .stars .container__items label{
-    aspect-ratio: 1;
-    cursor: pointer;
-  }
+
 
 
   
-  .stars  label:hover ~ label .star-stroke,
-  .stars  label:hover  .star-stroke
-{
-    background: var( var(--btn-bg-color)) !important;
-  } 
-  
+
   

@@ -78,7 +78,7 @@ const CreateCarousel = () => {
         
     
       };
-      console.log(error);
+   
       
     //  handel error message
       useEffect(() => {

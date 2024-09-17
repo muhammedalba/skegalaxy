@@ -46,20 +46,19 @@ const Product = () => {
     data: product,
     error,
   } = useGetOneQuery(`products/${productId}`);
-  console.log(product);
   // get categories from db
   const {
     isLoading: loadingCatego,
     isSuccess: SucccessCatego,
     data: categories,
-  } = useGetDataQuery(`categories`);
+  } = useGetDataQuery(`categories?limit=500&page=1&fields=name`);
     // get subcategory from the database
     const {
       data: Brands,
       
       isLoading:loadingSub,
       isSuccess:SuccessSub,
-    } = useGetDataQuery(`brands`);
+    } = useGetDataQuery(`brands?limit=500&page=1&fields=name`);
     // console.log(Brands,'Brands');
     const [
       deletOne,
@@ -357,7 +356,7 @@ const removeImages =useCallback((id) => {
         );
       })
     ) : (
-      <option value="">nodata</option>
+      <option >nodata</option>
     );
       // view brands
   const showbrands =
@@ -371,50 +370,10 @@ const removeImages =useCallback((id) => {
       );
     })
   ) : (
-    <option value="">nodata</option>
+    <option >nodata</option>
   );
 
-  // view imagesShow
-  // const imagesShow =
-  //   previews.length > 0
-  //     ? previews.map((preview, index) => {
-  //         return (
-  //           <div
-  //             key={index}
-  //             className={
-  //               index === 3
-  //                 ? "carousel-item active h-100 w-100 rounded"
-  //                 : " rounded carousel-item active h-100 w-100"
-  //             }
-  //             data-bs-interval={`${index}000`}
-  //           >
-  //             <img
-  //               src={preview}
-  //               className="d-block h-100 rounded  w-100"
-  //               alt={`Preview`}
-  //             />
-  //           </div>
-  //         );
-  //       })
-  //     : ProductData.images.map((preview, index) => {
-  //         return (
-  //           <div
-  //             key={index}
-  //             className={
-  //               index === 3
-  //                 ? "carousel-item active h-100 w-100 rounded"
-  //                 : " rounded carousel-item active h-100 w-100"
-  //             }
-  //             data-bs-interval={`${index}000`}
-  //           >
-  //             <img
-  //               src={`${product?.imageUrl}/${preview}`}
-  //               className="d-block h-100 rounded  w-100"
-  //               alt={`Preview`}
-  //             />
-  //           </div>
-  //         );
-  //       });
+ 
   const imagesShow =
   previews.length > 0
     ? previews.map((preview, index) => {
@@ -670,7 +629,7 @@ const removeImages =useCallback((id) => {
                   id="createdAt"
                   disabled
                   type="date"
-                  value={ProductData.createdAt}
+                  defaultValue={ProductData.createdAt}
                 />
               </div>
               <div className="col-sm-6">
@@ -688,7 +647,7 @@ const removeImages =useCallback((id) => {
                   id="ratingsQuantity"
                   disabled
                   type="number"
-                  value={ProductData.ratingsQuantity}
+                  defaultValue={ProductData.ratingsQuantity}
                 />
               </div>
             </div>
@@ -713,7 +672,7 @@ const removeImages =useCallback((id) => {
                   value={formData.category}
                   aria-label="Default select example"
                 >
-                  <option value='' disabled>اختر الشركه</option>
+                  <option value={''} disabled>اختر القسم</option>
                   {showCategorie}
                 </select>
               </div>
@@ -734,7 +693,7 @@ const removeImages =useCallback((id) => {
                   value={formData.brand}
                   aria-label="Default select example"
                 >
-                  <option value='' disabled>اختر الشركه</option>
+                  <option value={''} disabled>اختر الشركه</option>
                   {showbrands}
                 </select>
               </div>
@@ -763,39 +722,7 @@ const removeImages =useCallback((id) => {
       
       
           
-        {imagesShow.length > 0 &&  
-            // <div
-            //   style={{ width: "100%", height: "150px" }}
-            //   id="carouselExampleInterval"
-            //   className="carousel slide m-auto mt-5"
-            //   data-bs-ride="carousel"
-            // >
-            //   <div className="carousel-inner h-100 w-100">{imagesShow}</div>
-            //   <button
-            //     className="carousel-control-prev h-100"
-            //     type="button"
-            //     data-bs-target="#carouselExampleInterval"
-            //     data-bs-slide="prev"
-            //   >
-            //     <span
-            //       className="carousel-control-prev-icon "
-            //       aria-hidden="true"
-            //     />
-            //     <span className="visually-hidden">Previous</span>
-            //   </button>
-            //   <button
-            //     className="carousel-control-next h-100 "
-            //     type="button"
-            //     data-bs-target="#carouselExampleInterval"
-            //     data-bs-slide="next"
-            //   >
-            //     <span
-            //       className="carousel-control-next-icon"
-            //       aria-hidden="true"
-            //     />
-            //     <span className="visually-hidden">Next</span>
-            //   </button>
-            // </div>}
+        {imagesShow.length > 0 && 
             <>
             <span className="fs-5 text-center d-block my-2">
             ( {imagesShow.length} ) عدد الصور

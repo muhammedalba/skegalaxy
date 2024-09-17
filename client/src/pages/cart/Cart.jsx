@@ -57,7 +57,6 @@ const Cart =() => {
   const cookies = new Cookies();
 
 
-console.log(products);
 
   
   const [selectedBrandId, setSelectedBrandId] = useState(null);
@@ -84,7 +83,6 @@ console.log(products);
 
 
   const token = cookies.get("token");
-  console.log(errorUpdate);
 
 // Delete all products
 const openModalAndClearCart = useCallback(() => {

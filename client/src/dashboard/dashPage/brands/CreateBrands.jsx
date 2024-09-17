@@ -12,7 +12,7 @@ import { errorNotify, successNotify, warnNotify } from "../../../utils/Toast";
 const CreateBrands = () => {
   // create category with rtk 
   const [createOne, { error, isLoading, isSuccess }] = useCreateOneMutation();
-  console.log(error);
+
 
     // 
       const navigate = useNavigate();

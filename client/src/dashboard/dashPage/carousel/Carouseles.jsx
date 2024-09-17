@@ -41,7 +41,6 @@ const Carouseles = () => {
     { error: errorDelet, isLoading: LoadingDelet, isSuccess: SuccessDelet },
   ] = useDeletOneMutation();
 
- console.log(Carouseles?.data);
  
 
   const [selectedBrandId, setSelectedBrandId] = useState(null);

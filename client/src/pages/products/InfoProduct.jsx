@@ -67,7 +67,6 @@ const InfoProduct = () => {
   const handleMouseEnter = useCallback((src) => {
     setSelectedImage(src);
   }, []);
-  console.log(product);
 
   //   sare
   const shareUrl = window.location.href;    
@@ -77,7 +76,6 @@ const InfoProduct = () => {
   const resetProductImage = useCallback(() => {
     setSelectedImage("");
   }, []);
-console.log(createData?.status);
 
 const scrollToTop = useCallback(() => {
   window.scrollTo({ top: 0, behavior: 'smooth' });

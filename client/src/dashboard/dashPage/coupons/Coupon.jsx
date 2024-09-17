@@ -22,7 +22,6 @@ import { convertDateTime } from '../../../utils/convertDateTime';
     // update data (rtk redux)
       const [ updateOne,{error:updateEror,isLoading:updateLoading,isSuccess:updateSuccess,}]=useUpdateOneMutation();
     
-    //    console.log(data,' ');
       const [formData,setFormData]=useState({
         name:'',
         discount:"",
@@ -85,20 +84,27 @@ import { convertDateTime } from '../../../utils/convertDateTime';
      
   if(  convertDateTime(Date.now()) <= convertDateTime(formData?.expires) &&
        formData.name !==''&&
-       formData.discount !==""&&
+       formData.discount !== "" &&
+       formData.discount !== "" &&
        formData.expires !==""&&
        formData.createdAt !==""){
             
-        
-             
-        
-       
-           //  send form data to server
+        if( formData.discount > 0 && formData.discount <100 ){
+   //  send form data to server
            updateOne({
              url:`/coupons/${couponId}` ,
              body: formData,
              method: 'put',
            });
+
+        }else{
+          warnNotify('يجب ان تكون الخصم من 0 والى 100');
+          return;
+        }
+             
+        
+       
+        
       }else{ 
         
        infoNotify('  يجب تعبئه  المعلومات المطلوبه ')
@@ -114,7 +120,7 @@ import { convertDateTime } from '../../../utils/convertDateTime';
     const handleChange=(e)=>{
  
       setFormData({...formData,[e.target.id]:e.target.value}||{});
-      console.log(formData);
+    
       
      }
     

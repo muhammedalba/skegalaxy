@@ -15,7 +15,7 @@ import { errorNotify, successNotify } from "../../utils/Toast";
 
 const Verifyresetcode = () => {
   const [Autapi, {  error: eror, isLoading, isSuccess }] = useAutapiMutation();
-  console.log(eror);
+  
   
   const focus = useRef(null);
   const navigate = useNavigate();

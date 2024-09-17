@@ -29,24 +29,19 @@ const CreatProduct = () => {
     isLoading: loadingCatego,
     isSuccess: SucccessCatego,
     data: categories,
-  } = useGetOneQuery(`categories?limit=500&page=1`);
+  } = useGetOneQuery(`categories?limit=500&page=1&fields=name`);
 
   // get Brands from db
-  const { data: Brands, error: errorBrand } = useGetOneQuery(
-    `brands?limit=500&page=1`
+  const { data: Brands,  } = useGetOneQuery(
+    `brands?limit=500&page=1&fields=name`
   );
 
-  console.log(Brands);
 
-  console.log(errorBrand);
 
   // update data (rtk redux) review
   const [createOne, { error, isLoading, isSuccess }] = useCreateOneMutation();
 
-  console.log(error);
-  // console.log(isLoading);
-  // console.log(isSuccess);
-  // console.log(product);
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -198,7 +193,6 @@ const CreatProduct = () => {
   // handleChange
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-    console.log(formData);
   };
 
   // view categories

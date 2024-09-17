@@ -1,4 +1,4 @@
-import {  useParams } from "react-router-dom";
+import {  Link, useParams } from "react-router-dom";
 import { useCreateOneMutation, useGetDataQuery, useUpdateOneMutation } from "../../../redux/features/api/apiSlice";
 import {  useCallback, useEffect, useMemo, useState } from "react";
 import { Fade } from "react-awesome-reveal";
@@ -72,16 +72,21 @@ useEffect(() => {
       }, [createError, error, updateError]);
 
       // handle success
+
+
+      useEffect(() => {
+        if (createSuccess) {
+          successNotify("  تم ارسال الفاتورة بنجاح ");
+        } 
+      },[createSuccess])
       useEffect(() => {
       
         if (updateSuccess) {
           successNotify(" تمت تحديث الحاله بنجاح");
         }
-        if (createSuccess) {
-          successNotify("  تم ارسال الفاتورة بنجاح ");
-        }
+       
         
-      }, [createSuccess, updateSuccess]);
+      }, [ updateSuccess]);
 
       // handel delivered
       const handleAction = useCallback(
@@ -96,9 +101,7 @@ useEffect(() => {
 
 // download order PDF
 const DownloadPdf = async( ) => {
-  const baseUrl=import.meta.env.VITE_API
-  console.log(Token);
-  
+  const baseUrl=import.meta.env.VITE_API  
    if(Token){
     try {
       const response = await fetch(`${baseUrl}/orders/${orderId}/?download=pdf`, {
@@ -113,7 +116,6 @@ const DownloadPdf = async( ) => {
       // تحقق من حالة الاستجابة
       if (!response.ok) {
         // throw new Error(`HTTP error! Status: ${response.status}`);
-        console.log(response)
       }
 
       // تحقق من نوع المحتوى
@@ -132,7 +134,6 @@ const DownloadPdf = async( ) => {
       } else {
         console.error('Error: Response is not a PDF file');
       }
-      console.log(response);
     
     } catch (error) {
       console.error('Error fetching PDF:', error);
@@ -157,6 +158,7 @@ const DownloadPdf = async( ) => {
  
           <td className="d-none d-md-table-cell">
             <Fade delay={0} direction='up' triggerOnce={true} cascade>
+              <Link to={`/products/${product?.product?._id}`}>
               <div className="d-flex flex-column align-items-center">
                 
               <img
@@ -169,6 +171,7 @@ const DownloadPdf = async( ) => {
               <i className="text-success"> SAR</i>
               </div>
               </div>
+              </Link>
             </Fade>
           </td>
           <td className="  d-table-cell">

@@ -24,7 +24,6 @@ const Category = () => {
 // update data (rtk redux)
   const [ updateOne,{error:eror,isLoading:loading,isSuccess:success,data:Category}]=useUpdateOneMutation();
 
-  eror && console.log(eror?.data,'eror Category');
   const [formData,setFormData]=useState({
     name:'',
  })
@@ -101,8 +100,7 @@ const handleChange=(e)=>{
   
     const file = event.target.files[0];
     const imgeFile = file.type.split("/")[0];
- console.log(file);
- console.log(imgeFile);
+
 
     if (file) {
       if (imgeFile === 'image' || imgeFile === 'webp') {

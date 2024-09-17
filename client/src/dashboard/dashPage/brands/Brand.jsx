@@ -25,7 +25,7 @@ const Brand = () => {
 // update data (rtk redux)
   const [ updateOne,{error:eror,isLoading:loading,isSuccess:success,data:brand}]=useUpdateOneMutation();
 
-  eror && console.log(eror?.data,'eror brand');
+
   const [formData,setFormData]=useState({
     name:'',
  })

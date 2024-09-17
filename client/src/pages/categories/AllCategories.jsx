@@ -35,7 +35,6 @@ const AllCategories = () => {
         isLoading,
         isSuccess,
       } = useGetDataQuery(`categories?limit=${limit}&page=${Pagination}${sortFilter}&keywords=${search}&fields=name,image`);
-      console.log(categories);
     
     
     

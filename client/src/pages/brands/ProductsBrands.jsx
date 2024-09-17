@@ -20,7 +20,6 @@ const ProductsBrands = () => {
   // Bring the product
   const { BrandId } = useParams();
   //
-console.log(BrandId,'BrandId');
 
   // get category from the database
   const {
@@ -32,7 +31,6 @@ console.log(BrandId,'BrandId');
     `products?brand=${BrandId}${sortFilter}&keywords=${search}&fields=price,title,imageCover,priceAfterDiscount,quantity,ratingsAverage`
   );
 
-  console.log(products, "products");
 
   //handel error our  success message
 

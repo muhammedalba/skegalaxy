@@ -39,7 +39,6 @@ const ClientOrders = () => {
       } = useGetDataQuery(
         `orders?limit=${limit}&page=${Pagination}&isDelivered=${confirmed}&fields=VerificationCode,isDelivered,isPaid,paymentMethodType,totalOrderPrice createdAt`
       );
-    console.log(error);
     
       useEffect(() => {
         if (error) {
@@ -47,7 +46,6 @@ const ClientOrders = () => {
         }
       }, [error]);
     
-      isSuccess && console.log(orders?.data);
     
       const showData = useMemo(() => {
         if (isLoading) {

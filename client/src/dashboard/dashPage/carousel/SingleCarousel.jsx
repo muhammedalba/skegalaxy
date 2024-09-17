@@ -24,7 +24,6 @@ const SingleCarousel = () => {
 // update data (rtk redux)
   const [ updateOne,{error:eror,isLoading:loading,isSuccess:success,data:carousel}]=useUpdateOneMutation();
 
-  eror && console.log(eror?.data,'eror carousel');
   const [formData,setFormData]=useState({
     name:'',
  })
