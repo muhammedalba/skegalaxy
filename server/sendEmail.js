@@ -5,7 +5,7 @@ exports.sendEmail = async(options) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOSt,
     port:  process.env.EMAIL_PORt, // if secur flase port=587,if true port=465
-    secure:  465,
+    secure:  true,
     auth: {
       user: process.env.EMAIL_USER,
       pass:  process.env.EMAIL_PASS,
@@ -18,7 +18,7 @@ exports.sendEmail = async(options) => {
     to: options.email,
     subject: options.subject,
     html : options.message,
-    text : options.message,
+    
     attachments: options.attachments,
   };
   // 3- send email

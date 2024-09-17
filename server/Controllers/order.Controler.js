@@ -271,9 +271,9 @@ exports.updateOrderSendInvoice = asyncHandler(async (req, res, next) => {
 
   
       message:   `<h2>  ${order.user.firstname}:مرحبا </h2>
-      <p>تم استلام طلبك بنجاح وانشاء الفاتورة الخاصة بك من قبل  شركه <span>sky Galaxy </span> </p>
+      <p>تم استلام طلبك بنجاح وانشاء الفاتورة الخاصة بك من قبل  شركة   <span>  ممجرة السماء للتجارة </span> </p>
       <p>شكرا لكم لاختياركم لنا سنقوم بارسال طلبيتكم باقرب  وقت </p>
-      <p>   يمكنك تحميل الفاتورة من الرابط في الافل</p>
+      <p>   يمكنك تحميل الفاتورة من الرابط في الافسل</p>
                 <p>sky Galaxy  شكرا لاختياركم </p>
 
     `,
@@ -316,8 +316,8 @@ exports.updateOrderDeliveryReceiptImage = asyncHandler(async (req, res, next) =>
     await sendEmail({
       message: 
        `<h2>تم استلام طلبك ${order.user.firstname}:مرحبا </h2>
-      <p>تم استلام طلبك بنجاح وانشاء الفاتورة الخاصة بك من قبل  شركه <span>sky Galaxy </span> </p>
-      <p>شكرا لكم لاختياركم لنا سنقوم بارسال طلبيتكم باقرب  وقت </p>
+      <p>  تم توصيل طلبك بنجاح    بك من قبل  شركه مجرة السماء للتجارة  </p>
+      <p>شكرا لكم لاختياركم لنا       </p>
       <p>وهذه صورة وصل الاستلام":</p>
       <img src="cid:productImage@ecommerce" alt="Product Image" />
           <p>sky Galaxy  شكرا لاختياركم </p>
