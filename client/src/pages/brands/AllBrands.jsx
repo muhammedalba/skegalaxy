@@ -39,7 +39,7 @@ const AllBrands = () => {
         isLoading,
         isSuccess,
       } = useGetDataQuery(`brands?limit=${limit}&page=${Pagination}${sortFilter}&keywords=${search}&fields=name,image`);
-      console.log(brands);
+ 
     
     
     

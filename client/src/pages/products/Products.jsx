@@ -478,7 +478,7 @@ const Products = () => {
 
       <TextSlide />
       {/* products */}
-      <div className=" my-3">
+      <div className=" my-2">
         <p
           ref={section1Ref}
           style={{ backgroundColor: "var(--bgColor)" }}

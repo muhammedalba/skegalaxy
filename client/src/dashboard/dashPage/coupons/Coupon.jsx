@@ -18,7 +18,7 @@ import { convertDateTime } from '../../../utils/convertDateTime';
     
       //get data (rtk redux) 
       const {isLoading,isSuccess,data, error}=useGetOneQuery(`coupons/${couponId}`);
-    console.log(data);
+   
   
     
     // update data (rtk redux)
@@ -91,7 +91,7 @@ import { convertDateTime } from '../../../utils/convertDateTime';
        formData.expires !==""&&
        formData.createdAt !==""){
             
-        // if( formData.discount > 0 && formData.discount < 100 ){
+        if( formData.discount > 0 && formData.discount < 100 ){
    //  send form data to server
            updateOne({
              url:`/coupons/${couponId}` ,
@@ -99,10 +99,10 @@ import { convertDateTime } from '../../../utils/convertDateTime';
              method: 'put',
            });
 
-        // }else{
-        //   warnNotify('يجب ان تكون الخصم من 0 والى 100');
-        //   return;
-        // }
+        }else{
+          warnNotify('يجب ان تكون الخصم من 0 والى 100');
+          return;
+        }
              
         
        
@@ -123,7 +123,6 @@ import { convertDateTime } from '../../../utils/convertDateTime';
  
       setFormData({...formData,[e.target.id]:e.target.value}||{});
     
-      console.log(formData.expires);
       
      }
     
@@ -197,7 +196,7 @@ import { convertDateTime } from '../../../utils/convertDateTime';
                     <input
                     disabled={isLoading || updateLoading ? true : false}
                     
-                    min={3}
+                    min={1}
                     
                     className="form-control"
                     id={'discount'}

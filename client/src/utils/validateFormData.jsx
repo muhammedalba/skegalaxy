@@ -123,7 +123,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
       errors.quantity = "يجب أن لا يكون الكمية فارغه.";
     }
   
-    console.log(errors);
+
   
     return errors;
   };
@@ -157,7 +157,6 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
       errors.quantity = "     كلمة السر غير متطابقة";
     }
   
-    console.log(errors);
-  
+
     return errors;
   };

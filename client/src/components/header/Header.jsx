@@ -20,6 +20,13 @@ import logo from "../../imges/logo.webp";
 import avatar from "../../imges/avatar.webp";
 
 // icons
+const RiTwitterXFill  = lazy(() =>
+  import("react-icons/ri").then((module) => ({ default: module.RiTwitterXFill }))
+);
+
+const SiSnapchat  = lazy(() =>
+  import("react-icons/si").then((module) => ({ default: module.SiSnapchat }))
+);
 const CiSearch = lazy(() =>
   import("react-icons/ci").then((module) => ({ default: module.CiSearch }))
 );
@@ -875,36 +882,49 @@ const closeMenu= useCallback(()=>{
             className={"nav-item  py-2   w-100 "}
           >
             <a>معلومات التواصل</a>
-            <div className="d-flex justify-content-center align-items-center pt-2 ">
-              <a className="w-auto " href="tel:+966598909991">
-                <Suspense>
-                  <BsFillTelephoneFill
-                    fontSize={"1rem"}
-                    color="var( --spancolor)"
-                  />
-                </Suspense>
-              </a>
-              <a href="#" className=" w-auto ">
-                <Suspense>
-                  <SiFacebook fontSize={"1rem"} color="#0866ff" />
-                </Suspense>
-              </a>
-              <a href="#" className=" w-auto ">
-                <Suspense>
-                  <FaTelegramPlane fontSize={"1rem"} color="#28a8e9" />
-                </Suspense>
-              </a>
-              <a href="https://wa.me/+966598909991" className=" w-auto ">
-                <Suspense>
-                  <BsWhatsapp fontSize={"1rem"} color="#33bd45 " />
-                </Suspense>
-              </a>
-              <a href="#" className=" w-auto  ">
-                <Suspense>
-                  <FaInstagram fontSize={"1rem"} color="#df0073" />
-                </Suspense>
-              </a>
-            </div>
+            <div className="d-flex justify-content-center align-items-center pt-1 flex-wrap text-center w-auto">
+                <a className=" w-auto" href="tel:+966598909991">
+                  <Suspense>
+                    <BsFillTelephoneFill
+                      fontSize={"1.3rem"}
+                      color="var( --spancolor)"
+                    />
+                  </Suspense>
+                </a>
+                <a href="https://www.facebook.com/share/UcQFNEMfpaWuphKy/?mibextid=qi2Omg" target="_blank"  className="w-auto ">
+                  <Suspense>
+                    <SiFacebook fontSize={"1rem"} color="#0866ff" />
+                  </Suspense>
+                </a>
+                <a href="http://t.me/Skygalaxyshop" target="_blank" className=" w-auto">
+                  <Suspense>
+                    <FaTelegramPlane fontSize={"1rem"} color="#28a8e9" />
+                  </Suspense>
+                </a>
+                <a
+                  href="https://wa.me/+966598909991" target="_blank"
+                  className="w-auto "
+                >
+                  <Suspense>
+                    <BsWhatsapp fontSize={"1rem"} color="#33bd45 " />
+                  </Suspense>
+                </a>
+                <a href="https://www.snapchat.com/add/skygalaxyshop?share_id=VESqbU6Mucg&locale=ar-AE" target="_blank" className="w-auto   ">
+                  <Suspense>
+                    <SiSnapchat   fontSize={"1rem"} color="#fffc00" />
+                  </Suspense>
+                </a>
+                <a href="https://www.instagram.com/sky.galaxy.shop?igsh=MTdkODBteWZ4cDY1MQ==" target="_blank" className=" w-auto ">
+                  <Suspense>
+                    <FaInstagram fontSize={"1rem"} color="#df0073" />
+                  </Suspense>
+                </a>
+                <a href="https://x.com/skygalaxyshop?s=09" target="_blank" className="  w-auto">
+                  <Suspense>
+                    <RiTwitterXFill  fontSize={"1rem"} color="#000" />
+                  </Suspense>
+                </a>
+              </div>
           </li>
         </ul>
       </div>

@@ -64,16 +64,21 @@ if(error){
     
      return infoNotify("  يجب تعبئه  المعلومات المطلوبه ");
     }   
-    if (convertDateTime(Date.now()) >= convertDateTime(formData?.expires)) {
+    if (convertDateTime(Date.now()) >= convertDateTime(formData?.expires,true)) {
       errorNotify("المدى الخاصة بهذا الكوبون  غير صالحه");
       return;
     }
+    if( formData.discount > 0 && formData.discount < 100 ){
       //  send form data to server
       createOne({
         url: `/coupons`,
         body: formData,
         method: "post",
       });
+    }else{
+      warnNotify('يجب ان تكون الخصم من 0 والى 100');
+      return;
+    }
   };
 
   // handleChange
@@ -147,7 +152,7 @@ if(error){
               <input
               required
                 disabled={isLoding ? true : false}
-                min={3}
+                min={1}
                 className="form-control"
                 id={"discount"}
                 name={"discount"}
@@ -176,43 +181,15 @@ if(error){
                 required
                 placeholder={"  تاريخ الانتهاء  "}
                 value={
-                  (formData?.expires && convertDateTime(formData?.expires)) ||
+                  (formData?.expires && convertDateTime(formData?.expires,true)) ||
                   ""
                 }
                 onChange={handleChange}
               />
             </div>
-            {/* createdAt */}
-            {/* <div className="col-12 col-sm-6 py-2">
-              <label
-                className="p-1 fs-5 d-flex align-items-center gap-1"
-                htmlFor="createdAt"
-              >
-                <FaImage color="var(--spanColor)" fontSize="1rem" />
-                تاريخ الانشاء
-              </label>
-              <input
-                disabled={true}
-                min={3}
-                className="form-control"
-                id={"createdAt"}
-                name={"createdAt"}
-                type={"date"}
-                placeholder={"  تاريخ النشاء  "}
-                value={
-                  (formData?.expires && convertDateTime(formData?.createdAt)) ||
-                  ""
-                }
-              />
-            </div> */}
+
           </div>
 
-          {/*     
-            {error && (
-              <span className="w-100 text-center d-block text-danger pt-3">
-                {error.status=== 400?'لايوجد مستخدم  ':"خطا في الخادم"}
-              </span>
-            )} */}
 
           <button
             disabled={isLoding ? true : false}

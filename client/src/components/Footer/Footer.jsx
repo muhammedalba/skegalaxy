@@ -7,7 +7,13 @@ import logo from "../../imges/footerImge.webp";
 import skyDitels from "../../imges/skyDitels.pdf";
 
 // icons
+const RiTwitterXFill  = lazy(() =>
+  import("react-icons/ri").then((module) => ({ default: module.RiTwitterXFill }))
+);
 
+const SiSnapchat  = lazy(() =>
+  import("react-icons/si").then((module) => ({ default: module.SiSnapchat }))
+);
 const SiFacebook = lazy(() =>
   import("react-icons/si").then((module) => ({ default: module.SiFacebook }))
 );
@@ -199,32 +205,42 @@ const Footer = () => {
                 <a className="fs-5 mx-1" href="tel:+966598909991">
                   <Suspense>
                     <BsFillTelephoneFill
-                      fontSize={"1.7rem"}
+                      fontSize={"1.3rem"}
                       color="var( --spancolor)"
                     />
                   </Suspense>
                 </a>
-                <a href="#" className="text-white mx-1">
+                <a href="https://www.facebook.com/share/UcQFNEMfpaWuphKy/?mibextid=qi2Omg" target="_blank"  className="text-white mx-1">
                   <Suspense>
-                    <SiFacebook fontSize={"2rem"} color="#0866ff" />
+                    <SiFacebook fontSize={"1.3rem"} color="#0866ff" />
                   </Suspense>
                 </a>
-                <a href="#" className="text-white mx-1">
+                <a href="http://t.me/Skygalaxyshop" target="_blank" className="text-white mx-1">
                   <Suspense>
-                    <FaTelegramPlane fontSize={"2rem"} color="#28a8e9" />
+                    <FaTelegramPlane fontSize={"1.3rem"} color="#28a8e9" />
                   </Suspense>
                 </a>
                 <a
-                  href="https://wa.me/+966598909991"
+                  href="https://wa.me/+966598909991" target="_blank"
                   className="text-white mx-1"
                 >
                   <Suspense>
-                    <BsWhatsapp fontSize={"2rem"} color="#33bd45 " />
+                    <BsWhatsapp fontSize={"1.3rem"} color="#33bd45 " />
                   </Suspense>
                 </a>
-                <a href="#" className="text-white mx-1 ">
+                <a href="https://www.snapchat.com/add/skygalaxyshop?share_id=VESqbU6Mucg&locale=ar-AE" target="_blank" className="text-white mx-1 border-5  rounded-5  ">
                   <Suspense>
-                    <FaInstagram fontSize={"2rem"} color="#df0073" />
+                    <SiSnapchat   fontSize={"1.6rem"} color="#fffc00" />
+                  </Suspense>
+                </a>
+                <a href="https://www.instagram.com/sky.galaxy.shop?igsh=MTdkODBteWZ4cDY1MQ==" target="_blank" className="text-white mx-1 ">
+                  <Suspense>
+                    <FaInstagram fontSize={"1.3rem"} color="#df0073" />
+                  </Suspense>
+                </a>
+                <a href="https://x.com/skygalaxyshop?s=09" target="_blank" className="text-white mx-1 ">
+                  <Suspense>
+                    <RiTwitterXFill  fontSize={"1.3rem"} color="#000" />
                   </Suspense>
                 </a>
               </div>

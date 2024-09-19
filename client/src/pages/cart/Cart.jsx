@@ -49,7 +49,7 @@ const Cart =() => {
   const [ deletOne,{ error: errorDelete, isLoading: LoadingDelet, isSuccess: successDelete },] = useDeletOneMutation();
   
   const [updateOne,{ error: errorUpdate,isLoading: LoadingUpdate,isSuccess: successUpdate},] = useUpdateOneMutation();
-console.log(products);
+
 
 
 

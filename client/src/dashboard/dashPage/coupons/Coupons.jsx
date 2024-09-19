@@ -173,7 +173,7 @@ const handleDelete =useCallback((id) => {
       
                 <td className="d-none d-sm-table-cell">
                   <Fade delay={0} direction='up' triggerOnce={true}   >
-                  <span className="">{convertDateTime(coupons.expires)}</span>
+                  <span className="">{convertDateTime(coupons.expires,true)}</span>
   
                   </Fade> 
                </td>

@@ -6,10 +6,8 @@ export const SerchSlice = createSlice({
     reducers: {
       searchItem: (state, action) => {
 
-            // console.log(action.payload,"action");
             return action.payload; 
-            // console.log(state,"state1");
-            // console.log(state,"state2");
+
         },
         
 }})

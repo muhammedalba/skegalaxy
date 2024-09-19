@@ -5,11 +5,11 @@ export const NavigationSlice = createSlice({
   initialState: 1,
   reducers: {
     minusAction: (state, action) => {
-      console.log(action.type, "state");
+    
       return state - action.payload;
     },
     PlusAction: (state, action) => {
-      console.log(action.type, "state");
+
       return state + action.payload;
     },
     currentPage: (state, action) => {

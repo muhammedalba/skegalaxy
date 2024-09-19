@@ -40,8 +40,7 @@ const Order = () => {
 
   const user = order?.data?.user;
   const shippingAddress = order?.data?.shippingAddress;
-  console.log(order);
-  console.log(createError);
+ 
 
   useEffect(() => {
     if (error?.status === 401) {

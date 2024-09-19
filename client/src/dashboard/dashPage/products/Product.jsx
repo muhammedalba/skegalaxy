@@ -59,7 +59,7 @@ const Product = () => {
       isLoading:loadingSub,
       isSuccess:SuccessSub,
     } = useGetDataQuery(`brands?limit=500&page=1&fields=name`);
-    // console.log(Brands,'Brands');
+
     const [
       deletOne,
       { error: errorDelet, isLoading: LoadingDelet, isSuccess: SuccessDelet },
