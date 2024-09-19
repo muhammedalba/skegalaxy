@@ -19,7 +19,11 @@ const FaTelegramPlane = lazy(() =>
 const BsWhatsapp = lazy(() =>
   import("react-icons/bs").then((module) => ({ default: module.BsWhatsapp }))
 );
-const BsFillTelephoneFill = lazy(() => import( "react-icons/bs").then(module => ({ default: module.BsFillTelephoneFill })));
+const BsFillTelephoneFill = lazy(() =>
+  import("react-icons/bs").then((module) => ({
+    default: module.BsFillTelephoneFill,
+  }))
+);
 const FcAutomotive = lazy(() =>
   import("react-icons/fc").then((module) => ({ default: module.FcAutomotive }))
 );
@@ -331,7 +335,7 @@ const Footer = () => {
         style={{ borderColor: " var(--btn-bg-color)!important " }}
         className="text-center border border-2  border-end-0 border-start-0 p-2"
       >
-        <Fade direction="up"  triggerOnce={true}>
+        <Fade direction="up" triggerOnce={true}>
           <a href="https://wa.me/+905346833726">
             صمم بواسطه codeprops. جميع الحقوق محفوظة <i>.2024 &copy; </i>
           </a>

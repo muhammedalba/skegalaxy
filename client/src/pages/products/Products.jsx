@@ -228,12 +228,11 @@ const Products = () => {
           key={index}
         >
           <div
-            style={{ backgroundColor: "white" }}
-            // style={{  width: "305px !important",
-            //   height: "275px  !important"}}
+          
+            
             inert="true"
-            className=" border w-100 h-100  d-flex flex-column
-            align-items-center justify-content-between  m-auto pointer overflow-hidden"
+            className=" border w-100 h-100  d-flex flex-column bg-white
+            align-items-center justify-content-between m-auto pointer overflow-hidden"
           >
             <img
               loading="lazy"
@@ -245,17 +244,14 @@ const Products = () => {
                   ? `${categories?.imageUrl}/${category?.image}`
                   : logo
               }
-              className=" w-100 m-auto  d-block p-1"
+              className=" w-100 m-auto  d-block p-1 object-fit-fill"
               alt="brand"
-              style={{ objectFit: "fill" }}
+      
             />
 
             <span
-              style={{
-                height: "5.5rem",
-                backgroundColor: "var(--bgColor)!important",
-              }}
-              className="fs-5 px-2  pb-2 w-100 justify-content-center text-center d-flex flex-column"
+            
+              className="category-text fs-5 px-2  pb-2 w-100 justify-content-center text-center d-flex flex-column"
             >
               <span>{category?.name.split("_")[0]}</span>
               <span>{category?.name.split("_")[1]}</span>
@@ -282,17 +278,16 @@ const Products = () => {
       const brands_slide = [...brands.data];
       return brands_slide.map((brand, index) => (
         <button
-          style={{ width: "275px  " }}
-          // style={{ minWidth: "75%" ,backgroundColor:'rgb(243 244 246)'}}
+          style={{ width: "275px" }}
           onClick={() => scrollToSection(section1Ref, `&brand=${brand._id}`)}
           className=" btn d-block m-auto  caroselBrand"
           key={index}
         >
           <div
-            style={{ height: "18rem", backgroundColor: "white" }}
+            style={{ height: "18rem" }}
             inert="true"
             className=" w-100 border pt-1  d-flex flex-column
-            align-items-center justify-content-between  m-auto pointer overflow-hidden"
+            align-items-center justify-content-between bg-whitte m-auto pointer overflow-hidden"
           >
             <img
               loading="lazy"
@@ -300,16 +295,13 @@ const Products = () => {
               width={216}
               height={216}
               src={brand.image ? `${brands?.imageUrl}/${brand?.image}` : logo}
-              className=" d-block  p-2 m-auto"
+              className=" d-block object-fit-fill  p-2 m-auto"
               alt="brand"
-              style={{ objectFit: "fill" }}
+             
             />
             <span
-              style={{
-                height: "5rem",
-                backgroundColor: "var(--bgColor)!important",
-              }}
-              className="fs-5 border  p-2  w-100 text-center justify-content-center  d-flex flex-column"
+             
+              className="fs-5 border category-text p-2  w-100 text-center justify-content-center  d-flex flex-column"
             >
               <span>{brand?.name.split("_")[0]}</span>
               <span>{brand?.name.split("_")[1]}</span>
@@ -501,7 +493,17 @@ const Products = () => {
             style={{ top: "6.1rem", zIndex: "5" }}
             className="col-12 col-sm-3  col-lg-2 flex-wrap flex-column bg-white  h-25 overflow-hidden p-1 d-flex position-sticky  end-0"
           >
-            <p className="fs-5 px-3 m-0 "> فلترة : </p>
+                {/* reset data button */}
+            <div className="d-flex align-items-center w-100  justify-content-between">
+              <p className="fs-5 px-3 m-0 "> فلترة : </p>
+               <button
+              onClick={resetFilter}
+              type="button"
+              className="btn btn-outline-danger mx-2"
+              >
+              اعادة تعيين
+               </button>
+            </div>
             {/*gategory  */}
             <div className=" p-2">
               <select
@@ -578,14 +580,8 @@ const Products = () => {
               </select>
             </div>
 
-            {/* reset data button */}
-            <button
-              onClick={resetFilter}
-              type="button"
-              className="btn btn-outline-danger mx-2"
-            >
-              اعادة تعيين
-            </button>
+        
+        
           </div>
 
           {/* products data */}

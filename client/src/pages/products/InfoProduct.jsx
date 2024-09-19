@@ -290,7 +290,6 @@ const InfoProduct = () => {
 
                     {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
                     <span
-                      // style={{ backgroundColor: "#df0073", padding: "0.4rem" }}
                       className="border rounded-circle border-1 pointer"
                     >
                       <SlSocialInstagram
@@ -354,7 +353,6 @@ const InfoProduct = () => {
 
                   {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
                   <span
-                    // style={{ backgroundColor: "#df0073", padding: "0.3rem" }}
                     className="border rounded-circle border-1 pointer"
                   >
                     <SlSocialInstagram

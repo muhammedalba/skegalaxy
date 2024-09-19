@@ -5,7 +5,6 @@ const ProtectedRoute = ({ children }) => {
   const cookies = new Cookies();
   const token = cookies.get("token");
   const role = cookies.get("role")?.toLowerCase();
-console.log(token);
 
   // Redirect to login if token is not found
   if (!token) {

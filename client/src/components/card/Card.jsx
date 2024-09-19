@@ -190,7 +190,6 @@ if(createError || successCreeate){
                         
         
       </div>
-      {/* <IoIosHeartEmpty className="cart-icon" /> */}
       <div className="imgBox pt-1">
         <img
          loading="lazy"
@@ -225,12 +224,11 @@ if(createError || successCreeate){
             {product?.title?.split("_")[1]} 
             </span>
             </h3>
-          {/* <h3 className="my-1"> {</h3> */}
          
           {/* price */}
           <div className="d-flex mb-1 w-100 justify-content-evenly align-items-center flex-wrap">
             <h2
-              className="price w-100 fs-6 p-0 m-0"
+              className="price w-100 fs-6 p-0 m-0 line-through"
               style={{
                 textDecoration: product?.priceAfterDiscount
                   ? "line-through "
@@ -266,31 +264,7 @@ if(createError || successCreeate){
           </div>
           
             </button>
-          {/* {  product?.quantity.toFixed(0) > 0 ?<span className="text-dark fs-5">الكميه: ({ product?.quantity.toFixed(0)})</span>:
-            <span className="text-dark fs-5">الكميه:متوفر عند الطلب</span>
-          } */}
-               {/* <div className={`fw-bold fs-5 pt-2 d-flex align-items-center  justify-content-center ${reverse?'flex-row-reverse':''} `}>
-                  <span className={`card-title ps-1 d-${ product?.quantity === 0?'none':''}`}>الكمية  </span>
-                  <span className="text-secondary d-flex align-items-center ">
-                      { product?.quantity> 0 ?`( ${product?.quantity.toFixed(0)} )`:''}
-
-                  </span>                      
-                    <span className={`text-danger  fs-6 ${showQuantity} `}>   كميه محدودة   </span>
-                    <span className={`text-danger  fs-6 ${showQuantityMsg} `}>     يتوفر عند الطلب</span>
-                </div> */}
-
-
-          {/* <button
-            disabled={createLoding?true:false}
-            onClick={() => addproducToCartOurWishlist(product?._id,'cart')}
-            style={{ whiteSpace: 'nowrap'}}
-            className="buy border-0"
-          >
-            <MdAddShoppingCart fontSize={'1.5rem'} className="mx-1" />
-
-       {    createLoding? <span className=" spinner-border"></span>:' اضافه الى السلة'}
-             
-          </button> */}
+       
         </Fade>
       </div>
              {/* share to social media */}

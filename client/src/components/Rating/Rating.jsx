@@ -1,5 +1,5 @@
 import { Fragment,  } from 'react';
-// import './Rating.css';
+
 import PropTypes from 'prop-types';
 import { IoStarSharp } from "react-icons/io5";
 

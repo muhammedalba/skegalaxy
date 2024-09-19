@@ -16,11 +16,11 @@ import "@fontsource/amiri/700.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <React.StrictMode>
-        <HelmetProvider>
-      <RouterProvider router={routes}>
+      <HelmetProvider>
+        <RouterProvider router={routes}>
           <App />
-      </RouterProvider>
-        </HelmetProvider>
+        </RouterProvider>
+      </HelmetProvider>
     </React.StrictMode>
   </Provider>
 );

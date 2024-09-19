@@ -1,5 +1,8 @@
 
-
+.category-text{
+    height: 5.5rem;
+    background-color: var(--bgColor)!important;
+  }
 .caroselcategory img,
 .AllCategories img,
 .AllBrands img,

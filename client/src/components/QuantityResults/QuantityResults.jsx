@@ -52,8 +52,7 @@ const QuantityResults = ({
 
       <div className="w-25 d-none d-sm-flex aligm-items-center  py-2">
         <label
-          style={{ whiteSpace: "nowrap" }}
-          className="p-1 fs-5 d-flex align-items-center gap-1"
+          className="p-1 fs-5 d-flex align-items-center gap-1 text-nowrap"
           htmlFor="image"
         >
           عدد النتايج :
