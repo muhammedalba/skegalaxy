@@ -494,12 +494,12 @@ const Products = () => {
             className="col-12 col-sm-3  col-lg-2 flex-wrap flex-column bg-white  h-25 overflow-hidden pt-2 pb-0 d-flex position-sticky  end-0"
           >
                 {/* reset data button */}
-            <div className="d-flex align-items-center w-100  justify-content-between">
-              <p className="fs-5 px-3 m-0 "> فلترة : </p>
+            <div className="d-flex align-items-center w-100  flex-wrap justify-content-between ">
+              <p className="fs-5 px-3 m-0 nowrap"> فلترة : </p>
                <button
               onClick={resetFilter}
               type="button"
-              className="btn btn-outline-danger mx-2"
+              className="btn btn-outline-danger mx-2 nowrap"
               >
               اعادة تعيين
                </button>
