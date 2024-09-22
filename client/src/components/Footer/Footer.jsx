@@ -1,16 +1,15 @@
 import "./Foter.css";
 import { Fade } from "react-awesome-reveal";
 import { Link } from "react-router-dom";
-import { lazy, Suspense, useCallback } from "react";
+import { lazy, Suspense, useCallback, useEffect } from "react";
 
 import logo from "../../imges/footerImge.webp";
 import skyDitels from "../../imges/skyDitels.pdf";
 import { XIcon } from "react-share";
+import { addHoverEffect } from "../../utils/icons_hover";
 
 // icons
-const RiTwitterXFill  = lazy(() =>
-  import("react-icons/ri").then((module) => ({ default: module.RiTwitterXFill }))
-);
+
 
 const SiSnapchat  = lazy(() =>
   import("react-icons/si").then((module) => ({ default: module.SiSnapchat }))
@@ -57,25 +56,38 @@ const FaInstagram = lazy(() =>
   import("react-icons/fa").then((module) => ({ default: module.FaInstagram }))
 );
 
-// import { SiFacebook } from "react-icons/si";
-// import { FaTelegramPlane } from "react-icons/fa";
-// import { BsWhatsapp } from "react-icons/bs";
-// import { FaInstagram } from "react-icons/fa";
-// import { BsFillTelephoneFill } from "react-icons/bs";
 
-// import { FcAutomotive } from "react-icons/fc";
-// import { FcSynchronize } from "react-icons/fc";
-// import { FcUnlock } from "react-icons/fc";
 
-// import { MdOutlineMail } from "react-icons/md";
-// import { TfiHeadphoneAlt } from "react-icons/tfi";
 
-// import { RiDownloadCloud2Line } from "react-icons/ri";
+
+
 
 const Footer = () => {
   const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+
+
+
+
+
+
+  
+  useEffect(() => {
+    const icons = document.querySelectorAll('.mouse-hover');
+    const cleanupFunctions = Array.from(icons).map(icon => addHoverEffect(icon));
+
+    return () => {
+      cleanupFunctions.forEach(cleanup => cleanup());
+    };
+  }, []);
+  
+
+
+
+
+
   return (
     // <animate__bounceInRight>
     <footer className="footer  mt-4">
@@ -203,45 +215,46 @@ const Footer = () => {
               </span>
 
               <div className="d-flex justify-content-center align-items-center pt-1 ">
-                <a className="fs-5 mx-1" href="tel:+966598909991">
+                <a className="fs-5 mx-1 mouse-hover" href="tel:+966598909991">
                   <Suspense>
                     <BsFillTelephoneFill
+                  
                       fontSize={"1.3rem"}
                       color="var( --spancolor)"
                     />
                   </Suspense>
                 </a>
-                <a href="https://www.facebook.com/share/UcQFNEMfpaWuphKy/?mibextid=qi2Omg" target="_blank"  className="text-white mx-1">
+                <a href="https://www.facebook.com/share/UcQFNEMfpaWuphKy/?mibextid=qi2Omg" target="_blank"  className="text-white mx-1 mouse-hover">
                   <Suspense>
                     <SiFacebook fontSize={"1.3rem"} color="#0866ff" />
                   </Suspense>
                 </a>
-                <a href="http://t.me/Skygalaxyshop" target="_blank" className="text-white mx-1">
+                <a href="http://t.me/Skygalaxyshop" target="_blank" className="text-white mx-1 mouse-hover">
                   <Suspense>
                     <FaTelegramPlane fontSize={"1.3rem"} color="#28a8e9" />
                   </Suspense>
                 </a>
                 <a
                   href="https://wa.me/+966598909991" target="_blank"
-                  className="text-white mx-1"
+                  className="text-white mx-1 mouse-hover"
                 >
                   <Suspense>
-                    <BsWhatsapp fontSize={"1.3rem"} color="#33bd45 " />
+                    <BsWhatsapp fontSize={"1.3rem"}color="#33bd45 " />
                   </Suspense>
                 </a>
-                <a href="https://www.snapchat.com/add/skygalaxyshop?share_id=VESqbU6Mucg&locale=ar-AE" target="_blank" className="text-white mx-1 border-5  rounded-5  ">
+                <a href="https://www.snapchat.com/add/skygalaxyshop?share_id=VESqbU6Mucg&locale=ar-AE" target="_blank" className="text-white mx-1  mouse-hover">
                   <Suspense>
-                    <SiSnapchat   fontSize={"1.6rem"} color="#fffc00" />
+                    <SiSnapchat   fontSize={"1.6rem"}color="#fffc00" />
                   </Suspense>
                 </a>
-                <a href="https://www.instagram.com/sky.galaxy.shop?igsh=MTdkODBteWZ4cDY1MQ==" target="_blank" className="text-white mx-1 ">
+                <a href="https://www.instagram.com/sky.galaxy.shop?igsh=MTdkODBteWZ4cDY1MQ==" target="_blank" className="text-white mx-1 mouse-hover">
                   <Suspense>
                     <FaInstagram fontSize={"1.3rem"} color="#df0073" />
                   </Suspense>
                 </a>
-                <a href="https://x.com/skygalaxyshop?s=09" target="_blank" className="text-white mx-1 ">
+                <a href="https://x.com/skygalaxyshop?s=09" target="_blank" className="text-white mx-1 mouse-hover">
                   <Suspense>
-                    <XIcon  size={25} round={true}/>
+                    <XIcon size={25} round={true}/>
                   </Suspense>
                 </a>
               </div>

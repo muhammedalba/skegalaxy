@@ -35,6 +35,7 @@ import {
   TelegramIcon,
 
 } from 'react-share';
+import { addHoverEffect } from "../../utils/icons_hover";
 
 const Card = ({ product, imgePath }) => {
 
@@ -59,6 +60,20 @@ const Card = ({ product, imgePath }) => {
     const shareUrl = window.location.href; // URL الصفحة الحالية
     const title =  "   شركه مجرة السماء! للتجارة"; // العنوان للمشاركة
   
+
+
+    useEffect(() => {
+      const icons = document.querySelectorAll('.mouse-hover');
+      const cleanupFunctions = Array.from(icons).map(icon => addHoverEffect(icon));
+  
+      return () => {
+        cleanupFunctions.forEach(cleanup => cleanup());
+      };
+    }, []);
+
+
+
+
   useEffect(()=>{
     if(  createError?.status == 401 ){
       
@@ -141,14 +156,14 @@ if(createError || successCreeate){
    
     
           <Suspense>
-             <IoShareSocial style={{ top: "4rem" }} className="cart-icon mx-2" onClick={showIcons} />
+             <IoShareSocial style={{ top: "4rem" }} className="cart-icon mx-2 mouse-hover top-4" onClick={showIcons} />
           </Suspense>
           <Suspense>
-             <CiHeart  onClick={() => addproducToCartOurWishlist(product?._id,'wishlist')}  style={{ top: "1rem",left:'auto'}} className="cart-icon-Heart mx-2 start-0 " />
+             <CiHeart  onClick={() => addproducToCartOurWishlist(product?._id,'wishlist')}  style={{ top: "1rem",left:'auto'}} className="cart-icon-Heart mx-2 start-0 mouse-hover" />
           </Suspense>
       <Link onClick={scrollToTop} to={`/products/${product?._id}`}>
            <Suspense>
-               <PiEyeThin style={{ top: "1rem" }} className="cart-icon mx-2 " />
+               <PiEyeThin style={{ top: "1rem" }} className="cart-icon mx-2 mouse-hover" />
            </Suspense>
    
     
@@ -157,28 +172,28 @@ if(createError || successCreeate){
        className=" cart-share  d-flex align-items-center justify-content-center gap-2 flex-column">
         {/* زر المشاركة على Twitter */}
         <TwitterShareButton url={`${shareUrl}products/${product.id}`} title={title}>
-          <XIcon size={35} round={true} />
+          <XIcon size={25} round={true}  className="mouse-hover"/>
         </TwitterShareButton>
 
         {/* زر المشاركة على WhatsApp */}
         <WhatsappShareButton url={`${shareUrl}products/${product.id}`} title={title}>
-          <WhatsappIcon size={35} round={true} />
+          <WhatsappIcon size={25} round={true} className="mouse-hover" />
         </WhatsappShareButton>
 
         {/* زر المشاركة على Telegram */}
         <TelegramShareButton url={`${shareUrl}products/${product.id}`} title={title}>
-          <TelegramIcon size={35} round={true} />
+          <TelegramIcon size={25} round={true} className="mouse-hover"/>
         </TelegramShareButton>
 
         <FacebookShareButton url={`${shareUrl}products/${product.id}`} title={title}>
-          <FacebookIcon size={35} round={true} />
+          <FacebookIcon size={25} round={true} className="mouse-hover"/>
         </FacebookShareButton>
 
         {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
-        <button  type="button" className="border rounded-circle border-1 pointer" onClick={() => {
+        <button  type="button" className="border rounded-circle border-1 pointer mouse-hover" onClick={() => {
             navigator.clipboard.writeText(`${shareUrl}/${product.id}`);
             successNotify('تم نسخ الرابط! يمكنك الآن لصقه في Instagram');
-          }}style={{backgroundColor:'#df0073',padding:'0.4rem'}} >
+          }}style={{backgroundColor:'#df0073',padding:'0.2rem'}} >
             
          
             <Suspense>

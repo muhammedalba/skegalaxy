@@ -29,6 +29,7 @@ import { RiDownloadCloud2Line } from "react-icons/ri";
 
 import "react-multi-carousel/lib/styles.css";
 import { Helmet } from "react-helmet-async";
+import { addHoverEffect } from "../../utils/icons_hover";
 
 const RelatedProducts = React.lazy(() =>
   import("../../components/relatedProducts/RelatedProducts")
@@ -120,6 +121,16 @@ const InfoProduct = () => {
     resetProductImage,
     scrollToTop,
   ]);
+
+
+  useEffect(() => {
+    const icons = document.querySelectorAll('.mouse-hover');
+    const cleanupFunctions = Array.from(icons).map(icon => addHoverEffect(icon));
+
+    return () => {
+      cleanupFunctions.forEach(cleanup => cleanup());
+    };
+  }, []);
   // add to cart our wish list
   const addproducToCartOurWishlist = useCallback(
     (productId, route) => {
@@ -274,28 +285,28 @@ const InfoProduct = () => {
 
                     <Suspense>
                     <FacebookShareButton url={`${shareUrl}products/${product.id}`} title={title}>
-          <FacebookIcon size={25} round={true} />
+          <FacebookIcon size={25} round={true}className=" mouse-hover"/>
         </FacebookShareButton>
                       <TwitterShareButton url={shareUrl} title={title}>
-                        <XIcon size={25} round={true} />
+                        <XIcon size={25} round={true}  className=" mouse-hover" />
                       </TwitterShareButton>
                   
                     {/* زر المشاركة على WhatsApp */}
                    
                       <WhatsappShareButton url={shareUrl} title={title}>
-                        <WhatsappIcon size={25} round={true} />
+                        <WhatsappIcon size={25} round={true}className=" mouse-hover" />
                       </WhatsappShareButton>
                    
                     {/* زر المشاركة على Telegram */}
                  
                       <TelegramShareButton url={shareUrl} title={title}>
-                        <TelegramIcon size={25} round={true} />
+                        <TelegramIcon size={25} round={true} className=" mouse-hover"/>
                       </TelegramShareButton>
                     </Suspense>
 
                     {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
                     <span
-                      className="border rounded-circle border-1 pointer"
+                      className="border rounded-circle border-1 pointer mouse-hover"
                     >
                       <SlSocialInstagram
                         color="#df0073"
@@ -340,23 +351,23 @@ const InfoProduct = () => {
                   <Suspense>
 
                   <FacebookShareButton url={`${shareUrl}products/${product.id}`} title={title}>
-          <FacebookIcon size={25} round={true} />
+          <FacebookIcon size={25} round={true}className=" mouse-hover" />
         </FacebookShareButton>
                     <TwitterShareButton url={shareUrl} title={title}>
-                      <XIcon size={25} round={true} />
+                      <XIcon size={25} round={true} className=" mouse-hover"/>
                     </TwitterShareButton>
                   
 
                   {/* زر المشاركة على WhatsApp */}
                 
                     <WhatsappShareButton url={shareUrl} title={title}>
-                      <WhatsappIcon size={25} round={true} />
+                      <WhatsappIcon size={25} round={true} className=" mouse-hover"/>
                     </WhatsappShareButton>
                
                   {/* زر المشاركة على Telegram */}
                
                     <TelegramShareButton url={shareUrl} title={title}>
-                      <TelegramIcon size={25} round={true} />
+                      <TelegramIcon size={25} round={true} className=" mouse-hover" />
                     </TelegramShareButton>
                   </Suspense>
 
@@ -364,7 +375,7 @@ const InfoProduct = () => {
                   <span
                     className="border rounded-circle border-1 pointer"
                   >
-                    <SlSocialInstagram
+                    <SlSocialInstagram className=" mouse-hover"
                       color="#df0073"
                       fontSize={"1.5rem"}
                       onClick={() => {

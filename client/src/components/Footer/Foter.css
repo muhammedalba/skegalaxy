@@ -26,9 +26,11 @@
         transition: 0.5s;
 }
     a{
+       
+       
         color: var(--text-color)!important;
-        
-    }
+     
+}
     
 }
 .Social a svg:hover {
