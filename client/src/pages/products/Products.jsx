@@ -231,7 +231,7 @@ const Products = () => {
           
             
             inert="true"
-            className=" border w-100 h-100  d-flex flex-column bg-white
+            className=" border rounded w-100 h-100  d-flex flex-column bg-white
             align-items-center justify-content-between m-auto pointer overflow-hidden"
           >
             <img
@@ -286,7 +286,7 @@ const Products = () => {
           <div
             style={{ height: "18rem" }}
             inert="true"
-            className=" w-100 border pt-1  d-flex flex-column
+            className="rounded w-100 border pt-1  d-flex flex-column
             align-items-center justify-content-between bg-whitte m-auto pointer overflow-hidden"
           >
             <img
