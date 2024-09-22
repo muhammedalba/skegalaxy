@@ -18,6 +18,7 @@ import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 // img
 import logo from "../../imges/logo.webp";
 import avatar from "../../imges/avatar.webp";
+import { addHoverEffect } from "../../utils/icons_hover";
 
 // icons
 const RiTwitterXFill  = lazy(() =>
@@ -190,6 +191,14 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
+  useEffect(() => {
+    const icons = document.querySelectorAll('.mouse-hover');
+    const cleanupFunctions = Array.from(icons).map(icon => addHoverEffect(icon));
+
+    return () => {
+      cleanupFunctions.forEach(cleanup => cleanup());
+    };
+  }, []);
 
   // handel serche
 
@@ -307,6 +316,7 @@ const Header = () => {
           <MdOutlineWifiProtectedSetup
             fontSize={"1.2rem"}
             color="var(--text-color)"
+            className="mouse-hover"
           />
         </Suspense>
       ),
@@ -316,7 +326,7 @@ const Header = () => {
       path: "/Favorite",
       icon: (
         <Suspense>
-          <CiHeart fontSize={"1.2rem"} color="var(--text-color)" />
+          <CiHeart fontSize={"1.2rem"} color="var(--text-color)"className="mouse-hover" />
         </Suspense>
       ),
     },
@@ -325,7 +335,7 @@ const Header = () => {
       path: "/Cart",
       icon: (
         <Suspense>
-          <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
+          <BsCart2 fontSize={"1.2rem"} color="var(--text-color)"className="mouse-hover" />
         </Suspense>
       ),
     },
@@ -349,7 +359,7 @@ const Header = () => {
       path: "/",
       icon: (
         <Suspense>
-          <IoStorefrontOutline fontSize={"1.2rem"} color="var(--text-color)" />
+          <IoStorefrontOutline fontSize={"1.2rem"} color="var(--text-color)" className="mouse-hover"/>
         </Suspense>
       ),
     },
@@ -359,7 +369,7 @@ const Header = () => {
       path: "/dashboard",
       icon: (
         <Suspense>
-          <AiOutlineDashboard fontSize={"1.2rem"} color="var(--text-color)" />
+          <AiOutlineDashboard fontSize={"1.2rem"} color="var(--text-color)" className="mouse-hover"/>
         </Suspense>
       ),
     },
@@ -569,13 +579,13 @@ const closeMenu= useCallback(()=>{
                 className={
                   role === "admin"
                     ? "d-none"
-                    : "p-1 border rounded-circle position-relative"
+                    : "p-1 border rounded-circle position-relative mouse-hover"
                 }
               >
                 <Suspense>
                   <PiShoppingCartThin
                     fontSize={"1.4rem"}
-                    color="var( --btn-bg-color)"
+                    color="var( --btn-bg-color)"className="mouse-hover"
                   />
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger ">
                     {cartitims > 0 && cartitims}
@@ -585,38 +595,38 @@ const closeMenu= useCallback(()=>{
               <NavLink
                 to={"/Favorite"}
                 className={
-                  role === "admin" ? "d-none" : "p-1 border rounded-circle mx-1"
+                  role === "admin" ? "d-none" : "p-1 border rounded-circle mx-1 mouse-hover"
                 }
               >
                 <Suspense>
-                  <CiHeart fontSize={"1.4rem"} color="var( --btn-bg-color)" />
+                  <CiHeart fontSize={"1.4rem"} color="var( --btn-bg-color)" className="mouse-hover"/>
                 </Suspense>
               </NavLink>
-              <NavLink to={"/"} className="p-1 border rounded-circle mx-1">
+              <NavLink to={"/"} className="p-1 border rounded-circle mx-1 mouse-hover">
                 <Suspense>
                   <LiaHomeSolid
                     fontSize={"1.4rem"}
-                    color="var( --btn-bg-color)"
+                    color="var( --btn-bg-color)"className="mouse-hover"
                   />
                 </Suspense>
               </NavLink>
               <NavLink
                 to={"/dashboard"}
                 className={
-                  role !== "admin" ? "d-none" : "p-1 border rounded-circle mx-1"
+                  role !== "admin" ? "d-none" : "p-1 border rounded-circle mx-1 mouse-hover"
                 }
               >
                 <Suspense>
                   <AiOutlineDashboard
                     fontSize={"1.4rem"}
-                    color="var( --btn-bg-color)"
+                    color="var( --btn-bg-color)"className="mouse-hover"
                   />
                 </Suspense>
               </NavLink>
 
               <div
                 onClick={() => setopen(!open)}
-                className="bars d-flex mx-3  align-items-center;
+                className="bars d-flex mx-3  mouse-hover  p-1
                       flex-column   justify-content-center "
               >
                 <span
@@ -660,7 +670,7 @@ const closeMenu= useCallback(()=>{
               className="d-none d-sm-flex align-items-center gap-1"
             >
               <Suspense>
-                <TfiHeadphoneAlt className="fs-5" color="var( --spancolor)" />
+                <TfiHeadphoneAlt className="fs-5 mouse-hover" color="var( --spancolor)" />
               </Suspense>
               <Fade
                 className="border-0 "
@@ -675,7 +685,7 @@ const closeMenu= useCallback(()=>{
           <a href="tel:+966598909991">
             <Suspense>
               <TfiHeadphoneAlt
-                className="fs-5 d-sm-none"
+                className="fs-5 d-sm-none mouse-hover "
                 color="var( --spancolor)"
               />{" "}
             </Suspense>
@@ -720,7 +730,7 @@ const closeMenu= useCallback(()=>{
           <div>
             <Suspense>
               <PiUserCircleLight
-                className="d-block  dropdown-toggle "
+                className="d-block  dropdown-toggle  mouse-hover "
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 color="var( --btn-bg-color)"
@@ -882,46 +892,47 @@ const closeMenu= useCallback(()=>{
             className={"nav-item  py-2   w-100 "}
           >
             <a>معلومات التواصل</a>
-            <div className="d-flex justify-content-center align-items-center pt-1 flex-wrap text-center w-auto">
-                <a className=" w-auto" href="tel:+966598909991">
+            <div className="d-flex justify-content-center align-items-center pt-1 flex-wrap text-center w-auto   ">
+                <a className=" w-auto mouse-hover " href="tel:+966598909991">
                   <Suspense>
                     <BsFillTelephoneFill
                       fontSize={"1.3rem"}
                       color="var( --spancolor)"
+                      
                     />
                   </Suspense>
                 </a>
-                <a href="https://www.facebook.com/share/UcQFNEMfpaWuphKy/?mibextid=qi2Omg" target="_blank"  className="w-auto ">
+                <a href="https://www.facebook.com/share/UcQFNEMfpaWuphKy/?mibextid=qi2Omg" target="_blank"  className="w-auto mouse-hover ">
                   <Suspense>
-                    <SiFacebook fontSize={"1rem"} color="#0866ff" />
+                    <SiFacebook fontSize={"1rem"} color="#0866ff"   />
                   </Suspense>
                 </a>
-                <a href="http://t.me/Skygalaxyshop" target="_blank" className=" w-auto">
+                <a href="http://t.me/Skygalaxyshop" target="_blank" className=" mouse-hover  w-auto">
                   <Suspense>
-                    <FaTelegramPlane fontSize={"1rem"} color="#28a8e9" />
+                    <FaTelegramPlane fontSize={"1rem"} color="#28a8e9"   />
                   </Suspense>
                 </a>
                 <a
                   href="https://wa.me/+966598909991" target="_blank"
-                  className="w-auto "
+                  className="w-auto mouse-hover  "
                 >
                   <Suspense>
-                    <BsWhatsapp fontSize={"1rem"} color="#33bd45 " />
+                    <BsWhatsapp fontSize={"1rem"} color="#33bd45 "  />
                   </Suspense>
                 </a>
-                <a href="https://www.snapchat.com/add/skygalaxyshop?share_id=VESqbU6Mucg&locale=ar-AE" target="_blank" className="w-auto   ">
+                <a href="https://www.snapchat.com/add/skygalaxyshop?share_id=VESqbU6Mucg&locale=ar-AE" target="_blank" className="w-auto mouse-hover   ">
                   <Suspense>
-                    <SiSnapchat   fontSize={"1rem"} color="#fffc00" />
+                    <SiSnapchat   fontSize={"1rem"} color="#fffc00"   />
                   </Suspense>
                 </a>
-                <a href="https://www.instagram.com/sky.galaxy.shop?igsh=MTdkODBteWZ4cDY1MQ==" target="_blank" className=" w-auto ">
+                <a href="https://www.instagram.com/sky.galaxy.shop?igsh=MTdkODBteWZ4cDY1MQ==" target="_blank" className=" w-auto mouse-hover ">
                   <Suspense>
-                    <FaInstagram fontSize={"1rem"} color="#df0073" />
+                    <FaInstagram fontSize={"1rem"} color="#df0073"   />
                   </Suspense>
                 </a>
-                <a href="https://x.com/skygalaxyshop?s=09" target="_blank" className="  w-auto">
+                <a href="https://x.com/skygalaxyshop?s=09" target="_blank" className="mouse-hover  w-auto">
                   <Suspense>
-                    <RiTwitterXFill  fontSize={"1rem"} color="#000" />
+                    <RiTwitterXFill  fontSize={"1rem"} color="#000"  />
                   </Suspense>
                 </a>
               </div>
