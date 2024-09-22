@@ -1,13 +1,13 @@
-import "./card.css";
 import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
+import "./card.css";
 import Cookies from "universal-cookie";
+import { Fade } from "react-awesome-reveal";
 import { useDispatch } from "react-redux";
 import { cartitems } from "../../redux/features/Slice/CartSlice";
+import { useCreateOneMutation } from "../../redux/features/api/apiSlice";
 import { Link } from "react-router-dom";
 
 import { MdAddShoppingCart } from "react-icons/md";
-import { Fade } from "react-awesome-reveal";
-import { useCreateOneMutation } from "../../redux/features/api/apiSlice";
 import PropTypes from "prop-types";
 
 const Rating = React.lazy(() => import("../Rating/Rating"));
@@ -15,24 +15,22 @@ const CiHeart = lazy(() => import("react-icons/ci").then(module => ({ default: m
 const PiEyeThin = lazy(() => import("react-icons/pi").then(module => ({ default: module.PiEyeThin })));
 const IoShareSocial = lazy(() => import("react-icons/io5").then(module => ({ default: module.IoShareSocial })));
 const SlSocialInstagram = lazy(() => import( "react-icons/sl").then(module => ({ default: module.SlSocialInstagram })));
-// import { PiEyeThin } from "react-icons/pi";
-// import { IoShareSocial } from "react-icons/io5";
-// import { SlSocialInstagram } from "react-icons/sl";
+
 
 
 import { successNotify, warnNotify } from "../../utils/Toast";
 
 
 import { 
-
+  FacebookShareButton,
   TwitterShareButton, 
   WhatsappShareButton,
   TelegramShareButton,
  
 } from 'react-share';
 import { 
-
-  TwitterIcon, 
+  FacebookIcon,
+  XIcon, 
   WhatsappIcon,
   TelegramIcon,
 
@@ -49,9 +47,7 @@ const Card = ({ product, imgePath }) => {
     { error: createError,isSuccess:  successCreeate, isLoading: createLoding ,data:crerateData},
   ] = useCreateOneMutation();
 
-  //  show Quantity
-  // const showQuantity =product.quantity <= 100 && product.quantity !== 0? " d-block" : "d-none";
-  // const showQuantityMsg =  product.quantity === 0 ? " d-block" : "d-none";
+
 
 
 
@@ -161,7 +157,7 @@ if(createError || successCreeate){
        className=" cart-share  d-flex align-items-center justify-content-center gap-2 flex-column">
         {/* زر المشاركة على Twitter */}
         <TwitterShareButton url={`${shareUrl}products/${product.id}`} title={title}>
-          <TwitterIcon size={35} round={true} />
+          <XIcon size={35} round={true} />
         </TwitterShareButton>
 
         {/* زر المشاركة على WhatsApp */}
@@ -174,6 +170,9 @@ if(createError || successCreeate){
           <TelegramIcon size={35} round={true} />
         </TelegramShareButton>
 
+        <FacebookShareButton url={`${shareUrl}products/${product.id}`} title={title}>
+          <FacebookIcon size={35} round={true} />
+        </FacebookShareButton>
 
         {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
         <button  type="button" className="border rounded-circle border-1 pointer" onClick={() => {
@@ -264,7 +263,7 @@ if(createError || successCreeate){
           </div>
           
             </button>
-       
+         
         </Fade>
       </div>
              {/* share to social media */}

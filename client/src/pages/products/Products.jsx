@@ -490,8 +490,8 @@ const Products = () => {
         <div className=" row  border-top pt-2 ">
           {/* filtter start */}
           <div
-            style={{ top: "6.1rem", zIndex: "5" }}
-            className="col-12 col-sm-3  col-lg-2 flex-wrap flex-column bg-white  h-25 overflow-hidden p-1 d-flex position-sticky  end-0"
+            style={{ top: "6rem", zIndex: "5" }}
+            className="col-12 col-sm-3  col-lg-2 flex-wrap flex-column bg-white  h-25 overflow-hidden pt-2 pb-0 d-flex position-sticky  end-0"
           >
                 {/* reset data button */}
             <div className="d-flex align-items-center w-100  justify-content-between">
@@ -546,7 +546,7 @@ const Products = () => {
               </select>
             </div>
             {/* sortFilter */}
-            <div className=" p-2">
+            <div className=" p-2 pb-0">
               <select
                 className="form-select py-2"
                 disabled={isLoading}

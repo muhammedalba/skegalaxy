@@ -5,6 +5,7 @@ import { lazy, Suspense, useCallback } from "react";
 
 import logo from "../../imges/footerImge.webp";
 import skyDitels from "../../imges/skyDitels.pdf";
+import { XIcon } from "react-share";
 
 // icons
 const RiTwitterXFill  = lazy(() =>
@@ -240,7 +241,7 @@ const Footer = () => {
                 </a>
                 <a href="https://x.com/skygalaxyshop?s=09" target="_blank" className="text-white mx-1 ">
                   <Suspense>
-                    <RiTwitterXFill  fontSize={"1.3rem"} color="#000" />
+                    <XIcon  size={25} round={true}/>
                   </Suspense>
                 </a>
               </div>
@@ -352,7 +353,7 @@ const Footer = () => {
         className="text-center border border-2  border-end-0 border-start-0 p-2"
       >
         <Fade direction="up" triggerOnce={true}>
-          <a href="https://wa.me/+905346833726">
+          <a target="_blank" href="https://www.codeprops.com">
             صمم بواسطه codeprops. جميع الحقوق محفوظة <i>.2024 &copy; </i>
           </a>
         </Fade>

@@ -36,7 +36,9 @@ const RelatedProducts = React.lazy(() =>
 const TwitterShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.TwitterShareButton })));
 const WhatsappShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.WhatsappShareButton })));
 const TelegramShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.TelegramShareButton })));
-const TwitterIcon = React.lazy(() => import("react-share").then(module => ({ default: module.TwitterIcon })));
+const FacebookShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.FacebookShareButton })));
+const FacebookIcon = React.lazy(() => import("react-share").then(module => ({ default: module.FacebookIcon })));
+const XIcon = React.lazy(() => import("react-share").then(module => ({ default: module.XIcon })));
 const WhatsappIcon = React.lazy(() => import("react-share").then(module => ({ default: module.WhatsappIcon })));
 const TelegramIcon = React.lazy(() => import("react-share").then(module => ({ default: module.TelegramIcon })));
 
@@ -271,20 +273,23 @@ const InfoProduct = () => {
                     {/* زر المشاركة على Twitter */}
 
                     <Suspense>
+                    <FacebookShareButton url={`${shareUrl}products/${product.id}`} title={title}>
+          <FacebookIcon size={25} round={true} />
+        </FacebookShareButton>
                       <TwitterShareButton url={shareUrl} title={title}>
-                        <TwitterIcon size={28} round={true} />
+                        <XIcon size={25} round={true} />
                       </TwitterShareButton>
                   
                     {/* زر المشاركة على WhatsApp */}
                    
                       <WhatsappShareButton url={shareUrl} title={title}>
-                        <WhatsappIcon size={28} round={true} />
+                        <WhatsappIcon size={25} round={true} />
                       </WhatsappShareButton>
                    
                     {/* زر المشاركة على Telegram */}
                  
                       <TelegramShareButton url={shareUrl} title={title}>
-                        <TelegramIcon size={28} round={true} />
+                        <TelegramIcon size={25} round={true} />
                       </TelegramShareButton>
                     </Suspense>
 
@@ -333,21 +338,25 @@ const InfoProduct = () => {
                 <div className="d-flex d-xl-none align-items-center justify-content-center gap-3 pt-1 w-100 ">
                   {/* زر المشاركة على Twitter */}
                   <Suspense>
+
+                  <FacebookShareButton url={`${shareUrl}products/${product.id}`} title={title}>
+          <FacebookIcon size={25} round={true} />
+        </FacebookShareButton>
                     <TwitterShareButton url={shareUrl} title={title}>
-                      <TwitterIcon size={28} round={true} />
+                      <XIcon size={25} round={true} />
                     </TwitterShareButton>
                   
 
                   {/* زر المشاركة على WhatsApp */}
                 
                     <WhatsappShareButton url={shareUrl} title={title}>
-                      <WhatsappIcon size={28} round={true} />
+                      <WhatsappIcon size={25} round={true} />
                     </WhatsappShareButton>
                
                   {/* زر المشاركة على Telegram */}
                
                     <TelegramShareButton url={shareUrl} title={title}>
-                      <TelegramIcon size={28} round={true} />
+                      <TelegramIcon size={25} round={true} />
                     </TelegramShareButton>
                   </Suspense>
 
