@@ -87,7 +87,7 @@ dbconnection();
 MountRoutes(app);
 // Static file declaration
 app.use(express.static(path.join(__dirname, "../client/dist"), {
-  maxAge: '1d' // التخزين المؤقت للملفات لمدة يوم واحد
+  maxAge: '2d' // التخزين المؤقت للملفات لمدة يوم واحد
 }));
 // Serve the React app
 app.get("*", (req, res) => {

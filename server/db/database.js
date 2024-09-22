@@ -8,9 +8,6 @@ const dbconnection = () => {
     .then((conn) =>
       console.log(`database is Connected ${conn.connection.host}`)
     )
-    // .catch((error) => {
-    //   console.log(`database is not connected`, error);
-    //   process.exit(1);
-    // });
+  
 };
 module.exports = dbconnection;
