@@ -54,7 +54,7 @@ const RelatedProducts = ({product}) => {
           />
         ));
       return (
-        <div className={filteredProducts?"container d-block":'d-none'}>
+        <div className={filteredProducts.length>0?"container d-block":'d-none'}>
           <div  className="w-100 px-2 portion d-flex align-items-center justify-content-between py-3 mt-4 border-bottom bo">
           <span
            

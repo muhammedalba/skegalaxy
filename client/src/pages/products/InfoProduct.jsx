@@ -26,7 +26,6 @@ import { CiHeart } from "react-icons/ci";
 import { MdAddShoppingCart } from "react-icons/md";
 import { RiDownloadCloud2Line } from "react-icons/ri";
 
-
 import "react-multi-carousel/lib/styles.css";
 import { Helmet } from "react-helmet-async";
 import { addHoverEffect } from "../../utils/icons_hover";
@@ -34,15 +33,38 @@ import { addHoverEffect } from "../../utils/icons_hover";
 const RelatedProducts = React.lazy(() =>
   import("../../components/relatedProducts/RelatedProducts")
 );
-const TwitterShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.TwitterShareButton })));
-const WhatsappShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.WhatsappShareButton })));
-const TelegramShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.TelegramShareButton })));
-const FacebookShareButton = React.lazy(() => import("react-share").then(module => ({ default: module.FacebookShareButton })));
-const FacebookIcon = React.lazy(() => import("react-share").then(module => ({ default: module.FacebookIcon })));
-const XIcon = React.lazy(() => import("react-share").then(module => ({ default: module.XIcon })));
-const WhatsappIcon = React.lazy(() => import("react-share").then(module => ({ default: module.WhatsappIcon })));
-const TelegramIcon = React.lazy(() => import("react-share").then(module => ({ default: module.TelegramIcon })));
-
+const TwitterShareButton = React.lazy(() =>
+  import("react-share").then((module) => ({
+    default: module.TwitterShareButton,
+  }))
+);
+const WhatsappShareButton = React.lazy(() =>
+  import("react-share").then((module) => ({
+    default: module.WhatsappShareButton,
+  }))
+);
+const TelegramShareButton = React.lazy(() =>
+  import("react-share").then((module) => ({
+    default: module.TelegramShareButton,
+  }))
+);
+const FacebookShareButton = React.lazy(() =>
+  import("react-share").then((module) => ({
+    default: module.FacebookShareButton,
+  }))
+);
+const FacebookIcon = React.lazy(() =>
+  import("react-share").then((module) => ({ default: module.FacebookIcon }))
+);
+const XIcon = React.lazy(() =>
+  import("react-share").then((module) => ({ default: module.XIcon }))
+);
+const WhatsappIcon = React.lazy(() =>
+  import("react-share").then((module) => ({ default: module.WhatsappIcon }))
+);
+const TelegramIcon = React.lazy(() =>
+  import("react-share").then((module) => ({ default: module.TelegramIcon }))
+);
 
 const InfoProduct = () => {
   const { productId } = useParams();
@@ -122,13 +144,14 @@ const InfoProduct = () => {
     scrollToTop,
   ]);
 
-
   useEffect(() => {
-    const icons = document.querySelectorAll('.mouse-hover');
-    const cleanupFunctions = Array.from(icons).map(icon => addHoverEffect(icon));
+    const icons = document.querySelectorAll(".mouse-hover");
+    const cleanupFunctions = Array.from(icons).map((icon) =>
+      addHoverEffect(icon)
+    );
 
     return () => {
-      cleanupFunctions.forEach(cleanup => cleanup());
+      cleanupFunctions.forEach((cleanup) => cleanup());
     };
   }, []);
   // add to cart our wish list
@@ -284,30 +307,47 @@ const InfoProduct = () => {
                     {/* زر المشاركة على Twitter */}
 
                     <Suspense>
-                    <FacebookShareButton url={`${shareUrl}products/${product.id}`} title={title}>
-          <FacebookIcon size={25} round={true}className=" mouse-hover"/>
-        </FacebookShareButton>
+                      <FacebookShareButton
+                        url={`${shareUrl}products/${product.id}`}
+                        title={title}
+                      >
+                        <FacebookIcon
+                          size={25}
+                          round={true}
+                          className=" mouse-hover"
+                        />
+                      </FacebookShareButton>
                       <TwitterShareButton url={shareUrl} title={title}>
-                        <XIcon size={25} round={true}  className=" mouse-hover" />
+                        <XIcon
+                          size={25}
+                          round={true}
+                          className=" mouse-hover"
+                        />
                       </TwitterShareButton>
-                  
-                    {/* زر المشاركة على WhatsApp */}
-                   
+
+                      {/* زر المشاركة على WhatsApp */}
+
                       <WhatsappShareButton url={shareUrl} title={title}>
-                        <WhatsappIcon size={25} round={true}className=" mouse-hover" />
+                        <WhatsappIcon
+                          size={25}
+                          round={true}
+                          className=" mouse-hover"
+                        />
                       </WhatsappShareButton>
-                   
-                    {/* زر المشاركة على Telegram */}
-                 
+
+                      {/* زر المشاركة على Telegram */}
+
                       <TelegramShareButton url={shareUrl} title={title}>
-                        <TelegramIcon size={25} round={true} className=" mouse-hover"/>
+                        <TelegramIcon
+                          size={25}
+                          round={true}
+                          className=" mouse-hover"
+                        />
                       </TelegramShareButton>
                     </Suspense>
 
                     {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
-                    <span
-                      className="border rounded-circle border-1 pointer mouse-hover"
-                    >
+                    <span className="border rounded-circle border-1 pointer mouse-hover">
                       <SlSocialInstagram
                         color="#df0073"
                         fontSize={"1.5rem"}
@@ -349,33 +389,45 @@ const InfoProduct = () => {
                 <div className="d-flex d-xl-none align-items-center justify-content-center gap-3 pt-1 w-100 ">
                   {/* زر المشاركة على Twitter */}
                   <Suspense>
-
-                  <FacebookShareButton url={`${shareUrl}products/${product.id}`} title={title}>
-          <FacebookIcon size={25} round={true}className=" mouse-hover" />
-        </FacebookShareButton>
+                    <FacebookShareButton
+                      url={`${shareUrl}products/${product.id}`}
+                      title={title}
+                    >
+                      <FacebookIcon
+                        size={25}
+                        round={true}
+                        className=" mouse-hover"
+                      />
+                    </FacebookShareButton>
                     <TwitterShareButton url={shareUrl} title={title}>
-                      <XIcon size={25} round={true} className=" mouse-hover"/>
+                      <XIcon size={25} round={true} className=" mouse-hover" />
                     </TwitterShareButton>
-                  
 
-                  {/* زر المشاركة على WhatsApp */}
-                
+                    {/* زر المشاركة على WhatsApp */}
+
                     <WhatsappShareButton url={shareUrl} title={title}>
-                      <WhatsappIcon size={25} round={true} className=" mouse-hover"/>
+                      <WhatsappIcon
+                        size={25}
+                        round={true}
+                        className=" mouse-hover"
+                      />
                     </WhatsappShareButton>
-               
-                  {/* زر المشاركة على Telegram */}
-               
+
+                    {/* زر المشاركة على Telegram */}
+
                     <TelegramShareButton url={shareUrl} title={title}>
-                      <TelegramIcon size={25} round={true} className=" mouse-hover" />
+                      <TelegramIcon
+                        size={25}
+                        round={true}
+                        className=" mouse-hover"
+                      />
                     </TelegramShareButton>
                   </Suspense>
 
                   {/* زر نسخ الرابط للمشاركة على Instagram (مشاركة يدوية) */}
-                  <span
-                    className="border rounded-circle border-1 pointer"
-                  >
-                    <SlSocialInstagram className=" mouse-hover"
+                  <span className="border rounded-circle border-1 pointer">
+                    <SlSocialInstagram
+                      className=" mouse-hover"
                       color="#df0073"
                       fontSize={"1.5rem"}
                       onClick={() => {
@@ -580,7 +632,7 @@ const InfoProduct = () => {
     isSuccess,
     product?.data?._id,
     product?.data?.brand?.name,
-    product?.data.category?.name,
+    product?.data?.category?.name,
     product?.data?.description,
     product?.data?.imageCover,
     product?.data?.infoProductPdf,
@@ -589,6 +641,7 @@ const InfoProduct = () => {
     product?.data?.quantity,
     product?.data?.ratingsAverage,
     product?.data?.title,
+    product?.id,
     product?.imageUrl,
     selectedImage,
     shareUrl,
