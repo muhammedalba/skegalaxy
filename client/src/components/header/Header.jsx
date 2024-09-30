@@ -401,7 +401,7 @@ const closeMenu= useCallback(()=>{
     });
     // in mobile
     const SubMinuCategories=categoriesitims.map((category)=>{
-      return   <li  key={category._id} className="border-bottom">
+      return   <li  key={category._id} className="border-bottom category">
           <Link  to={`/category/${category._id}`} onClick={closeMenu}>{category?.name.split("_")[0]}</Link>
           {/* <span>{category?.name.split("_")[1]}</span> */}
                      
@@ -707,9 +707,9 @@ const closeMenu= useCallback(()=>{
 
           {/* dropdown */}
 
-          <div style={{ fontWeight: "100" }} className="   d-none d-lg-block">
+          <div onClick={Scrolto} style={{ fontWeight: "100" }} className="   d-none d-lg-block">
             <Link to={"/about"} className="mx-1 p-1">
-              <span className=""> من نحن </span>{" "}
+              <span className=""> من نحن </span>
             </Link>
             <Link to={"/PrivacyPolic"} className="p-1 mx-1">
               الاحكام والشروط{" "}
@@ -873,21 +873,21 @@ const closeMenu= useCallback(()=>{
             <NavLink to={"/orders"}>طلباتي</NavLink>
           </li>
           <li
-            onClick={() => setopen(false)}
+            onClick={closeMenu}
             style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
             className={"nav-item  py-2   w-100 "}
           >
             <NavLink to={"/about"}>من نحن</NavLink>
           </li>
           <li
-            onClick={() => setopen(false)}
+            onClick={closeMenu}
             style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
             className={"nav-item  py-2   w-100 "}
           >
             <NavLink to={"/PrivacyPolic"}>الاحكام والشروط</NavLink>
           </li>
           <li
-            onClick={() => setopen(false)}
+            onClick={closeMenu}
             style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
             className={"nav-item  py-2   w-100 "}
           >

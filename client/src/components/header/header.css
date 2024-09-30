@@ -63,6 +63,10 @@ header {
       }
     }
   }
+  .category:last-child{
+    border: none !important;
+
+  }
 }
 .mobelLink li:not(.active):after,
 .mobelLink li #categories .card:after,

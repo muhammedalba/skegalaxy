@@ -104,7 +104,7 @@ const About = () => {
               </div>
 
               <div className="row pt-4 mt-4 border-top">
-                <div className="col-md-7 ">
+                <div className="col-md-12 ">
                   <div className="mt-4">
                     <Fade direction="up" triggerOnce cascade>
                       <h3 className=" text-center "> رؤيتنا</h3>
@@ -120,7 +120,7 @@ const About = () => {
                     </Fade>
                   </div>
                 </div>
-                <div className="col-md-5">
+                {/* <div className="col-md-5">
                   <Fade direction="up" triggerOnce cascade>
                     <div className="img2">
                       <img
@@ -132,13 +132,13 @@ const About = () => {
                       />
                     </div>
                   </Fade>
-                </div>
-              </div>
+                </div>*/}
+              </div> 
               <div className="row pt-5">
               
 
                 <div className="row pt-4 mt-4 border-top">
-                <div className="col-md-5">
+                {/* <div className="col-md-5">
                     <Fade direction="up" triggerOnce cascade>
                       <div className="img2">
                         <img
@@ -150,8 +150,8 @@ const About = () => {
                         />
                       </div>
                     </Fade>
-                  </div>
-                  <div className="col-md-7 ">
+                  </div> */}
+                  <div className="col-md-12 ">
                     <div className="mt-4">
                       <Fade direction="up" triggerOnce cascade>
                         <h3 className=" text-center "> اهدافنا</h3>
@@ -178,7 +178,7 @@ const About = () => {
         </section>
 
         {/*contact  */}
-        <section className="bg-contacts">
+        <section className="bg-contacts border-top">
           <main
             className=" pt-5 mt-2  Contact-items  container Contact-sec"
             id="Contact"
