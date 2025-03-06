@@ -28,15 +28,30 @@ app.use(cookieParser());
 
 // enable other domains to access routes
 // إعداد خيارات CORS
+//const corsOptions = {
+ // origin:  process.env.FRONTEND_ORIGIN, // أصل الفرونت إند
+//  // allowedHeaders: ['Content-Type', 'Authorization'],
+ // // secure: false,
+//  credentials: true // تمكين دعم ملفات تعريف الارتباط (credentials)
+//};
+const allowedOrigins = [
+  process.env.FRONTEND_ORIGIN, // للواجهة الأمامية
+  'http://127.0.0.1:5500', // للتطوير المحلي
+];
+// تطبيق إعدادات CORS على كل الطلبات
 const corsOptions = {
-  origin:  process.env.FRONTEND_ORIGIN, // أصل الفرونت إند
-  // allowedHeaders: ['Content-Type', 'Authorization'],
-  // secure: false,
-  credentials: true // تمكين دعم ملفات تعريف الارتباط (credentials)
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // تمكين ملفات تعريف الارتباط
 };
 
-// تطبيق إعدادات CORS على كل الطلبات
 app.use(cors(corsOptions));
+////app.use(cors(corsOptions));
 
 // إذا كنت تستخدم OPTIONS لتحديد إعدادات CORS لجميع المسارات
 app.options('*', cors(corsOptions));
