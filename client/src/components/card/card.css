@@ -6,8 +6,9 @@
 .card-product {
   padding: 0 !important;
   position: relative;
-  width: 19rem;
-  height: 33.5rem;
+  width: 15rem;
+  /* width: 19rem; */
+  height: 31rem;
   background: var(--bgColor);
   border-radius: 20px;
   overflow: hidden;
@@ -95,7 +96,7 @@
     width: 100%;
     text-align: center;
     font-weight: 500;
-    font-size: 2.3em;
+    font-size: 1.4em;
     color: var(--btn-bg-color);
     -webkit-transform: translate(-50%,0 );
     -moz-transform: translate(-50%,0 );
@@ -135,7 +136,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   height: 273px;
   .stars{
     width: 100% !important;
@@ -144,7 +145,7 @@
 }
 
 .card-product .contentBox h3 {
-  font-size: 18px;
+  font-size: 1rem;
   color: var(--text-color);
   font-weight: 500;
   text-transform: uppercase;
@@ -198,10 +199,10 @@
 
 
 
-/* butons */
+/* buttons */
 .button {
   --width: 100px;
-  --height: 3rem;
+  --height: 2.2rem;
   --tooltip-height: 35px;
   --tooltip-width: 125px;
   --gap-between-tooltip-to-button: 18px;

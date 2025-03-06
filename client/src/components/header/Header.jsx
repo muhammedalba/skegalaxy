@@ -5,6 +5,7 @@ import  {
   useState,
   lazy,
   Suspense,
+  useRef,
 } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -165,7 +166,7 @@ const Header = () => {
   const [open, setopen] = useState(false);
   const [showSubMinu, setshowSubMinu] = useState(false);
   const [showSubMinuBrands, setshowSubMinuBrands] = useState(false);
-
+ 
   const dispatch = useDispatch();
 
   const handleScroll = useCallback(() => {
@@ -201,15 +202,33 @@ const Header = () => {
   }, []);
 
   // handel serche
+ 
+  const searchTimeout = useRef(null);
 
   const handelserche = useCallback(
     (e) => {
       window.scrollTo({ top: 1100, behavior: "smooth" });
       dispatch(currentPage(1));
-      dispatch(searchItem(e.target.value));
+  
+      // استخدام useRef لتخزين الـ timeout
+      if (searchTimeout.current) {
+        clearTimeout(searchTimeout.current);
+      }
+  
+      searchTimeout.current = setTimeout(() => {
+        const searchValue = e.target.value.trim();
+        if (searchValue) {
+          dispatch(searchItem(searchValue));
+        }
+      }, 2000);
     },
     [dispatch]
   );
+  
+
+
+
+
   const Scrolto = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -696,7 +715,7 @@ const closeMenu= useCallback(()=>{
               className="h-100 px-2 w-100 text-end"
               placeholder="...بحث"
               onChange={handelserche}
-              value={search}
+              // value={search}
             />
             <label>
               <Suspense>

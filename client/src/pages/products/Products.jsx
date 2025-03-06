@@ -10,7 +10,7 @@ import { SkeletonProduct } from "../../utils/skeleton";
 import Navigation from "../../components/navigation/Navigation";
 import "./products.css";
 // icons
-
+import { IoFilterOutline } from "react-icons/io5";
 import logo from "../../imges/logo.webp";
 import Card from "../../components/card/Card";
 import LoadingPage from "../../components/LoadingPage/LoadingPage";
@@ -35,6 +35,7 @@ const Products = () => {
   const [filterDrands, setfilterDrands] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [show_Filter, setshow_Filter] = useState(false);
   const dispatch = useDispatch();
 
   // get products from the database
@@ -488,22 +489,20 @@ const Products = () => {
         </p>
 
         <div className=" row  border-top pt-2 ">
+           <div className="w-100">
+              <p className="fs-5 px-3 m-0 nowrap pointer" onClick={()=>setshow_Filter(!show_Filter)} >
+                <IoFilterOutline className="ms-2" />
+                 فلترة :
+              </p>
+               
+           </div>
           {/* filtter start */}
           <div
-            style={{ top: "6rem", zIndex: "5" }}
-            className="col-12 col-sm-3  col-lg-2 flex-wrap flex-column bg-white  h-25 overflow-hidden pt-2 pb-0 d-flex position-sticky  end-0"
+            style={{ top: "6rem", zIndex: "5", display: show_Filter?"flex":"none" }}
+            className="col-12 col-sm-3  col-lg-2 flex-wrap flex-column bg-white  h-25 overflow-hidden pt-2 pb-0 position-sticky  end-0"
           >
-                {/* reset data button */}
-            <div className="d-flex align-items-center w-100  flex-wrap justify-content-between ">
-              <p className="fs-5 px-3 m-0 nowrap"> فلترة : </p>
-               <button
-              onClick={resetFilter}
-              type="button"
-              className="btn btn-outline-danger mx-2 nowrap"
-              >
-              اعادة تعيين
-               </button>
-            </div>
+              
+          
             {/*gategory  */}
             <div className=" p-2">
               <select
@@ -579,13 +578,20 @@ const Products = () => {
                 </option>
               </select>
             </div>
-
+            {/* reset data button */}
+            <button
+              onClick={resetFilter}
+              type="button"
+              className="btn btn-outline-danger m-2 nowrap"
+              >
+              اعادة تعيين
+            </button>
         
         
           </div>
 
           {/* products data */}
-          <div className="  col-12 col-sm-9 col-lg-10  justify-content-center row-gap-4 gap-2 ">
+          <div className= "flex-grow-1 col-12 col-sm-9 col-lg-10  justify-content-center        gap-2 ">
             <div className="row">{showData}</div>
           </div>
         </div>
