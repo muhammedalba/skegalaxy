@@ -283,10 +283,15 @@ const Footer = () => {
                       الإدارة العامة
                     </span>
 
-                    <h5 className="footer-link ">
-                  
-                      الرياض - حي الملز - طريق صلاح الدين الايوبي
-                    </h5>
+                    <h5 className="footer-link">
+  <a
+    href="https://maps.app.goo.gl/mWXArwC5apmgZRF99"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    الرياض - حي الملز - طريق صلاح الدين الايوبي
+  </a>
+</h5>
                   </li>
                 
                   <span

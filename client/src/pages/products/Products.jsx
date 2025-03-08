@@ -496,8 +496,8 @@ const Products = () => {
         </p>
 
         <div className=" row  border-top pt-2 ">
-           <div className="w-100">
-              <p className="fs-5 px-3 m-0 nowrap pointer" onClick={()=>setshow_Filter(!show_Filter)} >
+           <div style={{ top: "5.6rem", zIndex: "5" }} className="w-100 pt-3  bg-white  position-sticky d-flex    end-0">
+              <p className="fs-4 px-3 m-0 nowrap pointer " onClick={()=>setshow_Filter(!show_Filter)} >
                 <IoFilterOutline className="ms-2" />
                  فلترة :
               </p>
@@ -505,7 +505,7 @@ const Products = () => {
            </div>
           {/* filtter start */}
           <div
-            style={{ top: "6rem", zIndex: "5", display: show_Filter?"flex":"none" }}
+            style={{ top: "8rem", zIndex: "5", display: show_Filter?"flex":"none" }}
             className="col-12 col-sm-3  col-lg-2 flex-wrap flex-column bg-white  h-25 overflow-hidden pt-2 pb-0 position-sticky  end-0"
           >
               
