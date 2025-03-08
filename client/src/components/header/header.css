@@ -16,13 +16,15 @@ header {
     background-color: var(--minColor) !important;
 
   }
-  svg{
-    color: var(--btn-bg-color) !important;  
+
+  svg {
+    color: var(--btn-bg-color) !important;
   }
+
   .active {
     svg {
       /* background-color: var(--text-color); */
-      color:  var(--text-color) !important;
+      color: var(--text-color) !important;
     }
 
     background-color: var(--bgColor);
@@ -33,7 +35,8 @@ header {
     -ms-border-radius: 20px;
     border-radius: 20px;
   }
-  .sub-menu{
+
+  .sub-menu {
     overflow: auto;
     max-height: 100vh;
     list-style: none;
@@ -46,28 +49,32 @@ header {
     font-weight: 400;
     color: #888888;
     width: max-content;
-    li{
+
+    li {
       font-size: 15px !important;
 
       list-style: none;
       transition: 0.5s;
       background-color: var(--bg-color);
       z-index: 999;
-      
+
       padding: 0.5rem 5px;
       /* border-bottom: 1px solid #e5e7eb; */
       cursor: pointer;
-      &:hover{
+
+      &:hover {
         background-color: var(--bgColor);
         color: var(--btn-bg-color) !important;
       }
     }
   }
-  .category:last-child{
+
+  .category:last-child {
     border: none !important;
 
   }
 }
+
 .mobelLink li:not(.active):after,
 .mobelLink li #categories .card:after,
 header .nav-link:not(.active):after {
@@ -88,21 +95,23 @@ header .nav-link:not(.active):after {
   object-fit: contain;
   aspect-ratio: '1',
 }
-.mobelLink  #categories .card:hover:after,
+
+.mobelLink #categories .card:hover:after,
 .mobelLink ul li:hover::after,
 nav ul .nav-link:hover::after {
   width: 100% !important;
   left: 0;
-  
+
 }
 
-nav ul li:hover ,
+nav ul li:hover,
 nav ul li:hover svg,
-nav ul li:hover  a{
+nav ul li:hover a {
   color: var(--text-color) !important;
   transition: 0.5s !important;
 
 }
+
 nav li,
 nav a {
   transition: 0.5s !important;
@@ -110,12 +119,14 @@ nav a {
   text-decoration: none;
 
 }
-.sub-menu li{
-color: #777777 !important;
+
+.sub-menu li {
+  color: #777777 !important;
 }
+
 .serch input {
   border: none;
-background-color: #f7f7f7!important ;
+  background-color: #f7f7f7 !important;
   outline: none;
   font-size: 1rem;
   font-weight: 500;
@@ -124,7 +135,8 @@ background-color: #f7f7f7!important ;
 .serch {
   color: var(--text-color);
   height: 2rem;
-z-index: -1;
+  z-index: -1;
+
   label {
     width: 35px;
     height: 35px;
@@ -181,32 +193,52 @@ header span {
 /* span setyle */
 #whatsapp {
   left: 5%;
-  padding:  4px;
+  padding: 4px;
   color: var(--minColor);
   background-color: #33bd45;
 
-  ssvg
-{
-  
-  
+  ssvg {
+
+
     border-radius: 50%;
     fill: rgb(255, 255, 255);
   }
+
   transform: translateX(-400%);
   -webkit-transform: translateX(-400%);
   -moz-transform: translateX(-400%);
   -ms-transform: translateX(-400%);
   -o-transform: translateX(-400%);
 }
+
 @keyframes shake {
+
   /* 0% { transform: translate(0px)  ; -webkit-transform: translate(0px)  ; -moz-transform: translate(0px)  ; -ms-transform: translate(0px)  ; -o-transform: translate(0px)  ; } */
-  0% { transform: translate(1px,1px)  rotate(0deg)  ;}
-  10% {transform: translate(1px,-2px) rotate(-1deg)  ;}
-  20% {transform: translate(-3px,-0px)rotate(0deg)  ;}
-  30% {transform: translate(3px,2px)  rotate(-1deg)  ;}
-  40% {transform: translate(1px,-1px) rotate(0deg)  ;}
-  50% {transform: translate(1px,1px)  rotate(-1deg)  ;} 
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+
+  10% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+
+  20% {
+    transform: translate(-3px, -0px)rotate(0deg);
+  }
+
+  30% {
+    transform: translate(3px, 2px) rotate(-1deg);
+  }
+
+  40% {
+    transform: translate(1px, -1px) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(1px, 1px) rotate(-1deg);
+  }
 }
+
 #whatsapp,
 #span {
   width: 50px;
@@ -280,38 +312,40 @@ header #span svg {
 
 
 /* mobail sidebar */
-.bars{
+.bars {
 
   width: 35px;
 
   cursor: pointer;
 
-  -webkit-transition:1s ;
-  -moz-transition:1s ;
-  -ms-transition:1s ;
-  -o-transition:1s ;
-  transition:1s ;
-    
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -ms-transition: 1s;
+  -o-transition: 1s;
+  transition: 1s;
+
 
 }
-.bars span{
+
+.bars span {
   display: block;
   width: 60%;
   height: 3px;
   margin: 3px auto;
   background-color: var(--SpanColr);
 }
-.bars:hover.bars span:nth-child(2){
+
+.bars:hover.bars span:nth-child(2) {
   width: 80% !important;
 
 }
 
 
-  /* mobelLink */
-.mobelLink{
-background-color: #ffffff;
+/* mobelLink */
+.mobelLink {
+  background-color: #ffffff;
   overflow: auto;
-min-width: 50% ;
+  min-width: 50%;
   position: fixed;
   top: 55px;
   right: 0;
@@ -323,19 +357,20 @@ min-width: 50% ;
   -o-transition: 0.5s;
   transition: 0.5s;
   min-height: 100vh;
-    ul{ 
-      font-size: 1rem;
-     
-     height: 100vh;
-   width:100%;
-     right: 0;
-     font-weight: 400;
+
+  ul {
+    font-size: 1rem;
+
+    height: 100vh;
+    width: 100%;
+    right: 0;
+    font-weight: 400;
   }
 
 }
 
 
-.mobelLink li{
+.mobelLink li {
   font-size: 15px !important;
   min-height: 40px;
   list-style: none;
@@ -349,13 +384,16 @@ min-width: 50% ;
 
   border-bottom: 1px solid #f8f8f8;
   cursor: pointer;
-  #categories{
+
+  #categories {
     padding-right: 0.4rem;
     background-color: #f9fafb !important;
-    .card{
-      background-color:transparent !important;;
+
+    .card {
+      background-color: transparent !important;
+      ;
       border-bottom: 1px solid #eeee !important;
-      
+
       padding: 10px;
       transition: 0.5s;
       -webkit-transition: 0.5s;
@@ -364,28 +402,31 @@ min-width: 50% ;
       -o-transition: 0.5s;
     }
   }
-  button{
+
+  button {
     color: #888888;
     border-bottom: 1px solid #f8f8f8;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
-  
+
 
 }
-.mobelLink a{
+
+.mobelLink a {
   display: block;
   position: relative;
   padding: 5px 10px;
   position: relative;
-    color: #888888 !important;
-    width: 100%;
-    text-align: start;
-  
-          }
-.mobelLink .active{
-  background-color: var(--bgColor) ;
+  color: #888888 !important;
+  width: 100%;
+  text-align: start;
+
+}
+
+.mobelLink .active {
+  background-color: var(--bgColor);
   color: var(--btn-bg-color) !important;
   border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -394,66 +435,75 @@ min-width: 50% ;
   -o-border-radius: 10px;
 }
 
-.mobelLink a:hover{
+.mobelLink a:hover {
   color: var(--btn-bg-color) !important;
 }
-.mobelLink li:nth-child(1){
-   transition: 0.5s;
-   -webkit-transition: 0.5s;
-   -moz-transition: 0.5s;
-   -ms-transition: 0.5s;
-   -o-transition: 0.5s;
+
+.mobelLink li:nth-child(1) {
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
 }
-.mobelLink li:nth-child(2){
+
+.mobelLink li:nth-child(2) {
   transition: 0.8s;
   -webkit-transition: 0.8s;
   -moz-transition: 0.8s;
   -ms-transition: 0.8s;
   -o-transition: 0.8s;
 }
-.mobelLink li:nth-child(3){
-   transition: 1S; 
-   -webkit-transition: 1S;
-    -moz-transition: 1S; 
-    -ms-transition: 1S; 
-    -o-transition: 1S;
+
+.mobelLink li:nth-child(3) {
+  transition: 1S;
+  -webkit-transition: 1S;
+  -moz-transition: 1S;
+  -ms-transition: 1S;
+  -o-transition: 1S;
 }
-.mobelLink li:nth-child(4){
+
+.mobelLink li:nth-child(4) {
   transition: 1.2s;
   -webkit-transition: 1.2s;
   -moz-transition: 1.2s;
   -ms-transition: 1.2s;
   -o-transition: 1.2s;
 }
-.mobelLink li:nth-child(5){
+
+.mobelLink li:nth-child(5) {
   transition: 1.4s;
   -webkit-transition: 1.4s;
   -moz-transition: 1.4s;
   -ms-transition: 1.4s;
   -o-transition: 1.4s;
 }
-.mobelLink li:nth-child(6){
+
+.mobelLink li:nth-child(6) {
   transition: 1.5s;
   -webkit-transition: 1.5s;
   -moz-transition: 1.5s;
   -ms-transition: 1.5s;
   -o-transition: 1.5s;
 }
-.mobelLink li:nth-child(7){
+
+.mobelLink li:nth-child(7) {
   transition: 1.7s;
   -webkit-transition: 1.7s;
   -moz-transition: 1.7s;
   -ms-transition: 1.7s;
   -o-transition: 1.7s;
 }
-.mobelLink li:nth-child(8){
+
+.mobelLink li:nth-child(8) {
   transition: 1.9s;
   -webkit-transition: 1.9s;
   -moz-transition: 1.9s;
   -ms-transition: 1.9s;
   -o-transition: 1.9s;
 }
-.mobelLink li:nth-child(9){
+
+.mobelLink li:nth-child(9) {
   transition: 2s;
   -webkit-transition: 2s;
   -moz-transition: 2s;

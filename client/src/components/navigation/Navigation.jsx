@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { PlusAction ,minusAction,currentPage} from "../../redux/features/Slice/NavigationSlice";
 
-
+// icon
+import { MdOutlineNavigateNext } from "react-icons/md";
+import { MdOutlineNavigateBefore } from "react-icons/md";
 // eslint-disable-next-line react-refresh/only-export-components
 const Navigation = ({
   isLoading,
@@ -44,7 +46,7 @@ const dispatch = useDispatch()
              color:'var(--btn-bg-color)!important' 
             }}
             onClick={() => handelcurrentPage(index + 1)}
-            className="page-link pointer"
+            className="page-link pointer border-0"
           >
             {isLoading ? <span className="spinner-border"></span> : index + 1}
           </span>
@@ -62,7 +64,10 @@ const dispatch = useDispatch()
             onClick={minusActions}
             className="page-item"
           >
-            <span className="page-link pointer">السابق</span>
+            <span className="page-link pointer border-0">
+              <MdOutlineNavigateNext fontSize={'1.3rem'} />
+              <MdOutlineNavigateNext fontSize={'1.3rem'} />
+            </span>
           </li>
         )}
 
@@ -74,7 +79,7 @@ const dispatch = useDispatch()
               <span 
               style={{ background: "var(--bgColor) !important",color:'var(--btn-bg-color)!important' }} 
               
-              className="page-link"
+              className="page-link border-0"
               >
                 {isLoading ? (
                   <span className="spinner-border"></span>
@@ -83,12 +88,10 @@ const dispatch = useDispatch()
                 )}
               </span>
             </li>
-            <li className="page-item mx-2" >
-              <span className="page-link  ">
+            <li className="page-item mx-2 " >
+              <span className="page-link border-0 ">
                 {isLoading ? (
-                  <span                       
-                  
-                  className="spinner-border"></span>
+                  <span  className="spinner-border"></span>
                 ) : (
                   `عدد الصفحات (${status?.numperOfPages})`
                 )}
@@ -105,7 +108,10 @@ const dispatch = useDispatch()
             onClick={handelPlusPagination}
             className="page-item"
           >
-            <span className="page-link pointer">التالي</span>
+            <span className="page-link pointer border-0">
+              <MdOutlineNavigateBefore fontSize={'1.3rem'} />
+              <MdOutlineNavigateBefore fontSize={'1.3rem'} />
+              </span>
           </li>
         )}
       </ul>

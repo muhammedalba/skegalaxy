@@ -43,12 +43,12 @@ export const SkeletonTeble = arry.map((index) => {
       </td>
       <td style={{ width: "50px" }}>
         <a className="btn btn-success  skeleton-loading">
-          <span className="">تعديل</span>
+          <span className=""></span>
         </a>
       </td>
       <td style={{ width: "50px" }}>
         <button className="btn btn-danger skeleton-loading ">
-          <span className="">حذف</span>
+          <span className=""></span>
         </button>
       </td>
     </tr>

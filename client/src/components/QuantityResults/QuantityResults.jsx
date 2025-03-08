@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { RiAddCircleLine } from "react-icons/ri";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {  Results } from "../../redux/features/Slice/QuantityResultSlice";
 
 import { infoNotify } from "../../utils/Toast";
+
 
 
 const QuantityResults = ({
@@ -17,6 +18,9 @@ const QuantityResults = ({
 }) => {
   const dispatch= useDispatch();
 
+
+const limit = useSelector((state) => state.QuantityResult) || 15;
+
   
   /* heade create buttun  && length data && limit data */
 
@@ -25,6 +29,8 @@ const QuantityResults = ({
 
  // The number of items to be displayed
  const handelLimetData = (limitData) => {
+  console.log(limitData.target.value);
+  
    if (limitData.target.value > 0 && limitData.target.value <= 50) {
     
      dispatch(Results(limitData.target.value));
@@ -54,16 +60,26 @@ const QuantityResults = ({
         <label
           className="p-1 fs-5 d-flex align-items-center gap-1 text-nowrap"
           htmlFor="image"
-        >
-          عدد النتايج :
+        >  اختر عدد النتايج :
         </label>
-        <input
-          style={{ width: "70px", height: "50px" }}
-          className="form-control "
-          min={1}
-          type="number"
-          onChange={handelLimetData}
-        />
+        <select
+                    required
+                    id="category"
+                    name="category"
+                    onChange={handelLimetData}
+                    className="form-select  py-2"
+                    value={+limit}
+                    aria-label="Default select example"
+                  >
+                
+                    <option disabled > </option>
+                    <option value="15"> 15</option>
+                    <option value="5"> 5</option>
+                    <option value="10"> 10</option>
+                    <option  value="20"> 20</option>
+                    <option value="50"> 50</option>
+                  </select>
+      
       </div>
       {/*  */}
       {!isLoading ? (
@@ -76,6 +92,8 @@ const QuantityResults = ({
     </div>
   );
 };
+
+
 QuantityResults.propTypes = {
   path: PropTypes.string.isRequired,
   isSuccess: PropTypes.bool.isRequired,

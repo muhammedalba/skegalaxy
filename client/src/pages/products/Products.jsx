@@ -246,7 +246,7 @@ const Products = () => {
                   : logo
               }
               className=" w-100 m-auto  d-block p-1 object-fit-fill"
-              alt="brand"
+              alt="categories"
       
             />
 
@@ -396,7 +396,7 @@ const Products = () => {
 
         
     <div className="container-fluid ">
-      {/*animation */}
+
 
       {/* categories slide*/}
 
