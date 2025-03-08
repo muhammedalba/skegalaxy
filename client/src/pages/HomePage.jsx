@@ -1,6 +1,14 @@
 import { Helmet } from "react-helmet-async";
 import Carousel from "../components/carousel/Carousel";
 import Products from "./products/Products";
+import { Link } from "react-router-dom";
+import imge from "../imges/brand.jpg";
+import imge1 from "../imges/brand1.jpg";
+import imge2 from "../imges/brand2.jpg";
+import imge3 from "../imges/brand3.png";
+import imge4 from "../imges/brand4.jpg";
+import imge5 from "../imges/brand5.jpg";
+import imge6 from "../imges/brand6.jpg";
 
 const HomePage = () => {
   return (
@@ -25,6 +33,7 @@ const HomePage = () => {
         <Carousel />
 
         <Products />
+
       </div>
     </>
   );

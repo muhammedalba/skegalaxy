@@ -87,7 +87,7 @@ const Carousel = () => {
         theme="colored"
       />
 
-      <div id="carousel" className="my-2 w-100 " style={{ height: "45vh" }}>
+      <div id="carousel" className="my-2 w-100 " style={{ height: "60vh" }}>
         {/* Carousel */}
 
         <div

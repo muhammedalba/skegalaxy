@@ -447,7 +447,7 @@ const Footer = () => {
       {/* Footer End Section */}
       <div
         style={{ borderColor: " var(--btn-bg-color)!important " }}
-        className="text-center w-100 border border-top-1 py-1 overflow-hidden "
+        className="text-center w-100 border border-end-0 border-top-1 py-1 overflow-hidden "
       >
         <Fade direction="up" triggerOnce={true}>
           <a

@@ -4,7 +4,7 @@ import './text_slide.css'
 const TextSlide = () => {
     return (
         <>
-    <div  className="text-container text-nowrap pt-3 w-100 g-1   d-flex overflow-hidden text-align-center  position-relative">
+    <div  className="text-container text-nowrap pt-3 w-100 g-1 mt-5  d-flex overflow-hidden text-align-center  position-relative">
         <div  className="text-slide d-flex text-align-center   p-2  fs-4">
           <p className="m-0">
         شركة مجرة السماء للتجارة 
