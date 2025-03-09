@@ -447,7 +447,7 @@ const InfoProduct = () => {
               <div className="w-100">
                 <div className="card-body text-end p-2">
                   <Fade delay={0} direction="up" triggerOnce={true}>
-                    <h4
+                    <h5
                       style={{ backgroundColor: "rgb(243, 244, 246)" }}
                       className="card-title p-2 mb-3   border-bottom border-start-0"
                     >
@@ -457,17 +457,17 @@ const InfoProduct = () => {
                       <span className=" ps-2 pt-1 w-100 d-block">
                         {product?.data?.title.split("_")[0]}
                       </span>
-                    </h4>
+                    </h5>
 
                     <div
                       className={
                         product?.data.brand?.name
-                          ? "fw-bold p-1 fs-6 d-flex  border-bottom"
+                          ? " p-1 fs-6 d-flex  border-bottom"
                           : "d-none"
                       }
                     >
-                      <span className="card-title fs-5 ps-3">الشركة :</span>
-                      <span className="text-secondary ps-2">
+                      <span className="card-title fs-6 fw-bold ps-3">الشركة :</span>
+                      <span className="text-secondary fs-6 ps-2">
                         {product?.data?.brand?.name.split("_")[0]}
                         <br />
                         {product?.data?.brand?.name.split("_")[1]}
@@ -476,11 +476,11 @@ const InfoProduct = () => {
                     <div
                       className={
                         product?.data.category?.name
-                          ? "fw-bold  border-bottom p-1  fs-6 pt-2 d-flex"
+                          ? " border-bottom p-1  fs-6 pt-2 d-flex"
                           : "d-none"
                       }
                     >
-                      <span className="card-title fs-5 ps-3 h-100">
+                      <span className="card-title fw-bold fs-6 ps-3 h-100">
                         {" "}
                         القسم :{" "}
                       </span>
@@ -491,10 +491,10 @@ const InfoProduct = () => {
                       </span>
                     </div>
                     <div
-                      className={`fw-bold fs-5 pt-2 d-flex align-items-center  show`}
+                      className={` fs-6 pt-2 d-flex align-items-center  show`}
                     >
                       <span
-                        className={`card-title ps-1 d-${
+                        className={`card-title ps-1 fw-bold  d-${
                           product?.data?.quantity === 0 ? "none" : ""
                         } `}
                       >
@@ -517,8 +517,8 @@ const InfoProduct = () => {
                         </span>
                       </span>
                     </div>
-                    <div className="fw-bold fs-4 pt-2 d-flex align-items-center">
-                      <span className="card-title fs-5 px-1">
+                    <div className=" fs-6 pt-2 d-flex align-items-center">
+                      <span className="card-title  fw-bold px-1">
                         {" "}
                         سعر المنتج :{" "}
                       </span>
@@ -539,11 +539,11 @@ const InfoProduct = () => {
                     <div
                       className={
                         product?.data?.priceAfterDiscount
-                          ? "fw-bold fs-4 d-flex align-items-center"
+                          ? "fs-6 d-flex align-items-center"
                           : "d-none"
                       }
                     >
-                      <span className="card-title fs-5 ps-1">
+                      <span className="card-title fw-bold fs-6 ps-1">
                         {" "}
                         السعر بعد الخصم :{" "}
                       </span>
@@ -560,19 +560,20 @@ const InfoProduct = () => {
                   </Fade>
                 </div>
 
-                <div className="fs-6 ">
+                <div className="fs-6  ">
                   <Fade delay={0} direction="up" triggerOnce={true}>
-                    <span className="card-title fs-4 ps-3 d-block  border-top p-1">
+                    <span className="card-title fs-5 ps-3 d-block  border-top p-1">
                       {" "}
                       مواصفات المنتج :{" "}
                     </span>
                     {description.map((ele) => (
-                      <p key={ele} className="card-title fs-6 px-2">
+                      <p key={ele} className="card-title  px-2">
                         * {ele}
                       </p>
                     ))}
                   </Fade>
                 </div>
+
                 <Fade delay={0} direction="up" triggerOnce={true}>
                   <div className=" d-flex align-items-center pt-4 justify-content-start flex-wrap gap-2">
                     <button

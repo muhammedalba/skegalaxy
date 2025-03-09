@@ -257,10 +257,11 @@ const Header = () => {
   // reset navigation to 10 items per page and update navigation property
 
   const resetNavegation = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch(Results(15));
     dispatch(currentPage(1));
     dispatch(searchItem(""));
-
+  
   };
   // Auth links
   const AuthLinks = [
@@ -816,7 +817,7 @@ const closeMenu= useCallback(()=>{
       >
         <ul className="pt-3 text-nowrap px-0 w-100">
           <li
-            onClick={() => setopen(false)}
+          onClick={closeMenu}
             style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
             className={"nav-item  py-2   w-100 "}
           >
@@ -876,14 +877,14 @@ const closeMenu= useCallback(()=>{
             </div>
           </li>
           <li
-            onClick={() => setopen(false)}
+            onClick={closeMenu}
             style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
             className={role === "admin" ? "d-none" : "nav-item  py-2   w-100 "}
           >
             <NavLink to={"cart"}>سلة المشتريات</NavLink>
           </li>
           <li
-            onClick={() => setopen(false)}
+            onClick={closeMenu}
             style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
             className={
               !role || role === undefined ? "d-none" : "nav-item  py-2   w-100 "

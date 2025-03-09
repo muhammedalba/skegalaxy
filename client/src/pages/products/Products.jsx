@@ -158,6 +158,7 @@ const Products = () => {
       // العثور على العلامة التجارية التي تطابق القيمة المحددة
       const selectedBrand = brands.data.find((brand) => brand._id === value);
       setSelectedBrand(selectedBrand ? selectedBrand.name : "");
+      section1Ref.current.scrollIntoView({ behavior: "smooth" });
     },
     [brands?.data]
   );
@@ -192,6 +193,7 @@ const Products = () => {
         (cate) => cate._id === value
       );
       setSelectedCategory(selectedcategory ? selectedcategory.name : "");
+      section1Ref.current.scrollIntoView({ behavior: "smooth" });
     },
     [categories?.data]
   );
@@ -200,6 +202,7 @@ const Products = () => {
   const handleSortProducts = useCallback((e) => {
     const selectedValue = e.target.value;
     setsortFilter(selectedValue);
+    section1Ref.current.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   // handel reset filter
@@ -310,11 +313,11 @@ const Products = () => {
         //   </div>
         // </button>
 
-                    <li key={index} onClick={() => scrollToSection(section1Ref, `&brand=${brand._id}`)} style={{height:'80px'}} className=" list-group-item pointer caroselBrand">
+                    <button key={index} onClick={() => scrollToSection(section1Ref, `&brand=${brand._id}`)} style={{height:'100px'}} className=" list-group-item pointer caroselBrand">
                      
                         <img style={{maxWidth:"150px",maxHeight:"100%"}} width={400} height={300}   src={brand.image ? `${brands?.imageUrl}/${brand?.image}` : logo} alt="" className="m-auto d-block " />
                     
-                    </li>
+                    </button>
             
       ));
     }
