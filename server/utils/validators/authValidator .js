@@ -39,7 +39,7 @@ exports.signUpValidator = [
     .custom((valeu) =>
       UserModel.findOne({ email: valeu }).then((user) => {
         if (user) {
-          return Promise.reject(new Error("Eamil already in user"));
+          return Promise.reject(new Error("Email already in user"));
           // throw new Error("Eamil already in user");
       
         }
