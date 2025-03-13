@@ -17,7 +17,7 @@ import { Results } from "../../redux/features/Slice/QuantityResultSlice";
 import { currentPage } from "../../redux/features/Slice/NavigationSlice";
 import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 // img
-import logo from "../../imges/logo.webp";
+import logo from "../../imges/logo1.webp";
 import avatar from "../../imges/auth_avatar.jpg";
 import { addHoverEffect } from "../../utils/icons_hover";
 
@@ -577,7 +577,7 @@ const closeMenu= useCallback(()=>{
                   <img
                     loading="lazy"
                     decoding="async"
-                    width={50}
+                    width={75}
                     className="logo d-none d-sm-block rounded-circle dropdown-toggle border-1 "
                     src={
                       !image || image === "undefined"

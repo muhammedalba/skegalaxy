@@ -90,7 +90,7 @@ header .nav-link:not(.active):after {
 }
 
 .logo {
-  width: 50px;
+  width: 75px;
   height: 50px;
   object-fit: contain;
   aspect-ratio: '1',

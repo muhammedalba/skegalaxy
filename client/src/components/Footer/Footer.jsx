@@ -3,7 +3,7 @@ import { Fade } from "react-awesome-reveal";
 import { Link } from "react-router-dom";
 import { lazy, Suspense, useCallback, useEffect } from "react";
 
-import logo from "../../imges/logo.webp";
+import logo from "../../imges/logo1.WebP";
 import skyDitels from "../../imges/skyDitels.pdf";
 import { XIcon } from "react-share";
 import { addHoverEffect } from "../../utils/icons_hover";
@@ -136,8 +136,8 @@ const Footer = () => {
                 className="m-auto "
                 loading="lazy"
                 decoding="async"
-                width={100}
-                height={100}
+                width={150}
+                
                 src={logo}
                 alt="logo"
               />
