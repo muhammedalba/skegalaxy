@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import logo from "../../imges/logo.webp";
+import logo from "../../imges/auth_avatar.jpg";
 import { MdOutlineEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";

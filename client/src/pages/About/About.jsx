@@ -8,7 +8,7 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 
-import logo from "../../imges/logob.webp";
+import logo from "../../imges/about/logo.jpg";
 import img2 from "../../imges/about/about-1.jpg";
 import img1 from "../../imges/about/about-2.jpg";
 import img3 from "../../imges/about/about-3.jpg";
@@ -236,8 +236,9 @@ const About = () => {
             </div>
             {/*map  */}
             <div className="mt-5">
+              
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3572.7122636397758!2d50.088684!3d26.432760499999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49fd00723c33a3%3A0x81186921c4f94e68!2z2LnZiNin2LLZhCDZhdin2YrYqSDYrdix2KfYsdmK2Kkg2LHYutmI2YrYqSDZhdis2LHYqSDYp9mE2LPZhdin2KEg2YTZhNiq2KzYp9ix2Kk!5e0!3m2!1sar!2str!4v1724486500106!5m2!1sar!2str"
+                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3625.9382544674563!2d46.742224685001126!3d24.6602535841488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjTCsDM5JzM2LjkiTiA0NsKwNDQnMjQuMSJF!5e0!3m2!1sar!2sde!4v1741863562186!5m2!1sar!2sde"
                 height={250}
                 style={{ border: 0, width: "100%" }}
                 allowFullScreen

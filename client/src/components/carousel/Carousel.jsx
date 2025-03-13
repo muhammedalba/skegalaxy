@@ -52,7 +52,7 @@ const Carousel = () => {
             style={{ objectFit: "fill" }}
             decoding="async"
             width={700}
-            height={200}
+          
             className="d-sm-none h-100 w-100 "
             src={`${carouseles?.imageUrl}/${preview?.carouselImage}`}
             alt={`Preview ${index}`}

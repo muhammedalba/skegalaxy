@@ -3,7 +3,7 @@ import { Fade } from "react-awesome-reveal";
 import { Link } from "react-router-dom";
 import { lazy, Suspense, useCallback, useEffect } from "react";
 
-import logo from "../../imges/footerImge.webp";
+import logo from "../../imges/logo.webp";
 import skyDitels from "../../imges/skyDitels.pdf";
 import { XIcon } from "react-share";
 import { addHoverEffect } from "../../utils/icons_hover";
@@ -38,9 +38,7 @@ const FcSynchronize = lazy(() =>
 const FcUnlock = lazy(() =>
   import("react-icons/fc").then((module) => ({ default: module.FcUnlock }))
 );
-const MdOutlineMail = lazy(() =>
-  import("react-icons/md").then((module) => ({ default: module.MdOutlineMail }))
-);
+
 const TfiHeadphoneAlt = lazy(() =>
   import("react-icons/tfi").then((module) => ({
     default: module.TfiHeadphoneAlt,
@@ -131,7 +129,7 @@ const Footer = () => {
 
       <div className="row p-3 m-auto bp-0 ">
         {/*  communication */}
-        <div className="col-12 col-sm-3 text-end pt-3">
+        <div className="col-12 col-sm-3 m-auto text-end pt-3 ">
           <Fade className="w-100" direction="up" triggerOnce={true} cascade>
             <Link to={"/"}>
               <img
@@ -156,7 +154,7 @@ const Footer = () => {
               </span>
               <span className="fw-bold">311658655700003</span>
             </div>
-            <div className="d-flex align-items-center flex-wrap justify-content-start column-gap-2">
+            <div className="d-flex align-items-center flex-wrap justify-content-start column-gap-2  ">
               <span
                 style={{ color: " var(--btn-bg-color) " }}
                 className="fw-bold fs-5 text-nowrap "
@@ -184,9 +182,9 @@ const Footer = () => {
             >
               {" "}
               تواصل معنا{" "}
-            </span>
+            </span> */}
 
-            <div className="d-flex justify-content-center align-items-center pt-1 ">
+            <div className="d-flex justify-content-start align-items-center pt-1 flex-wrap ">
               <a className="fs-5 mx-1 mouse-hover" href="tel:+966598909991">
                 <Suspense>
                   <BsFillTelephoneFill
@@ -256,7 +254,7 @@ const Footer = () => {
               className=" d-block fw-bold my-2"
             >
               الاحكام والشروط وسياسات الاسترجاع
-            </Link> */}
+            </Link>
           </Fade>
         </div>
         
@@ -275,6 +273,7 @@ const Footer = () => {
             <div className="col-12 col-md-6">
               <Fade direction="up" triggerOnce={true} cascade>
                 <ul className="list-unstyled px-2  text-end">
+                {/* الإدارة العامة */}
                   <li className="fs-5">
                     <span
                       style={{ color: " var(--btn-bg-color) " }}
@@ -284,16 +283,17 @@ const Footer = () => {
                     </span>
 
                     <h5 className="footer-link">
-  <a
-    href="https://maps.app.goo.gl/mWXArwC5apmgZRF99"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    الرياض - حي الملز - طريق صلاح الدين الايوبي
-  </a>
-</h5>
+                        <a
+                          href="https://maps.app.goo.gl/7NXfz41NLqp9bRBC7"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          الرياض - حي الملز - طريق صلاح الدين الايوبي
+                        </a>
+                    </h5>
                   </li>
-                
+                  {/* المنطقة الوسطى */}
+                  <li className="fs-5">
                   <span
                     style={{ color: " var(--btn-bg-color) " }}
                     className="w-100 d-block  py-1 fw-bold fs-5"
@@ -301,6 +301,12 @@ const Footer = () => {
                    
                     المنطقة الوسطى
                   </span>
+                  </li>
+                  <li>
+                    <h5 className="footer-link">
+                      الرياض - حي السلي - شارع ابن   ماجة
+                    </h5>
+                  </li>
                   <li className="">
                     <h5 className="footer-link">
                       الرياض - مخرج ١٧ - طريق المدينة المنورة
@@ -308,15 +314,28 @@ const Footer = () => {
                   </li>
                   <li>
                     <h5 className="footer-link">
-                      الرياض - حي العارض - طريق الملك عبد العزيز
+                    الرياض - حي الفيصلية - طريق المدينة المنورة
                     </h5>
                   </li>
                   <li>
                     <h5 className="footer-link">
-                      الرياض - حي السلي - شارع ابن   ماجة
+                  الرياض - حي الأمانة - طريق الملك عبد العزيز                     </h5>
+                  </li>
+                  <li>
+                    <h5 className="footer-link">
+                      الرياض - حي العارض - طريق الملك عبد العزيز
                     </h5>
                   </li>
-                  <li className=" ">
+               
+                </ul>
+              </Fade>
+            </div>
+
+            <div className="col-12 col-md-6">
+              <Fade direction="up" triggerOnce={true} cascade>
+                <ul className="list-unstyled  text-end">
+                       {/* المنطقة الشرقية */}
+                       <li className=" ">
                     <span
                       style={{ color: " var(--btn-bg-color) " }}
                       className="w-100 d-block  fw-bold fs-5  py-2"
@@ -330,13 +349,7 @@ const Footer = () => {
                       الدمام - حي البادية - شارع المستشفى
                     </h5>
                   </li>
-                </ul>
-              </Fade>
-            </div>
-
-            <div className="col-12 col-md-6">
-              <Fade direction="up" triggerOnce={true} cascade>
-                <ul className="list-unstyled  text-end">
+                {/* المنطقة الغربية */}
                   <li className=" pt-1">
                     <span
                       style={{ color: " var(--btn-bg-color) " }}
@@ -354,15 +367,19 @@ const Footer = () => {
                       مكة المكرمة - حي الزايدي - طريق الملك فهد
                     </h5>
                   </li>
+                  <li className=" ">
+                    <h5 className="footer-link  ">
+                    جدة - حي النخيل - طريق ابو عمرو الاوزاعي                    </h5>
+                  </li>
                 
                 </ul>
                 {/* social media */}
-                <span
+                {/* <span
               style={{ color: " var(--btn-bg-color) " }}
               className=" fs-5 mt-2 fw-bold d-block "
             >
-              {" "}
-              تواصل معنا{" "}
+            
+              تواصل معنا
                 </span>
             <div className="d-flex justify-content-start align-items-center pt-1 ">
               <a className="fs-5 mx-1 mouse-hover" href="tel:+966598909991">
@@ -441,7 +458,8 @@ const Footer = () => {
                 <MdOutlineMail fontSize={"1rem"} />
               </Suspense>
               <a href="mailto:info@skygalaxyco.com"> info@skygalaxyco.com</a>
-            </div>
+            </div> */}
+            {/* social end */}
               </Fade>
             </div>
           </div>

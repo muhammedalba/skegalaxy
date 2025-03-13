@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
-import logo from "../../imges/avatar.webp";
+import logo from "../../imges/auth_avatar.jpg";
 import { FaImage } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";

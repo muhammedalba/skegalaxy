@@ -18,7 +18,7 @@ import { currentPage } from "../../redux/features/Slice/NavigationSlice";
 import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 // img
 import logo from "../../imges/logo.webp";
-import avatar from "../../imges/avatar.webp";
+import avatar from "../../imges/auth_avatar.jpg";
 import { addHoverEffect } from "../../utils/icons_hover";
 
 // icons
@@ -157,7 +157,6 @@ const Header = () => {
   const cartitims = useSelector((state) => state.cart);
   const categoriesitims = useSelector((state) => state.Categories);
   const brandsitims = useSelector((state) => state.brands);
-  const search = useSelector((state) => state.serch);
 
 
 
@@ -210,7 +209,7 @@ const Header = () => {
       window.scrollTo({ top: 1100, behavior: "smooth" });
       dispatch(currentPage(1));
   
-      // استخدام useRef لتخزين الـ timeout
+      //  useRef لتخزين الـ timeout
       if (searchTimeout.current) {
         clearTimeout(searchTimeout.current);
       }
@@ -220,7 +219,7 @@ const Header = () => {
         if (searchValue) {
           dispatch(searchItem(searchValue));
         }
-      }, 2000);
+      }, 1000);
     },
     [dispatch]
   );

@@ -1,5 +1,5 @@
 import './LoadingPage.css'
-import logo from '../../imges/loadingImge.webp'
+import logo from '../../imges/about/logo.jpg'
 const LoadingPage = () => {
     return (
         <div className='loading'>

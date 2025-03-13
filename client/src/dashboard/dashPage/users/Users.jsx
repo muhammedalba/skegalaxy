@@ -64,8 +64,18 @@ const Users = () => {
     if (!LoadingDelet && SuccessDelet) {
   successNotify("تم الحذف بنجاح");
     }
-
-    if (errorDelet || error) {
+   if(errorDelet){
+    if (errorDelet?.data?.errors[0]?.msg === "there is no user  for this id") {
+      errorNotify("لا يوجد مستخدم بهذا الرقم");
+    }
+   else if (errorDelet?.data?.errors[0]?.msg === "you can't delete admin") {
+      errorNotify("لا يمكنك حذف نفسك او حذف المسؤول");
+    }
+    else{
+      errorNotify("خطأ في الخادم الداخلي");
+    }
+   }
+    if (error) {
       errorNotify("خطأ في الخادم الداخلي");
     }
   }, [SuccessDelet, LoadingDelet, errorDelet, error]);
@@ -145,7 +155,7 @@ const handleDelete =useCallback((id) => {
                <Fade delay={0} direction='up' triggerOnce={true}>
   
                  <Link to={user._id} 
-                 className={`btn btn-outline-success d-${role.toLowerCase() === "manger" && user.role.toLowerCase()=='admin' ||  role.toLowerCase()=='manger' && user.role.toLowerCase()=='manger' ?'none':'' }`}>
+                 className={`btn btn-outline-success d-${role.toLowerCase() === "manger" && user.role.toLowerCase() =='admin' ||  role.toLowerCase()=='manger' && user.role.toLowerCase()=='manger' ?'none':'' }`}>
                      <CiEdit   />  
                  </Link>
                  </Fade>
@@ -156,7 +166,7 @@ const handleDelete =useCallback((id) => {
            
                    <button
                      disabled={LoadingDelet ? true : false}
-                     className={`btn btn-outline-danger d-${role.toLowerCase() === "manger" && user.role.toLowerCase()=='admin' ||  role.toLowerCase()=='manger' && user.role.toLowerCase()=='manger' ?'none':'' }`}
+                     className={`btn btn-outline-danger ${role.toLowerCase() === "manger" && user.role.toLowerCase()=='admin' ||  role.toLowerCase() =='manger' && user.role.toLowerCase() == 'manger'|| role.toLowerCase() === "admin" && user.role.toLowerCase()=='admin'  ?'d-none':'' }`}
                     onClick={() => openModal(user._id)}
                   >
                          <RiDeleteBin6Line/>
@@ -182,7 +192,7 @@ const handleDelete =useCallback((id) => {
       </tr>
     );
   }, [isLoading, isSuccess, users?.data, users?.imageUrl, role, LoadingDelet, openModal]);
-
+ 
   return (
   <div className="w-100 pt-5 ">
     {/* tosat compunenet */}
