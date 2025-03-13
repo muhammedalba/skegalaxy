@@ -136,6 +136,18 @@ exports.deletUserValidator = [
   check("id")
     .isMongoId()
     .withMessage("Invalid User id Format")
+    .custom(async (val, { req }) => {
+      const user = await UserModel.findById(req.params.id);
+        console.log(user.role);
+      if (!user) {
+        throw new Error("there is no user  for this id");
+      }
+      if (user.role === "admin") {
+        return Promise.reject(new Error("you can't delete admin"));
+      
+      }
+      return true;
+    })
     ,
   validatorMiddleware,
 ];

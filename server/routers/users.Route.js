@@ -41,7 +41,7 @@ router.put(
 
   updateLoggedUserPassword
 );
-router.put("/updatLoggedUser", protect, allowedTo(role.USER),uploadUserImge,updatLoggedUserValidator, resizeImge, updatLoggedUser);
+router.put("/updatLoggedUser", protect, allowedTo(role.USER,role.ADMIN),uploadUserImge,updatLoggedUserValidator, resizeImge, updatLoggedUser);
 router.delete("/deletme", protect, allowedTo(role.USER), deletLoggedUserData);
 
 
