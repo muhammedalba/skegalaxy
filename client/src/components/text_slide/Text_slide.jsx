@@ -1,4 +1,4 @@
-import logo from '../../imges/logo.webp'
+import logo from '../../imges/logo1.webp'
 import './text_slide.css'
 
 const TextSlide = () => {
