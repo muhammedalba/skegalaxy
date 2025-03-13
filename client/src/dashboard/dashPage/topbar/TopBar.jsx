@@ -2,7 +2,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import Cookies from "universal-cookie";
 import logo from "../../../imges/logo.webp";
-import avatar from "../../../imges/avatar.webp";
+import avatar from "../../../imges/auth_avatar.jpg";
 
 // icons
 

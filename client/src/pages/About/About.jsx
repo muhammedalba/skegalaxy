@@ -15,6 +15,9 @@ import img3 from "../../imges/about/about-3.jpg";
 import img4 from "../../imges/about/about-4.jpg";
 import img5 from "../../imges/about/about-5.jpg";
 import { Helmet } from "react-helmet-async";
+import { Suspense } from "react";
+import { XIcon } from "react-share";
+import { BsFillTelephoneFill, SiFacebook, FaTelegramPlane, BsWhatsapp, SiSnapchat, FaInstagram } from "../../components/Footer/Footer";
 
 const About = () => {
   const images = [
@@ -202,14 +205,7 @@ const About = () => {
                     </div>
                   </Fade>
                 </div>
-                <div className="demo1 col-12 col-md-6">
-                  <Fade direction="up" triggerOnce className="w-100 h-100">
-                    <div className="one w-100 p-3">
-                      <h3> المنطقة الوسطى </h3>
-                      <p>الرياض - مخرج ١٧ - طريق المدينة المنورة</p>
-                    </div>
-                  </Fade>
-                </div>
+              
 
                 {/* <div className="two-sec row"> */}
                 <div className="demo1 col-12 col-md-6">
@@ -217,6 +213,78 @@ const About = () => {
                     <div className="one p-3">
                       <h3>اتصل بنا </h3>
                       <a href="https://wa.me/+966598909991">+966598909991</a>
+                    </div>
+                  </Fade>
+                </div>
+                  <div className="demo1 col-12 col-md-6">
+                  <Fade direction="up" triggerOnce className="w-100 h-100">
+                    <div className="one w-100 p-3">
+                    <h3> وسائل التواصل</h3>
+
+                      <div className="d-flex justify-content-start align-items-center pt-1 flex-wrap ">
+              <a className="fs-5 mx-1 mouse-hover" href="tel:+966598909991">
+                <Suspense>
+                  <BsFillTelephoneFill
+                    fontSize={"1.3rem"}
+                    color="var( --spancolor)"
+                  />
+                </Suspense>
+              </a>
+              <a
+                href="https://www.facebook.com/share/UcQFNEMfpaWuphKy/?mibextid=qi2Omg"
+                target="_blank"
+                className="text-white mx-1 mouse-hover"
+              >
+                <Suspense>
+                  <SiFacebook fontSize={"1.3rem"} color="#0866ff" />
+                </Suspense>
+              </a>
+              <a
+                href="http://t.me/Skygalaxyshop"
+                target="_blank"
+                className="text-white mx-1 mouse-hover"
+              >
+                <Suspense>
+                  <FaTelegramPlane fontSize={"1.3rem"} color="#28a8e9" />
+                </Suspense>
+              </a>
+              <a
+                href="https://wa.me/+966598909991"
+                target="_blank"
+                className="text-white mx-1 mouse-hover"
+              >
+                <Suspense>
+                  <BsWhatsapp fontSize={"1.3rem"} color="#33bd45 " />
+                </Suspense>
+              </a>
+              <a
+                href="https://www.snapchat.com/add/skygalaxyshop?share_id=VESqbU6Mucg&locale=ar-AE"
+                target="_blank"
+                className="text-white mx-1  mouse-hover"
+              >
+                <Suspense>
+                  <SiSnapchat fontSize={"1.6rem"} color="#fffc00" />
+                </Suspense>
+              </a>
+              <a
+                href="https://www.instagram.com/sky.galaxy.shop?igsh=MTdkODBteWZ4cDY1MQ=="
+                target="_blank"
+                className="text-white mx-1 mouse-hover"
+              >
+                <Suspense>
+                  <FaInstagram fontSize={"1.3rem"} color="#df0073" />
+                </Suspense>
+              </a>
+              <a
+                href="https://x.com/skygalaxyshop?s=09"
+                target="_blank"
+                className="text-white mx-1 mouse-hover"
+              >
+                <Suspense>
+                  <XIcon size={25} round={true} />
+                </Suspense>
+              </a>
+                     </div>
                     </div>
                   </Fade>
                 </div>

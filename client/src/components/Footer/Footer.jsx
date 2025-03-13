@@ -1,4 +1,4 @@
-import "./Foter.css";
+import "./footer.css";
 import { Fade } from "react-awesome-reveal";
 import { Link } from "react-router-dom";
 import { lazy, Suspense, useCallback, useEffect } from "react";
@@ -10,21 +10,21 @@ import { addHoverEffect } from "../../utils/icons_hover";
 
 // icons
 
-const SiSnapchat = lazy(() =>
+export const SiSnapchat = lazy(() =>
   import("react-icons/si").then((module) => ({ default: module.SiSnapchat }))
 );
-const SiFacebook = lazy(() =>
+export const SiFacebook = lazy(() =>
   import("react-icons/si").then((module) => ({ default: module.SiFacebook }))
 );
-const FaTelegramPlane = lazy(() =>
+export const FaTelegramPlane = lazy(() =>
   import("react-icons/fa").then((module) => ({
     default: module.FaTelegramPlane,
   }))
 );
-const BsWhatsapp = lazy(() =>
+export const BsWhatsapp = lazy(() =>
   import("react-icons/bs").then((module) => ({ default: module.BsWhatsapp }))
 );
-const BsFillTelephoneFill = lazy(() =>
+export const BsFillTelephoneFill = lazy(() =>
   import("react-icons/bs").then((module) => ({
     default: module.BsFillTelephoneFill,
   }))
@@ -49,7 +49,7 @@ const RiDownloadCloud2Line = lazy(() =>
     default: module.RiDownloadCloud2Line,
   }))
 );
-const FaInstagram = lazy(() =>
+export const FaInstagram = lazy(() =>
   import("react-icons/fa").then((module) => ({ default: module.FaInstagram }))
 );
 
@@ -319,7 +319,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <h5 className="footer-link">
-                  الرياض - حي الأمانة - طريق الملك عبد العزيز                     </h5>
+                  الرياض - حي الأمانة - طريق الملك عبدالعزيز                     </h5>
                   </li>
                   <li>
                     <h5 className="footer-link">
@@ -369,7 +369,7 @@ const Footer = () => {
                   </li>
                   <li className=" ">
                     <h5 className="footer-link  ">
-                    جدة - حي النخيل - طريق ابو عمرو الاوزاعي                    </h5>
+                    جدة - حي النخيل - طريق ابو عمروالاوزاعي   </h5>
                   </li>
                 
                 </ul>
