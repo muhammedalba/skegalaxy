@@ -103,37 +103,5 @@ productSchema.pre(/^find/, function(next){
   next();
 })
 
-// const setImageURL = (doc) => {
 
-//   if (doc.imageCover) {
-//     const imageUrl = `${process.env.BASE_URL}/uploads/products/${doc.imageCover}`;
-//     doc.imageCover = imageUrl;
-  
-//   }
-//   if (doc.images) {
-//     const imagesList = [];
-//     doc.images.forEach((image) => {
-//       const imageUrl = `${process.env.BASE_URL}/uploads/products/${image}`;
-      
-//       imagesList.push(imageUrl)
-//     });
-// doc.images = imagesList
-//   }
-// };
-
-// //update , findOne and findAll
-// productSchema.post("init", (doc) => {
-//   setImageURL(doc);
-// });
-// //  creat
-// productSchema.post("save", (doc) => {
-//   setImageURL(doc);
-// });
-// 2- Create a link between reviews with the product
-// productSchema.virtual("reviews",{
-//   ref: "Review",
-//   localField: "_id",
-//   foreignField: "Product",
-//   justOne: false,
-// })
 module.exports = mongoose.model("Product", productSchema);

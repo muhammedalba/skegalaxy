@@ -78,26 +78,7 @@ phone: {
 
   { timestamps: true }
 );
-// const setImageURL = (doc) => {
-//   if (doc.image) {
-//     const imageUrl = `${process.env.BASE_URL}/uploads/users/${doc.image}`;
-//     doc.image = imageUrl;
-//   }
-// };
 
-
-
-//update , findOne and findAll
-// userSchema.post("init", (doc) => {
- 
-//     // setImageURL(doc);
-  
-  
-// });
-// //  creat
-// userSchema.post("save", (doc) => {
-//   // setImageURL(doc);
-// });
 
 userSchema.pre("save", async function (next) {
   // hashing user pasword

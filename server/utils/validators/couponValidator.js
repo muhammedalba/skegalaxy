@@ -20,7 +20,7 @@ exports.createCouponValidator = [
     .withMessage("coupon required")
     .isLength({ min: 3 })
     .withMessage("too short coupon name")
-    .isLength({ max: 32 })
+    .isLength({ max: 20 })
     .withMessage("too short coupon name")
     .custom(async(value,{ req})=>{
       const coupon  = await couponModule.findOne({name:value});
@@ -28,6 +28,7 @@ exports.createCouponValidator = [
         return Promise.reject(new Error("the coupon name already in user"));
       }
          req.body.slug=slugify(value);
+         console.log(req.body)
         return true
    })
    
@@ -47,8 +48,7 @@ exports.createCouponValidator = [
 ,
   body("name")
   .optional()
-
-    .custom( async (valeu, { req }) => {
+  .custom( async (valeu, { req }) => {
      await  couponModule.findOne({ name: valeu }).then((copoun) => {
        if (copoun !== null) {
 

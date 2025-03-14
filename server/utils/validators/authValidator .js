@@ -25,10 +25,7 @@ exports.signUpValidator = [
     .withMessage("too short User name")
     .isLength({ max: 32 })
     .withMessage("too short User name")
-    // .custom((val, { req }) => {
-    //   req.body.slug = slugify(val);
-    //   return true;
-    // })
+  
     ,
   check("image").optional(),
   check("email")

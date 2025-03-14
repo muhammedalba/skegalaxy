@@ -14,12 +14,12 @@ const CouponSchema = new mongoose.Schema(
       type: Date,
 
       required: [true, " Coupon expire time is required"],
-      // validate: {
-      //   validator: function (v) {
-      //     return v > Date.now();
-      //   },
-      //   message: "Coupon must be valid",
-      // },
+      validate: {
+        validator: function (v) {
+          return v > Date.now();
+        },
+        message: "Coupon must be valid",
+      },
     },
     discount: {
       type: Number,

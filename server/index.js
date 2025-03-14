@@ -27,7 +27,7 @@ dotenv.config({ path: ".env" });
 app.use(cookieParser());
 
 // enable other domains to access routes
-// إعداد خيارات CORS
+
 //const corsOptions = {
  // origin:  process.env.FRONTEND_ORIGIN, // أصل الفرونت إند
 //  // allowedHeaders: ['Content-Type', 'Authorization'],
@@ -35,9 +35,8 @@ app.use(cookieParser());
 //  credentials: true // تمكين دعم ملفات تعريف الارتباط (credentials)
 //};
 const allowedOrigins = [
-  process.env.FRONTEND_ORIGIN, // للواجهة الأمامية
-  'http://127.0.0.1:5500', // للتطوير المحلي
-  'http://localhost:5173'
+  process.env.FRONTEND_ORIGIN, 
+ 
 ];
 // تطبيق إعدادات CORS على كل الطلبات
 const corsOptions = {
@@ -49,11 +48,13 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
+  allowedHeaders: ['Content-Type', 'Authorization'],
+ secure: false,
   credentials: true, // تمكين ملفات تعريف الارتباط
 };
 
 app.use(cors(corsOptions));
-////app.use(cors(corsOptions));
+
 
 // إذا كنت تستخدم OPTIONS لتحديد إعدادات CORS لجميع المسارات
 app.options('*', cors(corsOptions));

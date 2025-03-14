@@ -31,20 +31,7 @@ exports.createOne = (model) =>
 
   exports.getAll = (model, modelName) =>
     asyncHandler(async (req, res, next) => {
-      //    let newUrl;
-      // // Make sure it is a single path and does not contain a connected path.
-      // if(req.baseUrl.split("/").length >=3 ){
 
-      //   const parts = req.baseUrl.split('/');
-      //   const lastWord = parts[parts.length - 1];   
-      //   newUrl = `${req.protocol}://${req.get('host')}/uploads/${lastWord}`;
-
-      // }else{
-
-      //   newUrl = `${req.protocol}://${req.get('host')}/uploads/${req.baseUrl.split("/").slice(2, 3).join("/")}`;
-        
-      // } 
-      //  const imageUrl = newUrl.replace(/orders/g, 'products');
 const pathParts = req.baseUrl.split('/').filter(part => part);
  // Remove empty parts
 const lastSegment = pathParts[pathParts.length - 1];

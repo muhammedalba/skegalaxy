@@ -29,10 +29,6 @@ exports.createUserValidator = [
     .withMessage("too short User name")
     .isLength({ max: 32 })
     .withMessage("too short User name")
-    // .custom((val, { req }) => {
-    //   req.body.slug = slugify(val);
-    //   return true;
-    // })
     ,
 
   check("email")
@@ -103,10 +99,7 @@ exports.updateUserValidator = [
     .withMessage("too short User name")
     .isLength({ max: 32 })
     .withMessage("too short User name")
-    // .custom((val, { req }) => {
-    //   req.body.slug = slugify(val);
-    //   return true;
-    // })
+   
     ,
 
   check("email")
@@ -117,7 +110,7 @@ exports.updateUserValidator = [
     
     await  UserModel.findOne({ email: valeu }).then((user) => {
         if (user) {
-          return Promise.reject(new Error("Eamil is already in use"));
+          return Promise.reject(new Error("email is already in use"));
         }  
         return true;
       })
@@ -189,10 +182,7 @@ exports.updatLoggedUserValidator = [
     .withMessage("too short User name")
     .isLength({ max: 32 })
     .withMessage("too short User name")
-    // .custom((val, { req }) => {
-    //   req.body.slug = slugify(val);
-    //   return true;
-    // })
+   
     ,
 
   check("email")
