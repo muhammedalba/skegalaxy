@@ -8,7 +8,7 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 
-import logo from "../../imges/about/logo.jpg";
+import logo from "../../imges/about/about-logo.jpg";
 import img2 from "../../imges/about/about-1.jpg";
 import img1 from "../../imges/about/about-2.jpg";
 import img3 from "../../imges/about/about-3.jpg";

@@ -1,4 +1,4 @@
-import logo from '../../imges/logo1.webp'
+import logo from '../../imges/logo.webp'
 import './text_slide.css'
 
 const TextSlide = () => {
@@ -12,7 +12,7 @@ const TextSlide = () => {
 
           <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
 
-          <p className="m-0" > يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان)</p>
+          <p className="m-0" > يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان)</p>
           <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
 
         </div> 
@@ -23,7 +23,7 @@ const TextSlide = () => {
 
           <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
 
-          <p className="m-0" > يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان)</p>
+          <p className="m-0" > يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان)</p>
           <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
 
         </div>
@@ -34,7 +34,7 @@ const TextSlide = () => {
 
           <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
 
-          <p className="m-0" > يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة - فوم بوليرثان)</p>
+          <p className="m-0" > يتوفر لدينا جميع انواع العوازل  (المائية - الحرارية - مواد حقن وإصلاح الخرسانة فوم بوليرثان)</p>
           <img className="mx-3"  loading="lazy" width={50} height={50} src={logo} alt="logo" />
 
         </div>

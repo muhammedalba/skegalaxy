@@ -17,7 +17,7 @@ import { Results } from "../../redux/features/Slice/QuantityResultSlice";
 import { currentPage } from "../../redux/features/Slice/NavigationSlice";
 import { useAutapiMutation } from "../../redux/features/api/users/AuthSlice";
 // img
-import logo from "../../imges/logo1.webp";
+import logo from "../../imges/logo.webp";
 import avatar from "../../imges/auth_avatar.jpg";
 import { addHoverEffect } from "../../utils/icons_hover";
 
