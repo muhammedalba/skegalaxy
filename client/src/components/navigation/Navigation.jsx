@@ -6,14 +6,11 @@ import { PlusAction ,minusAction,currentPage} from "../../redux/features/Slice/N
 // icon
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
-// eslint-disable-next-line react-refresh/only-export-components
+
 const Navigation = ({
   isLoading,
   isSuccess,
   status,
-
-  
- 
 }) => {
 const dispatch = useDispatch()
 

@@ -128,22 +128,6 @@ const BsFillTelephoneFill = lazy(() =>
 );
 
 
-// <a  id="btnSerch" class="btn"
-     
-// href=https://api.whatsapp.com/send?phone=9647816435470&text=المنتج%20%3A%20${e.title}%20قسم%20مستحضرات%20التجميل
-// target="_blank">buy now</a>
-
-{/* <script>
-window.onscroll = function(){
-    myFunctiono()
-};
-function myFunctiono() {
-    var winscroll = document.body.scrollTop || document.documentElement.scrollTop;
-    var heigth = document.documentElement.scrollHeight - document.documentElement.clientHeight ;
-    var scrolled = (winscroll / heigth) * 100 ;
-    document.getElementById("mybar").style.width = scrolled +"%" 
-};
-</script> */}
 
 const Header = () => {
   const [Autapi, { isSuccess }] = useAutapiMutation();
@@ -395,8 +379,6 @@ const Header = () => {
   ];
 
 
-  // get property
-  // const bgColor = document.styleSheets[0].cssRules[0].style.getPropertyValue("--bg-color");
 
 
 

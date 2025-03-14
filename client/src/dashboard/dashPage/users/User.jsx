@@ -274,21 +274,7 @@ const User = () => {
             <option value="admin">admin</option>
             <option value="manger">manger</option>
           </select>
-          {/* <select
-            id="active"
-            onChange={handleChange}
-            className="form-select my-3 py-2"
-            defaultValue={formData.active}
-            aria-label="Default select example"
-          >
-            <option value="true">اختر الحالة</option>
-            <option disabled={formData.active} value="true">
-              نشط
-            </option>
-            <option disabled={!formData.active} value="false">
-              غير نشط
-            </option>
-          </select> */}
+          
           {error && (
             <span className="w-100 text-center d-block text-danger pt-3">
               {error.status === 400 ? "لايوجد مستخدم" : "خطأ في الخادم"}

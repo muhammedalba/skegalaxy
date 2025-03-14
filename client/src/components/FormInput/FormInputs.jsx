@@ -78,7 +78,7 @@ const FormInputs = ({ formdata, InputData, name, title, method, path }) => {
 
   
   useEffect(() => {
-    // const notify = () =>
+
     if (isSuccess && user.token) {
       //if res = success set data to cookies
       const cookies = new Cookies();

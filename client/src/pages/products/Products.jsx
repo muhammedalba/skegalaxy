@@ -281,38 +281,7 @@ const Products = () => {
     if (successbrands && brands?.data?.length > 0) {
       const brands_slide = [...brands.data];
       return brands_slide.map((brand, index) => (
-        // <button
-        //   style={{ width: "275px" }}
-        //   onClick={() => scrollToSection(section1Ref, `&brand=${brand._id}`)}
-        //   className=" btn d-block m-auto  caroselBrand"
-        //   key={index}
-        // >
-        //   <div
-        //     style={{ height: "18rem" }}
-        //     inert="true"
-        //     className="rounded w-100 border pt-1  d-flex flex-column
-        //     align-items-center justify-content-between bg-whitte m-auto pointer overflow-hidden"
-        //   >
-        //     <img
-        //       loading="lazy"
-        //       decoding="async"
-        //       width={216}
-        //       height={216}
-        //       src={brand.image ? `${brands?.imageUrl}/${brand?.image}` : logo}
-        //       className=" d-block object-fit-fill  p-2 m-auto"
-        //       alt="brand"
-             
-        //     />
-        //     <span
-             
-        //       className="fs-5 border category-text p-2  w-100 text-center justify-content-center  d-flex flex-column"
-        //     >
-        //       <span>{brand?.name.split("_")[0]}</span>
-        //       <span>{brand?.name.split("_")[1]}</span>
-        //     </span>
-        //   </div>
-        // </button>
-
+       
                     <button key={index} onClick={() => scrollToSection(section1Ref, `&brand=${brand._id}`)} style={{height:'100px'}} className=" list-group-item pointer caroselBrand">
                      
                         <img style={{maxWidth:"150px",maxHeight:"100%"}} width={400} height={300}   src={brand.image ? `${brands?.imageUrl}/${brand?.image}` : logo} alt="" className="m-auto d-block " />

@@ -80,8 +80,7 @@ const SideBar = () => {
     },
   ];
 
-  // get property
-  // const bgColor = document.styleSheets[0].cssRules[0].style.getPropertyValue("--bg-color");
+  
 
   // reset navigation to 10 items per page and update navigation property
 

@@ -127,7 +127,7 @@ const TopBar = () => {
             : "nav-item d-flex align-items-center "
         }
       >
-        {/* <Fade delay={0} direction="down" triggerOnce={true} cascade> */}
+       
           <NavLink
             to={link.path}
             className="nav-link p-2 d-flex  align-items-center "
@@ -135,7 +135,7 @@ const TopBar = () => {
             <span className="px-1 d-none d-md-block ">{link.title}</span>
             {link.icon}
           </NavLink>
-        {/* </Fade> */}
+       
       </li>
     );
   });
@@ -151,7 +151,7 @@ const TopBar = () => {
       >
         <div className=" d-flex w-100 px-2 py-2  justify-content-between container-fluid">
           {/* logo start */}
-          {/* <Fade delay={0} direction="up" triggerOnce={true}> */}
+       
             <div className="logo d-flex   align-items-center">
               <img
                 className="logo    me-2 d-sm-block  "
@@ -162,12 +162,10 @@ const TopBar = () => {
                 style={{ color: "var(--text-color)", whiteSpace: "nowrap" }}
                 className=" mb-0 d-none d-sm-block"
               >
-                {/* <Fade triggerOnce={true} cascade> */}
-                    مجرة السماء 
-                {/* </Fade> */}
+                
               </div>
             </div>
-          {/* </Fade> */}
+         
           {/* logo end */}
           <div className=" d-lg-block">
             <ul className="my-0 h-100 d-flex  align-items-center ">

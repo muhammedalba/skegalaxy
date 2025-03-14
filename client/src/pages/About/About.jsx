@@ -123,37 +123,13 @@ const About = () => {
                     </Fade>
                   </div>
                 </div>
-                {/* <div className="col-md-5">
-                  <Fade direction="up" triggerOnce cascade>
-                    <div className="img2">
-                      <img
-                        width={400}
-                        height={300}
-                        src={logo}
-                        alt="Hero"
-                        className="w-100  "
-                      />
-                    </div>
-                  </Fade>
-                </div>*/}
+               
               </div> 
               <div className="row pt-5">
               
 
                 <div className="row pt-4 mt-4 border-top">
-                {/* <div className="col-md-5">
-                    <Fade direction="up" triggerOnce cascade>
-                      <div className="img2">
-                        <img
-                          width={400}
-                          height={300}
-                          src={logo}
-                          alt="Hero"
-                          className="w-100  "
-                        />
-                      </div>
-                    </Fade>
-                  </div> */}
+              
                   <div className="col-md-12 ">
                     <div className="mt-4">
                       <Fade direction="up" triggerOnce cascade>

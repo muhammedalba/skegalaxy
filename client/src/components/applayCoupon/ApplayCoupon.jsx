@@ -62,14 +62,12 @@ Confirm ,HideDiscount}) => {
         
    
         {/* coupon start*/}
-        {/* {isSuccess && productsDetails?.resnumOfCartItems > 0 &&  */}
         <form
           style={{ backgroundColor: "var(--minColor)" }}
           className=" w-100 shadow-none pt-5 border-bottom p-2"
           onSubmit={handelcoupon}
         >
           <div className="form-group my-2">
-            {/* <p className="m-0 fs-4 px-1">هل لديك كود خصم؟</p> */}
             <Fade direction="up" triggerOnce={true} cascade>
               <label className="fs-4 my-2  px-1 " htmlFor="couponInput ">
                 هل لديك كود خصم؟

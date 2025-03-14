@@ -176,13 +176,7 @@ const Footer = () => {
               <i className=" "> تحميل اوراق الشركه </i>
             </a>
 
-            {/* <span
-              style={{ color: " var(--btn-bg-color) " }}
-              className=" fs-5 mt-2 fw-bold d-block"
-            >
-              {" "}
-              تواصل معنا{" "}
-            </span> */}
+            
 
             <div className="d-flex justify-content-start align-items-center pt-1 flex-wrap ">
               <a className="fs-5 mx-1 mouse-hover" href="tel:+966598909991">
@@ -374,91 +368,7 @@ const Footer = () => {
                 
                 </ul>
                 {/* social media */}
-                {/* <span
-              style={{ color: " var(--btn-bg-color) " }}
-              className=" fs-5 mt-2 fw-bold d-block "
-            >
-            
-              تواصل معنا
-                </span>
-            <div className="d-flex justify-content-start align-items-center pt-1 ">
-              <a className="fs-5 mx-1 mouse-hover" href="tel:+966598909991">
-                <Suspense>
-                  <BsFillTelephoneFill
-                    fontSize={"1.3rem"}
-                    color="var( --spancolor)"
-                  />
-                </Suspense>
-              </a>
-              <a
-                href="https://www.facebook.com/share/UcQFNEMfpaWuphKy/?mibextid=qi2Omg"
-                target="_blank"
-                className="text-white mx-1 mouse-hover"
-              >
-                <Suspense>
-                  <SiFacebook fontSize={"1.3rem"} color="#0866ff" />
-                </Suspense>
-              </a>
-              <a
-                href="http://t.me/Skygalaxyshop"
-                target="_blank"
-                className="text-white mx-1 mouse-hover"
-              >
-                <Suspense>
-                  <FaTelegramPlane fontSize={"1.3rem"} color="#28a8e9" />
-                </Suspense>
-              </a>
-              <a
-                href="https://wa.me/+966598909991"
-                target="_blank"
-                className="text-white mx-1 mouse-hover"
-              >
-                <Suspense>
-                  <BsWhatsapp fontSize={"1.3rem"} color="#33bd45 " />
-                </Suspense>
-              </a>
-              <a
-                href="https://www.snapchat.com/add/skygalaxyshop?share_id=VESqbU6Mucg&locale=ar-AE"
-                target="_blank"
-                className="text-white mx-1  mouse-hover"
-              >
-                <Suspense>
-                  <SiSnapchat fontSize={"1.6rem"} color="#fffc00" />
-                </Suspense>
-              </a>
-              <a
-                href="https://www.instagram.com/sky.galaxy.shop?igsh=MTdkODBteWZ4cDY1MQ=="
-                target="_blank"
-                className="text-white mx-1 mouse-hover"
-              >
-                <Suspense>
-                  <FaInstagram fontSize={"1.3rem"} color="#df0073" />
-                </Suspense>
-              </a>
-              <a
-                href="https://x.com/skygalaxyshop?s=09"
-                target="_blank"
-                className="text-white mx-1 mouse-hover"
-              >
-                <Suspense>
-                  <XIcon size={25} round={true} />
-                </Suspense>
-              </a>
-            </div>
-            <Link
-              onClick={scrollToTop}
-              to="/PrivacyPolic"
-              className=" d-block fw-bold my-2"
-            >
-              الاحكام والشروط وسياسات الاسترجاع
-            </Link>
-
-            <div className="d-flex align-items-center justify-content-start gap-1">
-              <Suspense>
-                <MdOutlineMail fontSize={"1rem"} />
-              </Suspense>
-              <a href="mailto:info@skygalaxyco.com"> info@skygalaxyco.com</a>
-            </div> */}
+             
             {/* social end */}
               </Fade>
             </div>

@@ -486,27 +486,7 @@ const CreatProduct = () => {
                     {showBrands}
                   </select>
                 </div>
-                {/* supcategory */}
-                {/* <div className="col-sm-6">
-                <label
-                  className="pt-2  fs-5 d-flex align-items-center gap-2"
-                  htmlFor="subcategory"
-                >
-                  <MdOutlineCategory color="var(--spanColor)" fontSize="1rem" />
-                  اختر القسم
-                </label>
-                <select
-                  disabled
-                  id="subcategory"
-            
-                  className="form-select  py-2"
-       
-                  aria-label="Default select example"
-                >
-                  <option disabled>اختر القسم</option>
-                  
-                </select>
-              </div> */}
+              
               </div>
             </div>
             {/* images */}
