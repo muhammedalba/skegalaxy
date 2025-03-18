@@ -137,7 +137,7 @@ const Header = () => {
   const imgeUrl = cookies.get("imageUrl");
   const image = cookies.get("image");
   const role = cookies.get("role");
- const user_imge=image || image !=='avatar.WebP'?`${imgeUrl}/${image}`:avatar;
+ const user_imge=!image || image ==='avatar.WebP'?avatar`${imgeUrl}/${image}`;
 
   
 
