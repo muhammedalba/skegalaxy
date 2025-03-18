@@ -27,3 +27,4 @@ const globalError = (error, req, res, next) => {
 };
 
 module.exports = globalError;
+// http://localhost:4000/uploads/users/users-1741879649878-c76bb777-b5fc-4262-a5f1-7f7f7a6fd291.WebP

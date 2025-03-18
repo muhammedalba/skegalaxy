@@ -49,7 +49,7 @@ phone: {
     },
     image: {
       type: String,
-      default: "avatar.WebP",
+      default: "avatar.webp",
     },
     // child references (one to many)
     wishlist: [
