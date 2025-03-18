@@ -22,7 +22,7 @@ import {
 
 import { Fade } from "react-awesome-reveal";
 import Cookies from "universal-cookie";
-
+import avatar from "../../imges/auth_avatar.jpg";
 const User = () => {
   const navigate = useNavigate();
   const cookies = new Cookies();
@@ -49,6 +49,7 @@ const User = () => {
   const [preview, setPreview] = useState(null);
   const [password, setPassword] = useState("");
  
+ const user_imge= data?.data?.image ==='avatar.webp'&&!preview?avatar:preview?preview:`${data?.imageUrl}/${data?.data?.image}`;
 
   const isDisabled = isLoading || updateLoading;
 
@@ -165,10 +166,7 @@ const User = () => {
               <img
                 style={{ border: " 0.5rem solid var(--bgColor)" }}
                 className="logo rounded-circle m-auto d-block "
-                src={
-                  isSuccess && !preview
-                    ? `${data?.imageUrl}/${data?.data?.image}`
-                    : preview
+                src={ user_imge
                 }
                 alt="avatar"
               />
