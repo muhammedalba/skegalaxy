@@ -1,4 +1,4 @@
-import  {
+import {
   useCallback,
   useEffect,
   useMemo,
@@ -22,11 +22,13 @@ import avatar from "../../imges/auth_avatar.jpg";
 import { addHoverEffect } from "../../utils/icons_hover";
 
 // icons
-const RiTwitterXFill  = lazy(() =>
-  import("react-icons/ri").then((module) => ({ default: module.RiTwitterXFill }))
+const RiTwitterXFill = lazy(() =>
+  import("react-icons/ri").then((module) => ({
+    default: module.RiTwitterXFill,
+  }))
 );
 
-const SiSnapchat  = lazy(() =>
+const SiSnapchat = lazy(() =>
   import("react-icons/si").then((module) => ({ default: module.SiSnapchat }))
 );
 const CiSearch = lazy(() =>
@@ -127,8 +129,6 @@ const BsFillTelephoneFill = lazy(() =>
   }))
 );
 
-
-
 const Header = () => {
   const [Autapi, { isSuccess }] = useAutapiMutation();
 
@@ -137,19 +137,20 @@ const Header = () => {
   const imgeUrl = cookies.get("imageUrl");
   const image = cookies.get("image");
   const role = cookies.get("role");
+ const user_imge=image?`${imgeUrl}/${image}`:avatar;
+
+  
 
   const cartitims = useSelector((state) => state.cart);
   const categoriesitims = useSelector((state) => state.Categories);
   const brandsitims = useSelector((state) => state.brands);
-
-
 
   const [scroll, setscroll] = useState(false);
   const [trans, settrans] = useState(false);
   const [open, setopen] = useState(false);
   const [showSubMinu, setshowSubMinu] = useState(false);
   const [showSubMinuBrands, setshowSubMinuBrands] = useState(false);
- 
+
   const dispatch = useDispatch();
 
   const handleScroll = useCallback(() => {
@@ -176,28 +177,30 @@ const Header = () => {
     };
   }, [handleScroll]);
   useEffect(() => {
-    const icons = document.querySelectorAll('.mouse-hover');
-    const cleanupFunctions = Array.from(icons).map(icon => addHoverEffect(icon));
+    const icons = document.querySelectorAll(".mouse-hover");
+    const cleanupFunctions = Array.from(icons).map((icon) =>
+      addHoverEffect(icon)
+    );
 
     return () => {
-      cleanupFunctions.forEach(cleanup => cleanup());
+      cleanupFunctions.forEach((cleanup) => cleanup());
     };
   }, []);
 
   // handel serche
- 
+
   const searchTimeout = useRef(null);
 
   const handelserche = useCallback(
     (e) => {
       window.scrollTo({ top: 1100, behavior: "smooth" });
       dispatch(currentPage(1));
-  
+
       //  useRef لتخزين الـ timeout
       if (searchTimeout.current) {
         clearTimeout(searchTimeout.current);
       }
-  
+
       searchTimeout.current = setTimeout(() => {
         const searchValue = e.target.value.trim();
         if (searchValue) {
@@ -207,10 +210,6 @@ const Header = () => {
     },
     [dispatch]
   );
-  
-
-
-
 
   const Scrolto = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -235,7 +234,6 @@ const Header = () => {
       body: {},
       method: "post",
     });
- 
   };
   // reset navigation to 10 items per page and update navigation property
 
@@ -244,7 +242,6 @@ const Header = () => {
     dispatch(Results(15));
     dispatch(currentPage(1));
     dispatch(searchItem(""));
-  
   };
   // Auth links
   const AuthLinks = [
@@ -289,8 +286,7 @@ const Header = () => {
   const AuthLinksShow = AuthLinks.map((link, index) => {
     return (
       <li key={index}>
-        
-        <Link 
+        <Link
           to={`${link.path}`}
           className={
             (role && link.path === "/login") ||
@@ -329,7 +325,11 @@ const Header = () => {
       path: "/Favorite",
       icon: (
         <Suspense>
-          <CiHeart fontSize={"1.2rem"} color="var(--text-color)"className="mouse-hover" />
+          <CiHeart
+            fontSize={"1.2rem"}
+            color="var(--text-color)"
+            className="mouse-hover"
+          />
         </Suspense>
       ),
     },
@@ -338,7 +338,11 @@ const Header = () => {
       path: "/Cart",
       icon: (
         <Suspense>
-          <BsCart2 fontSize={"1.2rem"} color="var(--text-color)"className="mouse-hover" />
+          <BsCart2
+            fontSize={"1.2rem"}
+            color="var(--text-color)"
+            className="mouse-hover"
+          />
         </Suspense>
       ),
     },
@@ -346,23 +350,27 @@ const Header = () => {
     // {
     //   title: "شركاء النجاح",
     //   path: "/cart",
-      // icon:  <Suspense>
-      //     <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
-      // </Suspense>
+    // icon:  <Suspense>
+    //     <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
+    // </Suspense>
     // },
     // {
     //   title: "الاقسام",
     //   path: "/cart",
-      // icon:  <Suspense>
-      //     <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
-      // </Suspense>
+    // icon:  <Suspense>
+    //     <BsCart2 fontSize={"1.2rem"} color="var(--text-color)" />
+    // </Suspense>
     // },
     {
       title: "الصفحة الرئيسية",
       path: "/",
       icon: (
         <Suspense>
-          <IoStorefrontOutline fontSize={"1.2rem"} color="var(--text-color)" className="mouse-hover"/>
+          <IoStorefrontOutline
+            fontSize={"1.2rem"}
+            color="var(--text-color)"
+            className="mouse-hover"
+          />
         </Suspense>
       ),
     },
@@ -372,68 +380,81 @@ const Header = () => {
       path: "/dashboard",
       icon: (
         <Suspense>
-          <AiOutlineDashboard fontSize={"1.2rem"} color="var(--text-color)" className="mouse-hover"/>
+          <AiOutlineDashboard
+            fontSize={"1.2rem"}
+            color="var(--text-color)"
+            className="mouse-hover"
+          />
         </Suspense>
       ),
     },
   ];
 
-
-
-
-
-
-const closeMenu= useCallback(()=>{
-  
-  window.scrollTo({ top: 0, behavior: "smooth" });
- setshowSubMinu(false) ;
- setshowSubMinuBrands(false); 
- setopen(false); 
-  
-},[]);
+  const closeMenu = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setshowSubMinu(false);
+    setshowSubMinuBrands(false);
+    setopen(false);
+  }, []);
 
   // in desktop
-  const categories=categoriesitims.map((category)=>{
-    return   <Link  to={`/category/${category._id}`} onClick={closeMenu} key={category._id} className="card border-0 px-4 py-2 w-100  ">
+  const categories = categoriesitims.map((category) => {
+    return (
+      <Link
+        to={`/category/${category._id}`}
+        onClick={closeMenu}
+        key={category._id}
+        className="card border-0 px-4 py-2 w-100  "
+      >
         <span>{category?.name.split("_")[0]}</span>
         {/* <span>{category?.name.split("_")[1]}</span> */}
-                   
-           </Link>
-    });
-    // in mobile
-    const SubMinuCategories=categoriesitims.map((category)=>{
-      return   <li  key={category._id} className="border-bottom category">
-          <Link  to={`/category/${category._id}`} onClick={closeMenu}>{category?.name.split("_")[0]}</Link>
-          {/* <span>{category?.name.split("_")[1]}</span> */}
-                     
-             </li>
-      });
-      // in mobile
-      const brands=brandsitims.map((brand)=>{
-        return   <Link  to={`/brand/${brand._id}`}  key={brand._id} onClick={closeMenu} className="card border-0 px-4 py-2 w-100  ">
-                    <span  >{brand?.name.split("_")[0]}</span>
-                     {/* <span>{brand?.name.split("_")[1]}</span> */}
-                       
-               </Link>
-        });
-        // in desktop
-        const SubMinuBrands=brandsitims.map((brand)=>{
-          return   <li  key={brand._id} className="border-bottom">
-              <Link  to={`/brand/${brand._id}`} onClick={closeMenu} >{brand?.name.split("_")[0]}</Link>
-              {/* <span>{brand?.name.split("_")[1]}</span> */}
-                         
-                 </li>
-          });
-
-
+      </Link>
+    );
+  });
+  // in mobile
+  const SubMinuCategories = categoriesitims.map((category) => {
+    return (
+      <li key={category._id} className="border-bottom category">
+        <Link to={`/category/${category._id}`} onClick={closeMenu}>
+          {category?.name.split("_")[0]}
+        </Link>
+        {/* <span>{category?.name.split("_")[1]}</span> */}
+      </li>
+    );
+  });
+  // in mobile
+  const brands = brandsitims.map((brand) => {
+    return (
+      <Link
+        to={`/brand/${brand._id}`}
+        key={brand._id}
+        onClick={closeMenu}
+        className="card border-0 px-4 py-2 w-100  "
+      >
+        <span>{brand?.name.split("_")[0]}</span>
+        {/* <span>{brand?.name.split("_")[1]}</span> */}
+      </Link>
+    );
+  });
+  // in desktop
+  const SubMinuBrands = brandsitims.map((brand) => {
+    return (
+      <li key={brand._id} className="border-bottom">
+        <Link to={`/brand/${brand._id}`} onClick={closeMenu}>
+          {brand?.name.split("_")[0]}
+        </Link>
+        {/* <span>{brand?.name.split("_")[1]}</span> */}
+      </li>
+    );
+  });
 
   // navLink show
   const nav_link_show = nav_Links.map((link, index) => {
     return (
       <li
-      //  onMouseOver={()=>{link.title === 'الاقسام'&& setshowSubMinu(true),link.title === 'شركاء النجاح'&& setshowSubMinuBrands(true)}} onMouseOut={()=>{setshowSubMinu(false),
-      //   setshowSubMinuBrands(false)
-      //  }} 
+        //  onMouseOver={()=>{link.title === 'الاقسام'&& setshowSubMinu(true),link.title === 'شركاء النجاح'&& setshowSubMinuBrands(true)}} onMouseOut={()=>{setshowSubMinu(false),
+        //   setshowSubMinuBrands(false)
+        //  }}
         onClick={resetNavegation}
         key={index}
         className={
@@ -446,9 +467,7 @@ const closeMenu= useCallback(()=>{
             : "nav-item d-flex align-items-center   position-relative"
         }
       >
-       
-
-                 <NavLink
+        <NavLink
           to={link.path}
           className="nav-link  py-1 px-2 d-flex  align-items-center position-relative"
         >
@@ -464,9 +483,7 @@ const closeMenu= useCallback(()=>{
               )}
             </span>
           }
-                </NavLink>
-          
-       
+        </NavLink>
       </li>
     );
   });
@@ -475,7 +492,8 @@ const closeMenu= useCallback(()=>{
 
   return (
     <>
-      <header onClick={()=>setshowSubMinu(false)}
+      <header
+        onClick={() => setshowSubMinu(false)}
         dir="ltr"
         style={{
           transform: trans && !open ? "translateY(-150%)" : "translateY(0)",
@@ -518,33 +536,65 @@ const closeMenu= useCallback(()=>{
             <div className="d-none d-lg-block">
               <ul className="my-0 h-100 d-flex  align-items-center gap-row-2">
                 <li className="nav-item d-flex align-items-center"></li>
-                 <li onMouseOver={()=>setshowSubMinu(true)} onMouseOut={()=>setshowSubMinu(false)} className="nav-item d-flex align-items-center justify-content-between position-relative ">
-              <Suspense>
-                <PiCaretDownThin style={{transform:showSubMinu? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon " fontSize={"1rem"} />
-              </Suspense>
-                <Link className="mx-1" to={'/categories'}>
-                  الاقسام     
-                
-                </Link>
-                  <ul className={`${showSubMinu? "position-absolute  sub-menu  text-end":"d-none "}`}>
+                <li
+                  onMouseOver={() => setshowSubMinu(true)}
+                  onMouseOut={() => setshowSubMinu(false)}
+                  className="nav-item d-flex align-items-center justify-content-between position-relative "
+                >
+                  <Suspense>
+                    <PiCaretDownThin
+                      style={{
+                        transform: showSubMinu
+                          ? "rotateX(180deg)"
+                          : "rotateX(0deg)",
+                      }}
+                      className="MinusIcon "
+                      fontSize={"1rem"}
+                    />
+                  </Suspense>
+                  <Link className="mx-1" to={"/categories"}>
+                    الاقسام
+                  </Link>
+                  <ul
+                    className={`${
+                      showSubMinu
+                        ? "position-absolute  sub-menu  text-end"
+                        : "d-none "
+                    }`}
+                  >
                     {SubMinuCategories}
                   </ul>
-                </li> 
+                </li>
 
-
-
-                <li onMouseOver={()=>setshowSubMinuBrands(true)} onMouseOut={()=>setshowSubMinuBrands(false)} className="nav-item px-1 d-flex align-items-center justify-content-between position-relative">
-              <Suspense>
-                <PiCaretDownThin style={{transform:showSubMinuBrands? 'rotateX(180deg)':'rotateX(0deg)'}} className="MinusIcon " fontSize={"1rem"} />
-              </Suspense>
-              <Link className="mx-1" to={'/brands'}>
-                  شركاء النجاح     
-              
-              </Link>
-                  <ul className={`${showSubMinuBrands? "position-absolute  sub-menu  text-end":"d-none "}`}>
+                <li
+                  onMouseOver={() => setshowSubMinuBrands(true)}
+                  onMouseOut={() => setshowSubMinuBrands(false)}
+                  className="nav-item px-1 d-flex align-items-center justify-content-between position-relative"
+                >
+                  <Suspense>
+                    <PiCaretDownThin
+                      style={{
+                        transform: showSubMinuBrands
+                          ? "rotateX(180deg)"
+                          : "rotateX(0deg)",
+                      }}
+                      className="MinusIcon "
+                      fontSize={"1rem"}
+                    />
+                  </Suspense>
+                  <Link className="mx-1" to={"/brands"}>
+                    شركاء النجاح
+                  </Link>
+                  <ul
+                    className={`${
+                      showSubMinuBrands
+                        ? "position-absolute  sub-menu  text-end"
+                        : "d-none "
+                    }`}
+                  >
                     {SubMinuBrands}
                   </ul>
-                </li> 
+                </li>
                 <Fade delay={0} direction="down" triggerOnce={true} cascade>
                   {nav_link_show}
                 </Fade>
@@ -562,9 +612,7 @@ const closeMenu= useCallback(()=>{
                     width={75}
                     className="logo d-none d-sm-block rounded-circle dropdown-toggle border-1 "
                     src={
-                      !image || image === "undefined"
-                        ? avatar
-                        : `${imgeUrl}/${image}`
+                      user_imge
                     }
                     alt="avatar"
                   />
@@ -572,7 +620,6 @@ const closeMenu= useCallback(()=>{
               </ul>
             </div>
 
-        
             {/* bars button srt && icons */}
             <div className=" d-flex d-lg-none align-items-center">
               <NavLink
@@ -586,7 +633,8 @@ const closeMenu= useCallback(()=>{
                 <Suspense>
                   <PiShoppingCartThin
                     fontSize={"1.4rem"}
-                    color="var( --btn-bg-color)"className="mouse-hover"
+                    color="var( --btn-bg-color)"
+                    className="mouse-hover"
                   />
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger ">
                     {cartitims > 0 && cartitims}
@@ -596,31 +644,44 @@ const closeMenu= useCallback(()=>{
               <NavLink
                 to={"/Favorite"}
                 className={
-                  role === "admin" ? "d-none" : "p-1 border rounded-circle mx-1 mouse-hover"
+                  role === "admin"
+                    ? "d-none"
+                    : "p-1 border rounded-circle mx-1 mouse-hover"
                 }
               >
                 <Suspense>
-                  <CiHeart fontSize={"1.4rem"} color="var( --btn-bg-color)" className="mouse-hover"/>
+                  <CiHeart
+                    fontSize={"1.4rem"}
+                    color="var( --btn-bg-color)"
+                    className="mouse-hover"
+                  />
                 </Suspense>
               </NavLink>
-              <NavLink to={"/"} className="p-1 border rounded-circle mx-1 mouse-hover">
+              <NavLink
+                to={"/"}
+                className="p-1 border rounded-circle mx-1 mouse-hover"
+              >
                 <Suspense>
                   <LiaHomeSolid
                     fontSize={"1.4rem"}
-                    color="var( --btn-bg-color)"className="mouse-hover"
+                    color="var( --btn-bg-color)"
+                    className="mouse-hover"
                   />
                 </Suspense>
               </NavLink>
               <NavLink
                 to={"/dashboard"}
                 className={
-                  role !== "admin" ? "d-none" : "p-1 border rounded-circle mx-1 mouse-hover"
+                  role !== "admin"
+                    ? "d-none"
+                    : "p-1 border rounded-circle mx-1 mouse-hover"
                 }
               >
                 <Suspense>
                   <AiOutlineDashboard
                     fontSize={"1.4rem"}
-                    color="var( --btn-bg-color)"className="mouse-hover"
+                    color="var( --btn-bg-color)"
+                    className="mouse-hover"
                   />
                 </Suspense>
               </NavLink>
@@ -671,7 +732,10 @@ const closeMenu= useCallback(()=>{
               className="d-none d-sm-flex align-items-center gap-1"
             >
               <Suspense>
-                <TfiHeadphoneAlt className="fs-5 mouse-hover" color="var( --spancolor)" />
+                <TfiHeadphoneAlt
+                  className="fs-5 mouse-hover"
+                  color="var( --spancolor)"
+                />
               </Suspense>
               <Fade
                 className="border-0 "
@@ -708,7 +772,11 @@ const closeMenu= useCallback(()=>{
 
           {/* dropdown */}
 
-          <div onClick={Scrolto} style={{ fontWeight: "100" }} className="   d-none d-lg-block">
+          <div
+            onClick={Scrolto}
+            style={{ fontWeight: "100" }}
+            className="   d-none d-lg-block"
+          >
             <Link to={"/about"} className="mx-1 p-1">
               <span className=""> من نحن </span>
             </Link>
@@ -766,10 +834,8 @@ const closeMenu= useCallback(()=>{
       {/* go  whatsapp start */}
       <a
         style={{
-          animation:scroll?'shake  1s    infinite linear':'' ,
-          transform: scroll
-            ? "translateX(0)"
-            : "translateX(-1500px)",
+          animation: scroll ? "shake  1s    infinite linear" : "",
+          transform: scroll ? "translateX(0)" : "translateX(-1500px)",
         }}
         id="whatsapp"
         href="https://wa.me/+966598909991"
@@ -798,7 +864,7 @@ const closeMenu= useCallback(()=>{
       >
         <ul className="pt-3 text-nowrap px-0 w-100">
           <li
-          onClick={closeMenu}
+            onClick={closeMenu}
             style={{ transform: open ? "translateX(0)" : "translateX(200%)" }}
             className={"nav-item  py-2   w-100 "}
           >
@@ -817,18 +883,16 @@ const closeMenu= useCallback(()=>{
               aria-controls="collapseExample"
             >
               الاقسام
-              <Suspense>             
+              <Suspense>
                 <HiOutlineChevronLeft className="plusIcon" fontSize={"1rem"} />
               </Suspense>
               <Suspense>
                 <PiCaretDownThin className="MinusIcon " fontSize={"1rem"} />
               </Suspense>
             </button>
-       
 
             <div className="collapse " id="categories">
               {categories}
-            
             </div>
           </li>
           <li
@@ -844,7 +908,7 @@ const closeMenu= useCallback(()=>{
               aria-controls="collapseExample"
             >
               شركاء النجاح
-              <Suspense>             
+              <Suspense>
                 <HiOutlineChevronLeft className="plusIcon" fontSize={"1rem"} />
               </Suspense>
               <Suspense>
@@ -854,7 +918,6 @@ const closeMenu= useCallback(()=>{
 
             <div className="collapse " id="collapseExample1">
               {brands}
-            
             </div>
           </li>
           <li
@@ -894,54 +957,74 @@ const closeMenu= useCallback(()=>{
           >
             <a>معلومات التواصل</a>
             <div className="d-flex justify-content-center align-items-center pt-1 flex-wrap text-center w-auto   ">
-                <a className=" w-auto mouse-hover " href="tel:+966598909991">
-                  <Suspense>
-                    <BsFillTelephoneFill
-                      fontSize={"1.3rem"}
-                      color="var( --spancolor)"
-                      
-                    />
-                  </Suspense>
-                </a>
-                <a href="https://www.facebook.com/share/UcQFNEMfpaWuphKy/?mibextid=qi2Omg" target="_blank"  className="w-auto mouse-hover ">
-                  <Suspense>
-                    <SiFacebook fontSize={"1rem"} color="#0866ff"   />
-                  </Suspense>
-                </a>
-                <a href="http://t.me/Skygalaxyshop" target="_blank" className=" mouse-hover  w-auto">
-                  <Suspense>
-                    <FaTelegramPlane fontSize={"1rem"} color="#28a8e9"   />
-                  </Suspense>
-                </a>
-                <a
-                  href="https://wa.me/+966598909991" target="_blank"
-                  className="w-auto mouse-hover  "
-                >
-                  <Suspense>
-                    <BsWhatsapp fontSize={"1rem"} color="#33bd45 "  />
-                  </Suspense>
-                </a>
-                <a href="https://www.snapchat.com/add/skygalaxyshop?share_id=VESqbU6Mucg&locale=ar-AE" target="_blank" className="w-auto mouse-hover   ">
-                  <Suspense>
-                    <SiSnapchat   fontSize={"1rem"} color="#fffc00"   />
-                  </Suspense>
-                </a>
-                <a href="https://www.instagram.com/sky.galaxy.shop?igsh=MTdkODBteWZ4cDY1MQ==" target="_blank" className=" w-auto mouse-hover ">
-                  <Suspense>
-                    <FaInstagram fontSize={"1rem"} color="#df0073"   />
-                  </Suspense>
-                </a>
-                <a href="https://x.com/skygalaxyshop?s=09" target="_blank" className="mouse-hover  w-auto">
-                  <Suspense>
-                    <RiTwitterXFill  fontSize={"1rem"} color="#000"  />
-                  </Suspense>
-                </a>
-              </div>
+              <a className=" w-auto mouse-hover " href="tel:+966598909991">
+                <Suspense>
+                  <BsFillTelephoneFill
+                    fontSize={"1.3rem"}
+                    color="var( --spancolor)"
+                  />
+                </Suspense>
+              </a>
+              <a
+                href="https://www.facebook.com/share/UcQFNEMfpaWuphKy/?mibextid=qi2Omg"
+                target="_blank"
+                className="w-auto mouse-hover "
+              >
+                <Suspense>
+                  <SiFacebook fontSize={"1rem"} color="#0866ff" />
+                </Suspense>
+              </a>
+              <a
+                href="http://t.me/Skygalaxyshop"
+                target="_blank"
+                className=" mouse-hover  w-auto"
+              >
+                <Suspense>
+                  <FaTelegramPlane fontSize={"1rem"} color="#28a8e9" />
+                </Suspense>
+              </a>
+              <a
+                href="https://wa.me/+966598909991"
+                target="_blank"
+                className="w-auto mouse-hover  "
+              >
+                <Suspense>
+                  <BsWhatsapp fontSize={"1rem"} color="#33bd45 " />
+                </Suspense>
+              </a>
+              <a
+                href="https://www.snapchat.com/add/skygalaxyshop?share_id=VESqbU6Mucg&locale=ar-AE"
+                target="_blank"
+                className="w-auto mouse-hover   "
+              >
+                <Suspense>
+                  <SiSnapchat fontSize={"1rem"} color="#fffc00" />
+                </Suspense>
+              </a>
+              <a
+                href="https://www.instagram.com/sky.galaxy.shop?igsh=MTdkODBteWZ4cDY1MQ=="
+                target="_blank"
+                className=" w-auto mouse-hover "
+              >
+                <Suspense>
+                  <FaInstagram fontSize={"1rem"} color="#df0073" />
+                </Suspense>
+              </a>
+              <a
+                href="https://x.com/skygalaxyshop?s=09"
+                target="_blank"
+                className="mouse-hover  w-auto"
+              >
+                <Suspense>
+                  <RiTwitterXFill fontSize={"1rem"} color="#000" />
+                </Suspense>
+              </a>
+            </div>
           </li>
         </ul>
       </div>
     </>
   );
-}; 
+};
 
 export default Header;
