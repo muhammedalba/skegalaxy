@@ -1,24 +1,46 @@
-
-
 class ApiFeatures {
   constructor(mongooseQuery, queryString) {
     this.mongooseQuery = mongooseQuery;
     this.queryString = queryString;
   }
 
+  // filter() {
+  //   // 1- filter product
+  //   const queryStringObj = { ...this.queryString };
+  //   const excludesFields = ["page", "limit", "fields", "sort", "keywords"];
+  //   excludesFields.forEach((el) => delete queryStringObj[el]);
+
+  //   // Apple filteration using {gte,lte,lt,gt}
+  //   let queryStr = JSON.stringify(queryStringObj);
+  //   // gte =>${gte}
+  //   queryStr = queryStr.replace(/\b(gte|lte|lt|gt)\b/g, (match) => `$${match}`);
+
+  //   this.mongooseQuery = this.mongooseQuery.find(JSON.parse(queryStr));
+
+  //   return this;
+  // }
   filter() {
-    // 1- filter product
+    // 1) نسخة من queryString
     const queryStringObj = { ...this.queryString };
+
+    // 2) حذف الحقول غير الخاصة بالفلترة
     const excludesFields = ["page", "limit", "fields", "sort", "keywords"];
     excludesFields.forEach((el) => delete queryStringObj[el]);
 
-    // Apple filteration using {gte,lte,lt,gt}
+    // 3) حذف القيم الفارغة <<< الحل الأساسي
+    Object.keys(queryStringObj).forEach((key) => {
+      if (queryStringObj[key] === "") {
+        delete queryStringObj[key];
+      }
+    });
+
+    // 4) Advanced filtering (gte, lte, gt, lt)
     let queryStr = JSON.stringify(queryStringObj);
-    // gte =>${gte}
     queryStr = queryStr.replace(/\b(gte|lte|lt|gt)\b/g, (match) => `$${match}`);
 
+    // 5) تطبيق الفلترة
     this.mongooseQuery = this.mongooseQuery.find(JSON.parse(queryStr));
-    
+
     return this;
   }
 
@@ -51,36 +73,32 @@ class ApiFeatures {
     // 5- search
     if (this.queryString.keywords) {
       let query = {};
-      if(keywords === 'products'){
-           query.$or = [
-        { title: { $regex: this.queryString.keywords, $options: "i" } },
-        { description: { $regex: this.queryString.keywords, $options: "i" } },
-      ];
-     
+      if (keywords === "products") {
+        query.$or = [
+          { title: { $regex: this.queryString.keywords, $options: "i" } },
+          { description: { $regex: this.queryString.keywords, $options: "i" } },
+        ];
       }
-      if(keywords === 'users'){
-             query.$or = [
+      if (keywords === "users") {
+        query.$or = [
           { firstname: { $regex: this.queryString.keywords, $options: "i" } },
           { email: { $regex: this.queryString.keywords, $options: "i" } },
         ];
-      
       }
 
-      if(keywords !== 'users' && keywords !== 'products' ){
-        query={name:{$regex:this.queryString.keywords, $options: "i"}}
+      if (keywords !== "users" && keywords !== "products") {
+        query = { name: { $regex: this.queryString.keywords, $options: "i" } };
       }
-       
-   
+
       this.mongooseQuery = this.mongooseQuery.find(query);
-    
     }
     return this;
   }
 
   paginate(countDocuments) {
     // 2- pagination
-    const page = +this.queryString.page * 1 || 1;
-    const limit = +this.queryString.limit * 1 || 15;
+    const page = Number(this.queryString.page) * 1 || 1;
+    const limit = Number(this.queryString.limit) * 1 || 15;
     const skip = (page - 1) * limit;
     const endIndex = page * limit; // end index of pagination 1 * 10
 
@@ -88,7 +106,7 @@ class ApiFeatures {
     const pogination = {};
     pogination.currentPage = page;
     pogination.limit = limit;
-    pogination.numperOfPages = Math.ceil( countDocuments / limit);
+    pogination.numperOfPages = Math.ceil(countDocuments / limit);
     // next page
     if (endIndex < countDocuments) {
       pogination.nextPage = page + 1;
@@ -99,8 +117,7 @@ class ApiFeatures {
     }
     this.mongooseQuery = this.mongooseQuery.skip(skip).limit(limit);
     this.poginationResult = pogination;
- 
-  
+
     return this;
   }
 }

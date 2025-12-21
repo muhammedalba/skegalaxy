@@ -64,7 +64,7 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-orderSchema.pre(/^find/, function (next) {
+orderSchema.pre(/^find/, function () {
   this.populate({
     path: "user",
     select: "firstname lastname phone email",
@@ -73,7 +73,7 @@ orderSchema.pre(/^find/, function (next) {
     select: "title price imageCover ratingsAverage",
   });
 
-  next();
+  
 });
 const orderModul = mongoose.model("Order", orderSchema);
 module.exports = orderModul;

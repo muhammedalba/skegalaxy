@@ -88,20 +88,14 @@ const productSchema = new mongoose.Schema(
   
 );
 // mongoose  query middeware
-productSchema.pre(/^find/, function(next){
+// Populate category & brand automatically on find queries
+productSchema.pre(/^find/, function() {
   this.populate([
-    {
-      path: 'category',
-      select: 'name',
-    },
-    {
-      path: 'brand',
-      select: 'name',
-    }
+    { path: 'category', select: 'name' },
+    { path: 'brand', select: 'name' }
   ]);
+});
 
-  next();
-})
 
 
 module.exports = mongoose.model("Product", productSchema);

@@ -6,13 +6,9 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 const cookieParser = require("cookie-parser");
-// eslint-disable-next-line import/no-extraneous-dependencies
 const rateLimit = require("express-rate-limit");
-// eslint-disable-next-line import/no-extraneous-dependencies
 const hpp = require("hpp");
 const compression = require("compression");
-// eslint-disable-next-line import/no-extraneous-dependencies
-const mongoSanitize = require("express-mongo-sanitize");
 
 const ApiError = require("./utils/apiError");
 const globalError = require("./middleWare/ErroeMidleWare");
@@ -29,16 +25,15 @@ app.use(cookieParser());
 // enable other domains to access routes
 
 //const corsOptions = {
- // origin:  process.env.FRONTEND_ORIGIN, // أصل الفرونت إند
+// origin:  process.env.FRONTEND_ORIGIN, // أصل الفرونت إند
 //  // allowedHeaders: ['Content-Type', 'Authorization'],
- // // secure: false,
+// // secure: false,
 //  credentials: true // تمكين دعم ملفات تعريف الارتباط (credentials)
 //};
 const allowedOrigins = [
-  process.env.FRONTEND_ORIGIN, 
-  'http://127.0.0.1:5500', 
-  'http://localhost:5173'
- 
+  process.env.FRONTEND_ORIGIN,
+  "http://127.0.0.1:5500",
+  "http://localhost:5173",
 ];
 // تطبيق إعدادات CORS على كل الطلبات
 const corsOptions = {
@@ -47,31 +42,47 @@ const corsOptions = {
       callback(null, true);
     } else {
       console.error(`Blocked by CORS: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error("Not allowed by CORS"));
     }
   },
-  allowedHeaders: ['Content-Type', 'Authorization'],
- secure: false,
+  allowedHeaders: ["Content-Type", "Authorization"],
+  secure: false,
   credentials: true, // تمكين ملفات تعريف الارتباط
 };
 
 app.use(cors(corsOptions));
 
-
 // إذا كنت تستخدم OPTIONS لتحديد إعدادات CORS لجميع المسارات
-app.options('*', cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 // compression all responses
 app.use(compression());
 // app.use("/uploads", express.static(path.join(__dirname, "uploads"), {maxAge: '1d'})); //dev
-app.use("/uploads", express.static(path.join(process.env.UPLOADS_DIRECTORY), {maxAge: '1d'})); //prod
-
+app.use(
+  "/uploads",
+  express.static(path.join(process.env.UPLOADS_DIRECTORY), { maxAge: "1d" })
+); //prod
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
-
 // To apply data sanitizotion:
-app.use(mongoSanitize());
+
+
+
+app.use((req, res, next) => {
+  const sanitize = (obj) => {
+    Object.keys(obj).forEach((key) => {
+      if (key.includes("$") || key.includes(".")) {
+        delete obj[key];
+      }
+    });
+  };
+
+  if (req.body) sanitize(req.body);
+  if (req.params) sanitize(req.params);
+  next();
+});
+
 // Limit each IP to 100 requests per `window` (here, per 15 minutes).
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -106,18 +117,23 @@ dbconnection();
 //mount Routes
 MountRoutes(app);
 // Static file declaration
-app.use(express.static(path.join(__dirname, "../client/dist"), {
-  maxAge: '2d' // التخزين المؤقت للملفات لمدة يوم واحد
-}));
+app.use(
+  express.static(path.join(__dirname, "../client/dist"), {
+    maxAge: "2d", // التخزين المؤقت للملفات لمدة يوم واحد
+  })
+);
 // Serve the React app
-app.get("*", (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
 });
 // create error and send it to error handling middleware
-app.use("*", (req, res, next) => {
-  // const error=new Error(` can't find this route :${req.originalUrl} `)
-  next(new ApiError(` can't find this route :${req.originalUrl} `, 400));
+// API 404 فقط
+app.use("/api", (req, res, next) => {
+  next(new ApiError(`API route not found: ${req.originalUrl}`, 404));
 });
+
+
+
 const PORT = process.env.PORT || 10000;
 
 const server = app.listen(PORT, () => {

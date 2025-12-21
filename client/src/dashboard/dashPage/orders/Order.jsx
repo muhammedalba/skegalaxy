@@ -40,7 +40,7 @@ const Order = () => {
 
   const user = order?.data?.user;
   const shippingAddress = order?.data?.shippingAddress;
- 
+  console.log("createError", createError);
 
   useEffect(() => {
     if (error?.status === 401) {
@@ -312,8 +312,8 @@ const Order = () => {
         //  send form data to server
         createOne({
           url: `/orders/${orderId}/Delivery-receipt-image`,
-          body: form,
           method: "post",
+          body: form,
         });
       }
     },
@@ -357,8 +357,11 @@ const Order = () => {
                 <span className=" text-dark "> : {user?.email} </span>
               </div>
               <div className="fs-5 text-primary p-2 border col-12 col-sm-6">
-                 تاريخ الطبلب
-                <span className=" text-dark "> : {convertDateTime(order?.data?.createdAt)} </span>
+                تاريخ الطبلب
+                <span className=" text-dark ">
+                  {" "}
+                  : {convertDateTime(order?.data?.createdAt)}{" "}
+                </span>
               </div>
               <div
                 className={

@@ -57,7 +57,7 @@ const imageUrl = newUrl.replace(/orders/g, 'products');
       // إنشاء نسخة من الاستعلام لحساب lengthdata بدون التصفح
       const queryForLength = apiFeatures.mongooseQuery.clone();
       const lengthdata = await queryForLength.countDocuments();
-  
+      
       // تطبيق التصفح على الاستعلام
       apiFeatures.paginate(lengthdata);
   

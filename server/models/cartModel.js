@@ -34,13 +34,13 @@ user:{
 
 
 }, { timestamps: true });
-catrSchema.pre(/^find/, function(next){
+
+catrSchema.pre(/^find/, function(){
     this.populate({
         path: 'cartItems.product',
         select: 'title imageCover priceAfterDiscount price quantity',
       });
   
-    next();
   })
   
 const cartModel=mongoose.model("Cart", catrSchema);

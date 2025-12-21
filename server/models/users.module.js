@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-
 const userSchema = new mongoose.Schema(
   {
     firstname: {
@@ -29,17 +28,16 @@ const userSchema = new mongoose.Schema(
       required: [true, "password required"],
       minlength: [6, "too short password"],
     },
-phone: {
+    phone: {
       type: String,
-  
     },
-    passwordChangeAt:  { type: Date,},
-    passwordResetCode: { type: String,},
-    passwordResetExpires: { type: Date,},
-    passwordResetVerified: { type: Boolean,},
+    passwordChangeAt: { type: Date },
+    passwordResetCode: { type: String },
+    passwordResetExpires: { type: Date },
+    passwordResetVerified: { type: Boolean },
     role: {
       type: String,
-      enum: ["user", "admin",'manger'],
+      enum: ["user", "admin", "manger"],
       default: "user",
       lowercase: true,
     },
@@ -49,7 +47,7 @@ phone: {
     },
     image: {
       type: String,
-      default: "avatar.WebP",
+      default: "avatar.webp",
     },
     // child references (one to many)
     wishlist: [
@@ -79,12 +77,11 @@ phone: {
   { timestamps: true }
 );
 
-
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
   // hashing user pasword
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 11);
-  next();
+ 
 });
 const UserModel = mongoose.model("User", userSchema);
 module.exports = UserModel;
