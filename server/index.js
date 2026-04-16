@@ -123,28 +123,14 @@ app.use(
   })
 );
 // Serve the React app
-// app.get(/.*/, (req, res) => {
-//   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
-// });
-
-
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+});
 // create error and send it to error handling middleware
-// API 404
+// API 404 فقط
 app.use("/api", (req, res, next) => {
   next(new ApiError(`API route not found: ${req.originalUrl}`, 404));
 });
-// 2. fallback SECOND
-app.use((req, res, next) => {
-  if (req.method !== "GET") return next();
-
-  if (req.path.startsWith("/api")) return next();
-
-  if (req.path.includes(".")) return next(); // assets
-
-  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
-});
-
-
 
 
 
