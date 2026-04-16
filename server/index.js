@@ -3,7 +3,7 @@ const path = require("path");
 const express = require("express"); 
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-const cors = require("cors");
+const cors = require("cors"); 
 
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
@@ -57,11 +57,11 @@ app.options(/.*/, cors(corsOptions));
 // compression all responses
 app.use(compression());
 // app.use("/uploads", express.static(path.join(__dirname, "uploads"), {maxAge: '1d'})); //dev
-app.use(
+app.use( 
   "/uploads",
   express.static(path.join(process.env.UPLOADS_DIRECTORY), { maxAge: "1d" })
 ); //prod
-
+ 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
@@ -104,7 +104,7 @@ app.use(
     ],
   })
 );
-
+ 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
   console.log("mode:", process.env.NODE_ENV);
@@ -123,14 +123,28 @@ app.use(
   })
 );
 // Serve the React app
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
-});
+// app.get(/.*/, (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+// });
+
+
 // create error and send it to error handling middleware
-// API 404 فقط
+// API 404
 app.use("/api", (req, res, next) => {
   next(new ApiError(`API route not found: ${req.originalUrl}`, 404));
 });
+// 2. fallback SECOND
+app.use((req, res, next) => {
+  if (req.method !== "GET") return next();
+
+  if (req.path.startsWith("/api")) return next();
+
+  if (req.path.includes(".")) return next(); // assets
+
+  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+});
+
+
 
 
 
@@ -139,7 +153,7 @@ const PORT = process.env.PORT || 10000;
 const server = app.listen(PORT, () => {
   console.log(`App is running port${PORT}`);
 });
-
+    
 // Global error handling middleWare for express
 app.use(globalError);
 
@@ -152,3 +166,4 @@ process.on("unhandledRejection", (error) => {
     process.exit(1);
   });
 });
+ 
